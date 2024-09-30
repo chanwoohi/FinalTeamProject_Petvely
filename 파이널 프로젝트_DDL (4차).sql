@@ -252,7 +252,8 @@ DROP TABLE IF EXISTS `ReportPenaltyStandard`;
 CREATE TABLE `ReportPenaltyStandard` (
 	`rps_standard`	varchar(50)	primary key NOT NULL,
 	`rps_period`	datetime	NULL,
-	`rps_number`	int	NULL
+	`rps_punishNumber`	int	NULL,
+    `rps_reportNumber` int NULL
 );
 
 DROP TABLE IF EXISTS `FriendList`;
@@ -320,9 +321,16 @@ CREATE TABLE `Sigg_areas` (
 	`sigg_version`	varchar(20)	NULL
 );
 
--- CREATE TABLE `Untitled2` (
-
--- );
+CREATE TABLE `UseAuthority` (
+	`ua_num` int primary key auto_increment,
+    `ua_postAuthority` boolean NOT NULL DEFAULT TRUE,
+    `ua_commentAuthority` boolean NOT NULL DEFAULT TRUE,
+    `ua_messageAuthority` boolean NOT NULL DEFAULT TRUE,
+    `ua_facilityAuthority` boolean NOT NULL DEFAULT TRUE,
+    `ua_reviewAuthority` boolean NOT NULL DEFAULT TRUE,
+    `ua_reportAuthority` boolean NOT NULL DEFAULT TRUE
+    
+);
 
 DROP TABLE IF EXISTS `WalkMatePet`;
 
