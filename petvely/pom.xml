@@ -80,7 +80,13 @@
 		 		spring-boot-configuration-processor
 		 	</artifactId>
 		 	<optional>true</optional>
-		 </dependency>
+		</dependency>
+ 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
