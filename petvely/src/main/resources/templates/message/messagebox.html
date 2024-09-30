@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/layout.html}">
 <body>
     <header th:fragment="header">
         <nav class="navbar navbar-expand-md bg-dark navbar-dark">
@@ -7,14 +10,15 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/message/messagebox/0}">쪽지함</a>
-                    </li>
-                </ul>
-            </div>
+
         </nav>
     </header>
+    <main layout:fragment="content">
+        <a class="btn btn-outline-info mr-3 mb-3" 
+   th:each="item : ${messages}" 
+   th:text="${item.mes_content}" 
+   th:href="@{/message/messagebox/${item.mes_num}}">쪽지 보기</a>
+    </main>
+    
 </body>
 </html>
