@@ -17,7 +17,7 @@ CREATE TABLE `Member` (
 	`me_limit`	datetime	NULL,
 	`me_loginType`	varchar(10)	NULL,
 	`me_addressDetail`	varchar(255)	NULL,
-	`me_phone`	varchar(8) unique	NULL,
+	`me_phone`	varchar(12) unique	NULL,
 	`me_wm_point`	int	NULL,
 	`me_ga_point`	int	NULL,
 	`me_mp_point`	int	NULL,
