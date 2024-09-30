@@ -184,7 +184,7 @@ CREATE TABLE `MarketPost` (
 	`mp_name`	varchar(50)	NULL,
 	`mp_content`	varchar(500)	NULL,
 	`mp_price`	int	NULL,
-	`gt_type`	varchar(50)	NOT NULL
+	`mp_gt_type`	varchar(50)	NOT NULL
 );
 
 DROP TABLE IF EXISTS `GiveAndTakeType`;
@@ -238,7 +238,7 @@ CREATE TABLE `ContentsReview` (
 	`cr_date`	datetime	NULL default current_timestamp,
 	`cr_report`	int	NULL,
 	`cr_me_num`	int	NOT NULL,
-	`po_num`	int	NOT NULL
+	`cr_po_num`	int	NOT NULL
 );
 
 DROP TABLE IF EXISTS `GoodsTradeState`;
