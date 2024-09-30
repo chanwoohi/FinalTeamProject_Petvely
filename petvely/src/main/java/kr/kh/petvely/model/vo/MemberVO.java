@@ -2,6 +2,7 @@ package kr.kh.petvely.model.vo;
 
 import java.util.Date;
 
+
 public class MemberVO {
 
 	private int me_num;
