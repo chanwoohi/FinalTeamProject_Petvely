@@ -1,5 +1,12 @@
 package kr.kh.petvely.model.vo;
 
+import java.util.Date;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 public class Sido_AreasVO {
 
 	private int sido_num; 
