@@ -2,6 +2,11 @@ package kr.kh.petvely.model.vo;
 
 import java.util.Date;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 public class MessageVO {
 	private int mes_num;
 	private String mes_content;
