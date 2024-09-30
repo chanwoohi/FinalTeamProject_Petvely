@@ -1,3 +1,11 @@
+DROP DATABASE IF EXISTS petvely;
+
+CREATE DATABASE IF NOT EXISTS petvely;
+
+USE petvely;
+
+DROP TABLE IF EXISTS `Member`;
+
 CREATE TABLE `Member` (
 	`me_num`	int primary key auto_increment	NOT NULL,
 	`me_id`	varchar(13) unique	NOT NULL,
@@ -18,6 +26,8 @@ CREATE TABLE `Member` (
 	`me_ms_status`	varchar(50)	NOT NULL
 );
 
+DROP TABLE IF EXISTS `Comment`;
+
 CREATE TABLE `Comment` (
 	`cm_num`	int primary key auto_increment	NOT NULL,
 	`cm_content`	varchar(200)	NULL,
@@ -31,6 +41,8 @@ CREATE TABLE `Comment` (
 	`cm_layer`	int	NULL
 );
 
+DROP TABLE IF EXISTS `File`;
+
 CREATE TABLE `File` (
 	`fi_num`	int primary key auto_increment	NOT NULL,
 	`fi_ori_name`	varchar(255)	NULL,
@@ -38,6 +50,8 @@ CREATE TABLE `File` (
 	`fi_date`	datetime	NULL,
 	`fi_po_num`	int	NOT NULL
 );
+
+DROP TABLE IF EXISTS `FacilityShare`;
 
 CREATE TABLE `FacilityShare` (
 	`fs_num`	int primary key auto_increment	NOT NULL,
@@ -47,6 +61,8 @@ CREATE TABLE `FacilityShare` (
 	`fs_reportCount`	int	NULL,
 	`fs_fst_type`	varchar(50)	NOT NULL
 );
+
+DROP TABLE IF EXISTS `FacilityReview`;
 
 CREATE TABLE `FacilityReview` (
 	`fr_num`	int primary key auto_increment	NOT NULL,
@@ -58,6 +74,8 @@ CREATE TABLE `FacilityReview` (
 	`fr_me_num`	int	NOT NULL
 );
 
+DROP TABLE IF EXISTS `WalkMatePost`;
+
 CREATE TABLE `WalkMatePost` (
 	`po_num`	int primary key auto_increment	NOT NULL,
 	`wm_date`	datetime	NULL,
@@ -65,12 +83,16 @@ CREATE TABLE `WalkMatePost` (
 	`wm_wms_state`	varchar(50)	NOT NULL
 );
 
+DROP TABLE IF EXISTS `Recommend`;
+
 CREATE TABLE `Recommend` (
 	`re_num`	int primary key auto_increment	NOT NULL,
 	`re_state`	int	NULL,
 	`re_me_num`	int	NOT NULL,
 	`re_po_num`	int	NOT NULL
 );
+
+DROP TABLE IF EXISTS `GiveAndTakePost`;
 
 CREATE TABLE `GiveAndTakePost` (
 	`po_num`	int primary key auto_increment	NOT NULL,
@@ -82,6 +104,8 @@ CREATE TABLE `GiveAndTakePost` (
 	`gat_emd_num`	int	NOT NULL
 );
 
+DROP TABLE IF EXISTS `Message`;
+
 CREATE TABLE `Message` (
 	`mes_num`	int primary key auto_increment	NOT NULL,
 	`mes_content`	longtext	NULL,
@@ -90,6 +114,8 @@ CREATE TABLE `Message` (
 	`mes_me_senderNum`	int	NOT NULL,
 	`mes_readingCheck`	varchar(1)	NULL
 );
+
+DROP TABLE IF EXISTS `Report`;
 
 CREATE TABLE `Report` (
 	`rp_num`	int primary key auto_increment	NOT NULL,
@@ -101,9 +127,13 @@ CREATE TABLE `Report` (
 	`rp_rtt_num`	int	NULL
 );
 
+DROP TABLE IF EXISTS `ReportType`;
+
 CREATE TABLE `ReportType` (
 	`rt_type`	varchar(50)	primary key NOT NULL
 );
+
+DROP TABLE IF EXISTS `Animal`;
 
 CREATE TABLE `Animal` (
 	`ani_num`	varchar(20) primary key	NOT NULL,
@@ -119,13 +149,19 @@ CREATE TABLE `Animal` (
 	`ani_me_num`	int	NOT NULL
 );
 
+DROP TABLE IF EXISTS `AnimalType`;
+
 CREATE TABLE `AnimalType` (
 	`at_type`	varchar(50) primary key	NOT NULL
 );
 
+DROP TABLE IF EXISTS `GoodsType`;
+
 CREATE TABLE `GoodsType` (
 	`gt_type`	varchar(50)	NOT NULL
 );
+
+DROP TABLE IF EXISTS `Post`;
 
 CREATE TABLE `Post` (
 	`po_num`	int primary key auto_increment	NOT NULL,
@@ -140,6 +176,8 @@ CREATE TABLE `Post` (
 	`po_me_num`	int	NOT NULL
 );
 
+DROP TABLE IF EXISTS `MarketPost`;
+
 CREATE TABLE `MarketPost` (
 	`po_num`	int primary key auto_increment	NOT NULL,
 	`mp_gts_state`	varchar(50)	NOT NULL,
@@ -149,9 +187,13 @@ CREATE TABLE `MarketPost` (
 	`gt_type`	varchar(50)	NOT NULL
 );
 
+DROP TABLE IF EXISTS `GiveAndTakeType`;
+
 CREATE TABLE `GiveAndTakeType` (
 	`gatt_type`	varchar(255)	NOT NULL
 );
+
+DROP TABLE IF EXISTS `WalkMateMember`;
 
 CREATE TABLE `WalkMateMember` (
 	`wmm_num`	int primary key auto_increment	NOT NULL,
@@ -161,23 +203,33 @@ CREATE TABLE `WalkMateMember` (
 	`wmm_me_num`	int	NOT NULL
 );
 
+DROP TABLE IF EXISTS `Dibs`;
+
 CREATE TABLE `Dibs` (
 	`di_num`	int primary key auto_increment	NOT NULL,
 	`di_me_num`	int	NOT NULL,
 	`di_po_num`	int	NOT NULL
 );
 
+DROP TABLE IF EXISTS `ReportTargetType`;
+
 CREATE TABLE `ReportTargetType` (
 	`rtt_type`	varchar(50)	primary key NOT NULL
 );
+
+DROP TABLE IF EXISTS `FacilityShareType`;
 
 CREATE TABLE `FacilityShareType` (
 	`fst_type`	varchar(50)	primary key NOT NULL
 );
 
+DROP TABLE IF EXISTS `MemberStatus`;
+
 CREATE TABLE `MemberStatus` (
 	`ms_status`	varchar(50)	primary key NOT NULL
 );
+
+DROP TABLE IF EXISTS `ContentsReview`;
 
 CREATE TABLE `ContentsReview` (
 	`cr_num`	int primary key auto_increment	NOT NULL,
@@ -189,9 +241,13 @@ CREATE TABLE `ContentsReview` (
 	`po_num`	int	NOT NULL
 );
 
+DROP TABLE IF EXISTS `GoodsTradeState`;
+
 CREATE TABLE `GoodsTradeState` (
 	`gts_state`	varchar(50)	NOT NULL
 );
+
+DROP TABLE IF EXISTS `ReportPenaltyStandard`;
 
 CREATE TABLE `ReportPenaltyStandard` (
 	`rps_standard`	varchar(50)	primary key NOT NULL,
@@ -199,31 +255,43 @@ CREATE TABLE `ReportPenaltyStandard` (
 	`rps_number`	int	NULL
 );
 
+DROP TABLE IF EXISTS `FriendList`;
+
 CREATE TABLE `FriendList` (
-	`Key`	VARCHAR(255)	primary key auto_increment NULL,
-	`me_num`	int	NOT NULL,
-	`me_num2`	int	NOT NULL
+	`fl_num`	int	primary key auto_increment,
+	`fl_me_num`	int	NOT NULL,
+	`fl_me_num2`	int	NOT NULL
 );
 
+DROP TABLE IF EXISTS `BlackList`;
+
 CREATE TABLE `BlackList` (
-	`Key`	VARCHAR(255)	primary key auto_increment NOT NULL,
-	`me_num`	int	NOT NULL,
-	`me_num2`	int	NOT NULL
+	`bl_num`	int	primary key auto_increment,
+	`bl_me_num`	int	NOT NULL,
+	`bl_me_num2`	int	NOT NULL
 );
+
+DROP TABLE IF EXISTS `Bookmark`;
 
 CREATE TABLE `Bookmark` (
 	`bm_num`	int primary key auto_increment	NOT NULL,
-	`me_num`	int	NOT NULL,
-	`po_num`	int	NOT NULL
+	`bm_me_num`	int	NOT NULL,
+	`bm_po_num`	int	NOT NULL
 );
+
+DROP TABLE IF EXISTS `WalkMateState`;
 
 CREATE TABLE `WalkMateState` (
 	`wms_state`	varchar(50)	NOT NULL
 );
 
+DROP TABLE IF EXISTS `GiveAndTakeState`;
+
 CREATE TABLE `GiveAndTakeState` (
 	`gats_state`	varchar(50)	NOT NULL
 );
+
+DROP TABLE IF EXISTS `Emd_areas`;
 
 CREATE TABLE `Emd_areas` (
 	`emd_num`	int primary key auto_increment	NOT NULL,
@@ -233,12 +301,16 @@ CREATE TABLE `Emd_areas` (
 	`emd_version`	varchar(20)	NULL
 );
 
+DROP TABLE IF EXISTS `Sido_areas`;
+
 CREATE TABLE `Sido_areas` (
 	`sido_num`	int primary key auto_increment	NOT NULL,
 	`sido_code`	varchar(2)	NULL,
 	`sido_name`	varchar(50)	NULL,
 	`sido_version`	varchar(20)	NULL
 );
+
+DROP TABLE IF EXISTS `Sigg_areas`;
 
 CREATE TABLE `Sigg_areas` (
 	`sigg_num`	int primary key auto_increment	NOT NULL,
@@ -251,6 +323,8 @@ CREATE TABLE `Sigg_areas` (
 -- CREATE TABLE `Untitled2` (
 
 -- );
+
+DROP TABLE IF EXISTS `WalkMatePet`;
 
 CREATE TABLE `WalkMatePet` (
 	`wmp_num`	int primary key auto_increment	NOT NULL,
