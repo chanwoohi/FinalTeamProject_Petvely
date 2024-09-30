@@ -13,7 +13,6 @@ VALUES ('Pet Park', 5, 10, 0, 'Park');
 INSERT INTO Animal (ani_num, ani_name, ani_age, ani_gender, ani_birth, ani_weight, ani_neutralization, ani_at_type, ani_me_num)
 VALUES ('A001', 'Max', 2, 'M', '2022-01-01', 5.5, TRUE, 'Dog', 1);
 
-
 -- 모든 회원 정보를 조회
 SELECT * FROM Member;
 
@@ -38,3 +37,6 @@ DELETE FROM Member WHERE me_id = 'user01';
 
 -- 특정 반려동물 정보 삭제
 DELETE FROM Animal WHERE ani_num = 'A001';
+
+INSERT INTO POST( PO_TITLE, PO_CONTENT, PO_ME_NUM)
+VALUES("[테스트]첫 산책 메이트 글", "안녕하세요 산책 메이트 게시판 첫 글 입니다.", 2);
