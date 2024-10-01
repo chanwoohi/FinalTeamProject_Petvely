@@ -1,15 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.petvely.dao.MessageDAO">
-
-
-    <insert id="insertMessage" parameterType="kr.kh.petvely.model.vo.MessageVO">
-        INSERT INTO message (mes_content, mes_me_receiverNum, mes_me_senderNum, mes_date, mes_readingCheck)
-        VALUES (#{mes_content}, #{mes_me_receiverNum}, #{mes_me_senderNum}, NOW(), #{mes_readingCheck})
-    </insert>
-
-    <select id="selectMessages"  resultType="MessageVO">
-        SELECT * FROM message WHERE mes_me_receiverNum = #{mes_num} ORDER BY mes_date DESC
+	<select id="selectMessages"  resultType="MessageVO">
+        select * from message 
+        	where
+        mes_me_receiverNum = #{mes_num} 
+        	order by
+        mes_date desc
     </select>
+    <select id="selectMemberIds" resultType="MemberVO">
+    	select * from member where me_id = #{senderNum}
+    </select>
+    <insert id="insertMessage" parameterType="MessageVO">
+        insert 
+        	into
+        message 
+        	(mes_content, mes_me_senderNum, mes_me_receiverNum, mes_date)
+        VALUES 
+        	(#{mes_content}, #{mes_me_senderNum}, #{mes_me_receiverNum}, NOW())
+    </insert>
+	
+	<select id="selectReceiverId" resultType="Integer">
+        select me_num from member WHERE me_id = #{receiverId}
+    </select>
+	
+	<select id="selectsenderId" resultType="Integer">
+        select me_num from member WHERE me_id = #{senderId}
+    </select>
+    
 
 </mapper>

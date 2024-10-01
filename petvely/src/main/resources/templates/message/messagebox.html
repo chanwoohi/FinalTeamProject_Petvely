@@ -14,10 +14,10 @@
         </nav>
     </header>
     <main layout:fragment="content">
-        <a class="btn btn-outline-info mr-3 mb-3" 
+        <div class="text" 
    th:each="item : ${messages}" 
-   th:text="${item.mes_content}" 
-   th:href="@{/message/messagebox/${item.mes_num}}">쪽지 보기</a>
+   th:text="${item.mes_content}" ></div>
+   <a th:href="@{/message/send/0}">쪽지 보내기</a>
     </main>
     
 </body>

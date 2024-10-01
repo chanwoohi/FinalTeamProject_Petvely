@@ -1,15 +1,32 @@
 <!DOCTYPE html>
 <html 
-xmlns:th="http://www.thymeleaf.org"
-xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-layout:decorate="~{layout/layout.html}">
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+    layout:decorate="~{layout/layout.html}">
 <head>
     <meta charset="UTF-8">
     <title>쪽지 보내기</title>
 </head>
 <body>
     <main layout:fragment="content">
-   
+        <form th:action="@{/message/send}" method="post">
+            <input type="hidden" name="mes_num" th:value="${me_num}"/>
+			 <div class="form-group">
+                <label for="receiverNum">보내는 이:</label>
+                <input type="text" class="form-control" name="senderNum" required placeholder="보내는 사람의 ID">
+            </div>
+            <div class="form-group">
+                <label for="receiverNum">받는 이:</label>
+                <input type="text" class="form-control" name="receiverNum" required placeholder="받는 사람의 ID">
+            </div>
+
+            <div class="form-group">
+                <label for="mes_content">내용:</label>
+                <textarea class="form-control" name="mes_content" id="mes_content" required placeholder="메시지를 입력하세요"></textarea>
+            </div>
+
+            <button class="btn btn-outline-dark" type="submit">보내기</button>
+        </form>
     </main>
 </body>
 </html>

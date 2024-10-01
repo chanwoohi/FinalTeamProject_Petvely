@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.kh.petvely.model.vo.MemberVO;
 import kr.kh.petvely.model.vo.MessageVO;
 import kr.kh.petvely.service.MessageService;
 
@@ -25,25 +26,31 @@ public class MessageController {
         model.addAttribute("messages", messages);
         return "message/messagebox";
     }
-    
-    @PostMapping("/message/send/{senderNum}/{receiverNum}")
+
+    @PostMapping("/message/send")
     public String messageSend(@RequestParam("mes_content") String content,
-                              @PathVariable("receiverNum") int receiverNum,
-                              @PathVariable("senderNum") int senderNum,
-                              Model model) {
-        MessageVO message = new MessageVO();
-        message.setMes_content(content);
-        message.setMes_me_receiverNum(receiverNum);
-        message.setMes_me_senderNum(senderNum);
-        
-        boolean res = messageService.sendMessage(message);
-        if(res) {
-            model.addAttribute("message", "쪽지 보내기 성공");
-        } else {
-            model.addAttribute("message", "쪽지 보내기 실패");
-        }
+    		@RequestParam("receiverNum") String receiverId,
+    		@RequestParam("senderNum") String senderId,
+    		Model model) {
+    	Integer senderNum = messageService.getsenderId(senderId); 
+    	Integer receiverNum = messageService.getreceiverId(receiverId); 
+    	MessageVO message = new	MessageVO(); message.setMes_content(content);
+    	message.setMes_me_senderNum(senderNum);
+    	message.setMes_me_receiverNum(receiverNum);
+
+    	boolean res = messageService.sendMessage(message);
+    	if(res) {
+    		model.addAttribute("message","쪽지 보내기 성공"); }
+    	else {
+    		model.addAttribute("message","쪽지 보내기 실패"); }
+
+    	return "/message/send";
+    }
+    @GetMapping("/message/send/{senderNum}")
+    public String messageSend( Model model, 
+                               @PathVariable int senderNum) {
+        List<MemberVO> senderId = messageService.getMemberIds(senderNum);
+        model.addAttribute("senderId", senderId);
         return "message/send";
     }
-   
- 
 }
