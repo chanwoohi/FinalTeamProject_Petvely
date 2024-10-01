@@ -18,4 +18,7 @@ public class PostVO {
 	private int po_reportCount;
 	private String po_notice;
 	private int po_me_num;
+	
+	private String me_id;
+
 }

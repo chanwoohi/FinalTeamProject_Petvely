@@ -16,16 +16,16 @@
         	into
         message 
         	(mes_content, mes_me_senderNum, mes_me_receiverNum, mes_date)
-        VALUES 
+        values 
         	(#{mes_content}, #{mes_me_senderNum}, #{mes_me_receiverNum}, NOW())
     </insert>
 	
 	<select id="selectReceiverId" resultType="Integer">
-        select me_num from member WHERE me_id = #{receiverId}
+        select me_num from member where me_id = #{receiverId}
     </select>
 	
 	<select id="selectsenderId" resultType="Integer">
-        select me_num from member WHERE me_id = #{senderId}
+        select me_num from member where me_id = #{senderId}
     </select>
     
 

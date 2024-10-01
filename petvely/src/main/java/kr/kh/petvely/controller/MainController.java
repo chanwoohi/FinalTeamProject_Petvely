@@ -16,7 +16,7 @@ public class MainController {
 	@GetMapping("/")
 	public String home(Model model) {
 		model.addAttribute("name", "홍길동");
-		System.out.println(postDao.count());
+
 		return "home";
 	}
 	
