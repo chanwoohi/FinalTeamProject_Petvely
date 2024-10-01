@@ -39,7 +39,7 @@ DELETE FROM Member WHERE me_id = 'user01';
 DELETE FROM Animal WHERE ani_num = 'A001';
 
 INSERT INTO POST ( PO_TITLE, PO_CONTENT, PO_ME_NUM)
-	VALUES ( "INSERT연습", "제발제발", "2" );
+	VALUES ( "POST테스2트", "ㅎㅇㅇ", "2" );
     
 -- 위의 POST의 PO_NUM을 가져와서 WALKMATEPOST에 강제로 넣기
 

@@ -47,6 +47,7 @@ public class WalkMatePostService {
 		}
 		try {
 			walkMatePost.setPo_num(po_num);
+			System.out.println(walkMatePost);
 			return walkMatePostDao.insertWalkMatePost(walkMatePost);
 		} catch (Exception e) {
 			e.printStackTrace();
