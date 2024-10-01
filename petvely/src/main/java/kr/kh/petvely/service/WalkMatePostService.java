@@ -54,4 +54,9 @@ public class WalkMatePostService {
 		}
 	}
 
+	public WalkMatePostVO getWalkMatePost(int po_num) {
+		return walkMatePostDao.selectWalkMatePost(po_num);
+		
+	}
+
 }

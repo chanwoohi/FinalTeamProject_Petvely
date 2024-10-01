@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<main layout:fragment="content">
+		<div th:object="${walkMatePost}">
+			<div class="form-group">
+				<label>제목</label>
+				<input type="text" class="form-control" th:field="*{po_title}" readonly>
+			</div>
+			
+			<!-- 로그인 기능 미구현으로 작성자 직접 입력해야함... 추후 수정 -->
+			<div class="form-group">
+				<label>작성자</label>
+				<input type="text" class="form-control" th:field="*{me_id}" readonly>
+			</div>
+			
+			<!-- 추후에 달력 api 추가 예정 -->
+			<div class="form-group">
+				<label>날짜</label>
+				<input type="text" class="form-control" th:field="*{wm_date}" readonly>
+			</div>
+			<div class="form-group">
+				<label>시간</label>
+				<input type="text" class="form-control" th:field="*{wm_time}" readonly>
+			</div>
+			<div class="form-group">
+				<label>내용</label>
+				<textarea class="form-control" style="min-height: 400px; height: auto;" th:field="*{po_content}" readonly>
+				</textarea>
+			</div>
+		</div>
+		<a class="btn btn-outline-info" th:href="@{/walkmatepost/list}">목록으로</a>
+		<a class="btn btn-outline-primary" th:href="@{/walkmatepost/update}">수정</a>
+		<a class="btn btn-outline-warning" th:href="@{/walkmatepost/delete}">삭제</a>
+	</main>
+</body>
+</html>

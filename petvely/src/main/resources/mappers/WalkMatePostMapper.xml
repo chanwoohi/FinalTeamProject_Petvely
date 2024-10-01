@@ -11,4 +11,10 @@
 		insert into walkmatepost(wm_date, wm_time)
 		values(#{wm_date}, #{wm_time})
 	</insert>
+	<select id="selectWalkMatePost" resultType="WalkMatePostVO">
+		select * from walkmatepost
+		join post using(po_num)
+		join member on po_me_num = me_num
+		where po_num = #{po_num}
+	</select>
 </mapper>
