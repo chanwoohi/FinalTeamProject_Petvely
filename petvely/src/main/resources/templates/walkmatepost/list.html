@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<main layout:fragment="content">
+		<div>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>번호</th>
+						<th>제목</th>
+						<th>작성자</th>
+						<th>조회수</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="item : ${list}">
+						<td th:text="${item.po_num}">번호</td>
+						<td th:text="${item.po_title}">제목</td>
+						<td th:text="${item.me_id}">작성자</td>
+						<td th:text="0">조회수</td>
+					</tr>
+				</tbody>
+			</table>
+			<a class="btn btn-outline-info"
+				th:href="@{/walkmatepost/insert}">글쓰기</a>
+		</div>
+	</main>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<main layout:fragment="content">
+		<form method="post" th:action="@{/post/insert}">
+			<div class="form-group">
+				<label>제목</label>
+				<input type="text" class="form-control" name="po_title">
+			</div>
+			
+			<!-- 로그인 기능 미구현으로 작성자 직접 입력해야함... 추후 수정 -->
+			<div class="form-group">
+				<label>작성자 번호</label>
+				<input type="text" class="form-control" name="po_me_num">
+			</div>
+			
+			<!-- 추후에 달력 api 추가 예정 -->
+			<div class="form-group">
+				<label>날짜</label>
+				<input type="text" class="form-control" name="wm_date">
+			</div>
+			<div class="form-group">
+				<label>시간</label>
+				<input type="text" class="form-control" name="wm_time">
+			</div>
+			<div class="form-group">
+				<label>내용</label>
+				<textarea class="form-control" style="min-height: 400px; height: auto;" name="po_content">
+				</textarea>
+			</div>
+			<button class="btn btn-outline-info col-12">게시글 등록</button>
+		</form>
+		<a class="btn btn-outline-info" th:href="@{/post/list}">목록으로</a>
+	</main>
+</body>
+</html>
