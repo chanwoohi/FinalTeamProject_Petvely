@@ -2,6 +2,8 @@ package kr.kh.petvely.model.vo;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,7 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class WalkMatePostVO extends PostVO {
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date wm_date;
+	
 	private String wm_time;
 	private String wm_wms_state;
 	

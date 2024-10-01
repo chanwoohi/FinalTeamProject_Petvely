@@ -8,4 +8,7 @@ public interface WalkMatePostDAO {
 
 	List<WalkMatePostVO> selectWalkMatePostList();
 
+	boolean insertWalkMatePost(WalkMatePostVO walkMatePost);
+
+
 }

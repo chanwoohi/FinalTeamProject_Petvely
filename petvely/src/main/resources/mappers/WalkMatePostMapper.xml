@@ -4,6 +4,11 @@
 	<select id="selectWalkMatePostList" resultType="WalkMatePostVO">
 		select * from walkmatepost
 		join post using(po_num)
+		join member on po_me_num = me_num
 		order by po_num desc
 	</select>
+	<insert id="insertWalkMatePost">
+		insert into walkmatepost(wm_date, wm_time)
+		values(#{wm_date}, #{wm_time})
+	</insert>
 </mapper>
