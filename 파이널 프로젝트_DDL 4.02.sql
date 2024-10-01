@@ -80,7 +80,7 @@ CREATE TABLE `WalkMatePost` (
 	`po_num`	int primary key auto_increment	NOT NULL,
 	`wm_date`	datetime	NULL,
 	`wm_time`	varchar(255)	NULL,
-	`wm_wms_state`	varchar(50)	NOT NULL
+	`wm_wms_state`	varchar(50)	NOT NULL DEFAULT "진행중"
 );
 
 DROP TABLE IF EXISTS `Recommend`;

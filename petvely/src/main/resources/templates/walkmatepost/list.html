@@ -10,7 +10,25 @@
 <body>
 	<main layout:fragment="content">
 		<div>
-			<p>123</p>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>번호</th>
+						<th>제목</th>
+						<th>작성자</th>
+						<th>조회수</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="item : ${list}">
+						<td th:text="${item.po_num}">번호</td>
+						<td th:text="${item.po_title}">제목</td>
+						<td th:text="${item.me_id}">작성자</td>
+						<td th:text="0">조회수</td>
+					</tr>
+				</tbody>
+			</table>
+			
 		</div>
 	</main>
 </body>

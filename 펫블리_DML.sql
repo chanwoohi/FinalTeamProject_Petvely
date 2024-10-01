@@ -38,5 +38,10 @@ DELETE FROM Member WHERE me_id = 'user01';
 -- 특정 반려동물 정보 삭제
 DELETE FROM Animal WHERE ani_num = 'A001';
 
-INSERT INTO POST( PO_TITLE, PO_CONTENT, PO_ME_NUM)
-VALUES("[테스트]첫 산책 메이트 글", "안녕하세요 산책 메이트 게시판 첫 글 입니다.", 2);
+INSERT INTO POST ( PO_TITLE, PO_CONTENT, PO_ME_NUM)
+	VALUES ( "INSERT연습", "제발제발", "2" );
+    
+-- 위의 POST의 PO_NUM을 가져와서 WALKMATEPOST에 강제로 넣기
+
+INSERT INTO WALKMATEPOST ( PO_NUM, WM_DATE, WM_TIME )
+	VALUES ( 4, '2020-10-19', '19:30');
