@@ -20,4 +20,16 @@ public class PostService {
 		return postDao.selectPostList();
 	}
 
+	public boolean addPost(PostVO post) {
+		if(post == null) {
+			return false;
+		}
+		try {
+			return postDao.insertPost(post);
+		}catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 }
