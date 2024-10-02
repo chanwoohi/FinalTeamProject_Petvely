@@ -29,7 +29,6 @@ public class MarketPostService {
 
 	public boolean addPost(MarketPostVO marketPost) {
 		if(marketPost == null) {
-			System.out.println("1");
 			return false;
 		}try {
 			marketPostDao.insertPost(marketPost);

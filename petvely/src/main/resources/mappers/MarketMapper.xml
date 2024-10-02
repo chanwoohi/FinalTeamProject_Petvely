@@ -15,7 +15,7 @@
 	
 	<insert id="insertPost" keyProperty="po_num">
    	 	insert into post (po_title, po_content, po_me_num)
-        	values( #{po_title}, #{po_content},#{po_me_num})
+        	values(#{po_title}, #{po_content},#{po_me_num})
 	</insert>	
 	
 	<insert id="insertMarketPost">

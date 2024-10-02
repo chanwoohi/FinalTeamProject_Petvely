@@ -42,7 +42,7 @@ public class MarketController {
 	}
 	@PostMapping("/post/marketinsert")
 	public String marketPostInsertPost(MarketPostVO marketPost) {
-	
+//	로그인 
 		boolean res = marketPostService.addPost(marketPost);
 		if(res) {
 			return "redirect:/post/marketinsert";	
