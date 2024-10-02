@@ -9,7 +9,7 @@
 </head>
 <body>
 	<main layout:fragment="content">
-		<div class="table table-striped" th:object="${GiveAndTakePost}">
+		<div class="table table-striped" th:object="${GATPost}">
 			<div class="form-group">
 				<label>번호:</label>
 				<input type="text" class="form-control" readonly th:field="*{po_num}">
@@ -41,6 +41,8 @@
 				<input type="text" class="form-control" readonly th:field="*{gat_emd_num}">
 			</div>
 			<a class="btn btn-outline-info" th:href="@{/gatpost/list}">목록으로</a>
+			<a class="btn btn-outline-info" th:href="@{/gatpost/update/{po_num}(po_num=*{po_num})}">수정</a>
+			<a class="btn btn-outline-info" th:href="@{/gatpost/delete/{po_num}(po_num=*{po_num})}">삭제</a>
 		</div>
 	</main>
 </body>

@@ -14,26 +14,42 @@ import lombok.AllArgsConstructor;
 public class GATPostService {
 	
 	@Autowired
-	private GATPostDAO postDao;
+	private GATPostDAO gatpostDao;
 	
 	public List<GiveAndTakePostVO> getGATPostList() {
-		return postDao.selectGATPostList();
+		return gatpostDao.selectGATPostList();
 	}
 
 	public GiveAndTakePostVO getGATPost(int po_num) {
-		return postDao.selectGATPost(po_num);
+		return gatpostDao.selectGATPost(po_num);
 	}
 
-	public boolean addGATPost(GiveAndTakePostVO GiveAndTakePost) {
-		if(GiveAndTakePost == null) {
+	public boolean addGATPost(GiveAndTakePostVO GATPost) {
+		if(GATPost == null) {
 			return false;
 		}
 		try {
-			return postDao.insertGATPost(GiveAndTakePost);
+			return gatpostDao.insertGATPost(GATPost);
 		}catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	public boolean updateGATPost(GiveAndTakePostVO GATPost) {
+		if(GATPost == null) {
+			return false;
+		}
+		try {
+			return gatpostDao.updateGATPost(GATPost);
+		}catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public boolean deleteGATPost(int po_num) {
+		return gatpostDao.deleteGATPost(po_num);
 	}
 	
 }

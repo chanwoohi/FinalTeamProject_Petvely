@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html 
+xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<main layout:fragment="content">
+		<form method="post" th:object="${GATPost}" th:action="@{/gatpost/update/{po_num}(po_num=*{po_num})}">
+			<input type="hidden"  th:field="*{po_num}"/>
+			<div class="form-group">
+				<label>번호 임시:</label>
+				<input type="text" class="form-control" th:field="*{po_num}">
+			</div>
+			<div class="form-group">
+				<label>타입:</label>
+				<input type="text" class="form-control" th:field="*{gat_gatt_type}">
+			</div>
+			<div class="form-group">
+				<label>시작기간:</label>
+				<input type="date" class="form-control" th:field="*{gat_startDate}">
+			</div>
+			<div class="form-group">
+				<label>종료기간:</label>
+				<input type="date" class="form-control" th:field="*{gat_endDate}">
+			</div>
+			<div class="form-group">
+				<label>품앗이:</label>
+				<input type="text" class="form-control" th:field="*{gat_gat}">
+			</div>
+			<div class="form-group">
+				<label>상태:</label>
+				<input type="text" class="form-control" th:field="*{gat_gats_state}">
+			</div>
+			<div class="form-group">
+				<label>주소:</label>
+				<input type="text" class="form-control" th:field="*{gat_emd_num}">
+			</div>
+			<button class="btn btn-outline-info col-12">수정</button>
+		</form>
+		<a class="btn btn-outline-info" th:href="@{/gatpost/list}">목록으로</a>
+	</main>
+</body>
+</html>
