@@ -34,7 +34,7 @@ public class PostController {
 
 		boolean res = postService.addPost(post);
 		System.out.println(res);
-		return "post/list";
+		return "post/insert";
 	}
 	@GetMapping("/post/detail/{po_num}") //게시글 상세
 	public String postDetail(Model model, @PathVariable int po_num) {
