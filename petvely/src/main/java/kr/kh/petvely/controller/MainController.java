@@ -19,5 +19,5 @@ public class MainController {
 		System.out.println(postDao.count());
 		return "home";
 	}
-	
+
 }
