@@ -12,4 +12,10 @@ public interface PostDAO {
 
 	List<PostVO> selectPostList();
 
+	PostVO selectPost(int po_num);
+
+	boolean updatePost(PostVO post);
+
+	boolean deletePost(int po_num);
+
 }
