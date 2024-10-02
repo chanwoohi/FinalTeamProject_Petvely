@@ -37,7 +37,9 @@ layout:decorate="~{layout/layout.html}">
 			</div>
 			<div class="form-group">
 				<label>주소:</label>
-				<input type="text" class="form-control" name="gat_emd_num" >
+				<a class="btn btn-outline-info" th:href="@{/address/insert}">
+					<input type="text" class="form-control" name="gat_emd_num" >
+				</a>
 			</div>
 			<button class="btn btn-outline-info col-12">등록</button>
 		</form>
