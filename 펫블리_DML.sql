@@ -1,9 +1,11 @@
 -- Member 테이블에 회원 추가
 INSERT INTO petvely.Member (me_id, me_pw, me_nickname, me_email, me_authority, me_phone, me_ms_status)
-VALUES ('user01', 'password123', 'nickname01', 'user01@example.com', 'user', '01095784512', 'active');
-
-INSERT INTO petvely.Member (me_id, me_pw, me_nickname, me_email, me_authority, me_phone, me_ms_status)
-VALUES ('user02', 'password456', 'nickname02', 'user02@example.com', 'user', '01085989958', 'active');
+VALUES 
+('user01', 'password111', 'nickname01', 'user01@example.com', 'user', '01011111111', 'active'), 
+('user02', 'password222', 'nickname02', 'user02@example.com', 'user', '01022222222', 'active'), 
+('user03', 'password333', 'nickname03', 'user03@example.com', 'user', '01033333333', 'active'), 
+('user04', 'password444', 'nickname04', 'user04@example.com', 'user', '01044444444', 'active'), 
+('user05', 'password555', 'nickname05', 'user05@example.com', 'user', '01055555555', 'active');
 
 -- 새로운 애플리케이션 런칭 게시글 추가 (user01이 작성)
 INSERT INTO petvely.Post (po_title, po_content, po_date, po_hidden, po_viewCount, po_recommendCount, po_reportCount, po_notice, po_me_num)
@@ -63,8 +65,8 @@ SET ani_weight = 6.0
 WHERE ani_num = 'A001';
 
 -- 특정 회원 삭제
-DELETE FROM petvely.Member 
-WHERE me_id = 'user01';
+-- DELETE FROM petvely.Member 
+-- WHERE me_id = 'user01';
 
 -- 특정 반려동물 정보 삭제
 DELETE FROM petvely.Animal 
