@@ -4,14 +4,4 @@
 	<select id="count" resultType="int">
 		select count(*) from post
 	</select>
-	<select id="selectGATPostList" resultType="GiveAndTakePostVO">
-		select * from GiveAndTakePost
-	</select>
-	<select id="selectGATPost" resultType="GiveAndTakePostVO">
-		select * from GiveAndTakePost where po_num = #{po_num}
-	</select>
-	<insert id="insertGATPost">
-		insert into GiveAndTakePost(gat_gatt_type, gat_startDate, gat_endDate, gat_gat, gat_gats_state, gat_emd_num)
-    	values#{gat_gatt_type}, #{gat_startDate}, #{gat_endDate}, #{gat_gat}, #{gat_gats_state}, #{gat_emd_num})
-	</insert>
 </mapper>

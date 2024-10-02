@@ -45,9 +45,9 @@ public class GATPostController {
 		boolean res = gatPostService.addGATPost(GiveAndTakePost);
 		System.out.println(GiveAndTakePost);
 		if(res) {
-			return "redirect:/gatpost/list/";
+			return "redirect:/gatpost/list";
 		}
-		return "redirect:/gatpost/insert/";
+		return "redirect:/gatpost/insert";
 	}
 	
 }

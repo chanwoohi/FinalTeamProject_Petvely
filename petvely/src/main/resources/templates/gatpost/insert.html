@@ -12,6 +12,10 @@ layout:decorate="~{layout/layout.html}">
 		<form method="post" th:action="@{/gatpost/insert}">
 			<input type="hidden"/>
 			<div class="form-group">
+				<label>번호 임시:</label>
+				<input type="text" class="form-control" name="po_num" >
+			</div>
+			<div class="form-group">
 				<label>타입:</label>
 				<input type="text" class="form-control" name="gat_gatt_type" >
 			</div>

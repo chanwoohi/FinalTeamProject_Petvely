@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.petvely.dao.GATPostDAO">
+	<select id="selectGATPostList" resultType="GiveAndTakePostVO">
+		select * from GATPost
+	</select>
+	<select id="selectGATPost" resultType="GiveAndTakePostVO">
+		select * from GATPost where po_num = #{po_num}
+	</select>
+	<insert id="insertGATPost">
+		insert into GATPost(po_num, gat_gatt_type, gat_startDate, gat_endDate, gat_gat, gat_gats_state, gat_emd_num)
+    	values(#{po_num}, #{gat_gatt_type}, #{gat_startDate}, #{gat_endDate}, #{gat_gat}, #{gat_gats_state}, #{gat_emd_num})
+	</insert>
+</mapper>

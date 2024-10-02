@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kr.kh.petvely.dao.PostDAO;
+import kr.kh.petvely.dao.GATPostDAO;
 import kr.kh.petvely.model.vo.GiveAndTakePostVO;
 import lombok.AllArgsConstructor;
 
@@ -14,7 +14,7 @@ import lombok.AllArgsConstructor;
 public class GATPostService {
 	
 	@Autowired
-	private PostDAO postDao;
+	private GATPostDAO postDao;
 	
 	public List<GiveAndTakePostVO> getGATPostList() {
 		return postDao.selectGATPostList();
