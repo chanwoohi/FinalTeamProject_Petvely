@@ -21,7 +21,9 @@
 				<tr th:each="item : ${list}">
 					<td th:text="${item.po_num}"></td>
 					<td th:text="${item.mp_gts_state}"></td>
-					<td th:text="${item.po_title}"></td>
+					<td>
+						<a th:href="@{/post/marketdetail/{po_num}(po_num=${item.po_num})}" th:text="${item.po_title}"></a>
+					</td>
 					<td th:text="${item.po_content}"></td>
 					<td th:text="${item.mp_price}"></td>
 					<td th:text="${item.me_id}"></td>
@@ -31,7 +33,10 @@
 				</tr>
 			</tbody>
     	</table>
-		
+
+			<a th:href="@{/post/marketinsert}"
+			 class="btn btn-outline-dark col-12">게시글 등록</a>
+
     </main>
     
 </body>

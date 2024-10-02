@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/layout.html}">
+<body>
+		
+    <main layout:fragment="content">
+   		<form method="post" th:action="@{/post/marketinsert}">
+			<div class="form-group">
+				<label>게시글 제목:</label>
+				<input type="text" class="form-control" name="po_title" >
+			</div>
+			<div class="form-group">
+				<label>게시글 내용:</label>
+				<textarea class="form-control" style="min-height: 400px; height: auto;" name="po_content">
+				</textarea>
+			</div>
+			<div class="form-group">
+				<label>작성자:</label>
+				<input type="text" class="form-control" name="me_id" >
+			</div>
+			<div class="form-group">
+				<label>판매 상태:</label>
+				<input type="text" class="form-control" name="mp_gts_state" >
+			</div>
+			<div class="form-group">
+				<label>상품명:</label>
+				<input type="text" class="form-control" name="mp_name" >
+			</div>
+			<div class="form-group">
+				<label>상품 내용:</label>
+				<textarea class="form-control" style="min-height: 400px; height: auto;" name="mp_content">
+				</textarea>
+			</div>
+			<div class="form-group">
+				<label>가격</label>
+				<input type="text" class="form-control" name="mp_price" >
+			</div>
+			<div class="form-group">
+				<label>타입</label>
+				<input type="text" class="form-control" name="mp_gt_type" >
+			</div>
+			<button class="btn btn-outline-info col-12" type="submit">게시글 등록</button>
+			
+		</form>
+		
+    </main>
+    
+</body>
+</html>
