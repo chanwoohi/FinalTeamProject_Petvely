@@ -27,7 +27,6 @@ public class WalkMatePostService {
 		int po_num;
 		
 		if(post == null) {
-			System.out.println("1");
 			return false;
 		}
 		else {
@@ -42,7 +41,6 @@ public class WalkMatePostService {
 		}
 		
 		if(walkMatePost ==  null) {
-			System.out.println("2");
 			return false;
 		}
 		try {
@@ -57,7 +55,18 @@ public class WalkMatePostService {
 
 	public WalkMatePostVO getWalkMatePost(int po_num) {
 		return walkMatePostDao.selectWalkMatePost(po_num);
-		
+	}
+
+	public boolean updateWalkMatePost(WalkMatePostVO walkMatePost) {
+		if(walkMatePost == null) {
+			return false;
+		}
+		try {
+			return walkMatePostDao.updateWalkMatePost(walkMatePost);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 }

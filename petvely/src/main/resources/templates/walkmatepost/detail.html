@@ -32,13 +32,13 @@
 			</div>
 			<div class="form-group">
 				<label>내용</label>
-				<textarea class="form-control" style="min-height: 400px; height: auto;" th:field="*{po_content}" readonly>
+				<textarea class="form-control" style="min-height: 400px; height: auto;" th:utext="*{po_content}" readonly>
 				</textarea>
 			</div>
+			<a class="btn btn-outline-info" th:href="@{/walkmatepost/list}">목록으로</a>
+			<a class="btn btn-outline-primary" th:href="@{/walkmatepost/update/{po_num}(po_num=*{po_num})}">수정</a>
+			<a class="btn btn-outline-warning" th:href="@{/walkmatepost/delete/{po_num}(po_num=*{po_num})}">삭제</a>
 		</div>
-		<a class="btn btn-outline-info" th:href="@{/walkmatepost/list}">목록으로</a>
-		<a class="btn btn-outline-primary" th:href="@{/walkmatepost/update}">수정</a>
-		<a class="btn btn-outline-warning" th:href="@{/walkmatepost/delete}">삭제</a>
 	</main>
 </body>
 </html>

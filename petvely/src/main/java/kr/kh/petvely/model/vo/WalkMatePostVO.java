@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class WalkMatePostVO extends PostVO {
 	
+	private int po_num;
+	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date wm_date;
 	

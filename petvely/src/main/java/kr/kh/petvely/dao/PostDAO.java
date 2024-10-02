@@ -8,4 +8,6 @@ public interface PostDAO {
 
 	boolean insertPost(PostVO post);
 
+	boolean deletePost(int po_num);
+
 }

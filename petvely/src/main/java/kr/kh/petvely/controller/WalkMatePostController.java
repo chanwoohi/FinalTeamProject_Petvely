@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import kr.kh.petvely.model.vo.PostVO;
 import kr.kh.petvely.model.vo.WalkMatePostVO;
+import kr.kh.petvely.service.PostService;
 import kr.kh.petvely.service.WalkMatePostService;
 import lombok.AllArgsConstructor;
 
@@ -21,6 +22,9 @@ public class WalkMatePostController {
 	
 	@Autowired
 	private WalkMatePostService walkMatePostService;
+	
+	@Autowired
+	private PostService postService;
 	
 	@GetMapping("/walkmatepost/list")
 	public String walkmatepostList(Model model) {
@@ -47,6 +51,34 @@ public class WalkMatePostController {
 		WalkMatePostVO walkMatePost = walkMatePostService.getWalkMatePost(po_num);
 		model.addAttribute("walkMatePost", walkMatePost);
 		return "/walkmatepost/detail";
+	}
+	
+	@GetMapping("/walkmatepost/update/{po_num}")
+	public String walkmatepostUpdate(Model model, @PathVariable int po_num) {
+		WalkMatePostVO walkMatePost = walkMatePostService.getWalkMatePost(po_num);
+		model.addAttribute("walkMatePost", walkMatePost);
+		return "/walkmatepost/update";
+	}
+	
+	@PostMapping("/walkmatepost/update/{po_num}")
+	public String walkmatepostUpdatePost(Model model, @PathVariable int po_num, WalkMatePostVO walkMatePost) {
+		if(walkMatePostService.updateWalkMatePost(walkMatePost)) {
+			System.out.println(walkMatePost);
+			return "redirect:/walkmatepost/list";
+		}
+		return "redirect:/walkmatepost/detail/"+po_num;
+	}
+	
+	@GetMapping("/walkmatepost/delete/{po_num}")
+	public String walkmatepostDelete(Model model, @PathVariable int po_num) {
+		/* 
+		 * postService에 맡긴 이유는 삭제 했을 때 DB에서 CASCADE 설정하면 어차피 같이 지워짐 ( po_num 공유라 상관 없나?)
+		 * 작동하면 다른 게시판에서 쓸 수 있으니까 postService로 보냄	
+		*/ 
+		if(postService.deletePost(po_num)) {
+			return "redirect:/walkmatepost/list";
+		}
+		return "redirect:/walkmatepost/detail/"+po_num;
 	}
 	
 }

@@ -5,4 +5,7 @@
 		insert into post(po_title, po_content, po_me_num)
 		values(#{po_title}, #{po_content}, #{po_me_num})
 	</insert>
+	<delete id="deletePost">
+		delete from post where po_num = #{po_num}
+	</delete>
 </mapper>
