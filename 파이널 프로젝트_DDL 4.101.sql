@@ -77,7 +77,7 @@ CREATE TABLE `FacilityReview` (
 DROP TABLE IF EXISTS `WalkMatePost`;
 
 CREATE TABLE `WalkMatePost` (
-	`po_num`	int primary key auto_increment	NOT NULL,
+	`po_num`	int primary key	NOT NULL,
 	`wm_date`	datetime	NULL,
 	`wm_time`	varchar(255)	NULL,
 	`wm_wms_state`	varchar(50)	NOT NULL
@@ -92,10 +92,10 @@ CREATE TABLE `Recommend` (
 	`re_po_num`	int	NOT NULL
 );
 
-DROP TABLE IF EXISTS `GiveAndTakePost`;
+DROP TABLE IF EXISTS `GATPost`;
 
-CREATE TABLE `GiveAndTakePost` (
-	`po_num`	int primary key auto_increment	NOT NULL,
+CREATE TABLE `GATPost` (
+	`po_num`	int primary key	NOT NULL,
 	`gat_gatt_type`	varchar(255)	NOT NULL,
 	`gat_startDate`	datetime	NULL default current_timestamp,
 	`gat_endDate`	datetime	NULL default current_timestamp,
@@ -179,7 +179,7 @@ CREATE TABLE `Post` (
 DROP TABLE IF EXISTS `MarketPost`;
 
 CREATE TABLE `MarketPost` (
-	`po_num`	int primary key auto_increment	NOT NULL,
+	`po_num`	int primary key	NOT NULL,
 	`mp_gts_state`	varchar(50)	NOT NULL,
 	`mp_name`	varchar(50)	NULL,
 	`mp_content`	varchar(500)	NULL,
@@ -187,9 +187,9 @@ CREATE TABLE `MarketPost` (
 	`mp_gt_type`	varchar(50)	NOT NULL
 );
 
-DROP TABLE IF EXISTS `GiveAndTakeType`;
+DROP TABLE IF EXISTS `GATType`;
 
-CREATE TABLE `GiveAndTakeType` (
+CREATE TABLE `GATType` (
 	`gatt_type`	varchar(255)	NOT NULL
 );
 
@@ -286,9 +286,9 @@ CREATE TABLE `WalkMateState` (
 	`wms_state`	varchar(50)	NOT NULL
 );
 
-DROP TABLE IF EXISTS `GiveAndTakeState`;
+DROP TABLE IF EXISTS `GATState`;
 
-CREATE TABLE `GiveAndTakeState` (
+CREATE TABLE `GATState` (
 	`gats_state`	varchar(50)	NOT NULL
 );
 
@@ -336,5 +336,5 @@ DROP TABLE IF EXISTS `WalkMatePet`;
 
 CREATE TABLE `WalkMatePet` (
 	`wmp_num`	int primary key auto_increment	NOT NULL,
-	`ani_num`	varchar(20) NOT NULL
+	`wmp_ani_num`	varchar(20) NOT NULL
 );
