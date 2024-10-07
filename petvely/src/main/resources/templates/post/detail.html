@@ -35,7 +35,8 @@
 					th:utext="*{po_content}">
 				</div>
 			</div>
-			<div class="form-group" th:if="${list != null and #lists.size(list) > 0}">
+			<!--  <div class="form-group" th:if="${list != null and #lists.size(list) > 0}">-->
+				<div class="form-group">
 			    <label>첨부파일:</label>
 			    <div th:each="file : ${list}">
 			        <a th:href="@{'/download/' + ${file.fi_name}}" 

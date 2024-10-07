@@ -17,8 +17,9 @@ public class PostService {
 	
 	private PostDAO postDao;
 	
-	public List<PostVO> getPostList(){
-		return postDao.selectPostList();
+	public List<PostVO> getPostList(int co_num){
+		return postDao.selectPostList(co_num);
+		 // DAO를 통해 특정 커뮤니티 번호(co_num)에 해당하는 게시글을 가져옴
 	}
 	public boolean addPost(PostVO post) {
 		if(post == null) {

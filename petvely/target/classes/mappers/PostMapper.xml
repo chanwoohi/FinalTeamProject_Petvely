@@ -7,6 +7,7 @@
     </insert>
 	<select id="selectPostList" resultType="PostVO">
 		select * from post
+		where po_co_num = #{co_num}
 	</select>
 	<select id="selectPost" resultType="PostVO">
 		select * from post where po_num = #{po_num}

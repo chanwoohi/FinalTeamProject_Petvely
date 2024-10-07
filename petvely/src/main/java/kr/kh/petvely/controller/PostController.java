@@ -23,10 +23,11 @@ public class PostController {
 
 	@GetMapping("/post/list/{co_num}")
 	public String postList(Model model, @PathVariable int co_num) {
-		List<PostVO> list = postService.getPostList();
+		List<PostVO> list = postService.getPostList(co_num);
 		//게시글 목록을 가져와서 화면에 전달
 		List<CommunityVO> communities = postService.getCommunityList();
 		model.addAttribute("list", list);
+		System.out.println(list);
 		model.addAttribute("communities", communities);
 	    return "/post/list";
 	}
@@ -66,7 +67,7 @@ public class PostController {
 		}
 		return "redirect:/post/update/"+po_num;
 	}
-	@GetMapping("/post/delete/{po_num}")
+	@GetMapping("/post/delete/{po_num}") //삭제
 	public String postDelete(Model model, @PathVariable int po_num) {
 		boolean res = postService.deletePost(po_num);
 		if(res) {
