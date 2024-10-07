@@ -22,7 +22,7 @@ public class PostController {
 	private PostService postService;
 
 	@GetMapping("/post/list/{co_num}")
-	public String postList(Model model) {
+	public String postList(Model model, @PathVariable int co_num) {
 		List<PostVO> list = postService.getPostList();
 		//게시글 목록을 가져와서 화면에 전달
 		List<CommunityVO> communities = postService.getCommunityList();
@@ -30,16 +30,17 @@ public class PostController {
 		model.addAttribute("communities", communities);
 	    return "/post/list";
 	}
-	@GetMapping("/post/insert") //글가져오기
-	public String postInsert() {
+	@GetMapping("/post/insert/{co_num}") //글가져오기
+	public String postInsert(@PathVariable int co_num) {
 		return "post/insert";
 	}
-	@PostMapping("/post/insert/{co_num}") //글쓰기
+	@PostMapping("/post/insert") //글쓰기
 	public String postInsertPost(PostVO post) {
-
 		boolean res = postService.addPost(post);
-		System.out.println(res);
-		return "post/insert";
+		if(res) {
+			return "redirect:/post/list/"+post.getPo_co_num();
+		}
+		return "redirect:/post/insert/"+post.getPo_co_num();
 	}
 	@GetMapping("/post/detail/{po_num}") //게시글 상세
 	public String postDetail(Model model, @PathVariable int po_num) {

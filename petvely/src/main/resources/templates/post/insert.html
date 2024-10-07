@@ -16,10 +16,9 @@
 				<label>제목</label>
 				<input type="text" class="form-control" name="po_title">
 			</div>
-			<!-- 로그인 기능 미구현으로 작성자 직접 입력해야함... 추후 수정 -->
 			<div class="form-group">
-				<label>작성자 번호</label>
-				<input type="text" class="form-control" name="po_me_num">
+				<label>작성자 번호(임시)</label>
+				<input type="text" class="form-control" name="po_me_num" >
 			</div>
 			<div class="form-group">
 				<label>내용</label>
@@ -28,7 +27,7 @@
 			</div>
 			<button class="btn btn-outline-info col-12">게시글 등록</button>
 		</form>
-		<a class="btn btn-outline-info" th:href="@{/post/list/{co_num}(co_num=${co_num})}">목록으로</a>
+		<a class="btn btn-outline-info" style="margin-top:10px;"th:href="@{/post/list/{co_num}(co_num=${co_num})}">목록으로</a>
 	</main>
 </body>
 </html>
