@@ -9,27 +9,32 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import kr.kh.petvely.model.vo.CommunityVO;
 import kr.kh.petvely.model.vo.PostVO;
 import kr.kh.petvely.service.PostService;
+import lombok.AllArgsConstructor;
 
 @Controller
+@AllArgsConstructor
 public class PostController {
 	
 	@Autowired
 	private PostService postService;
 
-	@GetMapping("/post/list/0")
-	public String getpostList(Model model) {
+	@GetMapping("/post/list/{co_num}")
+	public String postList(Model model) {
 		List<PostVO> list = postService.getPostList();
 		//게시글 목록을 가져와서 화면에 전달
+		List<CommunityVO> communities = postService.getCommunityList();
 		model.addAttribute("list", list);
+		model.addAttribute("communities", communities);
 	    return "/post/list";
 	}
 	@GetMapping("/post/insert") //글가져오기
 	public String postInsert() {
 		return "post/insert";
 	}
-	@PostMapping("/post/insert") //글쓰기
+	@PostMapping("/post/insert/{co_num}") //글쓰기
 	public String postInsertPost(PostVO post) {
 
 		boolean res = postService.addPost(post);

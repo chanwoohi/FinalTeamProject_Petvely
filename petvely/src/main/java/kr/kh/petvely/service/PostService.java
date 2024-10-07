@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import kr.kh.petvely.dao.PostDAO;
 import kr.kh.petvely.dao.WalkMatePostDAO;
+import kr.kh.petvely.model.vo.CommunityVO;
 import kr.kh.petvely.model.vo.PostVO;
 import kr.kh.petvely.model.vo.WalkMatePostVO;
 import lombok.AllArgsConstructor;
@@ -47,6 +48,9 @@ public class PostService {
 	}
 	public boolean deletePost(int po_num) {
 		return postDao.deletePost(po_num);
+	}
+	public List<CommunityVO> getCommunityList() {
+		return postDao.selectCommunityList();
 	}
 
 }

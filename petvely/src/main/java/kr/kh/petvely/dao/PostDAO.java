@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import kr.kh.petvely.model.vo.CommunityVO;
 import kr.kh.petvely.model.vo.PostVO;
 
 public interface PostDAO {
@@ -17,5 +18,7 @@ public interface PostDAO {
 	boolean updatePost(PostVO post);
 
 	boolean deletePost(int po_num);
+
+	List<CommunityVO> selectCommunityList();
 
 }

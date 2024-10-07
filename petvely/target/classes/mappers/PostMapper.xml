@@ -18,5 +18,7 @@
 	<delete id="deletePost">
 		delete from post where po_num = #{po_num}
 	</delete>
-	
+	<select id="selectCommunityList" resultType="CommunityVO">
+		select * from community
+	</select>
 </mapper>

@@ -10,25 +10,16 @@
 <body>
 	<main layout:fragment="content">
 		<form method="post" th:action="@{/post/insert}">
+			<input type="hidden" name="po_co_num" th:value="${co_num}"/>
 			<div class="form-group">
+				<br/>
 				<label>제목</label>
 				<input type="text" class="form-control" name="po_title">
 			</div>
-			
 			<!-- 로그인 기능 미구현으로 작성자 직접 입력해야함... 추후 수정 -->
 			<div class="form-group">
 				<label>작성자 번호</label>
 				<input type="text" class="form-control" name="po_me_num">
-			</div>
-			
-			<!-- 추후에 달력 api 추가 예정 -->
-			<div class="form-group">
-				<label>날짜</label>
-				<input type="text" class="form-control" name="wm_date">
-			</div>
-			<div class="form-group">
-				<label>시간</label>
-				<input type="text" class="form-control" name="wm_time">
 			</div>
 			<div class="form-group">
 				<label>내용</label>
@@ -37,7 +28,7 @@
 			</div>
 			<button class="btn btn-outline-info col-12">게시글 등록</button>
 		</form>
-		<a class="btn btn-outline-info" th:href="@{/post/list/0}">목록으로</a>
+		<a class="btn btn-outline-info" th:href="@{/post/list/{co_num}(co_num=${co_num})}">목록으로</a>
 	</main>
 </body>
 </html>
