@@ -35,6 +35,16 @@
 					th:utext="*{po_content}">
 				</div>
 			</div>
+			<div class="form-group" th:if="${list != null and #lists.size(list) > 0}">
+			    <label>첨부파일:</label>
+			    <div th:each="file : ${list}">
+			        <a th:href="@{'/download/' + ${file.fi_name}}" 
+			           class="form-control" 
+			           th:download="${file.fi_ori_name}" 
+			           th:text="${file.fi_ori_name}">
+			        </a>
+			    </div>
+			</div>
 			<a class="btn btn-outline-info" th:href="@{/post/list/0}">목록으로</a>
 			<a class="btn btn-outline-info" th:href="@{/post/update/{po_num}(po_num=*{po_num})}">수정</a>
 			<a class="btn btn-outline-info" th:href="@{/post/delete/{po_num}(po_num=*{po_num})}">삭제</a>

@@ -25,9 +25,22 @@
 				<textarea class="form-control" style="min-height: 400px; height: auto;" name="po_content">
 				</textarea>
 			</div>
+			<div class="from-group">
+				<label>첨부파일</label>
+				<input type="file" class="form-control" name="fileList">
+				<br/>
+			</div>
 			<button class="btn btn-outline-info col-12">게시글 등록</button>
+			<input type="hidden" name="po_co_num" value="${co_num }">
 		</form>
 		<a class="btn btn-outline-info" style="margin-top:10px;"th:href="@{/post/list/{co_num}(co_num=${co_num})}">목록으로</a>
 	</main>
+	<script>
+	$('#content').summernote({
+		placeholder: '내용을 작성하세요.',
+		tabsize: 2,
+		height: 400
+	});
+    </script>
 </body>
 </html>
