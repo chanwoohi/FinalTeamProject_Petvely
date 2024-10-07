@@ -22,4 +22,6 @@ public interface PostDAO {
 
 	void insertFile(FileVO fileVo);
 
+	void setIsDeleted(boolean Y);
+
 }

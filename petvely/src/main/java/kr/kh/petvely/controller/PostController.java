@@ -69,11 +69,13 @@ public class PostController {
 	}
 	@GetMapping("/post/delete/{po_num}") //삭제
 	public String postDelete(Model model, @PathVariable int po_num) {
-		boolean res = postService.deletePost(po_num);
-		if(res) {
-			return "redirect:/post/list/"+po_num;
-		}
+		postService.markAsDeleted(po_num);
 		return "redirect:/post/detail/"+po_num;
+//		boolean res = postService.deletePost(po_num);
+//		if(res) {
+//			return "redirect:/post/list/"+po_num;
+//		}
+//		return "redirect:/post/detail/"+po_num;
 	
 	}
 	
