@@ -92,13 +92,13 @@ CREATE TABLE `Recommend` (
 	`re_po_num`	int	NOT NULL
 );
 
-DROP TABLE IF EXISTS `GiveAndTakePost`;
+DROP TABLE IF EXISTS `GATPost`;
 
-CREATE TABLE `GiveAndTakePost` (
+CREATE TABLE `GATPost` (
 	`po_num`	int primary key auto_increment	NOT NULL,
 	`gat_gatt_type`	varchar(255)	NOT NULL,
 	`gat_startDate`	datetime	NULL default current_timestamp,
-	`gat_endDate`	datetime	NULL default current_timestamp,
+	`gat_endDate`	datetime	NULL ,
 	`gat_gat`	varchar(1)	NULL,
 	`gat_gats_state`	varchar(50)	NOT NULL,
 	`gat_emd_num`	int	NOT NULL
@@ -187,9 +187,9 @@ CREATE TABLE `MarketPost` (
 	`mp_gt_type`	varchar(50)	NOT NULL
 );
 
-DROP TABLE IF EXISTS `GiveAndTakeType`;
+DROP TABLE IF EXISTS `GATType`;
 
-CREATE TABLE `GiveAndTakeType` (
+CREATE TABLE `GATType` (
 	`gatt_type`	varchar(255)	NOT NULL
 );
 
@@ -286,9 +286,9 @@ CREATE TABLE `WalkMateState` (
 	`wms_state`	varchar(50)	NOT NULL
 );
 
-DROP TABLE IF EXISTS `GiveAndTakeState`;
+DROP TABLE IF EXISTS `GATState`;
 
-CREATE TABLE `GiveAndTakeState` (
+CREATE TABLE `GATState` (
 	`gats_state`	varchar(50)	NOT NULL
 );
 
