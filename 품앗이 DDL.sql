@@ -1,5 +1,5 @@
 select * from gatpost
-	left join post ;
+	join post using (po_num);
 
 select * from gatpost;
 
@@ -12,25 +12,12 @@ select * from gatpost
 INSERT INTO gatpost
 (po_num, gat_gatt_type, gat_startDate, gat_endDate, gat_gat, gat_gats_state, gat_emd_num) 
 VALUES
-	('1', 'ongoing', '2024-10-01', '2024-10-01', 'o', 'ongoing', '1'),
-	('2', 'ongoing', '2024-10-02', '2024-10-03', 'o', 'ongoing', '2'),
-    ('3', 'ongoing', '2024-10-03', '2024-10-05', 'o', 'ongoing', '3'),
-    ('4', 'ongoing', '2024-10-04', '2024-10-07', 'o', 'ongoing', '4'),
-    ('5', 'ongoing', '2024-10-05', '2024-10-05', 'o', 'ongoing', '5');
+	('0', 'ongoing', '2024-10-01', '2024-10-01', 'w', 'ongoing', '15');
+
     
 select * from emd_areas;
 select * from sigg_areas;
 select * from sido_areas;
-
-select * 
-	from sido_areas
-	left join sigg_areas
-	on sigg_sido_num = sido_num;
-
-select * 
-	from sido_areas
-	left join sigg_areas on sigg_sido_num = sido_num
-    left join emd_areas on emd_sigg_num = sigg_num;
     
 INSERT INTO sido_areas(sido_num, sido_code, sido_name) 
 VALUES

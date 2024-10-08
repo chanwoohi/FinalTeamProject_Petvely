@@ -13,23 +13,19 @@ layout:decorate="~{layout/layout.html}">
 			<thead>
 				<tr>
 					<th>번호</th>
-					<th>타입</th>
-					<th>시작날짜</th>
-					<th>종료날짜</th>
-					<th>품앗이</th>
+					<th>제목</th>
 					<th>상태</th>
+					<th>조회수</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="item : ${list}">
 					<td th:text="${item.po_num}"></td>
 					<td>
-						<a th:text="${item.gat_gatt_type}" th:href="@{/gatpost/detail/{po_num}(po_num=${item.po_num})}"></a>
+						<a th:text="${item.po_title}" th:href="@{/gatpost/detail/{po_num}(po_num=${item.po_num})}"></a>
 					</td>
-					<td th:text="${#dates.format(item.gat_startDate, 'yyyy-MM-dd')}"></td>
-					<td th:text="${#dates.format(item.gat_endDate, 'yyyy-MM-dd')}"></td>
-					<td th:text="${item.gat_gat}"></td>
 					<td th:text="${item.gat_gats_state}"></td>
+					<td th:text="${item.po_viewCount}"></td>
 				</tr>
 				<tr th:if="${list.size() == 0}">
 					<td colspan="6" class="text-center">등록된 게시글이 없습니다</td>

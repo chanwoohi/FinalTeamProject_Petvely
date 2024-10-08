@@ -6,6 +6,7 @@
 			left join emd_areas on gat_emd_num = emd_num
 			left join sigg_areas on emd_sigg_num = sigg_num
 			left join sido_areas on sigg_sido_num = sido_num
+			join post using (po_num)
 			order by po_num desc
 	</select>
 	<select id="selectGATPost" resultType="GiveAndTakePostVO">
@@ -13,6 +14,7 @@
 			left join emd_areas on gat_emd_num = emd_num
 			left join sigg_areas on emd_sigg_num = sigg_num
 			left join sido_areas on sigg_sido_num = sido_num
+			join post using (po_num)
 			where po_num = #{po_num}
 	</select>
 	<insert id="insertGATPost">
