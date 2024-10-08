@@ -53,22 +53,59 @@
 						
 						<!-- Modal body -->
 						<div class="modal-body">
-							여기에 펫 정보들 나열하고, 체크 박스 넣을 거임 ㅇㅇ
-							체크 한 값 등록하기 버튼과 함께 전송해서 
+							산책할 펫을 등록하시겠습니까?
 						</div>
 						
 						<!-- Modal footer -->
 						<div class="modal-footer">
-							<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+							<button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#myModal2">수락</button>
+							<button type="button" class="btn btn-danger" data-dismiss="modal">거절</button>
 						</div>
 					
 					</div>
 				</div>
 			</div>
+			
+			<div class="modal" id="myModal2">
+				<div class="modal-dialog">
+					<div class="modal-content">
+					
+						<!-- Modal Header -->
+						<div class="modal-header">
+							<h4 class="modal-title">내 펫 등록하기</h4>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+						
+						<!-- Modal body -->
+						<div class="modal-body">
+							펫 등록 누르면 나오게 하고 싶음(How?)
+							여기에 펫 정보들 나열하고, 체크 박스 넣을 거 ㅇㅇ
+							체크 한 값 등록하기 버튼과 함께 전송해서 
+						</div>
+						
+						<!-- Modal footer -->
+						<div class="modal-footer">
+							<button type="button" class="btn btn-outline-info">내 펫 등록</button>
+							<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			
+			
 			<!-- 나중에 펫 등록 안돼 있으면 등록 못하게 추가할 예정  -->
 			<button class="btn btn-outline-info col-12">게시글 등록</button>
 		</form>
 		<a class="btn btn-outline-info" th:href="@{/walkmatepost/list}">목록으로</a>
+		
+		<script>
+		    // myModal2를 열 때 myModal을 닫는 함수
+		    $('#myModal2').on('show.bs.modal', function () {
+		        $('#myModal').modal('hide');
+		    });
+		</script>
+		
 	</main>
 </body>
 </html>
