@@ -2,6 +2,11 @@ package kr.kh.petvely.model.vo;
 
 import java.util.Date;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 public class PostVO {
 
 	private int po_num;
@@ -14,4 +19,7 @@ public class PostVO {
 	private int po_reportCount;
 	private String po_notice;
 	private int po_me_num;
+	
+	private String me_id;
+	
 }

@@ -9,7 +9,7 @@ DROP TABLE IF EXISTS `Member`;
 CREATE TABLE `Member` (
 	`me_num`	int primary key auto_increment	NOT NULL,
 	`me_id`	varchar(13) unique	NOT NULL,
-	`me_pw`	varchar(255)	NULL,
+	`me_pw`	varchar(20)	NULL,
 	`me_nickname`	varchar(20) unique	NULL,
 	`me_email`	varchar(50) unique	NULL,
 	`me_authority`	varchar(5)	NULL,
@@ -77,10 +77,10 @@ CREATE TABLE `FacilityReview` (
 DROP TABLE IF EXISTS `WalkMatePost`;
 
 CREATE TABLE `WalkMatePost` (
-	`po_num`	int primary key	NOT NULL,
+	`po_num`	int primary key auto_increment	NOT NULL,
 	`wm_date`	datetime	NULL,
 	`wm_time`	varchar(255)	NULL,
-	`wm_wms_state`	varchar(50)	NOT NULL
+	`wm_wms_state`	varchar(50)	NOT NULL DEFAULT "진행중"
 );
 
 DROP TABLE IF EXISTS `Recommend`;
@@ -95,10 +95,10 @@ CREATE TABLE `Recommend` (
 DROP TABLE IF EXISTS `GATPost`;
 
 CREATE TABLE `GATPost` (
-	`po_num`	int primary key	NOT NULL,
+	`po_num`	int primary key auto_increment	NOT NULL,
 	`gat_gatt_type`	varchar(255)	NOT NULL,
 	`gat_startDate`	datetime	NULL default current_timestamp,
-	`gat_endDate`	datetime	NULL default current_timestamp,
+	`gat_endDate`	datetime	NULL ,
 	`gat_gat`	varchar(1)	NULL,
 	`gat_gats_state`	varchar(50)	NOT NULL,
 	`gat_emd_num`	int	NOT NULL
@@ -179,7 +179,7 @@ CREATE TABLE `Post` (
 DROP TABLE IF EXISTS `MarketPost`;
 
 CREATE TABLE `MarketPost` (
-	`po_num`	int primary key	NOT NULL,
+	`po_num`	int primary key auto_increment	NOT NULL,
 	`mp_gts_state`	varchar(50)	NOT NULL,
 	`mp_name`	varchar(50)	NULL,
 	`mp_content`	varchar(500)	NULL,
@@ -336,5 +336,5 @@ DROP TABLE IF EXISTS `WalkMatePet`;
 
 CREATE TABLE `WalkMatePet` (
 	`wmp_num`	int primary key auto_increment	NOT NULL,
-	`wmp_ani_num`	varchar(20) NOT NULL
+	`ani_num`	varchar(20) NOT NULL
 );
