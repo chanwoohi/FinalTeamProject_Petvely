@@ -80,7 +80,12 @@ CREATE TABLE `WalkMatePost` (
 	`po_num`	int primary key auto_increment	NOT NULL,
 	`wm_date`	datetime	NULL,
 	`wm_time`	varchar(255)	NULL,
-	`wm_wms_state`	varchar(50)	NOT NULL DEFAULT "진행중"
+	`wm_wms_state`	varchar(50)	NOT NULL DEFAULT "진행중",
+    CONSTRAINT `fk_wm_po_num`
+	  FOREIGN KEY (`po_num`)
+	  REFERENCES `petvely`.`post` (`po_num`)
+	  ON DELETE CASCADE
+	  ON UPDATE NO ACTION
 );
 
 DROP TABLE IF EXISTS `Recommend`;
@@ -136,7 +141,7 @@ CREATE TABLE `ReportType` (
 DROP TABLE IF EXISTS `Animal`;
 
 CREATE TABLE `Animal` (
-	`ani_num`	varchar(20) primary key	NOT NULL,
+	`ani_num`	int primary key auto_increment NOT NULL,
 	`ani_name`	varchar(40)	NULL,
 	`ani_age`	int	NULL,
 	`ani_gender`	varchar(1)	NULL,

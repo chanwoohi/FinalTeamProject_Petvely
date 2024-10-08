@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import kr.kh.petvely.model.vo.AnimalVO;
 import kr.kh.petvely.model.vo.PostVO;
 import kr.kh.petvely.model.vo.WalkMatePostVO;
 import kr.kh.petvely.service.PostService;
@@ -39,7 +40,7 @@ public class WalkMatePostController {
 	}
 	
 	@PostMapping("/walkmatepost/insert")
-	public String walkmatepostInsertPost(PostVO post, WalkMatePostVO walkMatePost) {
+	public String walkmatepostInsertPost(PostVO post, WalkMatePostVO walkMatePost, AnimalVO animal) {
 		if(walkMatePostService.insertWalkMatePost(post, walkMatePost)) {
 			return "redirect:/walkmatepost/list";
 		}
