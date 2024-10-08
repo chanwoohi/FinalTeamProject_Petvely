@@ -17,7 +17,7 @@ public class MarketPostService {
 
 	@Autowired
 	MarketPostDAO marketPostDao;
-	
+
 	public List<MarketPostVO> getMarketList() {
 		
 		return marketPostDao.selectMarketList();
@@ -37,7 +37,21 @@ public class MarketPostService {
 			e.printStackTrace();
 			return false;
 		}
+		
+		
+
 		return false;
+	}
+
+	public boolean marketComplete(int po_num) {
+		
+	    try {
+	        marketPostDao.updateTradeState(po_num, "판매완료");
+	        return true;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return false;
+	    }
 	}
 
 

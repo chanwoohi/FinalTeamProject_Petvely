@@ -17,12 +17,13 @@
 				</textarea>
 			</div>
 			<div class="form-group">
-				<label>작성자:</label>
-				<input type="text" class="form-control" name="me_id" >
-			</div>
-			<div class="form-group">
-				<label>판매 상태:</label>
-				<input type="text" class="form-control" name="mp_gts_state" >
+    			<label>타입:</label>
+   			 <select class="form-control" name="mp_gt_type">
+        		<option value="">선택하세요</option>
+        		<option th:each="type : ${types}" 
+               		 	th:value="${type.gt_type}" 
+                		th:text="${type.gt_type}"></option>
+   			 </select>
 			</div>
 			<div class="form-group">
 				<label>상품명:</label>
@@ -37,10 +38,7 @@
 				<label>가격</label>
 				<input type="text" class="form-control" name="mp_price" >
 			</div>
-			<div class="form-group">
-				<label>타입</label>
-				<input type="text" class="form-control" name="mp_gt_type" >
-			</div>
+			
 			<button class="btn btn-outline-info col-12" type="submit">게시글 등록</button>
 			
 		</form>
