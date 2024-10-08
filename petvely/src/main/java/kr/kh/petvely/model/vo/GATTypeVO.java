@@ -5,6 +5,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class GiveAndTakeTypeVO {
+public class GATTypeVO {
 	private String gatt_type;
 }

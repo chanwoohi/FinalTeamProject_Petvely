@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class GiveAndTakePostVO extends PostVO{
+public class GATPostVO extends PostVO{
 	
 	private String gat_gatt_type;
 	private Date gat_startDate;
