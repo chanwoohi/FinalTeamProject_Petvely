@@ -52,13 +52,6 @@ public class PostService {
 	public List<CommunityVO> getCommunityList() {
 		return postDao.selectCommunityList();
 	}
-	public void markAsDeleted(int po_num) {
-		Object postRepository;
-		// 게시글을 삭제 상태로 업데이트
-	    PostDAO post = postRepository.findById(po_num).orElseThrow(()
-	     -> new PostNotFoundException(postNum));
-	    post.setIsDeleted(true);  // 논리적으로 삭제된 상태로 변경
-	    postRepository.save(post);
-	}
+
 
 }

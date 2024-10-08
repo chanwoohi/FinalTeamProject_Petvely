@@ -27,15 +27,12 @@ NOW(),
 '0', 
 (SELECT me_num FROM petvely.Member WHERE me_id = 'user01'));
 
-# 관리자가 '축구', '야구', '배구', '올림픽' 커뮤니티를 추가했을 때 필요한 쿼리
+# 관리자가 '강아지', '고양이', '도마뱀', '고슴도치' 커뮤니티를 추가했을 때 필요한 쿼리
 INSERT INTO COMMUNITY(CO_NAME) VALUES('강아지');
 INSERT INTO COMMUNITY(CO_NAME) VALUES('고양이');
 INSERT INTO COMMUNITY(CO_NAME) VALUES('도마뱀');
 INSERT INTO COMMUNITY(CO_NAME) VALUES('고슴도치');
 
-# user01회원이 강아지 커뮤니티에 게시글을 1개 작성했습니다.(제목과 내용은 알아서)
-INSERT INTO POST(PO_TITLE, PO_CONTENT, PO_ME_ID, PO_CO_NUM)
-SELECT '포메라니안', '키우고싶다', 'user01', CO_NUM FROM COMMUNITY WHERE CO_NAME = '강아지';
 
 -- 모든 회원 정보를 조회
 SELECT * FROM Member;

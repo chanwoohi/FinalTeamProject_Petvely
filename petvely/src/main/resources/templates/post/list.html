@@ -31,10 +31,8 @@
 						<tr th:each="item : ${list}">
 							<td th:text="${item.po_num}"></td>
 							<td>
-								<a th:if="${item.delete_yn}"	
-								th:text="${item.po_title}"
-								th:href="@{/post/detail/{po_num}(po_num=${item.po_num})}"></a>
-								<span th:if="${item.delete_yn}" class="text-muted">이 글은 삭제된 글입니다</span>
+								<a 	th:text="${item.po_title}"
+									th:href="@{/post/detail/{po_num}(po_num=${item.po_num})}"></a>
 							</td>
 							<td th:text="${item.po_me_num}"></td>
 							<td th:text="${item.po_viewCount}"></td>
@@ -47,7 +45,5 @@
 			</table>
 				<a class="btn btn btn-outline-dark" th:href="@{/post/insert/{co_num}(co_num=${co_num})}">글쓰기</a>
 	</main>
-
-
 </body>
 </html>
