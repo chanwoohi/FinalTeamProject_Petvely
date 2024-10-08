@@ -20,7 +20,7 @@ public class PostVO {
 	private String po_notice;
 	private int po_me_num;
 	private int po_co_num;
-
+	private int po_delete;
 	
 	private String me_id;
 	

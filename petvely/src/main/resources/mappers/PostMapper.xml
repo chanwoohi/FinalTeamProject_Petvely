@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.petvely.dao.PostDAO">
     <insert id="insertPost">
-    	insert into post(po_title, po_co_num, po_content, po_me_num)
-    	values(#{po_title}, #{po_co_num}, #{po_content}, #{po_me_num})
+    	insert into post(po_title, po_co_num, po_content, po_me_num, po_delete)
+    	values(#{po_title}, #{po_co_num}, #{po_content}, #{po_me_num}, #{po_delete})
     </insert>
 	<select id="selectPostList" resultType="PostVO">
 		select * from post

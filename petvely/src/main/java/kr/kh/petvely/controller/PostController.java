@@ -26,6 +26,7 @@ public class PostController {
 		List<PostVO> list = postService.getPostList(co_num);
 		//게시글 목록을 가져와서 화면에 전달
 		List<CommunityVO> communities = postService.getCommunityList();
+		//커뮤니티 리스트를 가져옴
 		model.addAttribute("list", list);
 		System.out.println(list);
 		model.addAttribute("communities", communities);
@@ -77,6 +78,4 @@ public class PostController {
 		return "redirect:/post/detail/"+po_num;
 	
 	}
-	
-
 }

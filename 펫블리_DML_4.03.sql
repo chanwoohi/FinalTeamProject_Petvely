@@ -14,7 +14,7 @@ INSERT INTO Animal (ani_num, ani_name, ani_age, ani_gender, ani_birth, ani_weigh
 VALUES ('A001', 'Max', 2, 'M', '2022-01-01', 5.5, TRUE, 'Dog', 1);
 
 -- 새로운 게시글 추가 (user01이 작성)
-INSERT INTO petvely.Post (po_title, po_content, po_date, po_co_num, po_hidden, po_viewCount, po_recommendCount, po_reportCount, po_notice, po_me_num)
+INSERT INTO petvely.Post (po_title, po_content, po_date, po_co_num, po_hidden, po_viewCount, po_recommendCount, po_reportCount, po_notice, po_me_num, po_delete)
 VALUES 
 ('고양이 키우면 게추', 
 '히히',
@@ -25,6 +25,7 @@ NOW(),
 0,
 0, 
 '0', 
+0,
 (SELECT me_num FROM petvely.Member WHERE me_id = 'user01'));
 
 # 관리자가 '강아지', '고양이', '도마뱀', '고슴도치' 커뮤니티를 추가했을 때 필요한 쿼리
@@ -59,10 +60,6 @@ DELETE FROM Member WHERE me_id = 'user01';
 -- 특정 반려동물 정보 삭제
 DELETE FROM Animal WHERE ani_num = 'A001';
 
-INSERT INTO POST ( PO_TITLE, PO_CONTENT, PO_ME_NUM)
-	VALUES ( "INSERT연습", "제발제발", "2" );
-    
--- 위의 POST의 PO_NUM을 가져와서 WALKMATEPOST에 강제로 넣기
 
 INSERT INTO WALKMATEPOST ( PO_NUM, WM_DATE, WM_TIME )
 	VALUES ( 4, '2020-10-19', '19:30');
