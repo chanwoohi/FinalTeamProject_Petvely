@@ -5,6 +5,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class GiveAndTakeStateVO {
+public class GATStateVO {
 	private String gats_state; 
 }
