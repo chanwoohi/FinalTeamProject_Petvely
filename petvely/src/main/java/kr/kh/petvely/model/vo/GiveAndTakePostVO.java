@@ -20,4 +20,9 @@ public class GiveAndTakePostVO {
 	private String gat_gat;
 	private String gat_gats_state; 
 	private int gat_emd_num;
+	
+	private String sido_name;
+	private String sigg_name;
+	private String emd_name;
+	private int emd_num;
 }

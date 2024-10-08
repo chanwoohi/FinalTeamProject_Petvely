@@ -9,7 +9,7 @@ DROP TABLE IF EXISTS `Member`;
 CREATE TABLE `Member` (
 	`me_num`	int primary key auto_increment	NOT NULL,
 	`me_id`	varchar(13) unique	NOT NULL,
-	`me_pw`	varchar(255)	NULL,
+	`me_pw`	varchar(20)	NULL,
 	`me_nickname`	varchar(20) unique	NULL,
 	`me_email`	varchar(50) unique	NULL,
 	`me_authority`	varchar(5)	NULL,
@@ -80,7 +80,12 @@ CREATE TABLE `WalkMatePost` (
 	`po_num`	int primary key auto_increment	NOT NULL,
 	`wm_date`	datetime	NULL,
 	`wm_time`	varchar(255)	NULL,
-	`wm_wms_state`	varchar(50)	NOT NULL
+	`wm_wms_state`	varchar(50)	NOT NULL DEFAULT "진행중",
+    CONSTRAINT `fk_wm_po_num`
+	  FOREIGN KEY (`po_num`)
+	  REFERENCES `petvely`.`post` (`po_num`)
+	  ON DELETE CASCADE
+	  ON UPDATE NO ACTION
 );
 
 DROP TABLE IF EXISTS `Recommend`;
@@ -92,13 +97,13 @@ CREATE TABLE `Recommend` (
 	`re_po_num`	int	NOT NULL
 );
 
-DROP TABLE IF EXISTS `GiveAndTakePost`;
+DROP TABLE IF EXISTS `GATPost`;
 
-CREATE TABLE `GiveAndTakePost` (
+CREATE TABLE `GATPost` (
 	`po_num`	int primary key auto_increment	NOT NULL,
 	`gat_gatt_type`	varchar(255)	NOT NULL,
 	`gat_startDate`	datetime	NULL default current_timestamp,
-	`gat_endDate`	datetime	NULL default current_timestamp,
+	`gat_endDate`	datetime	NULL ,
 	`gat_gat`	varchar(1)	NULL,
 	`gat_gats_state`	varchar(50)	NOT NULL,
 	`gat_emd_num`	int	NOT NULL
@@ -136,7 +141,7 @@ CREATE TABLE `ReportType` (
 DROP TABLE IF EXISTS `Animal`;
 
 CREATE TABLE `Animal` (
-	`ani_num`	varchar(20) primary key	NOT NULL,
+	`ani_num`	int primary key auto_increment NOT NULL,
 	`ani_name`	varchar(40)	NULL,
 	`ani_age`	int	NULL,
 	`ani_gender`	varchar(1)	NULL,
@@ -187,9 +192,9 @@ CREATE TABLE `MarketPost` (
 	`mp_gt_type`	varchar(50)	NOT NULL
 );
 
-DROP TABLE IF EXISTS `GiveAndTakeType`;
+DROP TABLE IF EXISTS `GATType`;
 
-CREATE TABLE `GiveAndTakeType` (
+CREATE TABLE `GATType` (
 	`gatt_type`	varchar(255)	NOT NULL
 );
 
@@ -286,9 +291,9 @@ CREATE TABLE `WalkMateState` (
 	`wms_state`	varchar(50)	NOT NULL
 );
 
-DROP TABLE IF EXISTS `GiveAndTakeState`;
+DROP TABLE IF EXISTS `GATState`;
 
-CREATE TABLE `GiveAndTakeState` (
+CREATE TABLE `GATState` (
 	`gats_state`	varchar(50)	NOT NULL
 );
 
@@ -297,7 +302,7 @@ DROP TABLE IF EXISTS `Emd_areas`;
 CREATE TABLE `Emd_areas` (
 	`emd_num`	int primary key auto_increment	NOT NULL,
 	`emd_sigg_num`	int	NOT NULL,
-	`emd_areas`	varchar(2)	NULL,
+	`emd_areas`	varchar(3)	NULL,
 	`emd_name`	varchar(50)	NULL,
 	`emd_version`	varchar(20)	NULL
 );
@@ -306,7 +311,7 @@ DROP TABLE IF EXISTS `Sido_areas`;
 
 CREATE TABLE `Sido_areas` (
 	`sido_num`	int primary key auto_increment	NOT NULL,
-	`sido_code`	varchar(2)	NULL,
+	`sido_code`	varchar(3)	NULL,
 	`sido_name`	varchar(50)	NULL,
 	`sido_version`	varchar(20)	NULL
 );
@@ -316,7 +321,7 @@ DROP TABLE IF EXISTS `Sigg_areas`;
 CREATE TABLE `Sigg_areas` (
 	`sigg_num`	int primary key auto_increment	NOT NULL,
 	`sigg_sido_num`	int	NOT NULL,
-	`sigg_code`	varchar(2)	NULL,
+	`sigg_code`	varchar(3)	NULL,
 	`sigg_name`	varchar(50)	NULL,
 	`sigg_version`	varchar(20)	NULL
 );

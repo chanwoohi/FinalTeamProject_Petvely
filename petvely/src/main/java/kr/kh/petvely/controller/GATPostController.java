@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import kr.kh.petvely.model.vo.GiveAndTakePostVO;
+import kr.kh.petvely.model.vo.Sido_AreasVO;
+import kr.kh.petvely.service.AddressService;
 import kr.kh.petvely.service.GATPostService;
 import lombok.AllArgsConstructor;
 
@@ -19,11 +21,13 @@ public class GATPostController {
 	
 	@Autowired
 	private GATPostService gatPostService;
+	private AddressService addressService;
 	
 	@GetMapping("/gatpost/list")
 	public String GTAPostlist(Model model) {
 		List<GiveAndTakePostVO> list = gatPostService.getGATPostList();
 		model.addAttribute("list", list);
+		System.out.println(list);
 		return "gatpost/list";
 	}
 	
@@ -36,14 +40,15 @@ public class GATPostController {
 	}
 	
 	@GetMapping("/gatpost/insert")
-	public String GATPostInsert() {
+	public String GATPostInsert(Model model) {
+		List<Sido_AreasVO> sidoList = addressService.getSidoList();
+		model.addAttribute("sidoList", sidoList);
 		return "gatpost/insert";
 	}
 	
 	@PostMapping("/gatpost/insert")
 	public String GTAPostInsertPost(GiveAndTakePostVO GATPost) {
 		boolean res = gatPostService.addGATPost(GATPost);
-		System.out.println(GATPost);
 		if(res) {
 			return "redirect:/gatpost/list";
 		}
@@ -52,6 +57,8 @@ public class GATPostController {
 	
 	@GetMapping("/gatpost/update/{po_num}")
 	public String postUpdate(Model model, @PathVariable int po_num) {
+		List<Sido_AreasVO> sidoList = addressService.getSidoList();
+		model.addAttribute("sidoList", sidoList);
 		GiveAndTakePostVO GATPost = gatPostService.getGATPost(po_num);
 		model.addAttribute("GATPost", GATPost);
 		return "gatpost/update";
@@ -76,5 +83,5 @@ public class GATPostController {
 		return "redirect:/gatpost/detail/" + po_num;
 	}
 	
+	
 }
- 

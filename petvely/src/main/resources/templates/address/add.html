@@ -9,45 +9,17 @@ layout:decorate="~{layout/layout.html}">
 </head>
 <body>
 	<main layout:fragment="content">
-		<form method="post" th:object="${GATPost}" th:action="@{/gatpost/update/{po_num}(po_num=*{po_num})}">
-			<input type="hidden"  th:field="*{po_num}"/>
-			<div class="form-group">
-				<label>번호 임시:</label>
-				<input type="text" class="form-control" th:field="*{po_num}">
-			</div>
-			<div class="form-group">
-				<label>타입:</label>
-				<input type="text" class="form-control" th:field="*{gat_gatt_type}">
-			</div>
-			<div class="form-group">
-				<label>시작기간:</label>
-				<input type="date" class="form-control" th:field="*{gat_startDate}">
-			</div>
-			<div class="form-group">
-				<label>종료기간:</label>
-				<input type="date" class="form-control" th:field="*{gat_endDate}">
-			</div>
-			<div class="form-group">
-				<label>품앗이:</label>
-				<input type="text" class="form-control" th:field="*{gat_gat}">
-			</div>
-			<div class="form-group">
-				<label>상태:</label>
-				<input type="text" class="form-control" th:field="*{gat_gats_state}">
-			</div>
-			<div class="form-group" id="address">
-				<label>주소:</label>
-				<select id="sido">
-					<option th:each="itemSido : ${sidoList}" th:text="${itemSido.sido_name}" th:value="${itemSido.sido_num}"></option>
-				</select>
-				<select id="sigg">
-				</select>
-				<select id="emd" name="emd_num">
-				</select>
-			</div>
-			<button class="btn btn-outline-info col-12">등록</button>
-		</form>
-		<a class="btn btn-outline-info" th:href="@{/gatpost/list}">목록으로</a>
+		<div id="address">
+			<select id="sido">
+				<option th:each="itemSido : ${sidoList}" th:text="${itemSido.sido_name}" th:value="${itemSido.sido_num}"></option>
+			</select>
+			<select id="sigg">
+			</select>
+			<select id="emd">
+			</select>
+		</div>
+		<button class="btn btn-outline-info col-12">등록</button>
+		<a class="btn btn-outline-info" th:href="@{/gatpost/insert}">취소</a>
 		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 		<script type="text/javascript">
 		
@@ -100,7 +72,25 @@ layout:decorate="~{layout/layout.html}">
 			});
 		})
 		
+		$('#addAddress').click(function(){
+			let emd_num = $(this).val();
+			$.ajax({
+				async : true,
+				url : '/post/insert', 
+				type : 'post', 
+				data : {emd_num}, 
+				success : function (data){
+					for(emd of data){
+						consol(data)
+					}
+					$('#emd').html(str);
+				},
+				error : function(jqXHR, textStatus, errorThrown){
+				}
+			});
+		})
 		</script>
 	</main>
+	
 </body>
 </html>

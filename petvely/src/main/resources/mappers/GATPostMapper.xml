@@ -3,23 +3,30 @@
 <mapper namespace="kr.kh.petvely.dao.GATPostDAO">
 	<select id="selectGATPostList" resultType="GiveAndTakePostVO">
 		select * from GATPost
+			left join emd_areas on gat_emd_num = emd_num
+			left join sigg_areas on emd_sigg_num = sigg_num
+			left join sido_areas on sigg_sido_num = sido_num
+			order by po_num desc
 	</select>
 	<select id="selectGATPost" resultType="GiveAndTakePostVO">
-		select * from GATPost where po_num = #{po_num}
+		select * from GATPost
+			left join emd_areas on gat_emd_num = emd_num
+			left join sigg_areas on emd_sigg_num = sigg_num
+			left join sido_areas on sigg_sido_num = sido_num
+			where po_num = #{po_num}
 	</select>
 	<insert id="insertGATPost">
 		insert into 
 			GATPost(po_num, gat_gatt_type, gat_startDate, gat_endDate, gat_gat, gat_gats_state, gat_emd_num)
     		values
-    			(#{po_num}, #{gat_gatt_type}, #{gat_startDate}, 
-    			#{gat_endDate}, #{gat_gat}, #{gat_gats_state}, #{gat_emd_num})
+    			(#{po_num}, #{gat_gatt_type}, #{gat_startDate}, #{gat_endDate}, #{gat_gat}, #{gat_gats_state}, #{emd_num})
 	</insert>
 	<update id="updateGATPost">
 		update GATPost 
 			set 
 				po_num = #{po_num}, gat_gatt_type = #{gat_gatt_type}, 
 				gat_startDate = #{gat_startDate}, gat_endDate = #{gat_endDate}, 
-				gat_gat = #{gat_gat}, gat_gats_state = #{gat_gats_state}, gat_emd_num = #{gat_emd_num}
+				gat_gat = #{gat_gat}, gat_gats_state = #{gat_gats_state}, gat_emd_num = #{emd_num}
     		where 
     			po_num = #{po_num}
 	</update>
