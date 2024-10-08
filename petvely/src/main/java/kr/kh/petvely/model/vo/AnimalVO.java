@@ -16,7 +16,7 @@ public class AnimalVO {
 	private float ani_weight;
 	private String ani_img;
 	private String ani_info;
-	private int ani_neutralization ;
+	private int ani_neutralization;
 	private String ani_at_type;
 	private int ani_me_num;
 

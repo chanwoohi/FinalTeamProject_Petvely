@@ -1,0 +1,11 @@
+package kr.kh.petvely.dao;
+
+import java.util.List;
+
+import kr.kh.petvely.model.vo.AnimalVO;
+
+public interface AnimalDAO {
+
+	List<AnimalVO> selectPetList(AnimalVO animal);
+
+}

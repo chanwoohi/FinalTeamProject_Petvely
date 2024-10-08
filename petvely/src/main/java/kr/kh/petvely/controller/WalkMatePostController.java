@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import kr.kh.petvely.model.vo.AnimalVO;
 import kr.kh.petvely.model.vo.PostVO;
 import kr.kh.petvely.model.vo.WalkMatePostVO;
+import kr.kh.petvely.service.AnimalService;
 import kr.kh.petvely.service.PostService;
 import kr.kh.petvely.service.WalkMatePostService;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,9 @@ public class WalkMatePostController {
 	@Autowired
 	private PostService postService;
 	
+	@Autowired
+	private AnimalService animalService;
+	
 	@GetMapping("/walkmatepost/list")
 	public String walkmatepostList(Model model) {
 		List<WalkMatePostVO> list = walkMatePostService.getWalkMatePostList();
@@ -35,12 +39,16 @@ public class WalkMatePostController {
 	}
 	
 	@GetMapping("/walkmatepost/insert")
-	public String walkmatepostInsert() {
+	public String walkmatepostInsert(Model model, AnimalVO animal) {
+		List<AnimalVO> petList = animalService.selectPetList(animal);
+		System.out.println(petList);
+		model.addAttribute("petList", petList);
 		return "/walkmatepost/insert";
 	}
 	
 	@PostMapping("/walkmatepost/insert")
-	public String walkmatepostInsertPost(PostVO post, WalkMatePostVO walkMatePost, AnimalVO animal) {
+	public String walkmatepostInsertPost( PostVO post, WalkMatePostVO walkMatePost) {
+		
 		if(walkMatePostService.insertWalkMatePost(post, walkMatePost)) {
 			return "redirect:/walkmatepost/list";
 		}
@@ -82,18 +90,6 @@ public class WalkMatePostController {
 			return "redirect:/walkmatepost/list";
 		}
 		return "redirect:/walkmatepost/detail/"+po_num;
-	}
-	
-	@GetMapping("/walkmatepost/enroll")
-	public String walkmatepostEnroll() {
-		/*
-		 * if("해당 작성자가 펫 등록이 되어있는지 물어보는 코드") { 
-		 * return "redirect:/walkmatepost/enroll"; 
-		 * }
-		 * return "redirect:/펫 등록 하는 코드 ";
-		 * 이런 식으로 바꿀 것임 !
-		*/
-		return "/walkmatepost/enroll";
 	}
 	
 }

@@ -35,6 +35,26 @@
 				<textarea class="form-control" style="min-height: 400px; height: auto;" name="po_content">
 				</textarea>
 			</div>
+			<div>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>이름</th>
+							<th>나이</th>
+							<th>성별</th>
+							<th>중성화 여부</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="item : ${petList}">
+							<td th:text="${item.ani_name}"></td>
+							<td th:text="${item.ani_age}"></td>
+							<td th:text="${item.ani_gender}"></td>
+							<td th:text="${item.ani_neutralization}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 			
 			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
 				내 펫 등록하기
@@ -77,13 +97,36 @@
 						</div>
 						
 						<!-- Modal body -->
-						<div class="modal-body">
-							
-						</div>
+						<form>
+							<div class="modal-body">
+								<table class="table table-striped">
+									<thead>
+										<tr>
+											<th>선택</th>
+											<th>이름</th>
+											<th>나이</th>
+											<th>성별</th>
+											<th>중성화 여부</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="item : ${petList}">
+											<td>
+												<input type="checkbox" name="check" value="선택"/>
+											</td>
+											<td th:text="${item.ani_name}"></td>
+											<td th:text="${item.ani_age}"></td>
+											<td th:text="${item.ani_gender}"></td>
+											<td th:text="${item.ani_neutralization}"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</form>
 						
 						<!-- Modal footer -->
 						<div class="modal-footer">
-							<button type="button" class="btn btn-outline-info">내 펫 등록</button>
+							<button type="submit" class="btn btn-outline-info">내 펫 등록</button>
 							<button type="button" class="btn btn-outline-danger" data-dismiss="modal">닫기</button>
 						</div>
 

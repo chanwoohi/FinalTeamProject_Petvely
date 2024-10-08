@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import kr.kh.petvely.dao.PostDAO;
 import kr.kh.petvely.dao.WalkMatePostDAO;
+import kr.kh.petvely.model.vo.AnimalVO;
 import kr.kh.petvely.model.vo.PostVO;
 import kr.kh.petvely.model.vo.WalkMatePostVO;
 import lombok.AllArgsConstructor;
@@ -68,5 +69,4 @@ public class WalkMatePostService {
 			return false;
 		}
 	}
-
 }

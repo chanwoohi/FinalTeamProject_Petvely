@@ -38,8 +38,8 @@ INSERT INTO petvely.FacilityShare (fs_name, fs_grade, fs_reviewCount, fs_reportC
 VALUES ('Pet Park', 5, 10, 0, 'Park');
 
 -- Animal 테이블에 반려동물 정보 추가
-INSERT INTO petvely.Animal (ani_num, ani_name, ani_age, ani_gender, ani_birth, ani_weight, ani_neutralization, ani_at_type, ani_me_num)
-VALUES ('A001', 'Max', 2, 'M', '2022-01-01', 5.5, TRUE, 'Dog', (SELECT me_num FROM petvely.Member WHERE me_id = 'user01'));
+INSERT INTO petvely.Animal (ani_name, ani_age, ani_gender, ani_birth, ani_weight, ani_neutralization, ani_at_type, ani_me_num)
+VALUES ('잠자리', 1, 'M', '2024-07-25', 0.01, 0, '잠자리', 2);
 
 -- 모든 회원 정보를 조회
 SELECT * FROM petvely.Member;
