@@ -176,7 +176,7 @@ CREATE TABLE `Post` (
 	`po_content`	longtext	NULL,
 	`po_date`	datetime	NULL default current_timestamp,
 	`po_hidden`	varchar(1)	NULL,
-	`po_viewCount`	int	NULL,
+	`po_viewCount`	int NOT	NULL,
 	`po_recommendCount`	int	NULL,
 	`po_reportCount`	int	NULL,
 	`po_notice`	varchar(1)	NULL,

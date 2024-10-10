@@ -58,6 +58,10 @@ public class PostService {
 	public List<PostVO> getPostpostListWithMemberId() {
 		return postDao.selectPostWithMemberId();
 	}
+	public void updateView(int po_num) {
+		postDao.updateView(po_num);
+		
+	}
 
 
 

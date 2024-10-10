@@ -30,4 +30,6 @@ public interface PostDAO {
 	// Member의 me_id와 게시글 정보를 조회하는 메서드
 	List<PostVO> selectPostWithMemberId();
 
+	void updateView(int po_num);
+
 }

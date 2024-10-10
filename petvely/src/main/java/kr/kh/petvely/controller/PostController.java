@@ -46,10 +46,10 @@ public class PostController {
 	}
 	@GetMapping("/post/detail/{po_num}") //게시글 상세
 	public String postDetail(Model model, @PathVariable int po_num) {
-		System.out.println(po_num);
+		postService.updateView(po_num);
+		//조회수 증가
 		PostVO post = postService.getPost(po_num);
 		model.addAttribute("post", post);
-		System.out.println(post);
 		return "post/detail";	
 	}
 	@GetMapping("/post/update/{po_num}") //게시글 수정 가져오기
