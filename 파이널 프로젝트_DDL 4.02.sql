@@ -100,7 +100,7 @@ CREATE TABLE `Recommend` (
 DROP TABLE IF EXISTS `GATPost`;
 
 CREATE TABLE `GATPost` (
-	`po_num`	int primary key auto_increment	NOT NULL,
+	`po_num`	int	NOT NULL,
 	`gat_gatt_type`	varchar(255)	NOT NULL,
 	`gat_startDate`	datetime	NULL default current_timestamp,
 	`gat_endDate`	datetime	NULL ,

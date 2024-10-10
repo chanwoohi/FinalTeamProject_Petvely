@@ -10,10 +10,16 @@ public interface GATPostDAO {
 
 	GiveAndTakePostVO selectGATPost(int po_num);
 
-	boolean insertGATPost(GiveAndTakePostVO GATPost);
+	boolean insertGATPost1(GiveAndTakePostVO GATPost);
 
-	boolean updateGATPost(GiveAndTakePostVO GATPost);
+	boolean insertGATPost2(GiveAndTakePostVO GATPost);
+	
+	boolean updateGATPost1(GiveAndTakePostVO GATPost);
 
-	boolean deleteGATPost(int po_num);
+	boolean updateGATPost2(GiveAndTakePostVO GATPost);
+
+	boolean deleteGATPost1(int po_num);
+
+	boolean deleteGATPost2(int po_num);
 
 }

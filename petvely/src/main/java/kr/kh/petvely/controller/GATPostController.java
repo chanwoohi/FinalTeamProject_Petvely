@@ -27,7 +27,6 @@ public class GATPostController {
 	public String GTAPostlist(Model model) {
 		List<GiveAndTakePostVO> list = gatPostService.getGATPostList();
 		model.addAttribute("list", list);
-		System.out.println(list);
 		return "gatpost/list";
 	}
 	
@@ -35,7 +34,6 @@ public class GATPostController {
 	public String postDetail(Model model, @PathVariable int po_num) {
 		GiveAndTakePostVO GATPost = gatPostService.getGATPost(po_num);
 		model.addAttribute("GATPost", GATPost);
-		System.out.println(GATPost);
 		return "gatpost/detail";
 	}
 	
@@ -46,14 +44,17 @@ public class GATPostController {
 		return "gatpost/insert";
 	}
 	
+	
 	@PostMapping("/gatpost/insert")
 	public String GTAPostInsertPost(GiveAndTakePostVO GATPost) {
-		boolean res = gatPostService.addGATPost(GATPost);
-		if(res) {
+		boolean res = gatPostService.addGATPost1(GATPost);
+		boolean res2 = gatPostService.addGATPost2(GATPost);
+		if(res || res2) {
 			return "redirect:/gatpost/list";
 		}
 		return "redirect:/gatpost/insert";
 	}
+	
 	
 	@GetMapping("/gatpost/update/{po_num}")
 	public String postUpdate(Model model, @PathVariable int po_num) {
@@ -67,17 +68,22 @@ public class GATPostController {
 	@PostMapping("/gatpost/update/{po_num}")
 	public String postUpdatePost(Model model, @PathVariable int po_num, GiveAndTakePostVO GATPost) {
 		GATPost.setPo_num(po_num);
-		boolean res = gatPostService.updateGATPost(GATPost);
-		if(res) {
-			return "redirect:/gatpost/detail/"+po_num;
+		boolean res = gatPostService.updateGATPost1(GATPost);
+		boolean res2 = gatPostService.updateGATPost2(GATPost);
+		System.out.println(GATPost);
+		System.out.println(res);
+		System.out.println(res2);
+		if(res || res2) {
+			return "redirect:/gatpost/list";
 		}
-		return "redirect:/gatpost/update/"+po_num;
+		return "redirect:/gatpost/update";
 	}
 	
 	@GetMapping("/gatpost/delete/{po_num}")
 	public String postDelete(@PathVariable int po_num) {
-		boolean res = gatPostService.deleteGATPost(po_num);
-		if (res) {
+		boolean res = gatPostService.deleteGATPost1(po_num);
+		boolean res2 = gatPostService.deleteGATPost2(po_num);
+		if(res || res2) {
 			return "redirect:/gatpost/list";
 		}
 		return "redirect:/gatpost/detail/" + po_num;

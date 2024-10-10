@@ -1,24 +1,34 @@
 select * from gatpost
-	join post using (po_num);
-
-select * from gatpost;
-
-select * from gatpost
 	left join emd_areas on gat_emd_num = emd_num
 	left join sigg_areas on emd_sigg_num = sigg_num
 	left join sido_areas on sigg_sido_num = sido_num
-    left join post on po_num = po_num;
+	left join post using (po_num)
+    left join member on po_me_num = me_num;
 
+select * from post left join member on po_me_num = me_num;
+
+select * from gatpost;
 INSERT INTO gatpost
 (po_num, gat_gatt_type, gat_startDate, gat_endDate, gat_gat, gat_gats_state, gat_emd_num) 
-VALUES
-	('0', 'ongoing', '2024-10-01', '2024-10-01', 'w', 'ongoing', '15');
+VALUES 
+	('1', 'ongoing', '2024-10-01', '2024-10-01', 'w', 'ongoing', '15'),
+    ('2', 'ongoing', '2024-10-01', '2024-10-01', 'w', 'ongoing', '10'),
+    ('3', 'ongoing', '2024-10-01', '2024-10-01', 'w', 'ongoing', '17'),
+	('4', 'ongoing', '2024-10-01', '2024-10-01', 'w', 'ongoing', '3');
 
+select * from post;
+INSERT INTO post(po_num, po_title, po_content, po_me_num) 
+	VALUES 
+		('1', 'test1', 'w', '1'), ('2', 'test2', 'w', '1'), ('3', 'test2', 'w', '1'),
+        ('4', '테스트1', 'w', '1');
+
+select * from member;
+INSERT INTO member (me_id, me_pw, me_nickname, me_email, me_authority, me_phone, me_ms_status)
+	VALUES ('user01', 'password123', 'nickname01', 'user01@example.com', 'user', '01095784512', 'active');
+select * from gatpost
+	join post using (po_num);
     
-select * from emd_areas;
-select * from sigg_areas;
 select * from sido_areas;
-    
 INSERT INTO sido_areas(sido_num, sido_code, sido_name) 
 VALUES
 	('1', '11', '서울특별시'), ('2', '26', '부산광역시'), ('3', '27', '대구광역시'),
@@ -27,7 +37,8 @@ VALUES
     ('10', '51', '강원특별자치도'), ('11', '43', '충청북도'), ('12', '44', '충청남도'), 
     ('13', '52', '전북특별자치도'), ('14', '46', '전라남도'), ('15', '47', '경상북도'),
     ('16', '48', '경상남도'), ('17', '50', '제주특별자치도');
-    
+
+select * from sigg_areas;
 INSERT INTO sigg_areas(sigg_num, sigg_sido_num, sigg_code, sigg_name)
 VALUES
 	('1', '1', '110', '종로구'), ('2', '1', '140', '중구'), ('3', '1', '170', '용산구'), 
@@ -39,8 +50,8 @@ VALUES
     ('24', '1', '560', '영등포구'), ('17', '1', '590', '동작구'), ('18', '1', '620', '관악구'), 
     ('19', '1', '650', '서초구'), ('20', '1', '680', '강남구'), ('21', '1', '710', '송파구'),     
     ('25', '1', '740', '강동구');
-    
-    
+
+select * from emd_areas;    
 INSERT INTO emd_areas(emd_num, emd_sigg_num, emd_areas, emd_name) 
 VALUES
 	('1', '1', '101', '역삼동'), ('2', '1', '103', '개포동'), ('3', '1', '104', '청담동'), 

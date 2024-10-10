@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class GiveAndTakePostVO {
+public class GiveAndTakePostVO extends PostVO{
 	
 	private int po_num;
 	private String gat_gatt_type;
@@ -25,4 +25,5 @@ public class GiveAndTakePostVO {
 	private String sigg_name;
 	private String emd_name;
 	private int emd_num;
+	
 }

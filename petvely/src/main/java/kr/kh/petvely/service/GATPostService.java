@@ -24,32 +24,63 @@ public class GATPostService {
 		return gatpostDao.selectGATPost(po_num);
 	}
 
-	public boolean addGATPost(GiveAndTakePostVO GATPost) {
+	public boolean addGATPost1(GiveAndTakePostVO GATPost) {
 		if(GATPost == null) {
 			return false;
 		}
+		//post에 추가
 		try {
-			return gatpostDao.insertGATPost(GATPost);
+			return gatpostDao.insertGATPost1(GATPost);
 		}catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
-	}
-
-	public boolean updateGATPost(GiveAndTakePostVO GATPost) {
-		if(GATPost == null) {
-			return false;
-		}
-		try {
-			return gatpostDao.updateGATPost(GATPost);
-		}catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
-
-	public boolean deleteGATPost(int po_num) {
-		return gatpostDao.deleteGATPost(po_num);
+		//성공하면 gatpost에 추가
 	}
 	
+	public boolean addGATPost2(GiveAndTakePostVO GATPost) {
+		if(GATPost == null) {
+			return false;
+		}
+		try {
+			return gatpostDao.insertGATPost2(GATPost);
+		}catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public boolean updateGATPost1(GiveAndTakePostVO GATPost) {
+		if(GATPost == null) {
+			return false;
+		}
+		try {
+			return gatpostDao.updateGATPost1(GATPost);
+		}catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public boolean updateGATPost2(GiveAndTakePostVO GATPost) {
+		if(GATPost == null) {
+			return false;
+		}
+		try {
+			return gatpostDao.updateGATPost2(GATPost);
+		}catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public boolean deleteGATPost1(int po_num) {
+		return gatpostDao.deleteGATPost1(po_num);
+	}
+
+	public boolean deleteGATPost2(int po_num) {
+		return gatpostDao.deleteGATPost2(po_num);
+	}
+	
+
 }
