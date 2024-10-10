@@ -26,4 +26,6 @@ public class GiveAndTakePostVO extends PostVO{
 	private String emd_name;
 	private int emd_num;
 	
+	private String gats_state;
+	private String gatt_type;
 }

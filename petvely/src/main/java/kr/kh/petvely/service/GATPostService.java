@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import kr.kh.petvely.dao.GATPostDAO;
 import kr.kh.petvely.model.vo.GiveAndTakePostVO;
+import kr.kh.petvely.model.vo.GiveAndTakeStateVO;
+import kr.kh.petvely.model.vo.GiveAndTakeTypeVO;
+import kr.kh.petvely.model.vo.GoodsTradeStateVO;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -28,14 +31,12 @@ public class GATPostService {
 		if(GATPost == null) {
 			return false;
 		}
-		//post에 추가
 		try {
 			return gatpostDao.insertGATPost1(GATPost);
 		}catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
-		//성공하면 gatpost에 추가
 	}
 	
 	public boolean addGATPost2(GiveAndTakePostVO GATPost) {
@@ -80,6 +81,14 @@ public class GATPostService {
 
 	public boolean deleteGATPost2(int po_num) {
 		return gatpostDao.deleteGATPost2(po_num);
+	}
+
+	public List<GiveAndTakeStateVO> gatStateList() {
+		return gatpostDao.selectStateList();
+	}
+
+	public List<GiveAndTakeTypeVO> gatTypeList() {
+		return gatpostDao.selectGATTypeList();
 	}
 	
 

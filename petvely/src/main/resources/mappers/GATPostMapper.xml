@@ -28,7 +28,7 @@
 	<insert id="insertGATPost2" useGeneratedKeys="true" keyProperty="po_num">
 		insert into 
 			GATPost(po_num, gat_gatt_type, gat_startDate, gat_endDate, gat_gat, gat_gats_state, gat_emd_num)
-    		values(#{po_num}, #{gat_gatt_type}, #{gat_startDate}, #{gat_endDate}, #{gat_gat}, #{gat_gats_state}, #{emd_num})
+    		values(#{po_num}, #{gatt_type}, #{gat_startDate}, #{gat_endDate}, #{gat_gat}, #{gats_state}, #{emd_num})
 	</insert>
 	<update id="updateGATPost1">
 		update Post 
@@ -52,4 +52,10 @@
     <delete id="deleteGATPost2">
     	delete from Post where po_num = #{po_num}
     </delete>
+    <select id="selectStateList" resultType="GiveAndTakeStateVO">
+    	select * from GATState
+    </select>
+    <select id="selectGATTypeList"  resultType="GiveAndTakeTypeVO">
+    	select * from GATType
+    </select>
 </mapper>

@@ -5,22 +5,31 @@ select * from gatpost
 	left join post using (po_num)
     left join member on po_me_num = me_num;
 
+select * from gatpost
+	 left join goodstradestate on gat_gats_state = gats_state;
 select * from post left join member on po_me_num = me_num;
 
 select * from gatpost;
 INSERT INTO gatpost
 (po_num, gat_gatt_type, gat_startDate, gat_endDate, gat_gat, gat_gats_state, gat_emd_num) 
 VALUES 
-	('1', 'ongoing', '2024-10-01', '2024-10-01', 'w', 'ongoing', '15'),
-    ('2', 'ongoing', '2024-10-01', '2024-10-01', 'w', 'ongoing', '10'),
-    ('3', 'ongoing', '2024-10-01', '2024-10-01', 'w', 'ongoing', '17'),
-	('4', 'ongoing', '2024-10-01', '2024-10-01', 'w', 'ongoing', '3');
+	('1', '예시1', '2024-10-01', '2024-10-01', 'w', '진행 중', '15'),
+    ('2', '예시4', '2024-10-01', '2024-10-01', 'w', '진행 중', '10'),
+    ('3', '예시6', '2024-10-01', '2024-10-01', 'w', '완료', '17'),
+	('4', '예시6', '2024-10-01', '2024-10-01', 'w', '진행 중', '3');
 
 select * from post;
 INSERT INTO post(po_num, po_title, po_content, po_me_num) 
 	VALUES 
 		('1', 'test1', 'w', '1'), ('2', 'test2', 'w', '1'), ('3', 'test2', 'w', '1'),
         ('4', '테스트1', 'w', '1');
+
+select * from gattype;
+INSERT INTO gattype(gatt_type) values ('예시1'), ('예시2'),('예시3'), ('예시4'),('예시5'), ('예시6');
+
+select * from gatstate;
+INSERT INTO gatstate(gats_state) values ('진행 중'), ('완료');
+
 
 select * from member;
 INSERT INTO member (me_id, me_pw, me_nickname, me_email, me_authority, me_phone, me_ms_status)

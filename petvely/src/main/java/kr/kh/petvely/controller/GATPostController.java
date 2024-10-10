@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import kr.kh.petvely.model.vo.GiveAndTakePostVO;
+import kr.kh.petvely.model.vo.GiveAndTakeStateVO;
+import kr.kh.petvely.model.vo.GiveAndTakeTypeVO;
+import kr.kh.petvely.model.vo.GoodsTradeStateVO;
 import kr.kh.petvely.model.vo.Sido_AreasVO;
 import kr.kh.petvely.service.AddressService;
 import kr.kh.petvely.service.GATPostService;
@@ -41,6 +44,12 @@ public class GATPostController {
 	public String GATPostInsert(Model model) {
 		List<Sido_AreasVO> sidoList = addressService.getSidoList();
 		model.addAttribute("sidoList", sidoList);
+		List<GiveAndTakeStateVO> gatstateList = gatPostService.gatStateList();
+		model.addAttribute("gatstateList", gatstateList);
+		System.out.println(gatstateList);
+		List<GiveAndTakeTypeVO> gatTypeList = gatPostService.gatTypeList();
+		model.addAttribute("gatTypeList", gatTypeList);
+		System.out.println(gatTypeList);
 		return "gatpost/insert";
 	}
 	
@@ -49,6 +58,7 @@ public class GATPostController {
 	public String GTAPostInsertPost(GiveAndTakePostVO GATPost) {
 		boolean res = gatPostService.addGATPost1(GATPost);
 		boolean res2 = gatPostService.addGATPost2(GATPost);
+		System.out.println(GATPost);
 		if(res || res2) {
 			return "redirect:/gatpost/list";
 		}
@@ -60,8 +70,12 @@ public class GATPostController {
 	public String postUpdate(Model model, @PathVariable int po_num) {
 		List<Sido_AreasVO> sidoList = addressService.getSidoList();
 		model.addAttribute("sidoList", sidoList);
+		List<GiveAndTakeStateVO> gatstateList = gatPostService.gatStateList();
+		model.addAttribute("gatstateList", gatstateList);
 		GiveAndTakePostVO GATPost = gatPostService.getGATPost(po_num);
 		model.addAttribute("GATPost", GATPost);
+		List<GiveAndTakeTypeVO> gatTypeList = gatPostService.gatTypeList();
+		model.addAttribute("gatTypeList", gatTypeList);
 		return "gatpost/update";
 	}
 	
@@ -70,9 +84,6 @@ public class GATPostController {
 		GATPost.setPo_num(po_num);
 		boolean res = gatPostService.updateGATPost1(GATPost);
 		boolean res2 = gatPostService.updateGATPost2(GATPost);
-		System.out.println(GATPost);
-		System.out.println(res);
-		System.out.println(res2);
 		if(res || res2) {
 			return "redirect:/gatpost/list";
 		}

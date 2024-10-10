@@ -3,6 +3,9 @@ package kr.kh.petvely.dao;
 import java.util.List;
 
 import kr.kh.petvely.model.vo.GiveAndTakePostVO;
+import kr.kh.petvely.model.vo.GiveAndTakeStateVO;
+import kr.kh.petvely.model.vo.GiveAndTakeTypeVO;
+import kr.kh.petvely.model.vo.GoodsTradeStateVO;
 
 public interface GATPostDAO {
 
@@ -21,5 +24,9 @@ public interface GATPostDAO {
 	boolean deleteGATPost1(int po_num);
 
 	boolean deleteGATPost2(int po_num);
+
+	List<GiveAndTakeStateVO> selectStateList();
+
+	List<GiveAndTakeTypeVO> selectGATTypeList();
 
 }
