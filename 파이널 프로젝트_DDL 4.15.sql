@@ -80,12 +80,8 @@ CREATE TABLE `WalkMatePost` (
 	`po_num`	int primary key auto_increment	NOT NULL,
 	`wm_date`	datetime	NULL,
 	`wm_time`	varchar(255)	NULL,
-	`wm_wms_state`	varchar(50)	NOT NULL DEFAULT "진행중",
-    CONSTRAINT `fk_wm_po_num`
-	  FOREIGN KEY (`po_num`)
-	  REFERENCES `petvely`.`post` (`po_num`)
-	  ON DELETE CASCADE
-	  ON UPDATE NO ACTION
+	`wm_wms_state`	varchar(50)	NOT NULL DEFAULT "진행중"
+
 );
 
 DROP TABLE IF EXISTS `Recommend`;
@@ -342,4 +338,20 @@ DROP TABLE IF EXISTS `WalkMatePet`;
 CREATE TABLE `WalkMatePet` (
 	`wmp_num`	int primary key auto_increment	NOT NULL,
 	`ani_num`	varchar(20) NOT NULL
+);
+
+DROP TABLE IF EXISTS `PostHostSelectedPets`;
+
+CREATE TABLE PostHostSelectedPets (
+    `phsp_num` INT AUTO_INCREMENT PRIMARY KEY,
+    `phsp_po_num` INT,              -- 포스트 번호 (PostVO와 연결)
+    `phsp_ani_num` INT              -- 선택된 애완동물 번호
+);
+
+DROP TABLE IF EXISTS `PostUserSelectedPets`;
+
+CREATE TABLE PostUserSelectedPets (
+    `pusp_num` INT AUTO_INCREMENT PRIMARY KEY,
+    `pusp_po_num` INT,              -- 포스트 번호 (PostVO와 연결)
+    `pusp_ani_num` INT              -- 선택된 애완동물 번호
 );

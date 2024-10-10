@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import kr.kh.petvely.model.vo.AnimalVO;
 import kr.kh.petvely.model.vo.PostVO;
 import kr.kh.petvely.model.vo.WalkMatePostVO;
@@ -59,10 +61,7 @@ public class WalkMatePostController {
 			                            @RequestParam("wm_time") String time,
 			                            @RequestParam("po_content") String content,
 			                            @RequestParam(value = "selectedPets", required = false) String selectedPets) {
-		
-
-	    System.out.println("작성자 번호: " + poMeNum);
-		
+	    
 		if(walkMatePostService.insertWalkMatePost(post, walkMatePost)) {
 			return "redirect:/walkmatepost/list";
 		}
@@ -73,6 +72,7 @@ public class WalkMatePostController {
 	public String walkmatepostDetail(Model model, @PathVariable int po_num) {
 		WalkMatePostVO walkMatePost = walkMatePostService.getWalkMatePost(po_num);
 		model.addAttribute("walkMatePost", walkMatePost);
+		
 		return "/walkmatepost/detail";
 	}
 	
@@ -95,7 +95,7 @@ public class WalkMatePostController {
 	@GetMapping("/walkmatepost/delete/{po_num}")
 	public String walkmatepostDelete(Model model, @PathVariable int po_num) {
 		/* 
-		 * postService에 맡긴 이유는 삭제 했을 때 DB에서 CASCADE 설정하면 어차피 같이 지워짐 ( po_num 공유라 상관 없나?)
+		 * postService에 맡긴 이유는 삭제 했을 때 DB에서 CASCADE 설정하면 어차피 같이 지워짐 ( po_num 공유라 상관 없나? )
 		 * 상관 있는데 mysql 자체에서 설정해서 같이 삭제 시키게 했음
 		 * 작동하면 다른 게시판에서 쓸 수 있으니까 postService로 보냄	
 		*/ 
