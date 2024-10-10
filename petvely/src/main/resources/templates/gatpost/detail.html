@@ -46,10 +46,10 @@
 			<div class="form-group">
 				<label>품앗이:</label>
 				<input type="text" class="form-control" readonly th:field="*{gat_gat}">
-				<div th:if="${GATPost.gat_gat == o}">
+				<div th:if="${GATPost.gat_gat.equals('o')}">
 					<label>GIVE</label>
 				</div>
-				<div th:if="${GATPost.gat_gat == x}">
+				<div th:if="${GATPost.gat_gat.equals('x')}">
 					<label>TAKE</label>
 				</div>
 			</div>
