@@ -46,6 +46,12 @@
 			<div class="form-group">
 				<label>품앗이:</label>
 				<input type="text" class="form-control" readonly th:field="*{gat_gat}">
+				<div th:if="${GATPost.gat_gat == o}">
+					<label>GIVE</label>
+				</div>
+				<div th:if="${GATPost.gat_gat == x}">
+					<label>TAKE</label>
+				</div>
 			</div>
 			<div class="form-group">
 				<label>상태:</label>
