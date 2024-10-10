@@ -46,11 +46,12 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="item : ${petList}">
-							<td th:text="${item.ani_name}"></td>
-							<td th:text="${item.ani_age}"></td>
-							<td th:text="${item.ani_gender}"></td>
-							<td th:text="${item.ani_neutralization}"></td>
+						<tr th:each="item : ${selectedPets}">
+							<!-- 얘는 또 변수값 어케 가져오지 배열인데......  -->
+							<td th:text="${item.name}"></td>
+							<td th:text="${item.age}"></td>
+							<td th:text="${item.gender}"></td>
+							<td th:text="${item.neutralization}"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -122,13 +123,13 @@
 									</tbody>
 								</table>
 							</div>
-						</form>
 						
-						<!-- Modal footer -->
-						<div class="modal-footer">
-							<button type="submit" class="btn btn-outline-info">내 펫 등록</button>
-							<button type="button" class="btn btn-outline-danger" data-dismiss="modal">닫기</button>
-						</div>
+							<!-- Modal footer -->
+							<div class="modal-footer">
+								<button name="petEnroll" class="btn btn-outline-info" data-dismiss="modal">내 펫 등록</button>
+								<button type="button" class="btn btn-outline-danger" data-dismiss="modal">닫기</button>
+							</div>
+						</form>
 
 					</div>
 				</div>
@@ -145,6 +146,35 @@
 		    $('#myModal2').on('show.bs.modal', function () {
 		        $('#myModal').modal('hide');
 		    });
+		    
+		    document.querySelector('button[name="petEnroll"]').addEventListener('click', function(event) {
+		        event.preventDefault(); // 기본 폼 제출 방지
+
+		        const checkedBoxes = document.querySelectorAll('input[name="check"]:checked');
+		        let selectedPets = [];
+
+		        //배열에 저장
+		        checkedBoxes.forEach(function(checkbox) {
+		            let row = checkbox.closest('tr');
+		            let petData = {
+		                name: row.querySelector('td:nth-child(2)').innerText,
+		                age: row.querySelector('td:nth-child(3)').innerText,
+		                gender: row.querySelector('td:nth-child(4)').innerText,
+		                neutralization: row.querySelector('td:nth-child(5)').innerText
+		            };
+		            selectedPets.push(petData);
+		        });
+
+		        // 배열을 JSON 형태로 변환하여 hidden input에 추가
+		        const hiddenInput = document.createElement('input');
+		        hiddenInput.type = 'hidden';
+		        hiddenInput.name = 'selectedPets';
+		        hiddenInput.value = JSON.stringify(selectedPets);
+		        document.querySelector('form').appendChild(hiddenInput);
+				
+		        console.log(selectedPets);
+		    });
+		    
 		</script>
 		
 	</main>

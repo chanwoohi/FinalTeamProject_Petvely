@@ -1,13 +1,17 @@
 package kr.kh.petvely.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.kh.petvely.model.vo.AnimalVO;
 import kr.kh.petvely.model.vo.PostVO;
@@ -47,7 +51,17 @@ public class WalkMatePostController {
 	}
 	
 	@PostMapping("/walkmatepost/insert")
-	public String walkmatepostInsertPost( PostVO post, WalkMatePostVO walkMatePost) {
+	public String walkmatepostInsertPost( @ModelAttribute PostVO post, 
+										WalkMatePostVO walkMatePost,
+										@RequestParam("po_title") String title,
+										@RequestParam("po_me_num") int poMeNum,
+			                            @RequestParam(value = "wm_date", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
+			                            @RequestParam("wm_time") String time,
+			                            @RequestParam("po_content") String content,
+			                            @RequestParam(value = "selectedPets", required = false) String selectedPets) {
+		
+
+	    System.out.println("작성자 번호: " + poMeNum);
 		
 		if(walkMatePostService.insertWalkMatePost(post, walkMatePost)) {
 			return "redirect:/walkmatepost/list";
