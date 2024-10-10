@@ -1,10 +1,11 @@
 -- Member 테이블에 회원 추가
-INSERT INTO petvely.member (me_id, me_pw, me_nickname, me_email, me_authority, me_phone, me_ms_status)
-VALUES ('user01', 'password123', 'nickname01', 'user01@example.com', 'user', '01095784512', 'active');
-
-INSERT INTO Member (me_id, me_pw, me_nickname, me_email, me_authority, me_phone, me_ms_status)
-VALUES ('user02', 'password456', 'nickname02', 'user02@example.com', 'user', '01085989958', 'active');
-
+INSERT INTO petvely.Member (me_id, me_pw, me_nickname, me_email, me_authority, me_phone, me_ms_status)
+VALUES 
+('user01', 'password111', 'nickname01', 'user01@example.com', 'user', '01011111111', 'active'), 
+('user02', 'password222', 'nickname02', 'user02@example.com', 'user', '01022222222', 'active'), 
+('user03', 'password333', 'nickname03', 'user03@example.com', 'user', '01033333333', 'active'), 
+('user04', 'password444', 'nickname04', 'user04@example.com', 'user', '01044444444', 'active'), 
+('user05', 'password555', 'nickname05', 'user05@example.com', 'user', '01055555555', 'active');
 -- FacilityShare 테이블에 시설 정보 추가
 INSERT INTO FacilityShare (fs_name, fs_grade, fs_reviewCount, fs_reportCount, fs_fst_type)
 VALUES ('Pet Park', 5, 10, 0, 'Park');
