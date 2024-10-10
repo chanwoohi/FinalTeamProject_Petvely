@@ -24,6 +24,8 @@
 							<th>번호</th>
 							<th>제목</th>
 							<th>작성자</th>
+							<th>작성일</th>
+							<th>추천수</th>
 							<th>조회수</th>
 						</tr>
 					</thead>
@@ -41,6 +43,8 @@
 					            </a>
 					        </td>
 							<td th:text="${item.po_me_num}"></td>
+							<td th:text="${item.po_date}" pattern="yyyy-MM-dd"/></td>
+							<td>추천수</td>
 							<td th:text="${item.po_viewCount}"></td>
 						</tr>
 
