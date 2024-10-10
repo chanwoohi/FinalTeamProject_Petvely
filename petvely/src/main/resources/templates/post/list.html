@@ -34,7 +34,7 @@
 					            <a th:if="${item.po_delete == 1}">
 					               <span class="text-muted">이 글은 삭제된 글입니다.</span>
 					            </a>
-					            
+					          
 					            <a th:if="${item.po_delete == 0}"
 					               th:text="${item.po_title}" 
 					               th:href="@{/post/detail/{po_num}(po_num=${item.po_num})}">

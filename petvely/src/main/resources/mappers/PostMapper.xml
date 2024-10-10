@@ -5,20 +5,26 @@
     	insert into post(po_title, po_co_num, po_content, po_me_num, po_delete)
     	values(#{po_title}, #{po_co_num}, #{po_content}, #{po_me_num}, #{po_delete})
     </insert>
+    <!-- 삭제되지 않은 게시글 목록 조회 (po_delete = 0 조건 추가할 예정) -->
 	<select id="selectPostList" resultType="PostVO">
 		select * from post
 		where po_co_num = #{co_num}
 	</select>
+	<!-- 삭제되지 않은 게시글 목록 조회 (and po_delete 추후 추가예정) -->
 	<select id="selectPost" resultType="PostVO">
-		select * from post where po_num = #{po_num}
+		select * from post 
+		where po_num = #{po_num}
 	</select>
 	<update id="updatePost">
 		update post set po_title = #{po_title}, po_content = #{po_content}
 		where po_num = #{po_num} 
 	</update>
-	<delete id="deletePost">
-		delete from post where po_num = #{po_num}
-	</delete>
+	<!-- 게시글 논리적 삭제 쿼리 -->
+	<update id="logicalDeletePost">
+	    update post
+	    set po_delete = 1
+	    where po_num = #{po_num}
+	</update>
 	<select id="selectCommunityList" resultType="CommunityVO">
 		select * from community
 	</select>

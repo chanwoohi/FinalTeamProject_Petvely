@@ -182,7 +182,7 @@ CREATE TABLE `Post` (
 	`po_notice`	varchar(1)	NULL,
 	`po_me_num`	int	NOT NULL,
     `po_co_num` int NOT NULL,
-    `po_delete` BOOLEAN
+    `po_delete` TINYINT DEFAULT 0
 );
 
 DROP TABLE IF EXISTS `MarketPost`;
