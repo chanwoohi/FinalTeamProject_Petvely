@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import kr.kh.petvely.model.vo.GiveAndTakePostVO;
 import kr.kh.petvely.model.vo.GiveAndTakeStateVO;
 import kr.kh.petvely.model.vo.GiveAndTakeTypeVO;
-import kr.kh.petvely.model.vo.GoodsTradeStateVO;
 import kr.kh.petvely.model.vo.Sido_AreasVO;
 import kr.kh.petvely.service.AddressService;
 import kr.kh.petvely.service.GATPostService;
