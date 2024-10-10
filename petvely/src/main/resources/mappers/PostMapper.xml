@@ -28,4 +28,11 @@
 	<select id="selectCommunityList" resultType="CommunityVO">
 		select * from community
 	</select>
+	<!-- po_me_num을 me_id로 보여지게 -->
+	<select id="selectPostWithMemberId" resultType="kr.kh.petvely.model.vo.PostVO">
+    select p.po_num, p.po_title, p.po_content, p.po_date, p.po_co_num, m.me_id
+    from Post p
+    join Member m ON p.po_me_num = m.me_num
+	</select>
+	
 </mapper>

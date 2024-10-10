@@ -78,4 +78,11 @@ public class PostController {
 		return "redirect:/post/detail/"+po_num;
 	
 	}
+	@GetMapping("/listWithMember")  //게시글 목록과 작성자 ID 조회
+	public String postListWithMemberId(Model model) {
+		List<PostVO> postList = postService.getPostpostListWithMemberId();
+		model.addAttribute("postList", postList);
+		return "post/listWithMember";
+	}
+	
 }

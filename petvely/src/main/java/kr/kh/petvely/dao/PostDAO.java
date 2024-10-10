@@ -27,4 +27,7 @@ public interface PostDAO {
 	// 게시글 논리적 삭제 (po_delete 값을 1로 업데이트)
 	boolean logicalDeletePost(int po_num);
 
+	// Member의 me_id와 게시글 정보를 조회하는 메서드
+	List<PostVO> selectPostWithMemberId();
+
 }

@@ -54,6 +54,10 @@ public class PostService {
 	public List<CommunityVO> getCommunityList() {
 		return postDao.selectCommunityList();
 	}
+	// me_id와 함께 게시글 목록을 조회하는 메서드
+	public List<PostVO> getPostpostListWithMemberId() {
+		return postDao.selectPostWithMemberId();
+	}
 
 
 
