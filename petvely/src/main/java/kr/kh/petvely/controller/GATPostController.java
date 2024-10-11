@@ -29,14 +29,16 @@ public class GATPostController {
 	public String GTAPostlist(Model model) {
 		List<GiveAndTakePostVO> list = gatPostService.getGATPostList();
 		model.addAttribute("list", list);
+		System.out.println(list);
 		return "gatpost/list";
 	}
 	
 	@GetMapping("/gatpost/detail/{po_num}")
-	public String postDetail(Model model, @PathVariable Integer po_num) {
-		GiveAndTakePostVO GATPost = gatPostService.getGATPost(po_num);
+	public String postDetail(Model model, @PathVariable int po_num) {
 		gatPostService.updatePostView(po_num);
+		GiveAndTakePostVO GATPost = gatPostService.getGATPost(po_num);
 		model.addAttribute("GATPost", GATPost);
+		System.out.println(GATPost);
 		return "gatpost/detail";
 	}
 	

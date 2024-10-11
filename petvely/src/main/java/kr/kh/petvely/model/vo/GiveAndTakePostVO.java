@@ -28,4 +28,6 @@ public class GiveAndTakePostVO extends PostVO{
 	
 	private String gats_state;
 	private String gatt_type;
+	
+	private int po_viewCount;
 }

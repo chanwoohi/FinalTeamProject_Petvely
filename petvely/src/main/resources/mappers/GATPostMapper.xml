@@ -10,6 +10,9 @@
 			left join member on po_me_num = me_num
 		order by po_num desc
 	</select>
+	<update id="updateView">
+    	update Post set po_viewCount = po_viewCount + 1 where po_num = #{po_num}
+    </update>
 	<select id="selectGATPost" resultType="GiveAndTakePostVO">
 		select * from GATPost
 			left join emd_areas on gat_emd_num = emd_num
@@ -58,7 +61,4 @@
     <select id="selectGATTypeList"  resultType="GiveAndTakeTypeVO">
     	select * from GATType
     </select>
-    <update id="updateView">
-    	update Post set po_viewCount = po_viewCount + 1 where po_num = #{po_num}
-    </update>
 </mapper>

@@ -27,7 +27,7 @@ public class GATPostService {
 		return gatpostDao.selectGATPost(po_num);
 	}
 	
-	public void updatePostView(Integer po_num) {
+	public void updatePostView(int po_num) {
 		gatpostDao.updateView(po_num);
 	}
 
