@@ -13,5 +13,5 @@ public class MarketPostVO extends PostVO{
 	private int mp_price;
 	private String mp_gt_type;
 
-	
+	FileVO file;
 }

@@ -13,7 +13,7 @@
 			where po_num = #{po_num}	
 	</select>
 	
-	<insert id="insertPost" keyProperty="po_num">
+	<insert id="insertPost" keyProperty="po_num" useGeneratedKeys="true">
    	 	insert into post (po_title, po_content, po_me_num)
         	values(#{po_title}, #{po_content},#{po_me_num})
 	</insert>	
@@ -23,6 +23,10 @@
 			values(#{mp_gt_type},#{mp_gts_state}, #{mp_name}, #{mp_content}, #{mp_price})
 	</insert>
 	
+	<insert id="insertFile">
+		insert into file (fi_ori_name, fi_name,fi_po_num, fi_date) 
+			values(#{fi_ori_name},#{fi_name},#{fi_po_num}, now())
+	</insert>
 	<select id="selectTypes" resultType="GoodsTypeVO">
 		select * from goodstype;
 	</select>
@@ -32,5 +36,14 @@
    		set mp_gts_state = #{state}
     	where po_num = #{po_num}
 	</update>
+	
+	<select id="selectFileList" resultType="FileVO">
+		select * from file where fi_po_num = #{fi_po_num}
+	</select>
+	
+	<select id="selectImage" parameterType="int" resultType="FileVO">
+		select * from file join marketpost on fi_po_num = po_num where fi_po_num = #{fi_po_num} 
+	</select>
+  
 	
 </mapper>
