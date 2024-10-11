@@ -29,6 +29,10 @@ layout:decorate="~{layout/layout.html}">
 				<textarea class="form-control" style="min-height: 400px; height: auto;" name="po_content" >
 				</textarea>
 			</div>
+			<div class="form-group" id="view">
+				<label>조회수:</label>
+				<input type="text" class="form-control" name="po_viewCount" value="0">
+			</div>
 			<div class="form-group">
 				<label>타입:</label>
 				<select id="type" name="gatt_type">
@@ -116,15 +120,24 @@ layout:decorate="~{layout/layout.html}">
 		
 		$("#give").click(function() {
 			const myinput = document.getElementById('gat_gat');
+			const changegive = document.getElementById('give');
+			const changetake = document.getElementById('take');
 			myinput.value = "o";
+			changegive.style.color = 'red';
+			changetake.style.color = '';
 		})
 		$("#take").click(function() {
 			const myinput = document.getElementById('gat_gat');
+			const changegive = document.getElementById('give');
+			const changetake = document.getElementById('take');
 			myinput.value = "x";
+			changetake.style.color = 'red';
+			changegive.style.color = '';
 		})
 		
 		$("#gats_state").hide();
 		$("#gat_gat").hide();
+		$("#view").hide();
 		</script>
 	</main>
 </body>

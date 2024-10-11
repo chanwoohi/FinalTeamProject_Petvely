@@ -14,6 +14,7 @@ layout:decorate="~{layout/layout.html}">
 				<tr>
 					<th>번호</th>
 					<th>제목</th>
+					<th>작성자</th>
 					<th>타입</th>
 					<th>상태</th>
 					<th>조회수</th>
@@ -25,6 +26,7 @@ layout:decorate="~{layout/layout.html}">
 					<td>
 						<a th:text="${item.po_title}" th:href="@{/gatpost/detail/{po_num}(po_num=${item.po_num})}"></a>
 					</td>
+					<td th:text="${item.me_id}"></td>
 					<td th:text="${item.gat_gatt_type}"></td>
 					<td th:text="${item.gat_gats_state}"></td>
 					<td th:text="${item.po_viewCount}"></td>

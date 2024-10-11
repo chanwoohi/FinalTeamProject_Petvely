@@ -30,4 +30,7 @@ public class GiveAndTakePostVO extends PostVO{
 	private String gatt_type;
 	
 	private int po_viewCount;
+	
+	private String me_id;
+	private String me_nickname;
 }
