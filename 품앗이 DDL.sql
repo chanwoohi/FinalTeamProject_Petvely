@@ -16,13 +16,14 @@ VALUES
 	('1', '예시1', '2024-10-01', '2024-10-01', 'o', '진행 중', '15'),
     ('2', '예시4', '2024-10-01', '2024-10-01', 'o', '진행 중', '10'),
     ('3', '예시6', '2024-10-01', '2024-10-01', 'x', '완료', '17'),
-	('4', '예시6', '2024-10-01', '2024-10-01', 'x', '진행 중', '3');
+	('4', '예시6', '2024-10-01', '2024-10-01', 'x', '진행 중', '3'),
+    ('5', '예시6', '2024-10-01', '2024-10-01', 'x', '완료', '17');
 
 select * from post;
 INSERT INTO post(po_num, po_title, po_content, po_me_num) 
 	VALUES 
 		('1', 'test1', 'w', '1'), ('2', 'test2', 'w', '1'), ('3', 'test2', 'w', '1'),
-        ('4', '테스트1', 'w', '1');
+        ('4', '테스트1', 'w', '1'), ('5', '테스트16', 'w', '1');
 
 select * from gattype;
 INSERT INTO gattype(gatt_type) values ('예시1'), ('예시2'),('예시3'), ('예시4'),('예시5'), ('예시6');
@@ -34,6 +35,9 @@ INSERT INTO gatstate(gats_state) values ('진행 중'), ('완료');
 select * from member;
 INSERT INTO member (me_id, me_pw, me_nickname, me_email, me_authority, me_phone, me_ms_status)
 	VALUES ('user01', 'password123', 'nickname01', 'user01@example.com', 'user', '01095784512', 'active');
+INSERT INTO Member (me_id, me_pw, me_nickname, me_email, me_authority, me_phone, me_ms_status)
+VALUES ('user02', 'password456', 'nickname02', 'user02@example.com', 'user', '01085989958', 'active');
+    
 select * from gatpost
 	join post using (po_num);
     

@@ -11,6 +11,18 @@ layout:decorate="~{layout/layout.html}">
 	<main layout:fragment="content">
 		<form method="post" th:object="${GATPost}" th:action="@{/gatpost/update/{po_num}(po_num=*{po_num})}">
 			<input type="hidden"  th:field="*{po_num}"/>
+			<div class="form-group" id="GT">
+				<label>품앗이:</label>
+				<input type="text" id="gat_gat" name="gat_gat">
+				<a id="give" class="btn btn-outline-info" onclick="">GIVE</a>
+				<a id="take" class="btn btn-outline-info" onclick="">TAKE</a>
+			</div>
+			<div class="form-group">
+				<label>상태:</label>
+				<select id="state" name="gats_state">
+					<option th:each="itemstate : ${gatstateList}" th:text="${itemstate.gats_state}" th:value="${itemstate.gats_state}"></option>
+				</select>
+			</div>
 			<div class="form-group">
 				<label>제목:</label>
 				<input type="text" class="form-control" th:field="*{po_title}">
@@ -37,16 +49,6 @@ layout:decorate="~{layout/layout.html}">
 			<div class="form-group">
 				<label>종료날짜:</label>
 				<input type="date" class="form-control" th:field="*{gat_endDate}">
-			</div>
-			<div class="form-group">
-				<label>품앗이:</label>
-				<input type="text" class="form-control" th:field="*{gat_gat}">
-			</div>
-			<div class="form-group">
-				<label>상태:</label>
-				<select id="state" name="gats_state">
-					<option th:each="itemstate : ${gatstateList}" th:text="${itemstate.gats_state}" th:value="${itemstate.gats_state}"></option>
-				</select>
 			</div>
 			<div class="form-group" id="address">
 				<label>주소:</label>
@@ -113,6 +115,16 @@ layout:decorate="~{layout/layout.html}">
 			});
 		})
 		
+		$("#give").click(function() {
+			const myinput = document.getElementById('gat_gat');
+			myinput.value = "o";
+		})
+		$("#take").click(function() {
+			const myinput = document.getElementById('gat_gat');
+			myinput.value = "x";
+		})
+		
+		$("#gat_gat").hide();
 		</script>
 	</main>
 </body>

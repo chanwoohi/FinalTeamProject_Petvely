@@ -33,8 +33,9 @@ public class GATPostController {
 	}
 	
 	@GetMapping("/gatpost/detail/{po_num}")
-	public String postDetail(Model model, @PathVariable int po_num) {
+	public String postDetail(Model model, @PathVariable Integer po_num) {
 		GiveAndTakePostVO GATPost = gatPostService.getGATPost(po_num);
+		gatPostService.updatePostView(po_num);
 		model.addAttribute("GATPost", GATPost);
 		return "gatpost/detail";
 	}

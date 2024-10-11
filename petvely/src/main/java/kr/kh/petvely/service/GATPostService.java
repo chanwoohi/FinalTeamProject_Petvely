@@ -26,6 +26,10 @@ public class GATPostService {
 	public GiveAndTakePostVO getGATPost(int po_num) {
 		return gatpostDao.selectGATPost(po_num);
 	}
+	
+	public void updatePostView(Integer po_num) {
+		gatpostDao.updateView(po_num);
+	}
 
 	public boolean addGATPost1(GiveAndTakePostVO GATPost) {
 		if(GATPost == null) {
@@ -90,6 +94,8 @@ public class GATPostService {
 	public List<GiveAndTakeTypeVO> gatTypeList() {
 		return gatpostDao.selectGATTypeList();
 	}
+
+	
 	
 
 }

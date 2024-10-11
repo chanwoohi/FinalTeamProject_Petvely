@@ -104,7 +104,7 @@ CREATE TABLE `GATPost` (
 	`gat_gatt_type`	varchar(255)	NOT NULL,
 	`gat_startDate`	datetime	NULL default current_timestamp,
 	`gat_endDate`	datetime	NULL ,
-	`gat_gat`	varchar(1)	NULL,
+	`gat_gat`	varchar(1)	NOT NULL,
 	`gat_gats_state`	varchar(50)	NOT NULL,
 	`gat_emd_num`	int	NOT NULL
 );

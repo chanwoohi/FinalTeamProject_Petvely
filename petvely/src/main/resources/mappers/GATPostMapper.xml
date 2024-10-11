@@ -40,9 +40,9 @@
 	<update id="updateGATPost2">
 		update GATPost 
 			set 
-				gat_gatt_type = #{gat_gatt_type}, gat_startDate = #{gat_startDate}, 
+				gat_gatt_type = #{gatt_type}, gat_startDate = #{gat_startDate}, 
 				gat_endDate = #{gat_endDate}, gat_gat = #{gat_gat}, 
-				gat_gats_state = #{gat_gats_state}, gat_emd_num = #{emd_num}
+				gat_gats_state = #{gats_state}, gat_emd_num = #{emd_num}
     		where 
     			po_num = #{po_num}
 	</update>
@@ -58,4 +58,7 @@
     <select id="selectGATTypeList"  resultType="GiveAndTakeTypeVO">
     	select * from GATType
     </select>
+    <update id="updateView">
+    	update Post set po_viewCount = po_viewCount + 1 where po_num = #{po_num}
+    </update>
 </mapper>

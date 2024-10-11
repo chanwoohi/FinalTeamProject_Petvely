@@ -29,4 +29,6 @@ public interface GATPostDAO {
 
 	List<GiveAndTakeTypeVO> selectGATTypeList();
 
+	void updateView(Integer po_num);
+
 }
