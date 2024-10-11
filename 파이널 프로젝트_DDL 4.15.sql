@@ -355,3 +355,17 @@ CREATE TABLE PostUserSelectedPets (
     `pusp_po_num` INT,              -- 포스트 번호 (PostVO와 연결)
     `pusp_ani_num` INT              -- 선택된 애완동물 번호
 );
+
+ALTER TABLE `petvely`.`posthostselectedpets`
+ADD CONSTRAINT `po_num`
+  FOREIGN KEY (`phsp_po_num`)
+  REFERENCES `petvely`.`post` (`po_num`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+  
+ALTER TABLE `petvely`.`postuserselectedpets` 
+ADD CONSTRAINT `pusp_po_num`
+  FOREIGN KEY (`pusp_po_num`)
+  REFERENCES `petvely`.`post` (`po_num`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
