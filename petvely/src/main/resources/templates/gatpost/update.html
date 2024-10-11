@@ -117,11 +117,19 @@ layout:decorate="~{layout/layout.html}">
 		
 		$("#give").click(function() {
 			const myinput = document.getElementById('gat_gat');
+			const changegive = document.getElementById('give');
+			const changetake = document.getElementById('take');
 			myinput.value = "o";
+			changegive.style.color = 'red';
+			changetake.style.color = '';
 		})
 		$("#take").click(function() {
 			const myinput = document.getElementById('gat_gat');
+			const changegive = document.getElementById('give');
+			const changetake = document.getElementById('take');
 			myinput.value = "x";
+			changetake.style.color = 'red';
+			changegive.style.color = '';
 		})
 		
 		$("#gat_gat").hide();
