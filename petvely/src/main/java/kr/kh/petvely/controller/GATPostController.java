@@ -29,7 +29,6 @@ public class GATPostController {
 	public String GTAPostlist(Model model) {
 		List<GiveAndTakePostVO> list = gatPostService.getGATPostList();
 		model.addAttribute("list", list);
-		System.out.println(list);
 		return "gatpost/list";
 	}
 	
@@ -38,7 +37,6 @@ public class GATPostController {
 		gatPostService.updatePostView(po_num);
 		GiveAndTakePostVO GATPost = gatPostService.getGATPost(po_num);
 		model.addAttribute("GATPost", GATPost);
-		System.out.println(GATPost);
 		return "gatpost/detail";
 	}
 	
@@ -48,10 +46,8 @@ public class GATPostController {
 		model.addAttribute("sidoList", sidoList);
 		List<GiveAndTakeStateVO> gatstateList = gatPostService.gatStateList();
 		model.addAttribute("gatstateList", gatstateList);
-		System.out.println(gatstateList);
 		List<GiveAndTakeTypeVO> gatTypeList = gatPostService.gatTypeList();
 		model.addAttribute("gatTypeList", gatTypeList);
-		System.out.println(gatTypeList);
 		return "gatpost/insert";
 	}
 	
@@ -60,7 +56,6 @@ public class GATPostController {
 	public String GTAPostInsertPost(GiveAndTakePostVO GATPost) {
 		boolean res = gatPostService.addGATPost1(GATPost);
 		boolean res2 = gatPostService.addGATPost2(GATPost);
-		System.out.println(GATPost);
 		if(res || res2) {
 			return "redirect:/gatpost/list";
 		}
