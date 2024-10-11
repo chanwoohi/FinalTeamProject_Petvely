@@ -72,5 +72,7 @@ WHERE ani_num = 'A001';
 DELETE FROM petvely.Animal 
 WHERE ani_num = 'A001';
 
-
+insert into petvely.regex(re_regex)
+values
+("/^\w{3,13}$/"), ("/^[a-zA-Z0-9!@#$]{3,15}$/"), ("/^01(\d{1})[-. )]*(\d{4})[-. ]*(\d{4})$/");
 

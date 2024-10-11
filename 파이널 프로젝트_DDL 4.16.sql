@@ -343,3 +343,10 @@ CREATE TABLE `WalkMatePet` (
 	`wmp_num`	int primary key auto_increment	NOT NULL,
 	`ani_num`	varchar(20) NOT NULL
 );
+
+DROP TABLE IF EXISTS `RegEx`;
+
+CREATE TABLE `RegEx` (
+	`re_num`	int primary key auto_increment	NOT NULL,
+	`re_regex`	varchar(255) NOT NULL
+);
