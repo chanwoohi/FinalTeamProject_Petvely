@@ -76,3 +76,6 @@ insert into petvely.regex(re_regex)
 values
 ("/^\w{3,13}$/"), ("/^[a-zA-Z0-9!@#$]{3,15}$/"), ("/^01(\d{1})[-. )]*(\d{4})[-. ]*(\d{4})$/");
 
+insert into petvely.memberstatus(ms_status)
+values
+("활동"), ("정지");

@@ -350,3 +350,9 @@ CREATE TABLE `RegEx` (
 	`re_num`	int primary key auto_increment	NOT NULL,
 	`re_regex`	varchar(255) NOT NULL
 );
+
+ALTER TABLE `petvely`.`member` 
+CHANGE COLUMN `me_pw` `me_pw` VARCHAR(255) NOT NULL ,
+CHANGE COLUMN `me_nickname` `me_nickname` VARCHAR(20) NOT NULL ,
+CHANGE COLUMN `me_email` `me_email` VARCHAR(50) NOT NULL ,
+CHANGE COLUMN `me_phone` `me_phone` VARCHAR(12) NOT NULL ;
