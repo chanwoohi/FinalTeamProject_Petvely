@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.petvely.dao.PostHostSelectedPetsDAO">
+	<insert id="insertPostHostSelectedPets">
+		insert into postHostSelectedPets(phsp_po_num, phsp_ani_num)
+		values(#{phsp_po_num}, #{phsp_ani_num})
+	</insert>
+	<delete id="deletePostHostSelectedPets">
+		delete from postHostSelectedPets
+		where phsp_po_num = #{po_num}
+	</delete>
+</mapper>

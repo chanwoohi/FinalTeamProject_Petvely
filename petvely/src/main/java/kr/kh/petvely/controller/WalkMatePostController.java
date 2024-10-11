@@ -1,22 +1,15 @@
 package kr.kh.petvely.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.kh.petvely.model.vo.AnimalVO;
-import kr.kh.petvely.model.vo.PostVO;
 import kr.kh.petvely.model.vo.WalkMatePostVO;
 import kr.kh.petvely.service.AnimalService;
 import kr.kh.petvely.service.PostService;
@@ -46,6 +39,8 @@ public class WalkMatePostController {
 	
 	@GetMapping("/walkmatepost/insert")
 	public String walkmatepostInsert(Model model, AnimalVO animal) {
+		// 로그인 기능 구현 완료 하면 me_num 서버에서 로그인 되어있는 아이디 가져오면 됨
+		animal.setAni_me_num(2);
 		List<AnimalVO> petList = animalService.selectPetList(animal);
 		System.out.println(petList);
 		model.addAttribute("petList", petList);
@@ -53,40 +48,68 @@ public class WalkMatePostController {
 	}
 	
 	@PostMapping("/walkmatepost/insert")
-	public String walkmatepostInsertPost( @ModelAttribute PostVO post, 
-										WalkMatePostVO walkMatePost,
-										@RequestParam("po_title") String title,
-										@RequestParam("po_me_num") int poMeNum,
-			                            @RequestParam(value = "wm_date", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
-			                            @RequestParam("wm_time") String time,
-			                            @RequestParam("po_content") String content,
-			                            @RequestParam(value = "selectedPets", required = false) String selectedPets) {
-	    
-		if(walkMatePostService.insertWalkMatePost(post, walkMatePost)) {
+	public String walkmatepostInsertPost(WalkMatePostVO walkMatePost,
+			                            int [] selectedHostAniNums){
+	    System.out.println(selectedHostAniNums);
+		
+		if(walkMatePostService.insertWalkMatePost(walkMatePost, selectedHostAniNums)) {
 			return "redirect:/walkmatepost/list";
 		}
 		return "redirect:/walkmatepost/insert";
+
 	}
 	
 	@GetMapping("/walkmatepost/detail/{po_num}")
-	public String walkmatepostDetail(Model model, @PathVariable int po_num) {
+	public String walkmatepostDetail(Model model, 
+									@PathVariable int po_num, AnimalVO animal) {
 		WalkMatePostVO walkMatePost = walkMatePostService.getWalkMatePost(po_num);
 		model.addAttribute("walkMatePost", walkMatePost);
+		
+		List<AnimalVO> detailPetList = animalService.selectDetailPetList(po_num);
+		model.addAttribute("detailPetList", detailPetList);
+		
+		// 로그인 기능 구현 완료 하면 me_num 서버에서 로그인 되어있는 아이디 가져오면 됨
+		animal.setAni_me_num(3);
+		List<AnimalVO> petList = animalService.selectPetList(animal);
+		System.out.println(petList);
+		model.addAttribute("petList", petList);
 		
 		return "/walkmatepost/detail";
 	}
 	
+	@PostMapping("/walkmatepost/detail/{po_num}")
+	public String walkmatepostDetailPost(WalkMatePostVO walkMatePost,
+										@PathVariable int po_num,
+            							int [] selectedUserAniNums) {
+		System.out.println(selectedUserAniNums);
+		
+//		if(walkMatePostService.enrollWalkMatePost(walkMatePost, selectedUserAniNums)) {
+//			return "redirect:/walkmatepost/detail/"+po_num;
+//		}
+		return "redirect:/walkmatepost/detail/"+po_num;
+	}
+	
 	@GetMapping("/walkmatepost/update/{po_num}")
-	public String walkmatepostUpdate(Model model, @PathVariable int po_num) {
+	public String walkmatepostUpdate(Model model, @PathVariable int po_num,
+									 AnimalVO animal) {
+		
 		WalkMatePostVO walkMatePost = walkMatePostService.getWalkMatePost(po_num);
 		model.addAttribute("walkMatePost", walkMatePost);
+		
+		List<AnimalVO> petList = animalService.selectPetList(animal);
+		model.addAttribute("petList", petList);
+		
 		return "/walkmatepost/update";
 	}
 	
 	@PostMapping("/walkmatepost/update/{po_num}")
-	public String walkmatepostUpdatePost(Model model, @PathVariable int po_num, WalkMatePostVO walkMatePost) {
-		if(walkMatePostService.updateWalkMatePost(walkMatePost)) {
+	public String walkmatepostUpdatePost(Model model, 
+										@PathVariable int po_num, 
+										WalkMatePostVO walkMatePost,
+										int [] selectedHostAniNums) {
+		if(walkMatePostService.updateWalkMatePost(walkMatePost, selectedHostAniNums)) {
 			System.out.println(walkMatePost);
+			
 			return "redirect:/walkmatepost/list";
 		}
 		return "redirect:/walkmatepost/detail/"+po_num;

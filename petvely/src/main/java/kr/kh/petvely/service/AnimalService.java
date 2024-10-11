@@ -17,8 +17,13 @@ public class AnimalService {
 	AnimalDAO animalDao;
 	
 	public List<AnimalVO> selectPetList(AnimalVO animal) {
-		animal.setAni_me_num(2);
+		
 		return animalDao.selectPetList(animal);
+	}
+
+	public List<AnimalVO> selectDetailPetList(int po_num) {
+		
+		return animalDao.selectDetailPetList(po_num);
 	}
 	
 

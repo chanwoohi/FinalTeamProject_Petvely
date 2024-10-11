@@ -5,4 +5,14 @@
 		select * from animal
 		where ani_me_num = #{ani_me_num}
 	</select>
+	<select id="selectDetailPetList" resultType="AnimalVO">
+		select 
+			* 
+		from 
+			animal
+		join 
+			postHostSelectedPets on ani_num = phsp_ani_num
+		where
+			phsp_po_num = #{po_num}
+	</select>
 </mapper>

@@ -10,6 +10,7 @@
 <body>
 	<main layout:fragment="content">
 		<form method="post" th:action="@{/walkmatepost/insert}">
+
 			<div class="form-group">
 				<label>제목</label>
 				<input type="text" class="form-control" name="po_title">
@@ -97,7 +98,7 @@
 						</div>
 						
 						<!-- Modal body -->
-						<form>
+						<div>
 							<div class="modal-body">
 								<table class="table table-striped">
 									<thead>
@@ -128,15 +129,17 @@
 								<button name="petEnroll" class="btn btn-outline-info" data-dismiss="modal">내 펫 등록</button>
 								<button type="button" class="btn btn-outline-danger" data-dismiss="modal">닫기</button>
 							</div>
-						</form>
+						</div>
 
 					</div>
 				</div>
 			</div>
 			
-			
 			<!-- 나중에 펫 등록 안돼 있으면 등록 못하게 추가할 예정  -->
-			<button class="btn btn-outline-info col-12">게시글 등록</button>
+			<button class="btn btn-outline-info col-12" id="submitBtn" >게시글 등록</button>
+			<div id="selectedPets">
+				
+			</div>
 		</form>
 		<a class="btn btn-outline-info" th:href="@{/walkmatepost/list}">목록으로</a>
 		
@@ -151,16 +154,43 @@
 
 		        const checkedBoxes = document.querySelectorAll('input[name="check"]:checked');
 		        
-		        let selectedAniNums = [];
-
-		        // 체크된 항목의 ani_num 값 추출
+		        let selectedHostAniNums = [];
+				const selectedPetsEl = document.querySelector('#selectedPets');
+				selectedPetsEl.innerHTML = '';
+				var str = '';
+		    	// 체크된 항목의 ani_num 값 추출
 		        checkedBoxes.forEach(function(checkbox) {
 		            let aniNum = checkbox.value;  // 체크된 체크박스의 value가 ani_num
-		            selectedAniNums.push(aniNum);
+		            
+		            // PostHostSelectedPetsVO 객체 생성
+		            let petData = {
+		                phsp_po_num: null, // 서버에서 자동 생성하므로 null 또는 아예 생략 가능
+		                phsp_ani_num: aniNum
+		            };
+					console.log(aniNum)
+		            selectedHostAniNums.push(petData); // 객체를 배열에 추가
+		            str += `<input type="text" name="selectedHostAniNums" value="${aniNum}"/>`;
 		        });
+		        selectedPetsEl.innerHTML = str;
+		       	/*
+		     	// 선택된 동물 데이터 전송
+		        $.ajax({
+		            url: '/walkmatepost/insert/animals', // 데이터 전송 URL
+		            type: 'POST',
+		            contentType: 'application/json',
+		            data: JSON.stringify(selectedHostAniNums), // 배열을 JSON 문자열로 변환
+		            success: function(response) {
+		                console.log('Animals response:', response);
+		                // 이후 추가 동작이 필요할 수 있음
+		            },
+		            error: function(jqXHR, textStatus, errorThrown) {
+		                console.error('Animal error 발생:', textStatus, errorThrown);
+		            }
+		        });
+		     	*/
+		        console.log(JSON.stringify(selectedHostAniNums));
 		        
-		        console.log(selectedAniNums);
-		        
+		        console.log(selectedHostAniNums);
 		        
 		        let selectedPets = [];
 

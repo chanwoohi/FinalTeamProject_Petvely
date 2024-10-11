@@ -39,7 +39,7 @@ VALUES ('Pet Park', 5, 10, 0, 'Park');
 
 -- Animal 테이블에 반려동물 정보 추가
 INSERT INTO petvely.Animal (ani_name, ani_age, ani_gender, ani_birth, ani_weight, ani_neutralization, ani_at_type, ani_me_num)
-VALUES ('다초', 7, 'M', '2017-07-25', 8.4, 0, '강아지', 2);
+VALUES ('호날두', 3, 'M', '2021-05-18', 85, 0, '사람', 3);
 
 -- 모든 회원 정보를 조회
 SELECT * FROM petvely.Member;

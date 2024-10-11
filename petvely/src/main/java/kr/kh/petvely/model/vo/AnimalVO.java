@@ -19,14 +19,14 @@ public class AnimalVO {
 	private int ani_neutralization;
 	private String ani_at_type;
 	private int ani_me_num;
-	@Override
-	public String toString() {
-		return "{ ani_num : " + ani_num /*+ ", ani_name=" + ani_name + ", ani_age=" + ani_age + ", ani_gender="
-				+ ani_gender + ", ani_birth=" + ani_birth + ", ani_weight=" + ani_weight + ", ani_img=" + ani_img
-				+ ", ani_info=" + ani_info + ", ani_neutralization=" + ani_neutralization + ", ani_at_type="
-				+ ani_at_type + ", ani_me_num=" + ani_me_num + "]"*/ +"}";
-	}
 	
-	
+	//PostHostSelectedPetsVO 와 join 해서 사용할 때 호출용
+	private int phsp_num;
+	private int phsp_po_num; 
+	private int phsp_ani_num;
 
+	//PostUserSelectedPetsVO 와 join 해서 사용할 때 호출용 
+	private int pusp_num;
+	private int pusp_po_num;
+	private int pusp_ani_num;
 }
