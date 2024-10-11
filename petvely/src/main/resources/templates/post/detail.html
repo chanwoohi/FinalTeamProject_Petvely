@@ -30,19 +30,17 @@
 				<input type="text" class="form-control" readonly th:field="*{po_viewCount}">
 			</div>
 			<div class="text-center">
+			<br/>
 		    <a href="#" data-state="1"
 		       class="btn-up btn btn" 
 		       th:classappend="${re_state != 1} ? '-outline-danger' : '-danger'">
 		        👍추천(<span th:text="${post.po_recommendCount}"></span>)
 		    </a>
 		    <a href="#" data-state="-1"
-		       class="btn-up btn btn" 
+		       class="btn-down btn btn" 
 		       th:classappend="${re_state != -1} ? '-outline-danger' : '-danger'">
 		        👎비추천(<span th:text="${post.po_recommendCount}"></span>)
 		    </a>
-	
-
-			
 			</div>
 			<div class="form-group">
 				<label>내용:</label>
@@ -51,8 +49,8 @@
 				</div>
 			</div>
 			<!--  <div class="form-group" th:if="${list != null and #lists.size(list) > 0}">-->
-				<div class="form-group">
-			    <label>첨부파일:</label>
+			<div class="form-group">
+			     <label>첨부파일 :</label>
 			    <div th:each="file : ${list}">
 			        <a th:href="@{'/download/' + ${file.fi_name}}" 
 			           class="form-control" 
@@ -65,6 +63,56 @@
 			<a class="btn btn-outline-info" th:href="@{/post/update/{po_num}(po_num=*{po_num})}">수정</a>
 			<a class="btn btn-outline-info" th:href="@{/post/delete/{po_num}(po_num=*{po_num})}">삭제</a>
 		</div>
+		
+		<script type="text/javascript">
+		//추천/비추천 버튼 클릭 이벤트
+		$('.btn-up, .btn-down').click(function(e){
+			    e.preventDefault();
+
+			    let state = $(this).data('state'); // 추천: 1, 비추천: -1
+			    let num = [[${post.po_num}]];  // 게시글 번호
+			   // let $this = $(this);
+	     
+			
+			    $.ajax({
+			        url: '/post/recommend',
+			        method : "get", //원하는 방식 선택
+			        data: {			 
+			            //re_me_num: memberId,
+			            state: state,
+			            num: num
+			        },
+					success : function(data){
+						let res = data.result;
+				
+						if(res == 1){
+							alert('추천 했습니다.');
+							 $('.btn-up').removeClass('btn-outline-danger').addClass('btn-danger');
+			                 $('.btn-down').removeClass('btn-danger').addClass('btn-outline-danger');
+						
+						}else if(res == -1){
+							alert('비추천 했습니다.');
+							 $('.btn-up').removeClass('btn-danger').addClass('btn-outline-danger');
+			                 $('.btn-down').removeClass('btn-outline-danger').addClass('btn-danger');
+						}else{
+							alert(`${res == 1?'추천':'비추천'}을 취소했습니다.`);
+						}
+						checkRecommendBtns(res);
+						   // 이미 파싱된 JSON을 사용하므로 JSON.parse 필요 없음
+				        let post = data.post;
+						$('.btn-up span').text(post.po_up);
+						$('.btn-down span').text(post.po_down);
+					}, 
+					error : function(xhr, status, error){
+						//xhr : XHLHttpRequest 객체, 요청과 관련된 정보를 제공
+						//status :HTTP 상태 코드, 요청이 실패한 원인
+						//error : 에러에 대한 추가 정보
+						console.log('추천/비추천 요청 중 에러 발생', error);
+					}
+				});
+			});
+
+		</script>
 	</main>
 </body>
 </html>

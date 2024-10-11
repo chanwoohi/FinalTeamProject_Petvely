@@ -1,6 +1,8 @@
 package kr.kh.petvely.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.petvely.model.vo.CommunityVO;
 import kr.kh.petvely.model.vo.PostVO;
@@ -84,5 +88,20 @@ public class PostController {
 		model.addAttribute("postList", postList);
 		return "post/listWithMember";
 	}
-	
+    // 추천/비추천 처리
+	@ResponseBody
+    @GetMapping("/post/recommend")
+	public Map<String, Object> recommend(@RequestParam("state") int state,
+			@RequestParam("num") int num) {
+	    // state: 1이면 추천, 0이면 비추천을 의미
+	    // num: 게시물 번호
+
+	    Map<String, Object> resultMap = new HashMap<>();
+	    Object res;
+		// 결과를 Map에 담아 반환
+	    resultMap.put("result", res);
+	    return resultMap;
+	}
+
+
 }

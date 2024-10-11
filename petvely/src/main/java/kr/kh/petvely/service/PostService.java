@@ -2,12 +2,12 @@ package kr.kh.petvely.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.kh.petvely.dao.PostDAO;
 import kr.kh.petvely.model.vo.CommunityVO;
 import kr.kh.petvely.model.vo.PostVO;
+import kr.kh.petvely.model.vo.RecommendVO;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -46,6 +46,11 @@ public class PostService {
 			return false;
 		}
 	}
+	//조회수 증가
+	public void updateView(int po_num) {
+		postDao.updateView(po_num);
+		
+	}
 	// 게시글 논리적 삭제 (po_delete 값을 1로 업데이트)
 	public boolean deletePost(int po_num) {
 		// 실제 삭제가 아니라 po_delete를 1로 변경하여 논리적 삭제 처리
@@ -58,10 +63,32 @@ public class PostService {
 	public List<PostVO> getPostpostListWithMemberId() {
 		return postDao.selectPostWithMemberId();
 	}
-	public void updateView(int po_num) {
-		postDao.updateView(po_num);
+	//추천
+	public int insertRecommend(RecommendVO recommend) {
 		
+		if(recommend == null) {
+			throw new RuntimeException();
+		}
+		//기존에 추천 내용을 확인
+		RecommendVO dbRecommend = PostDAO.selectRecommend(recommend);
+		
+		//없으면 추가 후 추천상태를 리턴
+		if(dbRecommend == null){
+			PostDAO.insertRecommend(recommend);
+			return recommend.getRe_state();
+		}
+		//있으면 삭제 
+		PostDAO.deleteRecommend(dbRecommend.getRe_num());
+		
+		//기존 상태와 새 상태가 같으면(취소)
+		if(dbRecommend.getRe_state() == recommend.getRe_state()) {
+			return 0;
+		}
+		//기존상태와 새 상태가 다르면(변경)
+		PostDAO.insertRecommend(recommend);
+		return recommend.getRe_state();
 	}
+
 
 
 
