@@ -29,4 +29,17 @@
 		where
 			po_num = #{po_num}
 	</update>
+	<insert id="insertWalkMateMember">
+		insert into walkmatemember(wmm_po_num, wmm_ani_num, wmm_me_num)
+		values(#{pet.pusp_po_num}, #{pet.pusp_ani_num}, #{pet.wmm_me_num})
+	</insert>
+	<select id="selectWalkMateMember" resultType="walkMateMemberVO">
+		select * from walkmatemember
+		join animal on wmm_ani_num = ani_num 
+		where wmm_po_num = #{po_num}
+	</select>
+	<delete id="deleteWalkMateMember">
+		delete from walkmatemember
+		where wmm_po_num = #{po_num}
+	</delete>
 </mapper>

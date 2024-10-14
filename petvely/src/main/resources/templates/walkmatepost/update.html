@@ -177,22 +177,7 @@
 		            str += `<input type="text" name="selectedHostAniNums" value="${aniNum}"/>`;
 		        });
 		        selectedPetsEl.innerHTML = str;
-		       	/*
-		     	// 선택된 동물 데이터 전송
-		        $.ajax({
-		            url: '/walkmatepost/insert/animals', // 데이터 전송 URL
-		            type: 'POST',
-		            contentType: 'application/json',
-		            data: JSON.stringify(selectedHostAniNums), // 배열을 JSON 문자열로 변환
-		            success: function(response) {
-		                console.log('Animals response:', response);
-		                // 이후 추가 동작이 필요할 수 있음
-		            },
-		            error: function(jqXHR, textStatus, errorThrown) {
-		                console.error('Animal error 발생:', textStatus, errorThrown);
-		            }
-		        });
-		     	*/
+		       
 		        console.log(JSON.stringify(selectedHostAniNums));
 		        
 		        console.log(selectedHostAniNums);

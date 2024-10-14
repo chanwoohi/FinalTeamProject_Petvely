@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import kr.kh.petvely.model.vo.AnimalVO;
+import kr.kh.petvely.model.vo.WalkMateMemberVO;
 import kr.kh.petvely.model.vo.WalkMatePostVO;
 import kr.kh.petvely.service.AnimalService;
 import kr.kh.petvely.service.PostService;
@@ -50,7 +51,6 @@ public class WalkMatePostController {
 	@PostMapping("/walkmatepost/insert")
 	public String walkmatepostInsertPost(WalkMatePostVO walkMatePost,
 			                            int [] selectedHostAniNums){
-	    System.out.println(selectedHostAniNums);
 		
 		if(walkMatePostService.insertWalkMatePost(walkMatePost, selectedHostAniNums)) {
 			return "redirect:/walkmatepost/list";
@@ -74,18 +74,27 @@ public class WalkMatePostController {
 		System.out.println(petList);
 		model.addAttribute("petList", petList);
 		
+				
 		return "/walkmatepost/detail";
 	}
 	
 	@PostMapping("/walkmatepost/detail/{po_num}")
-	public String walkmatepostDetailPost(WalkMatePostVO walkMatePost,
+	public String walkmatepostDetailPost(Model model,
+										WalkMatePostVO walkMatePost,
 										@PathVariable int po_num,
             							int [] selectedUserAniNums) {
-		System.out.println(selectedUserAniNums);
 		
-//		if(walkMatePostService.enrollWalkMatePost(walkMatePost, selectedUserAniNums)) {
-//			return "redirect:/walkmatepost/detail/"+po_num;
-//		}
+		if(walkMatePostService.insertWalkMateMember(walkMatePost, selectedUserAniNums)) {
+			List<WalkMateMemberVO> walkMateMemberList = walkMatePostService.selectWalkMateMember(po_num);
+			
+			System.out.println("walkMateMemberList : " + walkMateMemberList);
+			
+			model.addAttribute("walkMateMemberList", walkMateMemberList);
+
+			
+			
+			return "redirect:/walkmatepost/detail/"+po_num;
+		}
 		return "redirect:/walkmatepost/detail/"+po_num;
 	}
 	

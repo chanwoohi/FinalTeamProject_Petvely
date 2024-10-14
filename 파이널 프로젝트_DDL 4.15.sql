@@ -200,7 +200,7 @@ CREATE TABLE `WalkMateMember` (
 	`wmm_num`	int primary key auto_increment	NOT NULL,
 	`wmm_approve`	varchar(1)	NULL,
 	`wmm_po_num`	int	NOT NULL,
-	`wmm_ani_num`	varchar(20)	NOT NULL,
+	`wmm_ani_num`	int	NOT NULL,
 	`wmm_me_num`	int	NOT NULL
 );
 

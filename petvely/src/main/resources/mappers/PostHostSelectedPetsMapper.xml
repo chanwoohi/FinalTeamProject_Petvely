@@ -9,4 +9,12 @@
 		delete from postHostSelectedPets
 		where phsp_po_num = #{po_num}
 	</delete>
+	<insert id="insertPostUserSelectedPets">
+		insert into postHostSelectedPets(pusp_po_num, pusp_ani_num)
+		values(#{pusp_po_num}, #{pusp_ani_num})
+	</insert>
+	<delete id="deletePostUserSelectedPets">
+		delete from postUserSelectedPets
+		where pusp_po_num = #{po_num}
+	</delete>
 </mapper>
