@@ -15,4 +15,16 @@
 		where
 			phsp_po_num = #{po_num}
 	</select>
+	
+	<select id="selectChoicePetList" resultType="AnimalVO">
+		select 
+			* 
+		from 
+			animal
+		join 
+			postUserSelectedPets on ani_num = pusp_ani_num
+		where
+			pusp_po_num = #{po_num}
+	</select>
+	
 </mapper>

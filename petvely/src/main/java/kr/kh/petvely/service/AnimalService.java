@@ -25,6 +25,11 @@ public class AnimalService {
 		
 		return animalDao.selectDetailPetList(po_num);
 	}
+
+	public List<AnimalVO> selectChoicePetList(int po_num) {
+		
+		return animalDao.selectChoicePetList(po_num);
+	}
 	
 
 }

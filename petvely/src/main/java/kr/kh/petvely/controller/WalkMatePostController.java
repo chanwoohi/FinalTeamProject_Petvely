@@ -74,6 +74,10 @@ public class WalkMatePostController {
 		System.out.println(petList);
 		model.addAttribute("petList", petList);
 		
+		List<AnimalVO> choicePetList = animalService.selectChoicePetList(po_num);
+		model.addAttribute("choicePetList", choicePetList);
+		
+		List<WalkMateMemberVO> walkMateMember = walkMatePostService.selectWalkMateMember(po_num);
 				
 		return "/walkmatepost/detail";
 	}
@@ -88,10 +92,7 @@ public class WalkMatePostController {
 			List<WalkMateMemberVO> walkMateMemberList = walkMatePostService.selectWalkMateMember(po_num);
 			
 			System.out.println("walkMateMemberList : " + walkMateMemberList);
-			
 			model.addAttribute("walkMateMemberList", walkMateMemberList);
-
-			
 			
 			return "redirect:/walkmatepost/detail/"+po_num;
 		}
@@ -99,7 +100,8 @@ public class WalkMatePostController {
 	}
 	
 	@GetMapping("/walkmatepost/update/{po_num}")
-	public String walkmatepostUpdate(Model model, @PathVariable int po_num,
+	public String walkmatepostUpdate(Model model, 
+									 @PathVariable int po_num,
 									 AnimalVO animal) {
 		
 		WalkMatePostVO walkMatePost = walkMatePostService.getWalkMatePost(po_num);
@@ -107,6 +109,9 @@ public class WalkMatePostController {
 		
 		List<AnimalVO> petList = animalService.selectPetList(animal);
 		model.addAttribute("petList", petList);
+		
+		List<WalkMateMemberVO> walkMateMemberList = walkMatePostService.selectWalkMateMember(po_num);
+		model.addAttribute("walkMateMemberList", walkMateMemberList);
 		
 		return "/walkmatepost/update";
 	}
@@ -118,7 +123,12 @@ public class WalkMatePostController {
 										int [] selectedHostAniNums) {
 		if(walkMatePostService.updateWalkMatePost(walkMatePost, selectedHostAniNums)) {
 			System.out.println(walkMatePost);
+			List<WalkMateMemberVO> walkMateMemberList = walkMatePostService.selectWalkMateMember(po_num);
 			
+			System.out.println("walkMateMemberList : " + walkMateMemberList);
+			
+			model.addAttribute("walkMateMemberList", walkMateMemberList);
+
 			return "redirect:/walkmatepost/list";
 		}
 		return "redirect:/walkmatepost/detail/"+po_num;
@@ -126,7 +136,7 @@ public class WalkMatePostController {
 	
 	@GetMapping("/walkmatepost/delete/{po_num}")
 	public String walkmatepostDelete(Model model, @PathVariable int po_num) {
-		/* 
+		/*
 		 * postService에 맡긴 이유는 삭제 했을 때 DB에서 CASCADE 설정하면 어차피 같이 지워짐 ( po_num 공유라 상관 없나? )
 		 * 상관 있는데 mysql 자체에서 설정해서 같이 삭제 시키게 했음
 		 * 작동하면 다른 게시판에서 쓸 수 있으니까 postService로 보냄	

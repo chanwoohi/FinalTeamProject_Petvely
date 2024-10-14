@@ -10,4 +10,6 @@ public interface AnimalDAO {
 
 	List<AnimalVO> selectDetailPetList(int po_num);
 
+	List<AnimalVO> selectChoicePetList(int po_num);
+
 }
