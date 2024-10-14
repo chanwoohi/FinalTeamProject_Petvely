@@ -63,33 +63,34 @@ public class PostService {
 	public List<PostVO> getPostpostListWithMemberId() {
 		return postDao.selectPostWithMemberId();
 	}
-	//추천
+    // 추천/비추천 처리 메서드
 	public int insertRecommend(RecommendVO recommend) {
-		
-		if(recommend == null) {
-			throw new RuntimeException();
-		}
-		//기존에 추천 내용을 확인
-		RecommendVO dbRecommend = PostDAO.selectRecommend(recommend);
-		
-		//없으면 추가 후 추천상태를 리턴
-		if(dbRecommend == null){
-			PostDAO.insertRecommend(recommend);
-			return recommend.getRe_state();
-		}
-		//있으면 삭제 
-		PostDAO.deleteRecommend(dbRecommend.getRe_num());
-		
-		//기존 상태와 새 상태가 같으면(취소)
-		if(dbRecommend.getRe_state() == recommend.getRe_state()) {
-			return 0;
-		}
-		//기존상태와 새 상태가 다르면(변경)
-		PostDAO.insertRecommend(recommend);
-		return recommend.getRe_state();
+	    if (recommend == null) {
+	        throw new RuntimeException();
+	    }
+
+	    // 기존 추천 정보 확인
+	    RecommendVO dbRecommend = postDao.selectRecommend(recommend);
+
+	    // 기존 추천 정보가 없으면 새로 추가
+	    if (dbRecommend == null) {
+	        postDao.insertRecommend(recommend);
+	        postDao.updateRecommendCount(recommend.getRe_po_num());  // 게시글 추천수 업데이트
+	        return recommend.getRe_state();  // 추천/비추천 상태 반환
+	    }
+
+	    // 기존 추천 정보가 있으면 삭제
+	    postDao.deleteRecommend(dbRecommend.getRe_num());
+
+	    // 기존 상태와 동일하면 추천 취소
+	    if (dbRecommend.getRe_state() == recommend.getRe_state()) {
+	        postDao.updateRecommendCount(recommend.getRe_po_num());  // 게시글 추천수  업데이트
+	        return 0;  // 취소 상태 반환
+	    }
+
+	    // 기존 상태와 다르면 상태 변경
+	    postDao.insertRecommend(recommend);
+	    postDao.updateRecommendCount(recommend.getRe_po_num());  // 게시글 추천수 업데이트
+	    return recommend.getRe_state();  // 새로운 추천/비추천 상태 반환
 	}
-
-
-
-
 }

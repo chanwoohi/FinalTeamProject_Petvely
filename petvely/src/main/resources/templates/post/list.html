@@ -42,11 +42,15 @@
 					               th:href="@{/post/detail/{po_num}(po_num=${item.po_num})}">
 					            </a>
 					        </td>
-							<td th:text="${item.po_me_num}"></td>
-							<td th:text="${item.po_date}"></td>
-							<td>추천수</td>
-							<td th:text="${item.po_viewCount}"></td>
-						</tr>
+							    <td th:text="${item.po_me_num}"></td>
+						        <td th:text="${item.po_date}"></td>
+						        <!-- 추천 수/비추천 수 출력 -->
+						        <td>
+						            <span th:text="${item.recommendCount}">추천수</span> / 
+						            <span th:text="${item.notRecommendCount}">비추천수</span>
+						        </td>
+						        <td th:text="${item.po_viewCount}"></td>
+						    </tr>
 
 						<tr th:if="${list.size() == 0}">
 							<td colspan="6" class="text-center">등록된 게시글이 없습니다.</td>

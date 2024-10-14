@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.petvely.model.vo.CommunityVO;
 import kr.kh.petvely.model.vo.PostVO;
+import kr.kh.petvely.model.vo.RecommendVO;
 import kr.kh.petvely.service.PostService;
 import lombok.AllArgsConstructor;
 
@@ -89,19 +90,28 @@ public class PostController {
 		return "post/listWithMember";
 	}
     // 추천/비추천 처리
-	@ResponseBody
+    @ResponseBody
     @GetMapping("/post/recommend")
-	public Map<String, Object> recommend(@RequestParam("state") int state,
-			@RequestParam("num") int num) {
-	    // state: 1이면 추천, 0이면 비추천을 의미
-	    // num: 게시물 번호
+    public Map<String, Object> recommend(@RequestParam("state") int state,
+                                         @RequestParam("num") int num) {  
+    	
+        Map<String, Object> resultMap = new HashMap<>();
+        
+        RecommendVO recommend = new RecommendVO();
+        recommend.setRe_post_num(num);  // 게시글 번호
+        recommend.setRe_state(state);  // 추천/비추천 상태
 
-	    Map<String, Object> resultMap = new HashMap<>();
-	    Object res;
-		// 결과를 Map에 담아 반환
-	    resultMap.put("result", res);
-	    return resultMap;
-	}
+        // 추천/비추천 처리
+        int res = postService.insertRecommend(recommend);
+
+        // 게시글 정보 다시 가져오기
+        PostVO post = postService.getPost(num);
+        System.out.println(res);
+        resultMap.put("result", res);  // 처리 결과(추천/비추천 또는 취소 상태)
+        resultMap.put("post", post);           // 업데이트된 게시글 정보
+        
+        return resultMap;
+    }
 
 
 }

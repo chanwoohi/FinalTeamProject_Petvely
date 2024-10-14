@@ -34,12 +34,12 @@
 		    <a href="#" data-state="1"
 		       class="btn-up btn btn" 
 		       th:classappend="${re_state != 1} ? '-outline-danger' : '-danger'">
-		        👍추천(<span th:text="${post.po_recommendCount}"></span>)
+		        👍추천(<span th:text="${post.po_up}"></span>)
 		    </a>
 		    <a href="#" data-state="-1"
 		       class="btn-down btn btn" 
 		       th:classappend="${re_state != -1} ? '-outline-danger' : '-danger'">
-		        👎비추천(<span th:text="${post.po_recommendCount}"></span>)
+		        👎비추천(<span th:text="${post.po_down}"></span>)
 		    </a>
 			</div>
 			<div class="form-group">
@@ -65,54 +65,80 @@
 		</div>
 		
 		<script type="text/javascript">
-		//추천/비추천 버튼 클릭 이벤트
-		$('.btn-up, .btn-down').click(function(e){
-			    e.preventDefault();
 
-			    let state = $(this).data('state'); // 추천: 1, 비추천: -1
-			    let num = [[${post.po_num}]];  // 게시글 번호
-			   // let $this = $(this);
-	     
-			
-			    $.ajax({
-			        url: '/post/recommend',
-			        method : "get", //원하는 방식 선택
-			        data: {			 
-			            //re_me_num: memberId,
-			            state: state,
-			            num: num
-			        },
-					success : function(data){
-						let res = data.result;
-				
-						if(res == 1){
-							alert('추천 했습니다.');
-							 $('.btn-up').removeClass('btn-outline-danger').addClass('btn-danger');
-			                 $('.btn-down').removeClass('btn-danger').addClass('btn-outline-danger');
-						
-						}else if(res == -1){
-							alert('비추천 했습니다.');
-							 $('.btn-up').removeClass('btn-danger').addClass('btn-outline-danger');
-			                 $('.btn-down').removeClass('btn-outline-danger').addClass('btn-danger');
-						}else{
-							alert(`${res == 1?'추천':'비추천'}을 취소했습니다.`);
-						}
-						checkRecommendBtns(res);
-						   // 이미 파싱된 JSON을 사용하므로 JSON.parse 필요 없음
-				        let post = data.post;
-						$('.btn-up span').text(post.po_up);
-						$('.btn-down span').text(post.po_down);
-					}, 
-					error : function(xhr, status, error){
-						//xhr : XHLHttpRequest 객체, 요청과 관련된 정보를 제공
-						//status :HTTP 상태 코드, 요청이 실패한 원인
-						//error : 에러에 대한 추가 정보
-						console.log('추천/비추천 요청 중 에러 발생', error);
-					}
-				});
-			});
+		let prevState = 0; // 초기 상태 (0: 아무 상태 아님)
+		//추천/비추천 버튼 클릭 이벤트
+		$('.btn-up, .btn-down').click(function(e) {
+		    e.preventDefault();
+		
+		    let state = $(this).data('state');  // 추천: 1, 비추천: -1
+		    let num = [[${post.po_num}]];       // 게시글 번호
+		   
+		   
+
+		    $.ajax({
+		        url: '/post/recommend',
+		        method: 'get',
+		        data: {
+		            state: state,
+		            num: num
+		        },
+		        
+		    	success : function(data){
+					let res = data.result;
+					console.log(res);
+					// 상태에 따라 알림 메시지 출력
+	                // 메시지 출력 및 상태 관리
+	                if (res === 1) {
+	                    if (prevState === -1) {
+	                        alert('비추천을 취소하고 추천했습니다.'); // 비추천 취소 후 추천
+	                    } else {
+	                        alert('추천 했습니다.'); // 추천
+	                    }
+	                } else if (res === -1) {
+	                    if (prevState === 1) {
+	                        alert('추천을 취소하고 비추천했습니다.'); // 추천 취소 후 비추천
+	                    } else {
+	                        alert('비추천 했습니다.'); // 비추천
+	                    }
+	                } else if (res === 0) {
+	                    if (prevState === 1) {
+	                        alert('추천을 취소했습니다.'); // 추천 취소
+	                    } else if (prevState === -1) {
+	                        alert('비추천을 취소했습니다.'); // 비추천 취소
+	                    }
+	                }
+					
+					checkRecommendBtns(res);
+
+					 prevState = res; // 현재 상태 업데이트
+
+					console.log(data);
+	                
+					let post = JSON.parse(data.post);
+					console.log(post);
+					$('.btn-up span').text(post.po_up);
+					$('.btn-down span').text(post.po_down);
+				}, 
+		        error: function(xhr, status, error) {
+		            console.log('추천/비추천 요청 중 에러 발생', error);
+		        }
+		    });
+		});
+		//해당 게시글의 추천/비추천에 따라 각 버튼의 색상을 채워주는 함수
+		function checkRecommendBtns(state){
+			$('.btn-up, .btn-down').removeClass('btn-danger');
+			$('.btn-up, .btn-down').addClass('btn-outline-danger');
+			if(state != 0){
+				$(state==1?'.btn-up':'.btn-down').removeClass('btn-outline-danger');
+				$(state==1?'.btn-up':'.btn-down').addClass('btn-danger');
+			}
+
+		}
 
 		</script>
+		
+		
 	</main>
 </body>
 </html>

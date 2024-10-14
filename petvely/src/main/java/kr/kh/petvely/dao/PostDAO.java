@@ -44,27 +44,19 @@ public interface PostDAO {
 	
 	//조회수
 	void updateView(int po_num);
+    // 추천 정보를 가져오는 메서드
+    RecommendVO selectRecommend(RecommendVO recommend);
 
+    // 추천 정보를 추가하는 메서드
+    int insertRecommend(RecommendVO recommend);
 
-    // 추천 또는 비추천 삽입
-    static void insertRecommend(RecommendVO recommend) {
-		
-	}
+    // 추천 정보를 삭제하는 메서드
+    int deleteRecommend(int re_num);
 
-    // 추천 또는 비추천 상태 업데이트
-    void updateRecommend(RecommendVO recommend);
+    // 게시글의 추천수를 업데이트하는 메서드
+    int updateRecommendCount(int po_num);
 
-    // 특정 게시글의 추천 수 조회
-    int countRecommendByPost(@Param("re_po_num") int rePoNum, @Param("re_state") int reState);
+ 
 
-    // 추천 또는 비추천 상태 조회
-	static RecommendVO selectRecommend(@Param("re")RecommendVO recommend) {
-		return null;
-	}
-
-	static void deleteRecommend(@Param("re_num")int re_num) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

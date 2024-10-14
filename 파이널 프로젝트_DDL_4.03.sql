@@ -95,7 +95,7 @@ DROP TABLE IF EXISTS `Recommend`;
 CREATE TABLE `Recommend` (
 	`re_num`	int primary key auto_increment	NOT NULL,
 	`re_state`	int NOT NULL default 0,
-	`re_me_num`	int	NOT NULL,
+	`re_me_num`	int	NULL,
 	`re_po_num`	int	NOT NULL
 );
 
