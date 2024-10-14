@@ -34,12 +34,13 @@
 		    <a href="#" data-state="1"
 		       class="btn-up btn btn" 
 		       th:classappend="${re_state != 1} ? '-outline-danger' : '-danger'">
-		        👍추천(<span th:text="${post.po_up}"></span>)
+		        👍추천<!-- (<span th:text="${post.recommendCount}"></span>) -->
 		    </a>
+		    &nbsp;
 		    <a href="#" data-state="-1"
 		       class="btn-down btn btn" 
 		       th:classappend="${re_state != -1} ? '-outline-danger' : '-danger'">
-		        👎비추천(<span th:text="${post.po_down}"></span>)
+		        👎비추천<!-- (<span th:text="${post.notRecommendCount}"></span>) -->
 		    </a>
 			</div>
 			<div class="form-group">
@@ -117,8 +118,8 @@
 	                
 					let post = JSON.parse(data.post);
 					console.log(post);
-					$('.btn-up span').text(post.po_up);
-					$('.btn-down span').text(post.po_down);
+					$('.btn-up span').text(post.recommendCount);
+					$('.btn-down span').text(post.notRecommendCount);
 				}, 
 		        error: function(xhr, status, error) {
 		            console.log('추천/비추천 요청 중 에러 발생', error);

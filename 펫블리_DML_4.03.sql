@@ -18,16 +18,17 @@ VALUES ('A001', 'Max', 2, 'M', '2022-01-01', 5.5, TRUE, 'Dog', 1);
 INSERT INTO petvely.Post (po_title, po_content, po_date, po_co_num, po_hidden, po_viewCount, po_recommendCount, po_reportCount, po_notice, po_me_num, po_delete)
 VALUES 
 ('고양이 키우면 게추', 
-'히히',
-NOW(), 
-'1', 
-0, 
-0, 
-0,
-0, 
-'0', 
-0,
-(SELECT me_num FROM petvely.Member WHERE me_id = 'user01'));
+ '히히',
+ NOW(), 
+ 1,        -- 커뮤니티 번호 (정수로 입력)
+ 0,        -- 숨김 여부 (0: 숨김 아님)
+ 0,        -- 조회수
+ 0,        -- 추천 수
+ 0,        -- 신고 수
+ 'N',      -- 공지 여부 (N: 공지 아님)
+ (SELECT me_num FROM petvely.Member WHERE me_id = 'user01'), -- user01의 회원 번호 조회
+ 0         -- 삭제 여부 (0: 삭제되지 않음)
+);
 
 # 관리자가 '강아지', '고양이', '도마뱀', '고슴도치' 커뮤니티를 추가했을 때 필요한 쿼리
 INSERT INTO COMMUNITY(CO_NAME) VALUES('강아지');
@@ -73,3 +74,11 @@ ALTER TABLE post AUTO_INCREMENT = 5;
 SELECT p.po_num, p.po_title, p.po_content, p.po_date, p.po_co_num, m.me_id
 FROM Post p
 JOIN Member m ON p.po_me_num = m.me_num;
+
+-- 추천수 조인
+
+SELECT p.po_num, p.po_title, p.po_content, p.po_recommendCount, 
+       IFNULL(COUNT(r.re_state), 0) AS recommendCount
+FROM petvely.Post p
+LEFT JOIN petvely.Recommend r ON p.po_num = r.re_po_num AND r.re_state = 1
+GROUP BY p.po_num;

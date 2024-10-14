@@ -183,6 +183,7 @@ CREATE TABLE `Post` (
 	`po_me_num`	int	NOT NULL,
     `po_co_num` int NOT NULL,
     `po_delete` TINYINT DEFAULT 0
+
 );
 
 DROP TABLE IF EXISTS `MarketPost`;
