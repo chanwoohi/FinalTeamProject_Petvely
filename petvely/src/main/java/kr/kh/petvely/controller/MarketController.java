@@ -31,7 +31,6 @@ public class MarketController {
 
 		List<MarketPostVO> list = marketPostService.getMarketList();
 		List<FileVO> fileList = marketPostService.getThumNail();
-		System.out.println(fileList);
 		model.addAttribute("list",list);
 		model.addAttribute("fileList",fileList);
 
@@ -74,7 +73,7 @@ public class MarketController {
 			return "redirect:/post/marketdetail/" + po_num;
 		}
 	}
-	
+
 
 }
 

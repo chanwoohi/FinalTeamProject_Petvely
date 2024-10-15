@@ -42,7 +42,7 @@
 	</select>
 	
 	<select id="selectImage" parameterType="int" resultType="FileVO">
-		select * from file join marketpost on fi_po_num = po_num where fi_po_num = #{fi_po_num} 
+		select * from file join marketpost where fi_po_num = po_num
 	</select>
   
 	

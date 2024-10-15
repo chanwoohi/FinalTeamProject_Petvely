@@ -26,11 +26,12 @@
 					<td>
 						<a th:href="@{/post/marketdetail/{po_num}(po_num=${item.po_num})}" th:text="${item.po_title}"></a>
 					</td>
-					<td>
-						<img class="thumbnail" 
-                             th:src="${item.file != null && item.file.imgUrl != null ? item.file.imgUrl : '/image/image.jpg'}" 
-                             alt="Thumbnail" style="width: 100px; height: auto; margin-right: 5px;"/>
+					 <td>
+					    <img class="thumbnail" 
+					         th:src="${item.imgUrl != null && !item.imgUrl.isEmpty() ? item.imgUrl : '/image/image.jpg'}" 
+					         alt="Thumbnail" style="width: 100px; height: auto; margin-right: 5px;"/>
 					</td>
+					
 					<td th:text="${item.po_content}"></td>
 					<td th:text="${item.mp_price}"></td>
 					<td th:text="${item.me_id}"></td>

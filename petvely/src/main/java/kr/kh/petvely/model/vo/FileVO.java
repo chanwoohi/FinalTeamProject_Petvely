@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class FileVO {
-	int fi_num; 
-	String fi_ori_name;
-	String fi_name;
-	Date fi_date;
-	int fi_po_num;
-	String imgUrl;
+	private int fi_num; 
+	private String fi_ori_name;
+	private String fi_name;
+	private Date fi_date;
+	private int fi_po_num;
+	private String imgUrl;
 
 	public FileVO(String fi_ori_name, String fi_name, int fi_po_num) {
 		this.fi_ori_name = fi_ori_name;
@@ -21,11 +21,6 @@ public class FileVO {
 		this.fi_po_num = fi_po_num;
 	}
 	
-	public void setImgUrl(String imgUrl) {
-		this.imgUrl = imgUrl;
-	}
-	public String getImgUrl() {
-		return imgUrl;
-	}
+
 }
 

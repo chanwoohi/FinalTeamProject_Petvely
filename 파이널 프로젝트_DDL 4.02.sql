@@ -49,6 +49,7 @@ CREATE TABLE `File` (
 	`fi_name`	varchar(255)	NULL,
 	`fi_date`	datetime	NULL,
 	`fi_po_num`	int	NOT NULL
+
 );
 
 DROP TABLE IF EXISTS `FacilityShare`;

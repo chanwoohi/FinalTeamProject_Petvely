@@ -20,5 +20,5 @@ public class PostVO {
 	private int po_me_num;
 	
 	private String me_id;
-
+	
 }

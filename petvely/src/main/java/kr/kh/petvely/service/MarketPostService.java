@@ -86,33 +86,37 @@ public class MarketPostService {
 
 
 	public List<FileVO> getThumNail() {
-		List<FileVO> fileList = marketPostDao.selectImage();
-		String defaultImage = "/image/image.jpg";
-		
-		List<MarketPostVO> list = getMarketList();
-		List<FileVO> ThumImg = new ArrayList<>();
-		
-		for(MarketPostVO post : list) {
-			boolean img = false;
-			for(FileVO file : fileList) {
-				if(file.getFi_po_num() == post.getPo_num()) {
-					img=true;
-					break;
-				}
-			}
-			if(!img) {
-				FileVO defaultFile = new FileVO();
-				defaultFile.setImgUrl(defaultImage);
-				defaultFile.setFi_po_num(post.getPo_num());
-				ThumImg.add(defaultFile);
-			}
-		
-			
-		}
-		return ThumImg;
-	}
+	    List<FileVO> fileList = marketPostDao.selectImage();
+	    String defaultImage = "/image/image.jpg";
+	    String basePath = "/uploads";
+	    
+	    
+	    List<MarketPostVO> list = getMarketList();
+	    List<FileVO> ThumImg = new ArrayList<>();
+	    
+	    for (MarketPostVO post : list) {
+	    	boolean img = false;
+	    	System.out.println("FileList:2"+ fileList);
+	        for (FileVO file : fileList) {
+	            if (file.getFi_po_num() == post.getPo_num()) {
+	                String imgUrl = basePath + file.getFi_name();	      
+	                post.setImgUrl(imgUrl);
+	                ThumImg.add(file);
+	                img = true;
+	                break;
+	            }
+	        }
+	        if (!img) {
 
-	
+	            FileVO defaultFile = new FileVO();
+	            defaultFile.setImgUrl(defaultImage);
+	            defaultFile.setFi_po_num(post.getPo_num());
+	            ThumImg.add(defaultFile);
+	        }
+	    }
+
+	    return ThumImg;
+	}
 	
 
 	
