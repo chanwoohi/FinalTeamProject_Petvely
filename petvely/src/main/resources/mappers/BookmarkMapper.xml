@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.petvely.dao.BookmarkDAO">
+	<select id="selectBookmarkList" resultType="BookmarkVO">
+		SELECT *
+		FROM 
+		    bookmark b
+		JOIN 
+		    gatpost g ON b.bm_po_num = g.po_num
+		JOIN 
+		    marketpost m ON b.bm_po_num = m.po_num
+		JOIN 
+		    walkmatepost w ON b.bm_po_num = w.po_num
+		JOIN 
+		    post p ON b.bm_po_num = p.po_num
+		JOIN 
+		    member u ON p.po_me_num = u.me_num
+		where
+			bm_me_num = #{bm_me_num}
+	</select>
+</mapper>

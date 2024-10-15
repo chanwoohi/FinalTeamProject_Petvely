@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<main layout:fragment="content">
+		<div>
+			<table class="table table-striped">
+				<h2>즐겨찾기 목록</h2>
+				<thead>
+					<tr>
+						<th>번호</th>
+						<th>제목</th>
+						<th>작성자</th>
+						<th>조회수</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="item : ${bookMarkList}">
+						<td th:text="${item.po_num}"></td>
+						<td th:text="${item.po_title}"></td>
+						<td th:text="${item.me_id}"></td>
+						<td th:text="0">조회수 구현 하려고 하고 있음</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</main>
+</body>
+</html>

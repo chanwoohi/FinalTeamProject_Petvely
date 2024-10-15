@@ -102,7 +102,7 @@ public class WalkMatePostService {
 		}
 		try {
 			postHostSelectedPetsDao.deletePostUserSelectedPets(walkMatePost.getPo_num());
-			
+			walkMatePostDao.deleteWalkMateMember(walkMatePost.getPo_num());
 			for (int num : selectedUserAniNums) {
 	        	PostUserSelectedPetsVO pet = new PostUserSelectedPetsVO();
 	        	System.out.println("num : " + num);
@@ -112,7 +112,10 @@ public class WalkMatePostService {
 	            pet.setWmm_me_num(3);
 	            System.out.println("이거야 Inserting animal: " + pet.getPusp_ani_num() + " with po_num: " + walkMatePost.getPo_num() + " and me_num: " + pet.getWmm_me_num());
 	    		// 여기에서 deleteWalkmateMember(pet) 넣고 하려고 했다가 Mapper에 Distinct로 중복 제거하기로 함...
+	            
+	            
 	            walkMatePostDao.insertWalkMateMember(pet);
+	            
 	            postHostSelectedPetsDao.insertPostUserSelectedPets(pet); // DB에 저장
 	        }
 			return true;
@@ -123,7 +126,6 @@ public class WalkMatePostService {
 	}
 
 	public List<WalkMateMemberVO> selectWalkMateMember(int po_num) {
-
 		return walkMatePostDao.selectWalkMateMember(po_num);
 	}
 }

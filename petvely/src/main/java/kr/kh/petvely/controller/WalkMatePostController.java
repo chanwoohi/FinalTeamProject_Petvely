@@ -78,6 +78,9 @@ public class WalkMatePostController {
 		model.addAttribute("choicePetList", choicePetList);
 		
 		List<WalkMateMemberVO> walkMateMember = walkMatePostService.selectWalkMateMember(po_num);
+		model.addAttribute("walkMateMember", walkMateMember);
+		
+		System.out.println(walkMateMember);
 				
 		return "/walkmatepost/detail";
 	}
