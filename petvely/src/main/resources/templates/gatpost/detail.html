@@ -101,7 +101,7 @@
 			
 			function displayCommentList(data){
 				if(data == null || data.length == 0){
-					console.log(10);
+					console.log(1);
 					$(".comment-list").html('<li class="comment-item">등록된 댓글이 없습니다.</li>');
 					return;
 				}
@@ -115,6 +115,7 @@
 				}
 			}
 			var btns = '';
+			var str = '';
 			var str1 = '';
 			var str2 = '';
 				btns = `
@@ -124,7 +125,9 @@
 					<button class="btn btn-outline-primary" id="commentButton00">대댓글</button>
 				</div>
 				`
+			
 			function displayCommentList1(data){
+				console.log(1);
 				str2 += `
 					<div class="comment-item">
 						<div>
@@ -140,10 +143,11 @@
 						</div>
 					</div>
 				`;
-				$(".comment-list1").html(str2);
+					$(".comment-list").html(str2);
 			}
 				
 			function displayCommentList0(data){
+				console.log(10);
 				str1 += `
 					<div class="comment-item">
 						<div>
@@ -157,23 +161,19 @@
 							<div style="padding-left:20px; line-height: 40px;">${comment.cm_content}</div>
 							<div style="padding-left:20px; line-height: 40px;">${comment.cm_layer}</div>
 						</div>
-						
 					</div>
 				`;
 				$(".comment-list").html(str1);
 			}
+				
+			
 			
 			$("#commentList").hide();
-			
 			$("#commentButton").click(function() {
-				console.log(0);
 				$("#commentList").toggle();
 			})
 			
-			$("#commentList00").hide();
-			
 			$("#commentButton00").click(function() {
-				console.log(1);
 				$("#commentList00").toggle();
 			})
 		</script>

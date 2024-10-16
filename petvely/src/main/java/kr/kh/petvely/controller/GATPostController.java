@@ -1,8 +1,6 @@
 package kr.kh.petvely.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -107,7 +105,6 @@ public class GATPostController {
 	public List<CommentVO> ComentListPost(Model model, @RequestBody int po_num) {
 		List<CommentVO> list = gatPostService.getCommentList(po_num);
 		model.addAttribute("list",list);
-		System.out.println(list);
 		return list;
 		
 	}

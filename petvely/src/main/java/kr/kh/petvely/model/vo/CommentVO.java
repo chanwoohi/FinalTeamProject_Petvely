@@ -24,4 +24,7 @@ public class CommentVO {
 	
 	private String me_id; 
 	private String me_nickname;
+	private int me_num; 
+	
+	private int po_num;
 }
