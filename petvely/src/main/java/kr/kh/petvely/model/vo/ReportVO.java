@@ -2,6 +2,11 @@ package kr.kh.petvely.model.vo;
 
 import java.util.Date;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 public class ReportVO {
 
 	private int rp_num;

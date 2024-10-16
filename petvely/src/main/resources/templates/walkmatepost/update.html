@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<main layout:fragment="content">
+		<th:block th:if="${walkMatePost != null}">
+			<form method="post" th:object="${walkMatePost}" th:action="@{/walkmatepost/update/{po_num}(po_num=*{po_num})}">
+				<input type="hidden" th:field="*{po_num}"/>
+				<div class="form-group">
+					<label>제목</label>
+					<input type="text" class="form-control" th:field="*{po_title}">
+				</div>
+				
+				<!-- 로그인 기능 미구현으로 작성자 직접 입력해야함... 추후 수정 -->
+				<div class="form-group">
+					<label>작성자 번호</label>
+					<input type="text" class="form-control" th:field="*{po_me_num}">
+				</div>
+				
+				<!-- 추후에 달력 api 추가 예정 -->
+				<div class="form-group">
+					<label>날짜</label>
+					<input type="text" class="form-control" th:field="*{wm_date}">
+				</div>
+				<div class="form-group">
+					<label>시간</label>
+					<input type="text" class="form-control" th:field="*{wm_time}">
+				</div>
+				<div class="form-group">
+					<label>내용</label>
+					<!-- 
+						th:field는 name이 필요 없는 반면, th:utext는 name을 따로 설정해야 함.
+						나중에 섬머노트 쓰게되면 th:utext를 고려 해야하는데 그 때 참고
+				  	-->
+					<textarea class="form-control" style="min-height: 400px; height: auto;" th:field="*{po_content}">
+					</textarea>
+				</div>
+				<button class="btn btn-outline-info col-12">게시글 수정</button>
+			</form>
+		</th:block>
+		<a class="btn btn-outline-info" th:href="@{/walkmatepost/list}">목록으로</a>
+	</main>
+</body>
+</html>

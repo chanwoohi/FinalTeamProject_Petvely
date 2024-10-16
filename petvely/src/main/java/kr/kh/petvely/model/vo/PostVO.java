@@ -1,5 +1,6 @@
 package kr.kh.petvely.model.vo;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import lombok.Data;
@@ -9,17 +10,47 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PostVO {
 
-	private int po_num;
-	private String po_title;
-	private String po_content;
-	private Date po_date;
-	private String po_hidden;
-	private int po_viewCount; 
-	private int po_recommendCount;
-	private int po_reportCount;
-	private String po_notice;
-	private int po_me_num;
-	
+	private int po_num; // 게시글 번호
+	private String po_title; // 게시글 제목
+	private String po_content; // 게시글 내용
+	private Date po_date; // 작성일
+	private String po_hidden; // 숨김여부
+	private int po_viewCount; // 조회수
+	private int po_recommendCount; // 추천수
+	private int po_reportCount; // 신고수
+	private String po_notice; // 공지
+	private int po_me_num; // 작성자
+	private int po_co_num; // 커뮤니티 번호
+	private int po_delete; // 삭제처리
+
 	private String me_id;
-	private int me_num;
+	
+	// 새로 추가할 필드
+    private int recommendCount; // 추천 수
+    private int notRecommendCount; // 비추천 수
+
+    // Getter, Setter
+    public int getRecommendCount() {
+        return recommendCount;
+    }
+
+    public void setRecommendCount(int recommendCount) {
+        this.recommendCount = recommendCount;
+    }
+
+    public int getNotRecommendCount() {
+        return notRecommendCount;
+    }
+
+    public void setNotRecommendCount(int notRecommendCount) {
+        this.notRecommendCount = notRecommendCount;
+    }
+	
+	public String getPo_date() {
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			return format.format(po_date);
+		
+	}
+
+	
 }

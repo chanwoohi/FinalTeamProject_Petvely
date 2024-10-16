@@ -74,20 +74,6 @@ CREATE TABLE `FacilityReview` (
 	`fr_me_num`	int	NOT NULL
 );
 
-DROP TABLE IF EXISTS `WalkMatePost`;
-
-CREATE TABLE `WalkMatePost` (
-	`po_num`	int primary key auto_increment	NOT NULL,
-	`wm_date`	datetime	NULL,
-	`wm_time`	varchar(255)	NULL,
-	`wm_wms_state`	varchar(50)	NOT NULL DEFAULT "진행중",
-    CONSTRAINT `fk_wm_po_num`
-	  FOREIGN KEY (`po_num`)
-	  REFERENCES `petvely`.`post` (`po_num`)
-	  ON DELETE CASCADE
-	  ON UPDATE NO ACTION
-);
-
 DROP TABLE IF EXISTS `Recommend`;
 
 CREATE TABLE `Recommend` (
@@ -179,6 +165,20 @@ CREATE TABLE `Post` (
 	`po_reportCount`	int	NULL,
 	`po_notice`	varchar(1)	NULL,
 	`po_me_num`	int	NOT NULL
+);
+
+DROP TABLE IF EXISTS `WalkMatePost`;
+
+CREATE TABLE `WalkMatePost` (
+	`po_num`	int primary key auto_increment	NOT NULL,
+	`wm_date`	datetime	NULL,
+	`wm_time`	varchar(255)	NULL,
+	`wm_wms_state`	varchar(50)	NOT NULL DEFAULT "진행중",
+    CONSTRAINT `fk_wm_po_num`
+	  FOREIGN KEY (`po_num`)
+	  REFERENCES `petvely`.`post` (`po_num`)
+	  ON DELETE CASCADE
+	  ON UPDATE NO ACTION
 );
 
 DROP TABLE IF EXISTS `MarketPost`;
@@ -343,3 +343,29 @@ CREATE TABLE `WalkMatePet` (
 	`wmp_num`	int primary key auto_increment	NOT NULL,
 	`ani_num`	varchar(20) NOT NULL
 );
+
+DROP TABLE IF EXISTS `RegEx`;
+
+CREATE TABLE `RegEx` (
+	`re_num`	int primary key auto_increment	NOT NULL,
+	`re_regex`	varchar(255) NOT NULL
+);
+
+ALTER TABLE `petvely`.`member` 
+CHANGE COLUMN `me_pw` `me_pw` VARCHAR(255) NOT NULL ,
+CHANGE COLUMN `me_nickname` `me_nickname` VARCHAR(20) NOT NULL ,
+CHANGE COLUMN `me_email` `me_email` VARCHAR(50) NOT NULL ,
+CHANGE COLUMN `me_phone` `me_phone` VARCHAR(12) NOT NULL ;
+
+DROP TABLE IF EXISTS `community`;
+
+CREATE TABLE `community` (
+	`co_num`	int primary key auto_increment	NOT NULL,
+	`co_name`	varchar(50) unique	NULL
+);
+
+ALTER TABLE `petvely`.`post` 
+ADD COLUMN `po_delete` VARCHAR(1) NULL DEFAULT 0 AFTER `po_me_num`;
+
+ALTER TABLE `petvely`.`post` 
+ADD COLUMN `po_co_num` INT NOT NULL AFTER `po_delete`;
