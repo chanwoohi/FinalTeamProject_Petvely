@@ -1,21 +1,13 @@
 package kr.kh.petvely.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.sql.DataSource;
-
-import org.apache.ibatis.annotations.Param;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import kr.kh.petvely.model.vo.CommunityVO;
 import kr.kh.petvely.model.vo.FileVO;
 import kr.kh.petvely.model.vo.PostVO;
 import kr.kh.petvely.model.vo.RecommendVO;
-import kr.kh.petvely.pagination.PostCriteria;
 
 public interface PostDAO {
 	
