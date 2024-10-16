@@ -3,15 +3,39 @@
     xmlns:th="http://www.thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
     layout:decorate="~{layout/layout.html}">
+<head>
+  <style>
+        .blur {
+            filter: blur(1px);
+            pointer-events: none; 
+            opacity: 0.5; 
 
+        }
+        
+        .overlay {
+            position: absolute; 
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            color: #ff0000; 
+            font-size: 24px; 
+
+
+        }
+    </style>
+</head>
 <body>
 		
     <main layout:fragment="content">
+
    		<table class="table table-striped">
 	    	<thead>
 				<tr>
 					<th>번호</th>
-					<th>판매상태</th>
 					<th>제목</th>
 					<th>썸네일</th>
 					<th>판매내용</th>
@@ -20,11 +44,15 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="item : ${list}">
+				<tr th:each="item : ${list}" th:classappend="${item.mp_gts_state == '판매완료'} ? 'blur'">
 					<td th:text="${item.po_num}"></td>
-					<td th:text="${item.mp_gts_state}"></td>
+					
 					<td>
-						<a th:href="@{/post/marketdetail/{po_num}(po_num=${item.po_num})}" th:text="${item.po_title}"></a>
+						<a th:if="${item.mp_gts_state != '판매완료'}"
+							th:href="@{/post/marketdetail/{po_num}(po_num=${item.po_num})}" 
+							th:text="${item.po_title}"></a>
+						<span th:if="${item.mp_gts_state == '판매완료'}" th:text="${item.po_title}"></span>
+						<div class="overlay" th:if="${item.mp_gts_state == '판매완료'}">판매 완료</div>
 					</td>
 					 <td>
 					    <img class="thumbnail" 
@@ -36,6 +64,9 @@
 					<td th:text="${item.mp_price}"></td>
 					<td th:text="${item.me_id}"></td>
 				</tr>
+
+				
+			
 				<tr th:if="${list.size() == 0}">
 					<td colspan="4" class="text-center">등록된 게시글이 없습니다.</td>
 				</tr>
@@ -45,6 +76,7 @@
 		<a th:href="@{/post/marketinsert}" class="btn btn-outline-dark col-12">게시글 등록</a>
 
     </main>
+	
   
 </body>
 </html>

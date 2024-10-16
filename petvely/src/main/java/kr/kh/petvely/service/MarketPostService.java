@@ -40,29 +40,42 @@ public class MarketPostService {
 			return res;
 		}try {
 			res = marketPostDao.insertPost(marketPost);
+			if(res) {
+				
+			
+			if(fileList == null || fileList.length == 0) {
+				String defaultImage = "/image/image.jpg";
+				marketPost.setImgUrl(defaultImage);
+				
+			}else {
+				for(MultipartFile file : fileList) {
+					uploadFile(file, marketPost.getPo_num(),marketPost);
+				}
+				
+			}
+		}
 			marketPostDao.insertMarketPost(marketPost);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return res;
 		}
-		if(fileList == null || fileList.length == 0) {
-			return res;
-		}
-		for(MultipartFile file : fileList) {
-			uploadFile(file, marketPost.getPo_num());
-		}
 		return res;
 	}
 
-	private void uploadFile(MultipartFile file, int po_num) {
+	private void uploadFile(MultipartFile file, int po_num, MarketPostVO marketPost) {
 		if(file == null || file.getOriginalFilename().length() == 0) {
 			return;
 		}
 		try {
 			String fi_ori_name = file.getOriginalFilename();
 			String fi_name = UploadFileUtils.uploadFile(uploadPath, fi_ori_name, file.getBytes());
+			String basePath = "/uploads";
+			String imgUrl = basePath + fi_name;
+			marketPost.setImgUrl(imgUrl);
+			
 			FileVO fileVo = new FileVO(fi_ori_name, fi_name, po_num);
 			marketPostDao.insertFile(fileVo);
+
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -80,13 +93,14 @@ public class MarketPostService {
 	}
 
 	public List<FileVO> getFileList(int po_num) {
-		
+
 		return marketPostDao.selectFileList(po_num);
 	}
 
 
 	public List<FileVO> getThumNail() {
 	    List<FileVO> fileList = marketPostDao.selectImage();
+	    System.out.println(fileList);
 	    String defaultImage = "/image/image.jpg";
 	    String basePath = "/uploads";
 	    
@@ -96,7 +110,6 @@ public class MarketPostService {
 	    
 	    for (MarketPostVO post : list) {
 	    	boolean img = false;
-	    	System.out.println("FileList:2"+ fileList);
 	        for (FileVO file : fileList) {
 	            if (file.getFi_po_num() == post.getPo_num()) {
 	                String imgUrl = basePath + file.getFi_name();	      

@@ -19,14 +19,15 @@
 	</insert>	
 	
 	<insert id="insertMarketPost">
-		insert into marketpost (mp_gt_type,mp_gts_state,mp_name,mp_content,mp_price)
-			values(#{mp_gt_type},#{mp_gts_state}, #{mp_name}, #{mp_content}, #{mp_price})
+		insert into marketpost (mp_gt_type,mp_gts_state,mp_name,mp_content,mp_price,imgUrl)
+			values(#{mp_gt_type},#{mp_gts_state}, #{mp_name}, #{mp_content}, #{mp_price},#{imgUrl})
 	</insert>
 	
 	<insert id="insertFile">
 		insert into file (fi_ori_name, fi_name,fi_po_num, fi_date) 
 			values(#{fi_ori_name},#{fi_name},#{fi_po_num}, now())
 	</insert>
+	
 	<select id="selectTypes" resultType="GoodsTypeVO">
 		select * from goodstype;
 	</select>
@@ -41,7 +42,7 @@
 		select * from file where fi_po_num = #{fi_po_num}
 	</select>
 	
-	<select id="selectImage" parameterType="int" resultType="FileVO">
+	<select id="selectImage" resultType="FileVO">
 		select * from file join marketpost where fi_po_num = po_num
 	</select>
   
