@@ -1,6 +1,5 @@
 package kr.kh.petvely.model.vo;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import lombok.Data;
@@ -45,12 +44,5 @@ public class PostVO {
     public void setNotRecommendCount(int notRecommendCount) {
         this.notRecommendCount = notRecommendCount;
     }
-	
-	public String getPo_date() {
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-			return format.format(po_date);
-		
-	}
-
 	
 }

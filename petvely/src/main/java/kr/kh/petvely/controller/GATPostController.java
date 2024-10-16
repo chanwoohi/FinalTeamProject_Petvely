@@ -39,6 +39,7 @@ public class GATPostController {
 	public String postDetail(Model model, @PathVariable int po_num) {
 		gatPostService.updatePostView(po_num);
 		GiveAndTakePostVO GATPost = gatPostService.getGATPost(po_num);
+		System.out.println(GATPost);
 		model.addAttribute("GATPost", GATPost);
 		return "gatpost/detail";
 	}
