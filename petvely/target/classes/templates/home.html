@@ -1,16 +1,25 @@
 <!DOCTYPE html>
 <html 
-xmlns:th="http://www.thymeleaf.org"
-xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-layout:decorate="~{layout/layout.html}">
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+    layout:decorate="~{layout/layout.html}">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <title>Insert Title Here</title>
 </head>
+<<<<<<< HEAD
+<body>
+    <main layout:fragment="content">
+        <h2>2345</h2>
+        <p th:text="'Hello, ' + ${name} + '!'">Hello, Guest!</p>
+    </main>
+=======
 <body >
 	<main layout:fragment="content">
 		<a class="btn btn-outline-info" th:href="@{/comment/list}">댓글</a>
+
 		<p>펫블리</p>
 	</main>
+>>>>>>> main
 </body>
 </html>
