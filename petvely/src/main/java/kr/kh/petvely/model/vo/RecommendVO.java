@@ -13,9 +13,5 @@ public class RecommendVO {
 	private int re_po_num;	//추천한 게시글 번호
 	
 	// 1번 생성자 공부하기
-	public RecommendVO(int po_num, int re_state, int me_num) {
-		this.re_po_num = po_num;
-		this.re_state = re_state;
-		this.re_me_num = me_num;
-	}
+
 }

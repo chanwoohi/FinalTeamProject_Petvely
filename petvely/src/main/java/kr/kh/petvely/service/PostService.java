@@ -63,36 +63,7 @@ public class PostService {
 	public List<PostVO> getPostpostListWithMemberId() {
 		return postDao.selectPostWithMemberId();
 	}
-    // 추천/비추천 처리 메서드
-	public int insertRecommend(RecommendVO recommend) {
-	    if (recommend == null) {
-	        throw new RuntimeException();
-	    }
 
-	    // 기존 추천 정보 확인
-	    RecommendVO dbRecommend = postDao.selectRecommend(recommend);
-
-	    // 기존 추천 정보가 없으면 새로 추가
-	    if (dbRecommend == null) {
-	        postDao.insertRecommend(recommend);
-	        postDao.updateRecommendCount(recommend.getRe_po_num());  // 게시글 추천수 업데이트
-	        return recommend.getRe_state();  // 추천/비추천 상태 반환
-	    }
-
-	    // 기존 추천 정보가 있으면 삭제
-	    postDao.deleteRecommend(dbRecommend.getRe_num());
-
-	    // 기존 상태와 동일하면 추천 취소
-	    if (dbRecommend.getRe_state() == recommend.getRe_state()) {
-	        postDao.updateRecommendCount(recommend.getRe_po_num());  // 게시글 추천수  업데이트
-	        return 0;  // 취소 상태 반환
-	    }
-
-	    // 기존 상태와 다르면 상태 변경
-	    postDao.insertRecommend(recommend);
-	    postDao.updateRecommendCount(recommend.getRe_po_num());  // 게시글 추천수 업데이트
-	    return recommend.getRe_state();  // 새로운 추천/비추천 상태 반환
-	}
 	// 커뮤니티 번호에 맞는 게시글 목록을 가져오는 메서드
 	public List<PostVO> getAllPosts(int co_num) {
         return postDao.selectPostList(co_num);
@@ -102,6 +73,13 @@ public class PostService {
 	public int getPostCount(int co_num) {
         return postDao.selectCountPostList(co_num);
     }
+    // 추천/비추천 처리 메서드
+	public int insertRecommend(RecommendVO recommend) {
+	    if (recommend == null) {
+	        throw new RuntimeException();
+	    }
+		return 0;
 
+	}
 
 }

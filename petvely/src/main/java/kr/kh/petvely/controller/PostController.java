@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,8 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import kr.kh.petvely.model.vo.CommunityVO;
+import kr.kh.petvely.model.vo.MemberVO;
 import kr.kh.petvely.model.vo.PostVO;
 import kr.kh.petvely.model.vo.RecommendVO;
 import kr.kh.petvely.service.PostService;
@@ -94,17 +97,15 @@ public class PostController {
     // 추천/비추천 처리
     @ResponseBody
     @GetMapping("/post/recommend")
-    public Map<String, Object> recommend(@RequestParam("state") int state,
-                                         @RequestParam("num") int num) {  
+    public ResponseEntity<Map<String, Object>> recommend(
+    		
+    		@RequestParam("state") int state, //요청 파라미터 추천/비추천 상태를 받음
+            @RequestParam("num") int num,     // 요청 파라미터  게시글 번호를 받음
+            @SessionAttribute("user") MemberVO user  // 세션에서 'user' 속성 가져옴
+    ) {
     	
         Map<String, Object> resultMap = new HashMap<>();
 
-        // 2번 여기 문제점 서술하기
-        // 3번 로그인한 아이디가 존재하는지 확인
-        RecommendVO recommend = new RecommendVO();
-        recommend.setRe_po_num(num);  // 게시글 번호
-        recommend.setRe_state(state);  // 추천/비추천 상태
-        recommend.setRe_me_num(1);
 
         // 추천/비추천 처리
         int res = postService.insertRecommend(recommend);
@@ -113,7 +114,7 @@ public class PostController {
         PostVO post = postService.getPost(num);
         System.out.println(res);
         resultMap.put("result", res);  // 처리 결과(추천/비추천 또는 취소 상태)
-        resultMap.put("post", post);           // 업데이트된 게시글 정보
+        resultMap.put("post", post);   // 업데이트된 게시글 정보
         
         return resultMap;
     }
