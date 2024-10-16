@@ -65,13 +65,13 @@
 				<button class="btn btn-outline-info" id="commentButton">댓글</button>
 			</div>
 			<div class="comment-container" id="commentList">
-				<ul class="comment-list">
-				</ul>
-				<ul class="comment-list1" id="commentList00">
-				</ul>
-				<div class="comment-pagination"></div>
+				<div>
+					<span id="comment0"></span>
+				</div>
+				<div>
+					<span id="comment1"></span>
+				</div>
 				<div class="comment-insert-box">
-					<textarea class="col-12 input-comment-insert"></textarea>
 					<button class="btn btn-outline-success btn-comment-insert">등록</button>
 				</div>
 			</div>
@@ -99,6 +99,18 @@
 				});
 			});
 			
+			
+			var btns = '';
+			var str0 = '';
+			var str1 = '';
+				btns = `
+				<div class="float-right">
+					<button class="btn btn-outline-info">수정</button>
+					<button class="btn btn-outline-dark">삭제</button>
+					<button class="btn btn-outline-primary" id="commentButton00">대댓글</button>
+				</div>
+				`
+				
 			function displayCommentList(data){
 				if(data == null || data.length == 0){
 					console.log(1);
@@ -107,66 +119,48 @@
 				}
 				for(comment of data){
 					if (comment.cm_layer == 0) {
-						displayCommentList0(comment);
+						console.log(0);
+						console.log(comment);
+						str0 += `
+							<div class="comment-item">
+								<div>
+									<div style="float: left; line-height: 40px;">${comment.me_id}</div>
+									<div style="line-height: 40px;">(${comment.cm_date})</div>
+									<div class="float-right">
+										${btns}
+									</div>
+								</div>
+								<div>
+									<div style="padding-left:20px; line-height: 40px;">${comment.cm_content}</div>
+									<div>${comment.cm_layer}</div>
+								</div>
+							</div>
+						`;
+					$("#comment0").html(str0);
 					}
 					if (comment.cm_layer == 1) {
-						displayCommentList1(comment);
+						console.log(1);
+						console.log(comment);
+						str1 += `
+							<div class="comment-item">
+								<div>
+									<div style="float: left; line-height: 40px;">${comment.me_id}</div>
+									<div style="line-height: 40px;">(${comment.cm_date})</div>
+									<div class="float-right">
+										${btns}
+									</div>
+								</div>
+								<div>
+									<div style="padding-left:20px; line-height: 40px;">${comment.cm_content}</div>
+									<div>${comment.cm_layer}</div>
+								</div>
+							</div>
+						`;
+						$("#comment1").html(str1);
 					}
 				}
 			}
-			var btns = '';
-			var str = '';
-			var str1 = '';
-			var str2 = '';
-				btns = `
-				<div class="float-right">
-					<button class="btn btn-outline-info">수정</button>
-					<button class="btn btn-outline-dark">삭제</button>
-					<button class="btn btn-outline-primary" id="commentButton00">대댓글</button>
-				</div>
-				`
-			
-			function displayCommentList1(data){
-				console.log(1);
-				str2 += `
-					<div class="comment-item">
-						<div>
-							<div style="float: left; line-height: 40px;">${comment.me_id}</div>
-							<div style="line-height: 40px;">(${comment.cm_date})</div>
-							<div class="float-right">
-								${btns}
-							</div>
-						</div>
-						<div>
-							<div style="padding-left:20px; line-height: 40px;">${comment.cm_content}</div>
-							<div>${comment.cm_layer}</div>
-						</div>
-					</div>
-				`;
-			}
 				
-			function displayCommentList0(data){
-				console.log(10);
-				str1 += `
-					<div class="comment-item">
-						<div>
-							<div style="float: left; line-height: 40px;">${comment.me_id}</div>
-							<div style="line-height: 40px;">(${comment.cm_date})</div>
-							<div class="float-right">
-								${btns}
-							</div>
-						</div>
-						<div>
-							<div style="padding-left:20px; line-height: 40px;">${comment.cm_content}</div>
-							<div>${comment.cm_layer}</div>
-						</div>
-					</div>
-				`;
-				$(".comment-list").html(str1);
-			}
-				
-			
-			
 			$("#commentList").hide();
 			$("#commentButton").click(function() {
 				$("#commentList").toggle();

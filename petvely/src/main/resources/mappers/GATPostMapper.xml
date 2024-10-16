@@ -66,5 +66,6 @@
     	left join member on me_num = cm_me_num
     	left join post on po_num = cm_po_num
     	where cm_po_num = #{po_num}
+    	order by cm_reply, cm_ord
     </select>
 </mapper>
