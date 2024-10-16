@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -26,17 +27,6 @@ public class PostController {
 	
 	@Autowired
 	private PostService postService;
-	
-	@PostMapping("/petvely/api/endpoint")
-	@ResponseBody
-	public Map<String, Object> getPosts(@RequestParam Map<String, String> params) {
-	    // params로 전달되는 필터와 페이징 정보를 처리하고 데이터 반환
-	    List<PostVO> posts = postService.getAllPosts(params);
-	    Map<String, Object> result = new HashMap<>();
-	    result.put("data", posts); // 'data' 키를 사용하여 DataTables에 전달
-	    return result;
-	}
-
 
 
 	@GetMapping("/post/list/{co_num}")

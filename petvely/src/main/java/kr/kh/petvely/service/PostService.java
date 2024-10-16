@@ -1,7 +1,6 @@
 package kr.kh.petvely.service;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -100,10 +99,7 @@ public class PostService {
 		int count = postDao.selectCountPostList(cri);
 		return new PageMaker(3, cri, count);
 	}
-	public List<PostVO> getAllPosts(Map<String, String> params) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
+
+
 
 }

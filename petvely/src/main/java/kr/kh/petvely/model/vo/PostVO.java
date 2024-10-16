@@ -10,18 +10,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PostVO {
 
-	private int po_num;
-	private String po_title;
-	private String po_content;
-	private Date po_date;
-	private String po_hidden;
-	private int po_viewCount; 
-	private int po_recommendCount;
-	private int po_reportCount;
-	private String po_notice;
-	private int po_me_num;
-	private int po_co_num;
-	private int po_delete;
+	private int po_num; // 게시글 번호
+	private String po_title; // 게시글 제목
+	private String po_content; // 게시글 내용
+	private Date po_date; // 작성일
+	private String po_hidden; // 숨김여부
+	private int po_viewCount; // 조회수
+	private int po_recommendCount; // 추천수
+	private int po_reportCount; // 신고수
+	private String po_notice; // 공지
+	private int po_me_num; // 작성자
+	private int po_co_num; // 커뮤니티 번호
+	private int po_delete; // 삭제처리
 
 	private String me_id;
 	
