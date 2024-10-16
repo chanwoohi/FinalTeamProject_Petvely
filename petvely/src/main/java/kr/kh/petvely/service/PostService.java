@@ -8,8 +8,6 @@ import kr.kh.petvely.dao.PostDAO;
 import kr.kh.petvely.model.vo.CommunityVO;
 import kr.kh.petvely.model.vo.PostVO;
 import kr.kh.petvely.model.vo.RecommendVO;
-import kr.kh.petvely.pagination.PageMaker;
-import kr.kh.petvely.pagination.PostCriteria;
 import lombok.AllArgsConstructor;
 
 @Service
