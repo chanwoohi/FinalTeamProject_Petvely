@@ -1,6 +1,7 @@
 package kr.kh.petvely.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -8,6 +9,8 @@ import kr.kh.petvely.dao.PostDAO;
 import kr.kh.petvely.model.vo.CommunityVO;
 import kr.kh.petvely.model.vo.PostVO;
 import kr.kh.petvely.model.vo.RecommendVO;
+import kr.kh.petvely.pagination.PageMaker;
+import kr.kh.petvely.pagination.PostCriteria;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -93,4 +96,14 @@ public class PostService {
 	    postDao.updateRecommendCount(recommend.getRe_po_num());  // 게시글 추천수 업데이트
 	    return recommend.getRe_state();  // 새로운 추천/비추천 상태 반환
 	}
+	public PageMaker getPageMaker(PostCriteria cri) {
+		int count = postDao.selectCountPostList(cri);
+		return new PageMaker(3, cri, count);
+	}
+	public List<PostVO> getAllPosts(Map<String, String> params) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+
 }

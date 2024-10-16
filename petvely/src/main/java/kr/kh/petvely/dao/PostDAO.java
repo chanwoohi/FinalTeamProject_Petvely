@@ -15,6 +15,7 @@ import kr.kh.petvely.model.vo.CommunityVO;
 import kr.kh.petvely.model.vo.FileVO;
 import kr.kh.petvely.model.vo.PostVO;
 import kr.kh.petvely.model.vo.RecommendVO;
+import kr.kh.petvely.pagination.PostCriteria;
 
 public interface PostDAO {
 	
@@ -55,6 +56,8 @@ public interface PostDAO {
 
     // 게시글의 추천수를 업데이트하는 메서드
     int updateRecommendCount(int po_num);
+
+	int selectCountPostList(PostCriteria cri);
 
  
 

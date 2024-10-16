@@ -79,6 +79,8 @@
 
 		    $.ajax({
 		        url: '/post/recommend',
+		        type: 'POST',
+		        dataType: 'json',  // 서버가 JSON 형식으로 응답해야 함
 		        method: 'get',
 		        data: {
 		            state: state,
@@ -112,11 +114,11 @@
 					
 					checkRecommendBtns(res);
 
-					 prevState = res; // 현재 상태 업데이트
+					prevState = res; // 현재 상태 업데이트
 
 					console.log(data);
 	                
-					let post = JSON.parse(data.post);
+					let post = data.post;
 					console.log(post);
 					$('.btn-up span').text(post.recommendCount);
 					$('.btn-down span').text(post.notRecommendCount);

@@ -81,5 +81,5 @@
 	   FROM post
 	   WHERE po_num = #{po_num};
 	</update>
-
+	
 </mapper>
