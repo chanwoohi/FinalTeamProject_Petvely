@@ -4,15 +4,14 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
     layout:decorate="~{layout/layout.html}">
 <head>
-  <style>
-        .blur {
+  <style>        
+        .blur{
             filter: blur(1px);
             pointer-events: none; 
-            opacity: 0.5; 
-
+            opacity: 0.5;
         }
         
-        .overlay {
+        .overlay{
             position: absolute; 
             top: 0;
             left: 0;
@@ -23,8 +22,6 @@
             align-items: center;
             color: #ff0000; 
             font-size: 24px; 
-
-
         }
     </style>
 </head>
@@ -52,20 +49,20 @@
 							th:href="@{/post/marketdetail/{po_num}(po_num=${item.po_num})}" 
 							th:text="${item.po_title}"></a>
 						<span th:if="${item.mp_gts_state == '판매완료'}" th:text="${item.po_title}"></span>
-						<div class="overlay" th:if="${item.mp_gts_state == '판매완료'}">판매 완료</div>
+						<div>
+							<div class="overlay" th:if="${item.mp_gts_state == '판매완료'}">판매 완료</div>
+						</div>
 					</td>
 					 <td>
 					    <img class="thumbnail" 
-					         th:src="${item.imgUrl != null && !item.imgUrl.isEmpty() ? item.imgUrl : '/image/image.jpg'}" 
+					         th:src="${item.mp_imgUrl != null && !item.mp_imgUrl.isEmpty() ? item.mp_imgUrl : '/image/image.jpg'}" 
 					         alt="Thumbnail" style="width: 100px; height: auto; margin-right: 5px;"/>
 					</td>
 					
 					<td th:text="${item.po_content}"></td>
 					<td th:text="${item.mp_price}"></td>
 					<td th:text="${item.me_id}"></td>
-				</tr>
-
-				
+				</tr>				
 			
 				<tr th:if="${list.size() == 0}">
 					<td colspan="4" class="text-center">등록된 게시글이 없습니다.</td>

@@ -93,3 +93,7 @@ INSERT INTO gattype(gatt_type) values ('예시1'), ('예시2'),('예시3'), ('�
 
 select * from gatstate;
 INSERT INTO gatstate(gats_state) values ('진행 중'), ('완료');
+
+select * from goodstype;
+insert into goodstype values
+("먹이"), ("옷"), ("장난감"), ("하우스");

@@ -14,13 +14,13 @@
 	</select>
 	
 	<insert id="insertPost" keyProperty="po_num" useGeneratedKeys="true">
-   	 	insert into post (po_title, po_content, po_me_num)
-        	values(#{po_title}, #{po_content},#{po_me_num})
+   	 	insert into post (po_title, po_content, po_me_num, po_co_num)
+        	values(#{po_title}, #{po_content}, #{po_me_num}, #{po_co_num})
 	</insert>	
 	
 	<insert id="insertMarketPost">
-		insert into marketpost (mp_gt_type,mp_gts_state,mp_name,mp_content,mp_price,imgUrl)
-			values(#{mp_gt_type},#{mp_gts_state}, #{mp_name}, #{mp_content}, #{mp_price},#{imgUrl})
+		insert into marketpost (po_num, mp_gt_type,mp_gts_state,mp_name,mp_content,mp_price,mp_imgUrl)
+			values(#{po_num}, #{mp_gt_type},#{mp_gts_state}, #{mp_name}, #{mp_content}, #{mp_price},#{mp_imgUrl})
 	</insert>
 	
 	<insert id="insertFile">

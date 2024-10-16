@@ -43,7 +43,7 @@ public class MarketController {
 		List<FileVO> fileList = marketPostService.getFileList(po_num);
 		model.addAttribute("fileList",fileList);
 		model.addAttribute("post",post);
-		model.addAttribute("me_num", 2);
+		model.addAttribute("me_num", 1);
 		return "post/marketdetail";
 }
 	@GetMapping("/post/marketinsert")

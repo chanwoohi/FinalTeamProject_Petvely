@@ -39,13 +39,14 @@ public class MarketPostService {
 		if(marketPost == null) {
 			return res;
 		}try {
+			marketPost.setPo_me_num(1);
 			res = marketPostDao.insertPost(marketPost);
 			if(res) {
 				
 			
 			if(fileList == null || fileList.length == 0) {
 				String defaultImage = "/image/image.jpg";
-				marketPost.setImgUrl(defaultImage);
+				marketPost.setMp_imgUrl(defaultImage);
 				
 			}else {
 				for(MultipartFile file : fileList) {
@@ -71,7 +72,7 @@ public class MarketPostService {
 			String fi_name = UploadFileUtils.uploadFile(uploadPath, fi_ori_name, file.getBytes());
 			String basePath = "/uploads";
 			String imgUrl = basePath + fi_name;
-			marketPost.setImgUrl(imgUrl);
+			marketPost.setMp_imgUrl(imgUrl);
 			
 			FileVO fileVo = new FileVO(fi_ori_name, fi_name, po_num);
 			marketPostDao.insertFile(fileVo);
@@ -100,12 +101,12 @@ public class MarketPostService {
 
 	public List<FileVO> getThumNail() {
 	    List<FileVO> fileList = marketPostDao.selectImage();
-	    System.out.println(fileList);
 	    String defaultImage = "/image/image.jpg";
 	    String basePath = "/uploads";
 	    
 	    
 	    List<MarketPostVO> list = getMarketList();
+	    System.out.println(list);
 	    List<FileVO> ThumImg = new ArrayList<>();
 	    
 	    for (MarketPostVO post : list) {
@@ -113,7 +114,7 @@ public class MarketPostService {
 	        for (FileVO file : fileList) {
 	            if (file.getFi_po_num() == post.getPo_num()) {
 	                String imgUrl = basePath + file.getFi_name();	      
-	                post.setImgUrl(imgUrl);
+	                post.setMp_imgUrl(imgUrl);
 	                ThumImg.add(file);
 	                img = true;
 	                break;

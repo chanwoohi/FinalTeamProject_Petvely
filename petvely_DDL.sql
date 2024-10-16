@@ -370,3 +370,6 @@ ADD COLUMN `po_delete` VARCHAR(1) NULL DEFAULT 0 AFTER `po_me_num`;
 
 ALTER TABLE `petvely`.`post` 
 ADD COLUMN `po_co_num` INT NOT NULL AFTER `po_delete`;
+
+ALTER TABLE `petvely`.`marketpost` 
+ADD COLUMN `mp_imgUrl` VARCHAR(255) NULL DEFAULT NULL AFTER `mp_gt_type`;
