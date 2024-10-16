@@ -39,7 +39,13 @@ VALUES ('Pet Park', 5, 10, 0, 'Park');
 
 -- Animal 테이블에 반려동물 정보 추가
 INSERT INTO petvely.Animal (ani_name, ani_age, ani_gender, ani_birth, ani_weight, ani_neutralization, ani_at_type, ani_me_num)
-VALUES ('호날두', 3, 'M', '2021-05-18', 85, 0, '사람', 3);
+VALUES 
+('다초', 7, 'M', '2017-07-14', 8.4, 0, '강아지', 2),
+('잠자리', 1, 'M', '2024-09-18', 0.01, 0, '잠자리', 2),
+('호날두', 39, 'M', '1985-02-05', 85, 0, '사람', 3),
+('달이', 3, 'W', '2021-05-18', 3, 0, '강아지', 3),
+('메시', 37, 'M', '1987-06-25', 67, 0, '사람', 3),
+('초코', 1, 'M', '2024-03-03', 3, 0, '강아지', 4);
 
 -- 모든 회원 정보를 조회
 SELECT * FROM petvely.Member;
@@ -62,6 +68,14 @@ WHERE me_id = 'user01';
 -- 특정 회원 삭제
 -- DELETE FROM petvely.Member 
 -- WHERE me_id = 'user01';
+
+INSERT INTO community(co_name)
+values
+("산책 메이트"),
+("품앗이"),
+("중고거래");
+
+
 
 
 

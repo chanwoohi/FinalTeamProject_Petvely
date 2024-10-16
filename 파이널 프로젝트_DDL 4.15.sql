@@ -175,7 +175,7 @@ CREATE TABLE `Post` (
 	`po_reportCount`	int	NULL,
 	`po_notice`	varchar(1)	NULL,
 	`po_me_num`	int	NOT NULL,
-    `po_ca_num` int NOT NULL
+    `po_co_num` int NOT NULL
 );
 
 DROP TABLE IF EXISTS `MarketPost`;

@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.petvely.dao.PostDAO">
 	<insert id="insertPost" keyProperty="po_num" useGeneratedKeys="true">
-		insert into post(po_title, po_content, po_me_num)
-		values(#{po_title}, #{po_content}, #{po_me_num})
+		insert into post(po_title, po_content, po_me_num, po_co_num)
+		values(#{po_title}, #{po_content}, #{po_me_num}, #{po_co_num})
 	</insert>
 	<delete id="deletePost">
 		delete from post where po_num = #{po_num}
@@ -12,4 +12,7 @@
 		insert into bookmark(bm_me_num, bm_po_num)
 		values(#{bm_me_num}, #{po_num})
 	</insert>
+	<select id="selectCommunityList" resultType="CommunityVO">
+		select * from community
+	</select>
 </mapper>

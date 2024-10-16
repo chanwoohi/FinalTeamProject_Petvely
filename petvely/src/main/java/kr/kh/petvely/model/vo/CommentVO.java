@@ -14,7 +14,7 @@ public class CommentVO {
 	private int cm_state; 
 	private int cm_reportCount; 
 	private int cm_me_num; 
-	private int cm_mp_num;
+	private int cm_po_num;
 	private int cm_reply; 
 	private int cm_ord; 
 	private int cm_layer;

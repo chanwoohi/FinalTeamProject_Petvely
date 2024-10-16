@@ -53,6 +53,7 @@ public class BookMarkVO {
 	private int po_reportCount;
 	private String po_notice;
 	private Integer po_me_num;
+	private int po_co_num;
 	
 	private String me_id;
 }

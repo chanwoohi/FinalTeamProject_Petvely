@@ -40,29 +40,31 @@ public class WalkMatePostService {
 			return false;
 		}
 		 try {
-		        // 포스트를 데이터베이스에 저장
-		        postDao.insertPost(walkMatePost);
-		        // po_num = post.getPo_num(); // DB에 저장 후 po_num을 가져옴
+	        // 포스트를 데이터베이스에 저장
+			// po_co_num을 지금은 1로 다른 곳에서는 해당하는 co_num 골라가야함 방법을 찾아보자~
+			walkMatePost.setPo_co_num(1);
+	        postDao.insertPost(walkMatePost);
+	        // po_num = post.getPo_num(); // DB에 저장 후 po_num을 가져옴
 
-		        // walkMatePost에 포스트 번호를 설정
-		        // walkMatePost.setPo_num(po_num);
-		        System.out.println(walkMatePost);
+	        // walkMatePost에 포스트 번호를 설정
+	        // walkMatePost.setPo_num(po_num);
+	        System.out.println(walkMatePost);
 
-		        // walkMatePost를 데이터베이스에 저장
-		        walkMatePostDao.insertWalkMatePost(walkMatePost);
+	        // walkMatePost를 데이터베이스에 저장
+	        walkMatePostDao.insertWalkMatePost(walkMatePost);
 
-		        // selectedHostAniNums 저장
-		        for (int num : selectedHostAniNums) {
-		        	PostHostSelectedPetsVO pet = new PostHostSelectedPetsVO();
-		        	System.out.println("num : " + num);
-		        	pet.setPhsp_ani_num(num);
-		            pet.setPhsp_po_num(walkMatePost.getPo_num()); // phsp_po_num 설정
-		            System.out.println("Inserting animal: " + pet.getPhsp_ani_num() + " with po_num: " + walkMatePost.getPo_num());
-		            postHostSelectedPetsDao.insertPostHostSelectedPets(pet); // DB에 저장
-		            
-		        }
+	        // selectedHostAniNums 저장
+	        for (int num : selectedHostAniNums) {
+	        	PostHostSelectedPetsVO pet = new PostHostSelectedPetsVO();
+	        	System.out.println("num : " + num);
+	        	pet.setPhsp_ani_num(num);
+	            pet.setPhsp_po_num(walkMatePost.getPo_num()); // phsp_po_num 설정
+	            System.out.println("Inserting animal: " + pet.getPhsp_ani_num() + " with po_num: " + walkMatePost.getPo_num());
+	            postHostSelectedPetsDao.insertPostHostSelectedPets(pet); // DB에 저장
+	            
+        }
 
-		        return true;
+	        	return true;
 
 		    } catch (Exception e) {
 		        e.printStackTrace();

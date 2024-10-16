@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.kh.petvely.dao.PostDAO;
+import kr.kh.petvely.model.vo.CommunityVO;
 
 @Service
 public class PostService {
@@ -21,6 +22,10 @@ public class PostService {
 		
 		return postDao.insertBookmark(po_num, bm_me_num);
 		
+	}
+
+	public List<CommunityVO> selectCommunityList() {
+		return postDao.selectCommunityList();
 	}
 	
 	
