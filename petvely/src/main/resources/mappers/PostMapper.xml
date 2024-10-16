@@ -76,11 +76,11 @@
 	
 	<!-- 게시글의 추천수 및 비추천수 업데이트 -->
 	<update id="updateRecommendCount">
-	   SELECT 
-		    (SELECT COUNT(*) FROM recommend WHERE re_po_num = #{po_num} AND re_state = 1) AS recommendCount,
-		    (SELECT COUNT(*) FROM recommend WHERE re_po_num = #{po_num} AND re_state = -1) AS notRecommendCount
-	   FROM post
-	   WHERE po_num = #{po_num};
+	    UPDATE post
+	    SET
+	        po_recommendCount = (SELECT COUNT(*) FROM recommend WHERE re_po_num = #{po_num} AND re_state = 1),
+	        po_viewCount = (SELECT COUNT(*) FROM recommend WHERE re_po_num = #{po_num} AND re_state = -1) 
+	    WHERE po_num = #{po_num};
 	</update>
 	
 </mapper>
