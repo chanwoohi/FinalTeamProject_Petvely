@@ -36,6 +36,7 @@ public class GATPostService {
 			return false;
 		}
 		try {
+			GATPost.setPo_co_num(0);
 			return gatpostDao.insertGATPost1(GATPost);
 		}catch (Exception e) {
 			e.printStackTrace();
