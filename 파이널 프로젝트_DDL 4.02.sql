@@ -35,7 +35,7 @@ CREATE TABLE `Comment` (
 	`cm_state`	int	NULL,
 	`cm_reportCount`	int	NULL,
 	`cm_me_num`	int	NOT NULL,
-	`cm_mp_num`	int	NOT NULL,
+	`cm_po_num`	int	NOT NULL,
 	`cm_reply`	int	NOT NULL,
 	`cm_ord`	int	NULL,
 	`cm_layer`	int	NULL

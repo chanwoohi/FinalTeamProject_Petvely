@@ -13,7 +13,7 @@ layout:decorate="~{layout/layout.html}">
 			<input type="hidden"  th:field="*{po_num}"/>
 			<div class="form-group" id="GT">
 				<label>품앗이:</label>
-				<input type="text" id="gat_gat" name="gat_gat">
+				<input type="hidden" id="gat_gat" name="gat_gat" required="required" th:field="*{gat_gat}">
 				<a id="give" class="btn btn-outline-info" onclick="">GIVE</a>
 				<a id="take" class="btn btn-outline-info" onclick="">TAKE</a>
 			</div>
@@ -131,8 +131,6 @@ layout:decorate="~{layout/layout.html}">
 			changetake.style.color = 'red';
 			changegive.style.color = '';
 		})
-		
-		$("#gat_gat").hide();
 		</script>
 	</main>
 </body>

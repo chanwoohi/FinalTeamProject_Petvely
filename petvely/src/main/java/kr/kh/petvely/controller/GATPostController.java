@@ -1,6 +1,8 @@
 package kr.kh.petvely.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,7 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.kh.petvely.model.vo.CommentVO;
 import kr.kh.petvely.model.vo.GiveAndTakePostVO;
 import kr.kh.petvely.model.vo.GiveAndTakeStateVO;
 import kr.kh.petvely.model.vo.GiveAndTakeTypeVO;
@@ -97,5 +102,14 @@ public class GATPostController {
 		return "redirect:/gatpost/detail/" + po_num;
 	}
 	
+	@PostMapping("/comment/list")
+	@ResponseBody
+	public List<CommentVO> ComentListPost(Model model, @RequestBody int po_num) {
+		List<CommentVO> list = gatPostService.getCommentList(po_num);
+		model.addAttribute("list",list);
+		System.out.println(list);
+		return list;
+		
+	}
 	
 }

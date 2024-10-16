@@ -12,26 +12,27 @@ layout:decorate="~{layout/layout.html}">
 		<form method="post" th:action="@{/gatpost/insert}">
 			<div class="form-group" id="GT">
 				<label>품앗이:</label>
-				<input type="text" id="gat_gat" name="gat_gat">
+				<!-- 유효성 검사로 오류 표시로 바꿀것 -->
+				<input type="hidden" id="gat_gat" name="gat_gat" required="required">
 				<a id="give" class="btn btn-outline-info" onclick="">GIVE</a>
 				<a id="take" class="btn btn-outline-info" onclick="">TAKE</a>
 			</div>
 			<div class="form-group">
 				<label>제목:</label>
-				<input type="text" class="form-control" name="po_title" >
+				<input type="text" class="form-control" name="po_title" required="required">
 			</div>
 			<div class="form-group">
 				<label>작성자:</label>
-				<input type="text" class="form-control" name="me_num" >
+				<input type="text" class="form-control" name="me_num" required="required">
 			</div>
 			<div class="form-group">
 				<label>내용:</label>
-				<textarea class="form-control" style="min-height: 400px; height: auto;" name="po_content" >
+				<textarea class="form-control" style="min-height: 400px; height: auto;" name="po_content" required="required">
 				</textarea>
 			</div>
 			<div class="form-group" id="view">
 				<label>조회수:</label>
-				<input type="text" class="form-control" name="po_viewCount" value="0">
+				<input type="hidden" class="form-control" name="po_viewCount" value="0">
 			</div>
 			<div class="form-group">
 				<label>타입:</label>
@@ -41,11 +42,11 @@ layout:decorate="~{layout/layout.html}">
 			</div>
 			<div class="form-group">
 				<label>시작날짜:</label>
-				<input type="date" class="form-control" name="gat_startDate" >
+				<input type="date" class="form-control" name="gat_startDate" required="required">
 			</div>
 			<div class="form-group">
 				<label>종료날짜:</label>
-				<input type="date" class="form-control" name="gat_endDate" >
+				<input type="date" class="form-control" name="gat_endDate" required="required">
 			</div>
 			<div class="form-group" id="gats_state">
 				<label>상태:</label>
@@ -62,8 +63,8 @@ layout:decorate="~{layout/layout.html}">
 				</select>
 				<select id="emd" name="emd_num">
 				</select>
-			</div>
-			<button class="btn btn-outline-info col-12">등록</button>
+			</div> 
+			<button class="btn btn-outline-info col-12 btn-gatpost-insert">등록</button>
 		</form>
 		<a class="btn btn-outline-info" th:href="@{/gatpost/list}">목록으로</a>
 		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -136,8 +137,16 @@ layout:decorate="~{layout/layout.html}">
 		})
 		
 		$("#gats_state").hide();
-		$("#gat_gat").hide();
 		$("#view").hide();
+		
+		$('.btn-gatpost-insert').click(function(){
+			let gat = $('#gat_gat').val();
+			if(gat.trim() == ''){
+				alert('품앗이를 선택해 주세요');
+				$('#gat_gat').focus();
+				return;
+			}
+		});
 		</script>
 	</main>
 </body>

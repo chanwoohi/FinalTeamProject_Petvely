@@ -9,6 +9,23 @@ select * from gatpost
 	 left join goodstradestate on gat_gats_state = gats_state;
 select * from post left join member on po_me_num = me_num;
 
+select * from comment
+	left join member on me_num = cm_me_num;
+
+select * from comment;
+insert into comment
+	(cm_num, cm_content, cm_date, cm_state, cm_reportCount, cm_me_num, cm_po_num, cm_reply, cm_ord, cm_layer)
+values
+	('1', '테스트1', '2024-10-16', '1', '1', '1', '1', '1', '0', '0'),
+    ('2', '테스트2', '2024-10-16', '1', '1', '2', '1', '2', '0', '0'), 
+    ('3', '테스트3', '2024-10-16', '1', '1', '2', '1', '2', '1', '1'),
+    ('4', '테스트4', '2024-10-16', '1', '1', '1', '1', '2', '2', '1'),
+    ('5', '테스트5', '2024-10-16', '1', '1', '1', '2', '3', '0', '0'), 
+    ('6', '테스트6', '2024-10-16', '1', '1', '2', '2', '4', '0', '0'),
+    ('7', '테스트7', '2024-10-16', '1', '1', '2', '2', '4', '1', '1'), 
+    ('8', '테스트8', '2024-10-16', '1', '1', '1', '2', '4', '2', '1');
+    
+
 select * from gatpost;
 INSERT INTO gatpost
 (po_num, gat_gatt_type, gat_startDate, gat_endDate, gat_gat, gat_gats_state, gat_emd_num) 
@@ -34,9 +51,11 @@ INSERT INTO gatstate(gats_state) values ('진행 중'), ('완료');
 
 select * from member;
 INSERT INTO member (me_id, me_pw, me_nickname, me_email, me_authority, me_phone, me_ms_status)
-	VALUES ('user01', 'password123', 'nickname01', 'user01@example.com', 'user', '01095784512', 'active');
+	VALUES 
+		('user01', 'password123', 'nickname01', 'user01@example.com', 'user', '01095784512', 'active'),
+		('user02', 'password456', 'nickname02', 'user02@example.com', 'user', '01085989958', 'active');
 INSERT INTO Member (me_id, me_pw, me_nickname, me_email, me_authority, me_phone, me_ms_status)
-VALUES ('user02', 'password456', 'nickname02', 'user02@example.com', 'user', '01085989958', 'active');
+VALUES ('admin', 'admin123', 'admin', 'admin@example.com', 'admin', '01012345678', 'active');
     
 select * from gatpost
 	join post using (po_num);

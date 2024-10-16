@@ -2,10 +2,10 @@ package kr.kh.petvely.dao;
 
 import java.util.List;
 
+import kr.kh.petvely.model.vo.CommentVO;
 import kr.kh.petvely.model.vo.GiveAndTakePostVO;
 import kr.kh.petvely.model.vo.GiveAndTakeStateVO;
 import kr.kh.petvely.model.vo.GiveAndTakeTypeVO;
-import kr.kh.petvely.model.vo.GoodsTradeStateVO;
 
 public interface GATPostDAO {
 
@@ -30,5 +30,7 @@ public interface GATPostDAO {
 	List<GiveAndTakeTypeVO> selectGATTypeList();
 
 	void updateView(Integer po_num);
+
+	List<CommentVO> selectCommentList(int po_num);
 
 }

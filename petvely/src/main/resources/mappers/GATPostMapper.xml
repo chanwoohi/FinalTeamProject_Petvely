@@ -61,4 +61,9 @@
     <select id="selectGATTypeList"  resultType="GiveAndTakeTypeVO">
     	select * from GATType
     </select>
+    <select id="selectCommentList"  resultType="commentVO">
+    	select * from comment 
+    	left join member on me_num = cm_me_num
+    	where cm_po_num = #{po_num}
+    </select>
 </mapper>

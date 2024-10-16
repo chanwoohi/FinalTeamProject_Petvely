@@ -33,4 +33,5 @@ public class GiveAndTakePostVO extends PostVO{
 	
 	private String me_id;
 	private String me_nickname;
+	private String me_authority;
 }
