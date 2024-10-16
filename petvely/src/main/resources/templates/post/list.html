@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout.html}">
+<head>
+    <link href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <main layout:fragment="content">
+        <!-- 강아지 커뮤니티 버튼 -->
+        <div class="mt-3">
+            <a class="btn mr-3 mb-3" th:each="item : ${communities}" th:classappend="${item.co_num} ? 'btn-info' : 'btn-outline-info'" th:text="${item.co_name}" th:href="@{/post/list/{co_num}(co_num=${item.co_num})}">강아지</a>
+        </div>
+
+        <h1>게시판 구현중</h1>
+
+        <table id="dataTable" width="100%">
+            <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>작성일</th>
+                    <th>추천수</th>
+                    <th>조회수</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 데이터가 있을 경우 렌더링 -->
+                <tr th:each="post : ${list}">
+                    <td th:text="${post.po_num}"></td> <!-- 번호 -->
+                    <td>
+                        <a th:if="${post.po_delete == 1}">
+                            <span class="text-muted">이 글은 삭제된 글입니다.</span>
+                        </a>
+                        <a th:if="${post.po_delete == 0}" th:text="${post.po_title}" th:href="@{/post/detail/{po_num}(po_num=${post.po_num})}"></a>
+                    </td>
+                    <td th:text="${post.po_me_num}"></td> <!-- 작성자 -->
+                    <td th:text="${post.po_date}"></td> <!-- 작성일 -->
+                    <td th:text="${post.recommendCount} + ' / ' + ${post.notRecommendCount}"></td> <!-- 추천수 / 비추천수 -->
+                    <td th:text="${post.po_viewCount}"></td> <!-- 조회수 -->
+                </tr>
+
+            </tbody>
+        </table>
+
+        <a class="btn btn btn-outline-dark" th:href="@{/post/insert/{co_num}(co_num=${co_num})}">글쓰기</a>
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#dataTable').DataTable({
+                    "language": {
+                        "search": "검색: ",
+                        "lengthMenu": "_MENU_ 개씩 보기",
+                        "zeroRecords": "등록된 글이 없습니다.",  // 빈 데이터 메시지
+                        "infoEmpty": "데이터가 없습니다.",
+                        "infoFiltered": "(전체 _MAX_개의 데이터에서 필터링됨)",
+                        "paginate": {
+                            "first": "처음",
+                            "last": "마지막",
+                            "next": "다음",
+                            "previous": "이전"
+                        }
+                    },
+                    "info": false  // 테이블 정보 표시를 제거
+                });
+            });
+        </script>
+    </main>
+</body>
+</html>

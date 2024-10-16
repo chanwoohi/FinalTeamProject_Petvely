@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html 
+xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<main layout:fragment="content">
+		<form method="post" th:action="@{/gatpost/insert}">
+			<div class="form-group" id="GT">
+				<label>품앗이:</label>
+				<!-- 유효성 검사로 오류 표시로 바꿀것 -->
+				<input type="hidden" id="gat_gat" name="gat_gat" required="required">
+				<a id="give" class="btn btn-outline-info" onclick="">GIVE</a>
+				<a id="take" class="btn btn-outline-info" onclick="">TAKE</a>
+			</div>
+			<div class="form-group">
+				<label>제목:</label>
+				<input type="text" class="form-control" name="po_title" required="required">
+			</div>
+			<div class="form-group">
+				<label>작성자:</label>
+				<input type="text" class="form-control" name="po_me_num" required="required">
+			</div>
+			<div class="form-group">
+				<label>내용:</label>
+				<textarea class="form-control" style="min-height: 400px; height: auto;" name="po_content" required="required">
+				</textarea>
+			</div>
+			<div class="form-group" id="view">
+				<label>조회수:</label>
+				<input type="hidden" class="form-control" name="po_viewCount" value="0">
+			</div>
+			<div class="form-group">
+				<label>타입:</label>
+				<select id="type" name="gatt_type">
+					<option  th:each="itemtype : ${gatTypeList}" th:text="${itemtype.gatt_type}" th:value="${itemtype.gatt_type}"></option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label>시작날짜:</label>
+				<input type="date" class="form-control" name="gat_startDate" required="required">
+			</div>
+			<div class="form-group">
+				<label>종료날짜:</label>
+				<input type="date" class="form-control" name="gat_endDate" required="required">
+			</div>
+			<div class="form-group" id="gats_state">
+				<label>상태:</label>
+				<select id="state" name="gats_state">
+					<option th:each="itemstate : ${gatstateList}" th:text="${itemstate.gats_state}" th:value="${itemstate.gats_state}"></option>
+				</select>
+			</div>
+			<div class="form-group" id="address">
+				<label>주소:</label>
+				<select id="sido">
+					<option th:each="itemSido : ${sidoList}" th:text="${itemSido.sido_name}" th:value="${itemSido.sido_num}"></option>
+				</select>
+				<select id="sigg">
+				</select>
+				<select id="emd" name="emd_num">
+				</select>
+			</div> 
+			<button class="btn btn-outline-info col-12 btn-gatpost-insert">등록</button>
+		</form>
+		<a class="btn btn-outline-info" th:href="@{/gatpost/list}">목록으로</a>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<script type="text/javascript">
+		
+		//첫번째 시도번호를 가져옴 
+		let firstSido = '[[${sidoList.get(0).sido_num}]]';
+		//시도가 변경되면 ajax로 시도에 맞는 시군구를 가져옴
+		$('#sido').change(function(){
+			let sido_num = $(this).val();
+			$.ajax({
+				async : true,
+				url : '/get/sigg', 
+				type : 'post', 
+				data : {sido_num}, 
+				success : function (data){
+					var str = ''
+					for(sigg of data){
+						str += `
+								<option value="${sigg.sigg_num}">${sigg.sigg_name}</option>
+						`;
+					}
+					$('#sigg').html(str);
+					$('#sigg').trigger('change');
+				},
+				error : function(jqXHR, textStatus, errorThrown){
+				}
+			});
+		})
+		//select 태그의 값을 변경 후 이벤트 실행
+		$('#sido').val(firstSido);
+		$('#sido').trigger('change');
+		
+		$('#sigg').change(function(){
+			let sigg_num = $(this).val();
+			$.ajax({
+				async : true,
+				url : '/get/emd', 
+				type : 'post', 
+				data : {sigg_num}, 
+				success : function (data){
+					var str = ''
+					for(emd of data){
+						str += `
+								<option value="${emd.emd_num}">${emd.emd_name}</option>
+						`;
+					}
+					$('#emd').html(str);
+				},
+				error : function(jqXHR, textStatus, errorThrown){
+				}
+			});
+		})
+		
+		$("#give").click(function() {
+			const myinput = document.getElementById('gat_gat');
+			const changegive = document.getElementById('give');
+			const changetake = document.getElementById('take');
+			myinput.value = "o";
+			changegive.style.color = 'red';
+			changetake.style.color = '';
+		})
+		$("#take").click(function() {
+			const myinput = document.getElementById('gat_gat');
+			const changegive = document.getElementById('give');
+			const changetake = document.getElementById('take');
+			myinput.value = "x";
+			changetake.style.color = 'red';
+			changegive.style.color = '';
+		})
+		
+		$("#gats_state").hide();
+		$("#view").hide();
+		
+		$('.btn-gatpost-insert').click(function(){
+			let gat = $('#gat_gat').val();
+			if(gat.trim() == ''){
+				alert('품앗이를 선택해 주세요');
+				$('#gat_gat').focus();
+				return;
+			}
+		});
+		</script>
+	</main>
+</body>
+</html>

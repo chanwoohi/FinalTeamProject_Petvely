@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.petvely.dao.AddressDAO">
+	<select id="selectSidoList" resultType="Sido_AreasVO">
+		select * from sido_areas;
+	</select>
+	<select id="selectSiggList"  resultType="Sigg_AreasVO">
+		select * from sigg_areas where sigg_sido_num = #{sido_num};
+	</select>
+	<select id="selectEmdList" resultType="Emd_AreasVO">
+		select * from emd_areas where emd_sigg_num = #{sigg_num};
+	</select>
+	<select id="selectAddressList">
+		select * from sido_areas
+		left join sigg_areas on sigg_sido_num = sido_num
+   		left join emd_areas on emd_sigg_num = sigg_num
+   		left join GATpost on emd_num = gat_emd_num
+   		where emd_num = #{emd_num}
+	</select>
+</mapper>

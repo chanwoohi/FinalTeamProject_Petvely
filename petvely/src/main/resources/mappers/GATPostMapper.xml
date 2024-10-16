@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.petvely.dao.GATPostDAO">
+	<select id="selectGATPostList" resultType="GiveAndTakePostVO">
+		select * from GATPost
+			left join emd_areas on gat_emd_num = emd_num
+			left join sigg_areas on emd_sigg_num = sigg_num
+			left join sido_areas on sigg_sido_num = sido_num
+			left join post using (po_num)
+			left join member on po_me_num = me_num
+		order by po_num desc
+	</select>
+	<update id="updateView">
+    	update Post set po_viewCount = po_viewCount + 1 where po_num = #{po_num}
+    </update>
+	<select id="selectGATPost" resultType="GiveAndTakePostVO">
+		select * from GATPost
+			left join emd_areas on gat_emd_num = emd_num
+			left join sigg_areas on emd_sigg_num = sigg_num
+			left join sido_areas on sigg_sido_num = sido_num
+			left join post using (po_num)
+			left join member on po_me_num = me_num
+		where 
+			po_num = #{po_num}
+	</select>
+	<insert id="insertGATPost1" useGeneratedKeys="true" keyProperty="po_num">
+		insert into 
+			Post(po_title, po_content, po_me_num, po_co_num, po_viewCount)
+    		values(#{po_title}, #{po_content}, #{po_me_num}, #{po_co_num}, #{po_viewCount})
+	</insert>
+	<insert id="insertGATPost2" useGeneratedKeys="true" keyProperty="po_num">
+		insert into 
+			GATPost(po_num, gat_gatt_type, gat_startDate, gat_endDate, gat_gat, gat_gats_state, gat_emd_num)
+    		values(#{po_num}, #{gatt_type}, #{gat_startDate}, #{gat_endDate}, #{gat_gat}, #{gats_state}, #{emd_num})
+	</insert>
+	<update id="updateGATPost1">
+		update Post 
+			set 
+				po_title = #{po_title}, po_content = #{po_content}, po_me_num= #{me_num}
+    		where 
+    			po_num = #{po_num}
+	</update>
+	<update id="updateGATPost2">
+		update GATPost 
+			set 
+				gat_gatt_type = #{gatt_type}, gat_startDate = #{gat_startDate}, 
+				gat_endDate = #{gat_endDate}, gat_gat = #{gat_gat}, 
+				gat_gats_state = #{gats_state}, gat_emd_num = #{emd_num}
+    		where 
+    			po_num = #{po_num}
+	</update>
+	<delete id="deleteGATPost1">
+    	delete from GATPost where po_num = #{po_num}
+    </delete>
+    <delete id="deleteGATPost2">
+    	delete from Post where po_num = #{po_num}
+    </delete>
+    <select id="selectStateList" resultType="GiveAndTakeStateVO">
+    	select * from GATState
+    </select>
+    <select id="selectGATTypeList"  resultType="GiveAndTakeTypeVO">
+    	select * from GATType
+    </select>
+    <select id="selectCommentList"  resultType="commentVO">
+    	select * from comment 
+    	left join member on me_num = cm_me_num
+    	left join post on po_num = cm_po_num
+    	where cm_po_num = #{po_num}
+    </select>
+</mapper>

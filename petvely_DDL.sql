@@ -35,7 +35,7 @@ CREATE TABLE `Comment` (
 	`cm_state`	int	NULL,
 	`cm_reportCount`	int	NULL,
 	`cm_me_num`	int	NOT NULL,
-	`cm_mp_num`	int	NOT NULL,
+	`cm_po_num`	int	NOT NULL,
 	`cm_reply`	int	NOT NULL,
 	`cm_ord`	int	NULL,
 	`cm_layer`	int	NULL
@@ -75,15 +75,6 @@ CREATE TABLE `FacilityReview` (
 	`fr_me_num`	int	NOT NULL
 );
 
-DROP TABLE IF EXISTS `WalkMatePost`;
-
-CREATE TABLE `WalkMatePost` (
-	`po_num`	int primary key auto_increment	NOT NULL,
-	`wm_date`	datetime	NULL,
-	`wm_time`	varchar(255)	NULL,
-	`wm_wms_state`	varchar(50)	NOT NULL
-);
-
 DROP TABLE IF EXISTS `Recommend`;
 
 CREATE TABLE `Recommend` (
@@ -93,14 +84,14 @@ CREATE TABLE `Recommend` (
 	`re_po_num`	int	NOT NULL
 );
 
-DROP TABLE IF EXISTS `GiveAndTakePost`;
+DROP TABLE IF EXISTS `GATPost`;
 
-CREATE TABLE `GiveAndTakePost` (
-	`po_num`	int primary key auto_increment	NOT NULL,
+CREATE TABLE `GATPost` (
+	`po_num`	int	NOT NULL,
 	`gat_gatt_type`	varchar(255)	NOT NULL,
 	`gat_startDate`	datetime	NULL default current_timestamp,
-	`gat_endDate`	datetime	NULL default current_timestamp,
-	`gat_gat`	varchar(1)	NULL,
+	`gat_endDate`	datetime	NULL ,
+	`gat_gat`	varchar(1)	NOT NULL,
 	`gat_gats_state`	varchar(50)	NOT NULL,
 	`gat_emd_num`	int	NOT NULL
 );
@@ -137,7 +128,7 @@ CREATE TABLE `ReportType` (
 DROP TABLE IF EXISTS `Animal`;
 
 CREATE TABLE `Animal` (
-	`ani_num`	varchar(20) primary key	NOT NULL,
+	`ani_num`	int primary key auto_increment NOT NULL,
 	`ani_name`	varchar(40)	NULL,
 	`ani_age`	int	NULL,
 	`ani_gender`	varchar(1)	NULL,
@@ -177,6 +168,20 @@ CREATE TABLE `Post` (
 	`po_me_num`	int	NOT NULL
 );
 
+DROP TABLE IF EXISTS `WalkMatePost`;
+
+CREATE TABLE `WalkMatePost` (
+	`po_num`	int primary key auto_increment	NOT NULL,
+	`wm_date`	datetime	NULL,
+	`wm_time`	varchar(255)	NULL,
+	`wm_wms_state`	varchar(50)	NOT NULL DEFAULT "진행중",
+    CONSTRAINT `fk_wm_po_num`
+	  FOREIGN KEY (`po_num`)
+	  REFERENCES `petvely`.`post` (`po_num`)
+	  ON DELETE CASCADE
+	  ON UPDATE NO ACTION
+);
+
 DROP TABLE IF EXISTS `MarketPost`;
 
 CREATE TABLE `MarketPost` (
@@ -188,9 +193,9 @@ CREATE TABLE `MarketPost` (
 	`mp_gt_type`	varchar(50)	NOT NULL
 );
 
-DROP TABLE IF EXISTS `GiveAndTakeType`;
+DROP TABLE IF EXISTS `GATType`;
 
-CREATE TABLE `GiveAndTakeType` (
+CREATE TABLE `GATType` (
 	`gatt_type`	varchar(255)	NOT NULL
 );
 
@@ -287,9 +292,9 @@ CREATE TABLE `WalkMateState` (
 	`wms_state`	varchar(50)	NOT NULL
 );
 
-DROP TABLE IF EXISTS `GiveAndTakeState`;
+DROP TABLE IF EXISTS `GATState`;
 
-CREATE TABLE `GiveAndTakeState` (
+CREATE TABLE `GATState` (
 	`gats_state`	varchar(50)	NOT NULL
 );
 
@@ -298,7 +303,7 @@ DROP TABLE IF EXISTS `Emd_areas`;
 CREATE TABLE `Emd_areas` (
 	`emd_num`	int primary key auto_increment	NOT NULL,
 	`emd_sigg_num`	int	NOT NULL,
-	`emd_areas`	varchar(2)	NULL,
+	`emd_areas`	varchar(3)	NULL,
 	`emd_name`	varchar(50)	NULL,
 	`emd_version`	varchar(20)	NULL
 );
@@ -307,7 +312,7 @@ DROP TABLE IF EXISTS `Sido_areas`;
 
 CREATE TABLE `Sido_areas` (
 	`sido_num`	int primary key auto_increment	NOT NULL,
-	`sido_code`	varchar(2)	NULL,
+	`sido_code`	varchar(3)	NULL,
 	`sido_name`	varchar(50)	NULL,
 	`sido_version`	varchar(20)	NULL
 );
@@ -317,7 +322,7 @@ DROP TABLE IF EXISTS `Sigg_areas`;
 CREATE TABLE `Sigg_areas` (
 	`sigg_num`	int primary key auto_increment	NOT NULL,
 	`sigg_sido_num`	int	NOT NULL,
-	`sigg_code`	varchar(2)	NULL,
+	`sigg_code`	varchar(3)	NULL,
 	`sigg_name`	varchar(50)	NULL,
 	`sigg_version`	varchar(20)	NULL
 );
@@ -339,3 +344,29 @@ CREATE TABLE `WalkMatePet` (
 	`wmp_num`	int primary key auto_increment	NOT NULL,
 	`ani_num`	varchar(20) NOT NULL
 );
+
+DROP TABLE IF EXISTS `RegEx`;
+
+CREATE TABLE `RegEx` (
+	`re_num`	int primary key auto_increment	NOT NULL,
+	`re_regex`	varchar(255) NOT NULL
+);
+
+ALTER TABLE `petvely`.`member` 
+CHANGE COLUMN `me_pw` `me_pw` VARCHAR(255) NOT NULL ,
+CHANGE COLUMN `me_nickname` `me_nickname` VARCHAR(20) NOT NULL ,
+CHANGE COLUMN `me_email` `me_email` VARCHAR(50) NOT NULL ,
+CHANGE COLUMN `me_phone` `me_phone` VARCHAR(12) NOT NULL ;
+
+DROP TABLE IF EXISTS `community`;
+
+CREATE TABLE `community` (
+	`co_num`	int primary key auto_increment	NOT NULL,
+	`co_name`	varchar(50) unique	NULL
+);
+
+ALTER TABLE `petvely`.`post` 
+ADD COLUMN `po_delete` VARCHAR(1) NULL DEFAULT 0 AFTER `po_me_num`;
+
+ALTER TABLE `petvely`.`post` 
+ADD COLUMN `po_co_num` INT NOT NULL AFTER `po_delete`;
