@@ -95,11 +95,15 @@ public class PostService {
 	    postDao.updateRecommendCount(recommend.getRe_po_num());  // 게시글 추천수 업데이트
 	    return recommend.getRe_state();  // 새로운 추천/비추천 상태 반환
 	}
-	public PageMaker getPageMaker(PostCriteria cri) {
-		int count = postDao.selectCountPostList(cri);
-		return new PageMaker(3, cri, count);
-	}
-
+	// 커뮤니티 번호에 맞는 게시글 목록을 가져오는 메서드
+	public List<PostVO> getAllPosts(int co_num) {
+        return postDao.selectPostList(co_num);
+    }		
+	
+	// 총 게시글 수를 가져오는 메서드 (페이징을 위해 사용)
+	public int getPostCount(int co_num) {
+        return postDao.selectCountPostList(co_num);
+    }
 
 
 }

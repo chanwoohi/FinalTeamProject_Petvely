@@ -57,6 +57,9 @@ public interface PostDAO {
     // 게시글의 추천수를 업데이트하는 메서드
     int updateRecommendCount(int po_num);
     
+    // 게시글 총 개수를 가져오는 메서드
+	int selectCountPostList(int co_num);
+    
 
 
 }

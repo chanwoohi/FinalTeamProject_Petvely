@@ -59,24 +59,17 @@
 		<a class="btn btn btn-outline-dark" th:href="@{/post/insert/{co_num}(co_num=${co_num})}">글쓰기</a>
 		<script type="text/javascript">
 		//테이블 삽입
-		$(document).ready(function() {
-    $('#dataTable').DataTable({
-        "language": {
-            "search": "검색: ", 
-            "lengthMenu": "_MENU_ 개씩 보기", 
-            "zeroRecords": "검색 결과가 없습니다.", 
-            "infoEmpty": "데이터가 없습니다.",
-            "infoFiltered": "(전체 _MAX_개의 데이터에서 필터링됨)",
-            "paginate": {
-                "first": "처음",
-                "last": "마지막",
-                "next": "다음",
-                "previous": "이전"
-            }
-        },
-        "info": false  // 테이블 정보 표시를 제거
-    });
-});
+		$('#dataTable').DataTable({
+		    "columns": [
+		        { "data": "po_num" },          // 번호
+		        { "data": "po_title" },        // 제목
+		        { "data": "po_me_num" },       // 작성자
+		        { "data": "po_date" },         // 작성일
+		        { "data": "recommendCount" },  // 추천수
+		        { "data": "po_viewCount" }     // 조회수
+		    ],
+		    // 기타 설정...
+		});
 		</script>
 	</main>
 </body>
