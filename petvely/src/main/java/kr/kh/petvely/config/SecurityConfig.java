@@ -18,7 +18,7 @@ public class SecurityConfig{
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf ->csrf.disable())
             .authorizeHttpRequests((requests) -> requests
-                .requestMatchers("/post/insert/*").hasAuthority(UserRole.USER.name())
+                //.requestMatchers("/post/insert/*").hasAuthority(UserRole.USER.name())
                 .requestMatchers("/admin/**").hasAnyAuthority(UserRole.ADMIN.name())
                 .anyRequest().permitAll()  // 그 외 요청은 인증 필요
             )

@@ -26,16 +26,6 @@ CREATE TABLE `Member` (
 	`me_ms_status`	varchar(50)	NOT NULL
 );
 
-<<<<<<<< HEAD:파이널 프로젝트_DDL_4.03.sql
-DROP TABLE IF EXISTS `community`;
-
-CREATE TABLE `community` (
-	`co_num`	int primary key auto_increment	NOT NULL,
-	`co_name`	varchar(50) unique	NULL
-);
-
-========
->>>>>>>> main:파이널 프로젝트_DDL 4.17.sql
 DROP TABLE IF EXISTS `Comment`;
 
 CREATE TABLE `Comment` (
@@ -84,42 +74,18 @@ CREATE TABLE `FacilityReview` (
 	`fr_me_num`	int	NOT NULL
 );
 
-DROP TABLE IF EXISTS `WalkMatePost`;
-
-CREATE TABLE `WalkMatePost` (
-	`po_num`	int primary key auto_increment	NOT NULL,
-	`wm_date`	datetime	NULL,
-	`wm_time`	varchar(255)	NULL,
-<<<<<<<< HEAD:파이널 프로젝트_DDL_4.03.sql
-	`wm_wms_state`	varchar(50)	NOT NULL DEFAULT "진행중"
-========
-	`wm_wms_state`	varchar(50)	NOT NULL DEFAULT "진행중",
-    CONSTRAINT `fk_wm_po_num`
-	  FOREIGN KEY (`po_num`)
-	  REFERENCES `petvely`.`post` (`po_num`)
-	  ON DELETE CASCADE
-	  ON UPDATE NO ACTION
->>>>>>>> main:파이널 프로젝트_DDL 4.17.sql
-);
-
 DROP TABLE IF EXISTS `Recommend`;
 
 CREATE TABLE `Recommend` (
 	`re_num`	int primary key auto_increment	NOT NULL,
-	`re_state`	int NOT NULL default 0,
-	`re_me_num`	int	NULL,
+	`re_state`	int	NULL,
+	`re_me_num`	int	NOT NULL,
 	`re_po_num`	int	NOT NULL
 );
 
-<<<<<<<< HEAD:파이널 프로젝트_DDL_4.03.sql
-DROP TABLE IF EXISTS `GiveAndTakePost`;
-
-CREATE TABLE `GiveAndTakePost` (
-========
 DROP TABLE IF EXISTS `GATPost`;
 
 CREATE TABLE `GATPost` (
->>>>>>>> main:파이널 프로젝트_DDL 4.17.sql
 	`po_num`	int primary key auto_increment	NOT NULL,
 	`gat_gatt_type`	varchar(255)	NOT NULL,
 	`gat_startDate`	datetime	NULL default current_timestamp,
@@ -194,14 +160,25 @@ CREATE TABLE `Post` (
 	`po_content`	longtext	NULL,
 	`po_date`	datetime	NULL default current_timestamp,
 	`po_hidden`	varchar(1)	NULL,
-	`po_viewCount`	int NOT	NULL,
-	`po_recommendCount`	int	NOT NULL,
+	`po_viewCount`	int	NULL,
+	`po_recommendCount`	int	NULL,
 	`po_reportCount`	int	NULL,
 	`po_notice`	varchar(1)	NULL,
-	`po_me_num`	int	NOT NULL,
-    `po_co_num` int NOT NULL,
-    `po_delete` TINYINT DEFAULT 0
+	`po_me_num`	int	NOT NULL
+);
 
+DROP TABLE IF EXISTS `WalkMatePost`;
+
+CREATE TABLE `WalkMatePost` (
+	`po_num`	int primary key auto_increment	NOT NULL,
+	`wm_date`	datetime	NULL,
+	`wm_time`	varchar(255)	NULL,
+	`wm_wms_state`	varchar(50)	NOT NULL DEFAULT "진행중",
+    CONSTRAINT `fk_wm_po_num`
+	  FOREIGN KEY (`po_num`)
+	  REFERENCES `petvely`.`post` (`po_num`)
+	  ON DELETE CASCADE
+	  ON UPDATE NO ACTION
 );
 
 DROP TABLE IF EXISTS `MarketPost`;
@@ -215,15 +192,9 @@ CREATE TABLE `MarketPost` (
 	`mp_gt_type`	varchar(50)	NOT NULL
 );
 
-<<<<<<<< HEAD:파이널 프로젝트_DDL_4.03.sql
-DROP TABLE IF EXISTS `GiveAndTakeType`;
-
-CREATE TABLE `GiveAndTakeType` (
-========
 DROP TABLE IF EXISTS `GATType`;
 
 CREATE TABLE `GATType` (
->>>>>>>> main:파이널 프로젝트_DDL 4.17.sql
 	`gatt_type`	varchar(255)	NOT NULL
 );
 
@@ -320,15 +291,9 @@ CREATE TABLE `WalkMateState` (
 	`wms_state`	varchar(50)	NOT NULL
 );
 
-<<<<<<<< HEAD:파이널 프로젝트_DDL_4.03.sql
-DROP TABLE IF EXISTS `GiveAndTakeState`;
-
-CREATE TABLE `GiveAndTakeState` (
-========
 DROP TABLE IF EXISTS `GATState`;
 
 CREATE TABLE `GATState` (
->>>>>>>> main:파이널 프로젝트_DDL 4.17.sql
 	`gats_state`	varchar(50)	NOT NULL
 );
 
@@ -391,3 +356,16 @@ CHANGE COLUMN `me_pw` `me_pw` VARCHAR(255) NOT NULL ,
 CHANGE COLUMN `me_nickname` `me_nickname` VARCHAR(20) NOT NULL ,
 CHANGE COLUMN `me_email` `me_email` VARCHAR(50) NOT NULL ,
 CHANGE COLUMN `me_phone` `me_phone` VARCHAR(12) NOT NULL ;
+
+DROP TABLE IF EXISTS `community`;
+
+CREATE TABLE `community` (
+	`co_num`	int primary key auto_increment	NOT NULL,
+	`co_name`	varchar(50) unique	NULL
+);
+
+ALTER TABLE `petvely`.`post` 
+ADD COLUMN `po_delete` VARCHAR(1) NULL DEFAULT 0 AFTER `po_me_num`;
+
+ALTER TABLE `petvely`.`post` 
+ADD COLUMN `po_co_num` INT NOT NULL AFTER `po_delete`;

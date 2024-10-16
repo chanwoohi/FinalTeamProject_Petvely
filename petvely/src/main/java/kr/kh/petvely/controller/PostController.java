@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -99,10 +98,13 @@ public class PostController {
                                          @RequestParam("num") int num) {  
     	
         Map<String, Object> resultMap = new HashMap<>();
-        
+
+        // 2번 여기 문제점 서술하기
+        // 3번 로그인한 아이디가 존재하는지 확인
         RecommendVO recommend = new RecommendVO();
-        recommend.setRe_post_num(num);  // 게시글 번호
+        recommend.setRe_po_num(num);  // 게시글 번호
         recommend.setRe_state(state);  // 추천/비추천 상태
+        recommend.setRe_me_num(1);
 
         // 추천/비추천 처리
         int res = postService.insertRecommend(recommend);

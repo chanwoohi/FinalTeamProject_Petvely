@@ -59,8 +59,8 @@
 	
 	<!-- 추천 추가 -->
 	<insert id="insertRecommend">
-		INSERT into recommend(re_po_num, re_state)
-		VALUES (#{re_po_num},#{re_state})
+		INSERT into recommend(re_po_num, re_state, re_me_num)
+		VALUES (#{re_po_num}, #{re_state}, #{re_me_num})
 	</insert>
 	
 	<!-- 추천 정보 조회 (게시글 번호로 조회)-->
