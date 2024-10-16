@@ -35,7 +35,7 @@ CREATE TABLE `Comment` (
 	`cm_state`	int	NULL,
 	`cm_reportCount`	int	NULL,
 	`cm_me_num`	int	NOT NULL,
-	`cm_mp_num`	int	NOT NULL,
+	`cm_po_num`	int	NOT NULL,
 	`cm_reply`	int	NOT NULL,
 	`cm_ord`	int	NULL,
 	`cm_layer`	int	NULL
@@ -176,13 +176,6 @@ CREATE TABLE `Post` (
 	`po_notice`	varchar(1)	NULL,
 	`po_me_num`	int	NOT NULL,
     `po_ca_num` int NOT NULL
-);
-
-DROP TABLE IF EXISTS `Category`;
-
-CREATE TABLE `Category` (
-	`ca_num` int primary key auto_increment NOT NULL,
-    `ca_name` varchar(50) NULL
 );
 
 DROP TABLE IF EXISTS `MarketPost`;
@@ -364,6 +357,21 @@ CREATE TABLE PostUserSelectedPets (
     `pusp_ani_num` INT              -- 선택된 애완동물 번호
 );
 
+DROP TABLE IF EXISTS `RegEx`;
+
+CREATE TABLE `RegEx` (
+        `re_num`        int primary key auto_increment        NOT NULL,
+        `re_regex`        varchar(255) NOT NULL
+);
+
+DROP TABLE IF EXISTS `Community`;
+
+CREATE TABLE `community` (
+        `co_num`        int primary key auto_increment        NOT NULL,
+        `co_name`        varchar(50) unique        NULL
+);
+
+
 ALTER TABLE `petvely`.`posthostselectedpets`
 ADD CONSTRAINT `po_num`
   FOREIGN KEY (`phsp_po_num`)
@@ -378,170 +386,89 @@ ADD CONSTRAINT `pusp_po_num`
   ON DELETE CASCADE
   ON UPDATE CASCADE;
   
-ALTER TABLE `Comment`
-ADD CONSTRAINT `fk_comment_me_num`
-  FOREIGN KEY (`cm_me_num`)
-  REFERENCES `Member` (`me_num`)
+ALTER TABLE `Bookmark`
+ADD CONSTRAINT `fk_Bookmark_post`
+  FOREIGN KEY (`bm_po_num`)
+  REFERENCES `Post` (`po_num`)
   ON DELETE CASCADE
   ON UPDATE CASCADE;
 
 ALTER TABLE `Comment`
-ADD CONSTRAINT `fk_comment_mp_num`
-  FOREIGN KEY (`cm_mp_num`)
-  REFERENCES `MarketPost` (`po_num`)
+ADD CONSTRAINT `fk_Comment_post`
+  FOREIGN KEY (`cm_po_num`)
+  REFERENCES `Post` (`po_num`)
   ON DELETE CASCADE
   ON UPDATE CASCADE;
 
 ALTER TABLE `File`
-ADD CONSTRAINT `fk_file_po_num`
+ADD CONSTRAINT `fk_File_post`
   FOREIGN KEY (`fi_po_num`)
   REFERENCES `Post` (`po_num`)
   ON DELETE CASCADE
   ON UPDATE CASCADE;
 
 ALTER TABLE `FacilityReview`
-ADD CONSTRAINT `fk_facilityReview_fs_num`
+ADD CONSTRAINT `fk_FacilityReview_post`
   FOREIGN KEY (`fr_fs_num`)
-  REFERENCES `FacilityShare` (`fs_num`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-
-ALTER TABLE `FacilityReview`
-ADD CONSTRAINT `fk_facilityReview_me_num`
-  FOREIGN KEY (`fr_me_num`)
-  REFERENCES `Member` (`me_num`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-
-ALTER TABLE `WalkMatePost`
-ADD CONSTRAINT `fk_walkMatePost_me_num`
-  FOREIGN KEY (`po_me_num`)
-  REFERENCES `Member` (`me_num`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-
-ALTER TABLE `Recommend`
-ADD CONSTRAINT `fk_recommend_me_num`
-  FOREIGN KEY (`re_me_num`)
-  REFERENCES `Member` (`me_num`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-
-ALTER TABLE `Recommend`
-ADD CONSTRAINT `fk_recommend_po_num`
-  FOREIGN KEY (`re_po_num`)
   REFERENCES `Post` (`po_num`)
   ON DELETE CASCADE
   ON UPDATE CASCADE;
 
 ALTER TABLE `GATPost`
-ADD CONSTRAINT `fk_gatpost_emd_num`
-  FOREIGN KEY (`gat_emd_num`)
-  REFERENCES `Emd_areas` (`emd_num`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-
-ALTER TABLE `Message`
-ADD CONSTRAINT `fk_message_receiver`
-  FOREIGN KEY (`mes_me_receiverNum`)
-  REFERENCES `Member` (`me_num`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-
-ALTER TABLE `Message`
-ADD CONSTRAINT `fk_message_sender`
-  FOREIGN KEY (`mes_me_senderNum`)
-  REFERENCES `Member` (`me_num`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-
-ALTER TABLE `Report`
-ADD CONSTRAINT `fk_report_me_num`
-  FOREIGN KEY (`rp_me_num`)
-  REFERENCES `Member` (`me_num`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-
-ALTER TABLE `FacilityReview`
-ADD CONSTRAINT `fk_facilityReview_fs_num`
-  FOREIGN KEY (`fr_fs_num`)
-  REFERENCES `FacilityShare` (`fs_num`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-
-ALTER TABLE `WalkMateMember`
-ADD CONSTRAINT `fk_walkMateMember_po_num`
-  FOREIGN KEY (`wmm_po_num`)
-  REFERENCES `WalkMatePost` (`po_num`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-
-ALTER TABLE `WalkMateMember`
-ADD CONSTRAINT `fk_walkMateMember_ani_num`
-  FOREIGN KEY (`wmm_ani_num`)
-  REFERENCES `Animal` (`ani_num`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-
-ALTER TABLE `WalkMateMember`
-ADD CONSTRAINT `fk_walkMateMember_me_num`
-  FOREIGN KEY (`wmm_me_num`)
-  REFERENCES `Member` (`me_num`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-
-ALTER TABLE `Dibs`
-ADD CONSTRAINT `fk_dibs_me_num`
-  FOREIGN KEY (`di_me_num`)
-  REFERENCES `Member` (`me_num`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-
-ALTER TABLE `Dibs`
-ADD CONSTRAINT `fk_dibs_po_num`
-  FOREIGN KEY (`di_po_num`)
+ADD CONSTRAINT `fk_GATPost_post`
+  FOREIGN KEY (`po_num`)
   REFERENCES `Post` (`po_num`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-
-ALTER TABLE `Bookmark`
-ADD CONSTRAINT `fk_bookmark_me_num`
-  FOREIGN KEY (`bm_me_num`)
-  REFERENCES `Member` (`me_num`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-
-ALTER TABLE `Bookmark`
-ADD CONSTRAINT `fk_bookmark_po_num`
-  FOREIGN KEY (`bm_po_num`)
-  REFERENCES `Post` (`po_num`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-
-ALTER TABLE `Animal`
-ADD CONSTRAINT `fk_animal_me_num`
-  FOREIGN KEY (`ani_me_num`)
-  REFERENCES `Member` (`me_num`)
   ON DELETE CASCADE
   ON UPDATE CASCADE;
 
 ALTER TABLE `MarketPost`
-ADD CONSTRAINT `fk_marketPost_po_num`
+ADD CONSTRAINT `fk_MarketPost_post`
   FOREIGN KEY (`po_num`)
   REFERENCES `Post` (`po_num`)
   ON DELETE CASCADE
   ON UPDATE CASCADE;
 
 ALTER TABLE `WalkMatePost`
-ADD CONSTRAINT `fk_walkMatePost_ca_num`
-  FOREIGN KEY (`po_ca_num`)
-  REFERENCES `Category` (`ca_num`)
+ADD CONSTRAINT `fk_WalkMatePost_post`
+  FOREIGN KEY (`po_num`)
+  REFERENCES `Post` (`po_num`)
   ON DELETE CASCADE
   ON UPDATE CASCADE;
 
-ALTER TABLE `GATPost`
-ADD CONSTRAINT `fk_gatPost_ca_num`
-  FOREIGN KEY (`gat_emd_num`)
-  REFERENCES `Emd_areas` (`emd_num`)
+ALTER TABLE `Recommend`
+ADD CONSTRAINT `fk_Recommend_post`
+  FOREIGN KEY (`re_po_num`)
+  REFERENCES `Post` (`po_num`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+ALTER TABLE `ContentsReview`
+ADD CONSTRAINT `fk_ContentsReview_post`
+  FOREIGN KEY (`cr_po_num`)
+  REFERENCES `Post` (`po_num`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+ALTER TABLE `Dibs`
+ADD CONSTRAINT `fk_Dibs_post`
+  FOREIGN KEY (`di_po_num`)
+  REFERENCES `Post` (`po_num`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+ALTER TABLE `Message`
+ADD COLUMN `mes_po_num` INT NOT NULL;
+
+ALTER TABLE `Message`
+ADD CONSTRAINT `fk_Message_post`
+  FOREIGN KEY (`mes_po_num`)
+  REFERENCES `Post` (`po_num`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+ALTER TABLE `WalkMateMember`
+ADD CONSTRAINT `fk_WalkMateMember_post`
+  FOREIGN KEY (`wmm_po_num`)
+  REFERENCES `Post` (`po_num`)
   ON DELETE CASCADE
   ON UPDATE CASCADE;
