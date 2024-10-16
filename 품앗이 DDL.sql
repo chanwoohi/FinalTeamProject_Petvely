@@ -37,10 +37,10 @@ VALUES
     ('5', '예시6', '2024-10-01', '2024-10-01', 'x', '완료', '17');
 
 select * from post;
-INSERT INTO post(po_num, po_title, po_content, po_me_num) 
+INSERT INTO post(po_num, po_title, po_content, po_me_num, po_co_num) 
 	VALUES 
-		('1', 'test1', 'w', '1'), ('2', 'test2', 'w', '1'), ('3', 'test2', 'w', '1'),
-        ('4', '테스트1', 'w', '1'), ('5', '테스트16', 'w', '1');
+		('1', 'test1', 'w', '1', '8'), ('2', 'test2', 'w', '1', '8'), ('3', 'test2', 'w', '1', '8'),
+        ('4', '테스트1', 'w', '1', '8'), ('5', '테스트16', 'w', '1', '8');
 
 select * from gattype;
 INSERT INTO gattype(gatt_type) values ('예시1'), ('예시2'),('예시3'), ('예시4'),('예시5'), ('예시6');
