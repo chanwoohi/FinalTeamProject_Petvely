@@ -10,5 +10,8 @@ public interface WalkMatePostDAO {
 
 	boolean insertWalkMatePost(WalkMatePostVO walkMatePost);
 
+	WalkMatePostVO selectWalkMatePost(int po_num);
+
+	boolean updateWalkMatePost(WalkMatePostVO walkMatePost);
 
 }

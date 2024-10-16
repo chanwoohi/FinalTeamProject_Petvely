@@ -21,15 +21,18 @@
 				</thead>
 				<tbody>
 					<tr th:each="item : ${list}">
-						<td th:text="${item.po_num}">번호</td>
-						<td th:text="${item.po_title}">제목</td>
-						<td th:text="${item.me_id}">작성자</td>
-						<td th:text="0">조회수</td>
+						<td th:text="${item.po_num}"></td>
+						<td>
+							<a th:text="${item.po_title}"
+							th:href="@{/walkmatepost/detail/{po_num}(po_num=${item.po_num})}"></a> 
+						</td>
+						<td th:text="${item.me_id}"></td>
+						<td th:text="0">조회수 구현 하려고 하고 있음</td>
 					</tr>
 				</tbody>
 			</table>
 			<a class="btn btn-outline-info"
-				th:href="@{/walkmatepost/insert}">글쓰기</a>
+				th:href="@{/walkmatepost/insert}">글쓰기</a>	
 		</div>
 	</main>
 </body>

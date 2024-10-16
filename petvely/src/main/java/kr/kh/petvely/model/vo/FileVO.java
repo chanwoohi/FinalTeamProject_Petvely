@@ -13,11 +13,4 @@ public class FileVO {
 	private String fi_name; 
 	private Date fi_date; 
 	private int fi_po_num;
-	
-	public FileVO(String fi_name, String fi_ori_name, int po_num, Date fi_date) {
-		this.fi_name = fi_name;
-		this.fi_ori_name = fi_ori_name;
-		this.fi_po_num = po_num;
-		this.fi_date = fi_date;
-	}
 }
