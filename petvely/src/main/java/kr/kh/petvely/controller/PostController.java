@@ -67,19 +67,22 @@ public class PostController {
 		model.addAttribute("post", post);
 		return "post/detail"; // 뷰 템플릿 반환
 	}
-	@GetMapping("/post/update/{po_num}") // 게시글 수정 페이지 이동
+	@GetMapping("/post/update/{po_num}") // 게시글 수정 페이지 이동, 카테고리 목록 전달
 	public String postUpdate(Model model, @PathVariable int po_num) {
 		PostVO post = postService.getPost(po_num);
-		System.out.println(po_num);
+		List<CommunityVO> communities = postService.getCommunityList(); // 카테고리 목록을 가져옴    
+	
+		model.addAttribute("communities", communities); // 카테고리 목록을 모델에 추가
 		model.addAttribute("post", post);
 		return "post/update"; // 뷰 템플릿 반환
 	}
-	@PostMapping("/post/update/{po_num}") //게시글 수정 페이지 이동
-	public String postUpdatePost(Model model, @PathVariable int po_num, PostVO post) {
+	@PostMapping("/post/update/{po_num}") //게시글 수정 페이지 글 작성 처리
+	public String postUpdatePost(PostVO post, @PathVariable int po_num, @RequestParam("po_co_num")int co_num) {
 		post.setPo_num(po_num);
+		post.setPo_co_num(co_num); //선택된 카테고리를 게시글에 설정
 		boolean res = postService.updatePost(post);
 		if(res) {
-			return "redirect:/post/detail/" + po_num;
+			return "redirect:/post/detail/" + co_num; //성공 시 카테고리로
 		}
 		return "redirect:/post/update/" + po_num;
 	}
