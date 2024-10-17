@@ -2,6 +2,10 @@ package kr.kh.petvely.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
+import kr.kh.petvely.model.vo.CommunityVO;
+
 import javax.sql.DataSource;
 
 import kr.kh.petvely.model.vo.CommunityVO;
@@ -25,6 +29,8 @@ public interface PostDAO {
 
 	boolean deletePost(int po_num);
 
+	boolean insertBookmark(@Param("po_num")int po_num, @Param("bm_me_num")int bm_me_num);
+	
 	List<CommunityVO> selectCommunityList();
 
 	void insertFile(FileVO fileVo);

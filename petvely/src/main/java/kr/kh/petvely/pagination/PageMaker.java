@@ -18,7 +18,7 @@ public class PageMaker {
 	public void calculate() {
 		//현재 페이지에 대한 최대 페이지번호
 		//현재 페이지 : 4, 한페이지에 컨텐츠 개수가 10, 한 페이지네이션의 페이지 개수 : 10
-		//endPage = (int)(Math.ceilt(0.4) * 10);
+		//endPage = (int)(Math.ceil(0.4) * 10);
 		endPage = (int)(Math.ceil(cri.getPage()/(double)displayPageNum)*displayPageNum);
 		
 		startPage = endPage - displayPageNum + 1;

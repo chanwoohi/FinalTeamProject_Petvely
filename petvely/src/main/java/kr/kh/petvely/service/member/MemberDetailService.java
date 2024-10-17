@@ -1,4 +1,4 @@
-package kr.kh.petvely.service;
+package kr.kh.petvely.service.member;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -6,8 +6,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import kr.kh.petvely.dao.MemberDAO;
-import kr.kh.petvely.model.util.CustomUser;
+import kr.kh.petvely.dao.member.MemberDAO;
+import kr.kh.petvely.model.user.CustomUser;
 import kr.kh.petvely.model.vo.MemberVO;
 
 @Service

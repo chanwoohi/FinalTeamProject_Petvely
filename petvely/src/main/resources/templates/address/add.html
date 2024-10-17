@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html 
+xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<main layout:fragment="content">
+		<div id="address">
+			<select id="sido">
+				<option th:each="itemSido : ${sidoList}" th:text="${itemSido.sido_name}" th:value="${itemSido.sido_num}"></option>
+			</select>
+			<select id="sigg">
+			</select>
+			<select id="emd">
+			</select>
+		</div>
+		<button class="btn btn-outline-info col-12">등록</button>
+		<a class="btn btn-outline-info" th:href="@{/gatpost/insert}">취소</a>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+		<script type="text/javascript">
+		
+		//첫번째 시도번호를 가져옴 
+		let firstSido = '[[${sidoList.get(0).sido_num}]]';
+		//시도가 변경되면 ajax로 시도에 맞는 시군구를 가져옴
+		$('#sido').change(function(){
+			let sido_num = $(this).val();
+			$.ajax({
+				async : true,
+				url : '/get/sigg', 
+				type : 'post', 
+				data : {sido_num}, 
+				success : function (data){
+					var str = ''
+					for(sigg of data){
+						str += `
+								<option value="${sigg.sigg_num}">${sigg.sigg_name}</option>
+						`;
+					}
+					$('#sigg').html(str);
+					$('#sigg').trigger('change');
+				},
+				error : function(jqXHR, textStatus, errorThrown){
+				}
+			});
+		})
+		//select 태그의 값을 변경 후 이벤트 실행
+		$('#sido').val(firstSido);
+		$('#sido').trigger('change');
+		
+		$('#sigg').change(function(){
+			let sigg_num = $(this).val();
+			$.ajax({
+				async : true,
+				url : '/get/emd', 
+				type : 'post', 
+				data : {sigg_num}, 
+				success : function (data){
+					var str = ''
+					for(emd of data){
+						str += `
+								<option value="${emd.emd_num}">${emd.emd_name}</option>
+						`;
+					}
+					$('#emd').html(str);
+				},
+				error : function(jqXHR, textStatus, errorThrown){
+				}
+			});
+		})
+		
+		$('#addAddress').click(function(){
+			let emd_num = $(this).val();
+			$.ajax({
+				async : true,
+				url : '/post/insert', 
+				type : 'post', 
+				data : {emd_num}, 
+				success : function (data){
+					for(emd of data){
+						consol(data)
+					}
+					$('#emd').html(str);
+				},
+				error : function(jqXHR, textStatus, errorThrown){
+				}
+			});
+		})
+		</script>
+	</main>
+	
+</body>
+</html>

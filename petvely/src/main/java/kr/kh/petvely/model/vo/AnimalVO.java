@@ -16,8 +16,17 @@ public class AnimalVO {
 	private float ani_weight;
 	private String ani_img;
 	private String ani_info;
-	private int ani_neutralization ;
+	private int ani_neutralization;
 	private String ani_at_type;
 	private int ani_me_num;
+	
+	//PostHostSelectedPetsVO 와 join 해서 사용할 때 호출용
+	private int phsp_num;
+	private int phsp_po_num; 
+	private int phsp_ani_num;
 
+	//PostUserSelectedPetsVO 와 join 해서 사용할 때 호출용 
+	private int pusp_num;
+	private int pusp_po_num;
+	private int pusp_ani_num;
 }

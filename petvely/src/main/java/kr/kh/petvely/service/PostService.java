@@ -2,6 +2,9 @@ package kr.kh.petvely.service;
 
 import java.util.List;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.kh.petvely.dao.PostDAO;
@@ -11,9 +14,8 @@ import kr.kh.petvely.model.vo.RecommendVO;
 import lombok.AllArgsConstructor;
 
 @Service
-@AllArgsConstructor
 public class PostService {
-	
+	@Autowired
 	private PostDAO postDao;
 	
 	public List<PostVO> getPostList(int co_num){
@@ -34,6 +36,17 @@ public class PostService {
 	public PostVO getPost(int po_num) {
 		return postDao.selectPost(po_num);
 	}
+
+	public boolean insertBookmark(int po_num, int bm_me_num) {
+		
+		return postDao.insertBookmark(po_num, bm_me_num);
+		
+	}
+
+	public List<CommunityVO> selectCommunityList() {
+		return postDao.selectCommunityList();
+	}
+	
 	
 	public boolean updatePost(PostVO post) {
 		if(post == null) {

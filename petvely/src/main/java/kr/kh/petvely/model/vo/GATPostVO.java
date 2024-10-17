@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GATPostVO extends PostVO{
 	
+	private int po_num;
 	private String gat_gatt_type;
 	private Date gat_startDate;
 	private Date gat_endDate;

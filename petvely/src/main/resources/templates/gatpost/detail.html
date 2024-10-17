@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<main layout:fragment="content">
+		<div class="table table-striped" th:object="${GATPost}">
+			<div class="form-group">
+				<div th:if="${GATPost.gat_gat.equals('o')}">
+					<input class="btn btn-outline-info text-center" type="text" readonly value="GIVE">
+					<input class="btn btn-outline-info text-center" type="text" readonly th:field="*{gat_gats_state}">
+				</div>
+				<div th:if="${GATPost.gat_gat.equals('x')}">
+					<input class="btn btn-outline-info text-center" type="text" readonly value="TAKE">
+					<input class="btn btn-outline-info text-center" type="text" readonly th:field="*{gat_gats_state}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label>제목:</label>
+				<input type="text" class="form-control" readonly th:field="*{po_title}">
+			</div>
+			<div class="form-group">
+				<label>작성자:</label>
+				<input type="text" class="form-control"  readonly th:field="*{me_id}">
+			</div>
+			<div class="form-group">
+				<label>내용:</label>
+				<div class="form-control" style="min-height: 400px; height: auto;"
+					th:utext="*{po_content}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label>타입:</label>
+				<input type="text" class="form-control" readonly th:field="*{gat_gatt_type}">
+			</div>
+			<div class="form-group">
+				<label>등록시간:</label>
+				<input type="datetime" class="form-control" readonly name="po_date"
+					th:value="*{#dates.format(po_date, 'yyyy-MM-dd hh:mm:ss')}">
+			</div>
+			<div class="form-group">
+				<label>시작기간:</label>
+				<input type="date" class="form-control" readonly name="gat_startDate"
+					th:value="*{#dates.format(gat_startDate, 'yyyy-MM-dd')}">
+			</div>
+			<div class="form-group">
+				<label>종료기간:</label>
+				<input type="date" class="form-control" readonly name="gat_endDate"
+					th:value="*{#dates.format(gat_endDate, 'yyyy-MM-dd')}">
+			</div>
+			<div class="form-group">
+				<label>주소:</label>
+				<input type="text" class="form-control" readonly th:field="*{sido_name}">
+				<input type="text" class="form-control" readonly th:field="*{sigg_name}">
+				<input type="text" class="form-control" readonly th:field="*{emd_name}">
+			</div>
+<!-- 			<div class="mt-3">
+			</div>
+			<div class="form-group">
+				<button class="btn btn-outline-info" id="commentButton">댓글</button>
+			</div>
+			<div class="comment-container" id="commentList">
+				<ul class="comment-list">
+				</ul>
+				<ul class="comment-list1" id="commentList00">
+				</ul>
+				<div class="comment-pagination"></div>
+				<div class="comment-insert-box">
+					<textarea class="col-12 input-comment-insert"></textarea>
+					<button class="btn btn-outline-success btn-comment-insert">등록</button>
+				</div>
+			</div> -->
+			<div class="form-group">
+				<a class="btn btn-outline-info" th:href="@{/gatpost/list}">목록으로</a>
+				<a class="btn btn-outline-info" th:href="@{/gatpost/update/{po_num}(po_num=*{po_num})}">수정</a>
+				<a class="btn btn-outline-info" th:href="@{/gatpost/delete/{po_num}(po_num=*{po_num})}">삭제</a>
+			</div>
+		</div>
+		<script type="text/javascript">
+			let po_num = '[[${GATPost.po_num}]]';
+			$ (document).ready(function() {
+				$.ajax({
+					async : true, 
+					url : '/comment/list',
+					method : "post",
+					data : JSON.stringify(po_num), 
+					contentType : "application/json; charset=utf-8",
+					success : function (data){
+						console.log(data);
+						displayCommentList(data);
+					}, 
+					error : function(jqXHR, textStatus, errorThrown){
+					}
+				});
+			});
+			
+			function displayCommentList(data){
+				if(data == null || data.length == 0){
+					console.log(1);
+					$(".comment-list").html('<li class="comment-item">등록된 댓글이 없습니다.</li>');
+					return;
+				}
+				for(comment of data){
+					if (comment.cm_layer == 0) {
+						displayCommentList0(comment);
+					}
+					if (comment.cm_layer == 1) {
+						displayCommentList1(comment);
+					}
+				}
+			}
+			var btns = '';
+			var str = '';
+			var str1 = '';
+			var str2 = '';
+				btns = `
+				<div class="float-right">
+					<button class="btn btn-outline-info">수정</button>
+					<button class="btn btn-outline-dark">삭제</button>
+					<button class="btn btn-outline-primary" id="commentButton00">대댓글</button>
+				</div>
+				`
+			
+			function displayCommentList1(data){
+				console.log(1);
+				str2 += `
+					<div class="comment-item">
+						<div>
+							<div style="float: left; line-height: 40px;">${comment.me_id}</div>
+							<div style="line-height: 40px;">(${comment.cm_date})</div>
+							<div class="float-right">
+								${btns}
+							</div>
+						</div>
+						<div>
+							<div style="padding-left:20px; line-height: 40px;">${comment.cm_content}</div>
+							<div>${comment.cm_layer}</div>
+						</div>
+					</div>
+				`;
+			}
+				
+			function displayCommentList0(data){
+				console.log(10);
+				str1 += `
+					<div class="comment-item">
+						<div>
+							<div style="float: left; line-height: 40px;">${comment.me_id}</div>
+							<div style="line-height: 40px;">(${comment.cm_date})</div>
+							<div class="float-right">
+								${btns}
+							</div>
+						</div>
+						<div>
+							<div style="padding-left:20px; line-height: 40px;">${comment.cm_content}</div>
+							<div>${comment.cm_layer}</div>
+						</div>
+					</div>
+				`;
+				$(".comment-list").html(str1);
+			}
+				
+			
+			
+			$("#commentList").hide();
+			$("#commentButton").click(function() {
+				$("#commentList").toggle();
+			})
+			
+			$("#commentButton00").click(function() {
+				$("#commentList00").toggle();
+			})
+		</script>
+	</main>
+</body>
+</html>

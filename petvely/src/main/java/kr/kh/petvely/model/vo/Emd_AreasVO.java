@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class Emd_AreasVO {
+	
 	private int emd_num;
 	private int  emd_sigg_num;
 	private String emd_areas;
