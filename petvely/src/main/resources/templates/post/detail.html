@@ -34,13 +34,13 @@
 		    <a href="#" data-state="1"
 		       class="btn-up btn btn" 
 		       th:classappend="${re_state != 1} ? '-outline-danger' : '-danger'">
-		        👍추천(<span th:text="${post.recommendCount}"></span>)
+		        👍추천<!-- (<span th:text="${post.recommendCount}"></span>) -->
 		    </a>
 		    &nbsp;
 		    <a href="#" data-state="-1"
 		       class="btn-down btn btn" 
 		       th:classappend="${re_state != -1} ? '-outline-danger' : '-danger'">
-		        👎비추천<span th:text="${post.notRecommendCount}"></span>)
+		        👎비추천<!-- (<span th:text="${post.notRecommendCount}"></span>) -->
 		    </a>
 			</div>
 			<div class="form-group">
