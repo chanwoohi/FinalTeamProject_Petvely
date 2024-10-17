@@ -34,13 +34,13 @@
 		    <a href="#" data-state="1"
 		       class="btn-up btn btn" 
 		       th:classappend="${re_state != 1} ? '-outline-danger' : '-danger'">
-		        👍추천<!-- (<span th:text="${post.recommendCount}"></span>) -->
+		        👍추천(<span th:text="${post.recommendCount}"></span>)
 		    </a>
 		    &nbsp;
 		    <a href="#" data-state="-1"
 		       class="btn-down btn btn" 
 		       th:classappend="${re_state != -1} ? '-outline-danger' : '-danger'">
-		        👎비추천<!-- (<span th:text="${post.notRecommendCount}"></span>) -->
+		        👎비추천<span th:text="${post.notRecommendCount}"></span>)
 		    </a>
 			</div>
 			<div class="form-group">
@@ -67,7 +67,6 @@
 		
 		<script type="text/javascript">
 
-		let prevState = 0; // 초기 상태 (0: 아무 상태 아님)
 		//추천/비추천 버튼 클릭 이벤트
 		$('.btn-up, .btn-down').click(function(e) {
 		    e.preventDefault();
@@ -83,40 +82,20 @@
 		        data: {
 		            state: state,
 		            num: num
-		        },		        
+		        },		      
 		    	success : function(data){
 					let res = data.result;
-					console.log(res);
-					// 상태에 따라 알림 메시지 출력
-	                // 메시지 출력 및 상태 관리
-	                if (res === 1) {
-	                    if (prevState === -1) {
-	                        alert('비추천을 취소하고 추천했습니다.'); // 비추천 취소 후 추천
-	                    } else {
-	                        alert('추천 했습니다.'); // 추천
-	                    }
-	                } else if (res === -1) {
-	                    if (prevState === 1) {
-	                        alert('추천을 취소하고 비추천했습니다.'); // 추천 취소 후 비추천
-	                    } else {
-	                        alert('비추천 했습니다.'); // 비추천
-	                    }
-	                } else if (res === 0) {
-	                    if (prevState === 1) {
-	                        alert('추천을 취소했습니다.'); // 추천 취소
-	                    } else if (prevState === -1) {
-	                        alert('비추천을 취소했습니다.'); // 비추천 취소
-	                    }
-	                }
+					if(res == 1){
+						alert('추천 했습니다.');
+					}else if(res == -1){
+						alert('비추천 했습니다.');
+					}else{
+						alert(`${state == 1?'추천':'비추천'}을 취소했습니다.`);
+					}
 					
 					checkRecommendBtns(res);
-
-					prevState = res; // 현재 상태 업데이트
-
-					console.log(data);
-	                
+					console.log(res);
 					let post = data.post;
-					console.log(post);
 					$('.btn-up span').text(post.recommendCount);
 					$('.btn-down span').text(post.notRecommendCount);
 				}, 

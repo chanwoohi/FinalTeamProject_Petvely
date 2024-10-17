@@ -1,6 +1,5 @@
 package kr.kh.petvely.model.vo;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.kh.petvely.service.PostService;
 import lombok.AllArgsConstructor;
@@ -17,12 +16,4 @@ public class RecommendVO {
 	private int re_me_num;  //추천한 사용자 ID
 	private int re_po_num;	//추천한 게시글 번호
 	
-	private PostService postService;
-	private ObjectMapper objectMapper;
-	
-	// 생성자를 통한 의존성 주입
-    public void PostController(PostService postService, ObjectMapper objectMapper) {
-        this.postService = postService;
-        this.objectMapper = objectMapper;
-    }
 }

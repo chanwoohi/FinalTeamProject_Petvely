@@ -73,13 +73,30 @@ public class PostService {
 	public int getPostCount(int co_num) {
         return postDao.selectCountPostList(co_num);
     }
+
     // 추천/비추천 처리 메서드
 	public int insertRecommend(RecommendVO recommend) {
 	    if (recommend == null) {
 	        throw new RuntimeException();
 	    }
+	// 기존에 추천 여부 확인
+	RecommendVO dbRecommend = postDao.selectRecommend(recommend);
+	
+	// 없으면 추가 후 추천상태를 리턴
+	if(dbRecommend == null) {
+		postDao.insertRecommend(recommend);
+		return recommend.getRe_state();
+	}
+	//있으면 삭제
+	postDao.deleteRecommend(dbRecommend.getRe_num());
+		
+	// 기존 상태와 새 상태가 같으면(취소)
+	if(dbRecommend.getRe_state() == recommend.getRe_state()) {
 		return 0;
-
+	}
+	// 기존 상태와 새 상태가 같으면(변경)
+	postDao.insertRecommend(recommend);
+	return recommend.getRe_state();
 	}
 
 }

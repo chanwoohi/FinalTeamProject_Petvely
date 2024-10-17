@@ -8,11 +8,16 @@
     
     <!-- 삭제되지 않은 게시글 목록 조회 (po_delete = 0 조건 추가할 예정) -->
 	<select id="selectPostList" resultType="PostVO">
-		SELECT p.*, 
-           (SELECT COUNT(*) FROM recommend WHERE re_po_num = p.po_num AND re_state = 1) AS recommendCount,
-           (SELECT COUNT(*) FROM recommend WHERE re_po_num = p.po_num AND re_state = -1) AS notRecommendCount
-    	FROM post p
-		WHERE po_co_num = #{co_num}
+		SELECT
+		   post.*, 
+           count(if(re_state=1, re_state, null)) recommendCount,
+           count(if(re_state=-1, re_state, null)) AS notRecommendCount
+    	FROM
+		    post
+		        LEFT JOIN
+		    recommend ON po_num = re_po_num
+		WHERE po_num = #{po_num}
+		GROUP BY po_num 
 	</select>
 	
 	<select id="selectCountPostList" parameterType="int" resultType="int">
@@ -65,7 +70,7 @@
 	
 	<!-- 추천 정보 조회 (게시글 번호로 조회)-->
 	<select id="selectRecommend" resultType="RecommendVO">
-		SELECT * from recommend where re_po_num = #{re_po_num} and re_state = #{re_state}
+		SELECT * from recommend where re_me_num = #{re_po_num} and re_po_num = #{re_po_num}
 	</select>
 	
 	

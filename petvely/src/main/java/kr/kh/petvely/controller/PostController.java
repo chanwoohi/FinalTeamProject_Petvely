@@ -30,24 +30,23 @@ public class PostController {
 	
 	@Autowired
 	private PostService postService;
-	private ObjectMapper objectMapper;
 
-	@GetMapping("/post/list/{co_num}")
+	@GetMapping("/post/list/{co_num}") // 게시글 목록 조회
 	public String postList(Model model, @PathVariable int co_num) {
 		List<PostVO> list = postService.getPostList(co_num);
-		//게시글 목록을 가져와서 화면에 전달
+		// 게시글 목록을 가져와서 화면에 전달
 		List<CommunityVO> communities = postService.getCommunityList();
-		//커뮤니티 리스트를 가져옴
+		// 커뮤니티 리스트를 가져옴
 		model.addAttribute("list", list);
 		System.out.println(list);
 		model.addAttribute("communities", communities);
 	    return "/post/list";
 	}
-	@GetMapping("/post/insert/{co_num}") //글가져오기
+	@GetMapping("/post/insert/{co_num}") // 글 작성 페이지 이동
 	public String postInsert(@PathVariable int co_num) {
 		return "post/insert";
 	}
-	@PostMapping("/post/insert") //글쓰기
+	@PostMapping("/post/insert") // 글 작성 처리
 	public String postInsertPost(PostVO post) {
 		boolean res = postService.addPost(post);
 		if(res) {
@@ -55,22 +54,22 @@ public class PostController {
 		}
 		return "redirect:/post/insert/"+post.getPo_co_num();
 	}
-	@GetMapping("/post/detail/{po_num}") //게시글 상세
+	@GetMapping("/post/detail/{po_num}") // 게시글 상세 조회
 	public String postDetail(Model model, @PathVariable int po_num) {
-		postService.updateView(po_num);
-		//조회수 증가
+		postService.updateView(po_num); // 조회수 증가
+		
 		PostVO post = postService.getPost(po_num);
 		model.addAttribute("post", post);
-		return "post/detail";	
+		return "post/detail"; // 뷰 템플릿 반환
 	}
-	@GetMapping("/post/update/{po_num}") //게시글 수정 가져오기
+	@GetMapping("/post/update/{po_num}") // 게시글 수정 페이지 이동
 	public String postUpdate(Model model, @PathVariable int po_num) {
 		PostVO post = postService.getPost(po_num);
 		System.out.println(po_num);
 		model.addAttribute("post", post);
-		return "post/update";
+		return "post/update"; // 뷰 템플릿 반환
 	}
-	@PostMapping("/post/update/{po_num}") //게시글 쓴거 저장
+	@PostMapping("/post/update/{po_num}") //게시글 수정 페이지 이동
 	public String postUpdatePost(Model model, @PathVariable int po_num, PostVO post) {
 		post.setPo_num(po_num);
 		boolean res = postService.updatePost(post);
@@ -79,7 +78,7 @@ public class PostController {
 		}
 		return "redirect:/post/update/" + po_num;
 	}
-	@GetMapping("/post/delete/{po_num}") // 삭제 게시글 번호 받기
+	@GetMapping("/post/delete/{po_num}") // 삭제 (게시글 번호 받기)
 	public String postDelete(Model model, @PathVariable int po_num) {
 	
 			boolean res = postService.deletePost(po_num);
@@ -110,7 +109,7 @@ public class PostController {
         
         try {
             // 임시 사용자 정보 설정
-	        String me_id = "testUser"; //임시 사용자 아이디
+	        //String me_id = "testUser"; 아이디를 받으면 안되나?
 	        int me_num = 1; // 임시 사용자 번호
        
         	// 게시글 번호와 추천 상태, 사용자 아이디를 기반으로 RecommendVO 객체 생성
@@ -125,9 +124,7 @@ public class PostController {
 	        // 게시글 정보 다시 가져오기
 	        PostVO post = postService.getPost(num);
 	        
-	        // PostVO 객체를 JSON 형식의 문자열로 변환
-	        String postStr = objectMapper.writeValueAsString(post);
-	        
+	        //부트는 JSON 자동변환이라 안함.
 	        resultMap.put("result", res); // 추천 처리 결과
 	        resultMap.put("post", post); // 업데이트된 게시글 정보
 	        
