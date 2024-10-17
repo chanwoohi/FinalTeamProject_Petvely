@@ -1,4 +1,4 @@
-package kr.kh.petvely.model.util;
+package kr.kh.petvely.model.user;
 
 public enum UserRole {
 	ADMIN, USER
