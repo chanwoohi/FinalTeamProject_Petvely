@@ -196,7 +196,10 @@
 						</div>
 					</div>
 				</div>
-				<a class="btn btn-outline-warning" th:href="@{/post/bookmark/{po_num}(po_num=*{po_num})}" >즐겨찾기⭐</a>
+				<div th:text="${po_num}"></div>
+				<div th:text="${bookmark}"></div>
+				<a th:if="${bookmark}!=${po_num}" class="btn btn-outline-warning" th:href="@{/post/bookmark/insert/{po_num}(po_num=*{po_num})}" >즐겨찾기⭐</a>
+				<a th:if="${bookmark}==${po_num}" class="btn btn-warning" th:href="@{/post/bookmark/delete/{po_num}(po_num=*{po_num})}" >즐겨찾기2⭐</a>
 				<br>
 				<!-- 신청자 전용 -->
 				<a class="btn btn-outline-info" data-toggle="modal" data-target="#myModal">산책 메이트 신청하기</a>

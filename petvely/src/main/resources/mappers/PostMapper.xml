@@ -86,5 +86,10 @@
 	        po_viewCount = (SELECT COUNT(*) FROM recommend WHERE re_po_num = #{po_num} AND re_state = -1) 
 	    WHERE po_num = #{po_num};
 	</update>
-	
+	<delete id="deleteBookmark">
+		delete from bookmark where bm_me_num = #{bm_me_num} and bm_po_num = #{po_num}
+	</delete>
+	<select id="selectBookmark" resultType="Integer">
+		select distinct bm_po_num from bookmark where bm_me_num = #{bm_me_num} 
+	</select>
 </mapper>

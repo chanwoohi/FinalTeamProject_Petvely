@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,8 +25,8 @@ public class PostController {
 	@Autowired
 	private PostService postService;
 	
-	@GetMapping("/post/bookmark/{po_num}")
-	private String postBookmark(Model model,
+	@GetMapping("/post/bookmark/insert/{po_num}")
+	private String postBookmarkInsert(Model model,
 								@PathVariable int po_num) {
 		// 나중엔 로그인 된 사용자의 me_num 그대로 가져오게 해야 함
 		int bm_me_num = 3;
@@ -36,6 +35,19 @@ public class PostController {
 			System.out.println("즐겨찾기 등록 성공!");
 		} else {
 			System.out.println("즐겨찾기 등록 실패!");
+		}
+		return "/home";
+	}
+	
+	@GetMapping("/post/bookmark/delete/{po_num}")
+	private String postBookmarkDelete(@PathVariable int po_num) {
+		// 로그인 도입되면 바꿔야함
+		int bm_me_num = 3;
+		
+		if(postService.deleteBookmark(po_num, bm_me_num)) {
+			System.out.println("즐겨찾기 취소 성공!");
+		} else {
+			System.out.println("즐겨찾기 취소 성공!");
 		}
 		return "/home";
 	}
