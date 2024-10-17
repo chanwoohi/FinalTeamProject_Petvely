@@ -38,21 +38,24 @@ public class PostController {
 		model.addAttribute("communities", communities);
 	    return "/post/list";
 	}
-	@GetMapping("/post/insert/{co_num}") // 글 작성 페이지 이동
-	public String postInsert(@PathVariable int co_num) {
+	@GetMapping("/post/insert/{co_num}") // 글 작성 페이지 이동, 카테고리 목록을 전단
+	public String postInsert(Model model, @PathVariable int co_num) {
+	    List<CommunityVO> communities = postService.getCommunityList(); // 카테고리 목록을 가져옴
+        model.addAttribute("communities", communities); // 카테고리 목록을 모델에 추가
 		return "post/insert";
 	}
 	@PostMapping("/post/insert") // 글 작성 처리
-	public String postInsertPost(PostVO post, @RequestParam("co_num")int co_num) {
+	public String postInsertPost(PostVO post, @RequestParam("po_co_num")int co_num) {
 		
 		post.setPo_co_num(co_num); // 선택된 카테고리(co_num)을 게시글에 설정
 		boolean res = postService.addPost(post); // 서비스 로직을 통해 게시글을 저장
 
 		if(res) {
-			return "redirect:/post/list/"+post.getPo_co_num();
+			return "redirect:/post/list/" + co_num; // 성공 시 카테고리로
 		}
-		return "redirect:/post/insert/"+post.getPo_co_num();
+		return "redirect:/post/insert"; // 실패 시 글쓰기 페이지로
 	}
+	
 	@GetMapping("/post/detail/{po_num}") // 게시글 상세 조회
 	public String postDetail(Model model, @PathVariable int po_num) {
 		postService.updateView(po_num); // 조회수 증가

@@ -13,7 +13,7 @@ public interface PostDAO {
 	
 	public static final DataSource dataSource = null;
 	
-	boolean insertPost(PostVO post);
+	boolean insertPost(PostVO post); //게시글 저장
 
 	// 게시글 목록 조회 (po_delete가 0인 것만)
 	List<PostVO> selectPostList(int co_num);
