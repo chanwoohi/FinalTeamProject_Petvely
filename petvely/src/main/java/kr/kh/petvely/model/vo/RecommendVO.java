@@ -1,10 +1,15 @@
 package kr.kh.petvely.model.vo;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import kr.kh.petvely.service.PostService;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
+@NoArgsConstructor //기본 생성자 생성
+@AllArgsConstructor //전체 변수를 생성하는 생성자 생성
 public class RecommendVO {
 
 	private int re_num; 	//추천번호
@@ -12,6 +17,12 @@ public class RecommendVO {
 	private int re_me_num;  //추천한 사용자 ID
 	private int re_po_num;	//추천한 게시글 번호
 	
-	// 1번 생성자 공부하기
-
+	private PostService postService;
+	private ObjectMapper objectMapper;
+	
+	// 생성자를 통한 의존성 주입
+    public void PostController(PostService postService, ObjectMapper objectMapper) {
+        this.postService = postService;
+        this.objectMapper = objectMapper;
+    }
 }
