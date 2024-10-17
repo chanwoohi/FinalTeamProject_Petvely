@@ -1,5 +1,6 @@
 package kr.kh.petvely.model.vo;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import lombok.Data;
