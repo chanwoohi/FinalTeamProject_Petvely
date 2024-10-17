@@ -7,12 +7,6 @@
       "sourceMethod": "public javax.sql.DataSource dataSource() "
     }
   ],
-  "properties": [
-    {
-      "name": "spring.datasource.jdbc-url",
-      "type": "java.lang.String",
-      "description": "A description for 'spring.datasource.jdbc-url'"
-    }
-  ],
+  "properties": [],
   "hints": []
 }

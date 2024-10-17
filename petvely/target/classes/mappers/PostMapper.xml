@@ -90,6 +90,9 @@
 		delete from bookmark where bm_me_num = #{bm_me_num} and bm_po_num = #{po_num}
 	</delete>
 	<select id="selectBookmark" resultType="Integer">
-		select distinct bm_po_num from bookmark where bm_me_num = #{bm_me_num} 
+		select distinct bm_po_num 
+		from bookmark 
+		where bm_po_num = #{po_num} and bm_me_num = #{bm_me_num}
+		limit 1
 	</select>
 </mapper>
