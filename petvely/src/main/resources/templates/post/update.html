@@ -15,15 +15,15 @@
           <div class="form-group">
                 <br/>
                 <label for="category">카테고리</label>
-                <select id="category" name="po_co_num" required>
-                    <option value="">게시판을 선택하세요</option>
-                    <!-- 카테고리 목록을 동적으로 생성 -->
-                    <option th:each="item : ${communities}" 
-                            th:value="${item.co_num}" 
-                            th:text="${item.co_name}" 
-                            th:selected="${co_num == item.co_num}">
-                    </option>
-                </select>
+			    <select id="category" name="po_co_num" required>
+				    <option value="">게시판을 선택하세요</option>
+				    <!-- 카테고리 목록을 동적으로 생성 -->
+				    <option th:each="item : ${communities}" 
+				            th:value="${item.co_num}" 
+				            th:text="${item.co_name}" 
+				            th:selected="${post.po_co_num == item.co_num}">
+				    </option>
+				</select>
             </div>
 			<div class="form-group">
 				<label>제목:</label>
