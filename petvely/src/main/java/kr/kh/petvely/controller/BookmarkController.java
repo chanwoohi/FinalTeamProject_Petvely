@@ -26,7 +26,6 @@ public class BookmarkController {
 	
 	@GetMapping("/bookmark/list/{co_num}")
 	private String bookmarkList(Model model,
-								BookMarkVO bookMarkVo,
 								@PathVariable int co_num) {
 		// 커뮤니티 리스트 가져오기
 		List<CommunityVO> communityList = postService.selectCommunityList(); 
@@ -38,17 +37,8 @@ public class BookmarkController {
 		int me_num = 3; // << 추후에 로그인 추가하면 세션에서 따와야함
 		
 	    List<BookMarkVO> bookMarkList = new ArrayList<>();
-
-	    if (co_num == 1) {
-	        // WalkMatePost 조인
-	        bookMarkList = bookmarkService.selectWalkMateBookmarks(me_num);
-	    } else if (co_num == 2) {
-	        // GATPost 조인
-	        bookMarkList = bookmarkService.selectGATBookmarks(me_num);
-	    } else if (co_num == 3) {
-	        // MarketPost 조인
-	        bookMarkList = bookmarkService.selectMarketBookmarks(me_num);
-	    }
+	    
+	    bookMarkList = bookmarkService.selectBookmarks(me_num, co_num);
 
 	    model.addAttribute("bookMarkList", bookMarkList);
 		

@@ -1,25 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.petvely.dao.BookmarkDAO">
-	<select id="selectWalkMateBookmarks" resultType="BookmarkVO">
-		SELECT DISTINCT *
-		FROM bookmark
-		JOIN walkmatepost ON bookmark.bm_po_num = walkmatepost.po_num
-		JOIN post ON bookmark.bm_po_num = post.po_num
-		WHERE bookmark.bm_me_num = #{me_num}
-	</select>
-	<select id="selectGATBookmarks" resultType="BookmarkVO">
-		SELECT DISTINCT *
-		FROM bookmark
-		JOIN gatpost ON bookmark.bm_po_num = gatpost.po_num
-		JOIN post ON bookmark.bm_po_num = post.po_num
-		WHERE bookmark.bm_me_num = #{me_num};
-	</select>
-	<select id="selectMarketBookmarks" resultType="BookmarkVO">
-		SELECT DISTINCT *
-		FROM bookmark
-		JOIN marketpost ON bookmark.bm_po_num = marketpost.po_num
-		JOIN post ON bookmark.bm_po_num = post.po_num
-		WHERE bookmark.bm_me_num = #{me_num};
+	<select id="selectBookmarks" resultType="BookmarkVO">
+		select distinct *
+		from bookmark
+		join member on bm_me_num = me_num
+		join post on bm_po_num = po_num and #{co_num} = po_co_num 
+		where bm_me_num = #{me_num};
 	</select>
 </mapper>

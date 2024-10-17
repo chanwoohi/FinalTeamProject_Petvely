@@ -42,10 +42,11 @@ VALUES
 );
 
 # 관리자가 '강아지', '고양이', '도마뱀', '고슴도치' 커뮤니티를 추가했을 때 필요한 쿼리
-INSERT INTO COMMUNITY(CO_NAME) VALUES('강아지');
-INSERT INTO COMMUNITY(CO_NAME) VALUES('고양이');
-INSERT INTO COMMUNITY(CO_NAME) VALUES('도마뱀');
-INSERT INTO COMMUNITY(CO_NAME) VALUES('고슴도치');
+INSERT INTO COMMUNITY(CO_NAME) 
+VALUES('산책 메이트'),
+('품앗이'),
+('중고거래');
+
 
 insert into petvely.regex(re_regex)
 values

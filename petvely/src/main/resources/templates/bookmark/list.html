@@ -30,10 +30,24 @@
 				<tbody>
 					<tr th:each="item : ${bookMarkList}">
 						<td th:text="${item.po_num}"></td>
-						<td th:text="${item.po_title}"></td>
+						<td>
+							<div th:switch="${item != null ? item.po_co_num : -1}">
+								<a 	th:case="1" 
+									th:text="${item.po_title}" 
+									th:href="@{/walkmatepost/detail/{po_num}(po_num=${item.po_num})}"></a>
+								<a 	th:case="2" 
+									th:text="${item.po_title}" 
+									th:href="@{/marketpost/detail/{po_num}(po_num=${item.po_num})}"></a>
+								<a 	th:case="3" 
+									th:text="${item.po_title}" 
+									th:href="@{/gatpost/detail/{po_num}(po_num=${item.po_num})}"></a>
+								<span th:case="*">해당하는 포스트가 없습니다.</span>
+							</div>	
+						</td>
 						<td th:text="${item.me_id}"></td>
 						<td th:text="0">조회수 구현 하려고 하고 있음</td>
 					</tr>
+
 				</tbody>
 			</table>
 		</div>
