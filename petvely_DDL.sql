@@ -49,6 +49,7 @@ CREATE TABLE `File` (
 	`fi_name`	varchar(255)	NULL,
 	`fi_date`	datetime	NULL,
 	`fi_po_num`	int	NOT NULL
+
 );
 
 DROP TABLE IF EXISTS `FacilityShare`;
@@ -74,16 +75,6 @@ CREATE TABLE `FacilityReview` (
 	`fr_me_num`	int	NOT NULL
 );
 
-DROP TABLE IF EXISTS `WalkMatePost`;
-
-CREATE TABLE `WalkMatePost` (
-	`po_num`	int primary key auto_increment	NOT NULL,
-	`wm_date`	datetime	NULL,
-	`wm_time`	varchar(255)	NULL,
-	`wm_wms_state`	varchar(50)	NOT NULL DEFAULT "진행중"
-
-);
-
 DROP TABLE IF EXISTS `Recommend`;
 
 CREATE TABLE `Recommend` (
@@ -96,11 +87,11 @@ CREATE TABLE `Recommend` (
 DROP TABLE IF EXISTS `GATPost`;
 
 CREATE TABLE `GATPost` (
-	`po_num`	int primary key auto_increment	NOT NULL,
+	`po_num`	int	NOT NULL,
 	`gat_gatt_type`	varchar(255)	NOT NULL,
 	`gat_startDate`	datetime	NULL default current_timestamp,
 	`gat_endDate`	datetime	NULL ,
-	`gat_gat`	varchar(1)	NULL,
+	`gat_gat`	varchar(1)	NOT NULL,
 	`gat_gats_state`	varchar(50)	NOT NULL,
 	`gat_emd_num`	int	NOT NULL
 );
@@ -176,6 +167,15 @@ CREATE TABLE `Post` (
 	`po_notice`	varchar(1)	NULL,
 	`po_me_num`	int	NOT NULL,
     `po_co_num` int NOT NULL
+);
+
+DROP TABLE IF EXISTS `WalkMatePost`;
+
+CREATE TABLE `WalkMatePost` (
+	`po_num`	int primary key auto_increment	NOT NULL,
+	`wm_date`	datetime	NULL,
+	`wm_time`	varchar(255)	NULL,
+	`wm_wms_state`	varchar(50)	NOT NULL DEFAULT "진행중"
 );
 
 DROP TABLE IF EXISTS `MarketPost`;
@@ -299,7 +299,7 @@ DROP TABLE IF EXISTS `Emd_areas`;
 CREATE TABLE `Emd_areas` (
 	`emd_num`	int primary key auto_increment	NOT NULL,
 	`emd_sigg_num`	int	NOT NULL,
-	`emd_areas`	varchar(2)	NULL,
+	`emd_areas`	varchar(3)	NULL,
 	`emd_name`	varchar(50)	NULL,
 	`emd_version`	varchar(20)	NULL
 );
@@ -308,7 +308,7 @@ DROP TABLE IF EXISTS `Sido_areas`;
 
 CREATE TABLE `Sido_areas` (
 	`sido_num`	int primary key auto_increment	NOT NULL,
-	`sido_code`	varchar(2)	NULL,
+	`sido_code`	varchar(3)	NULL,
 	`sido_name`	varchar(50)	NULL,
 	`sido_version`	varchar(20)	NULL
 );
@@ -318,7 +318,7 @@ DROP TABLE IF EXISTS `Sigg_areas`;
 CREATE TABLE `Sigg_areas` (
 	`sigg_num`	int primary key auto_increment	NOT NULL,
 	`sigg_sido_num`	int	NOT NULL,
-	`sigg_code`	varchar(2)	NULL,
+	`sigg_code`	varchar(3)	NULL,
 	`sigg_name`	varchar(50)	NULL,
 	`sigg_version`	varchar(20)	NULL
 );
@@ -472,3 +472,18 @@ ADD CONSTRAINT `fk_WalkMateMember_post`
   REFERENCES `Post` (`po_num`)
   ON DELETE CASCADE
   ON UPDATE CASCADE;
+
+ALTER TABLE `petvely`.`member` 
+CHANGE COLUMN `me_pw` `me_pw` VARCHAR(255) NOT NULL ,
+CHANGE COLUMN `me_nickname` `me_nickname` VARCHAR(20) NOT NULL ,
+CHANGE COLUMN `me_email` `me_email` VARCHAR(50) NOT NULL ,
+CHANGE COLUMN `me_phone` `me_phone` VARCHAR(12) NOT NULL ;
+
+ALTER TABLE `petvely`.`post` 
+ADD COLUMN `po_delete` VARCHAR(1) NULL DEFAULT 0 AFTER `po_me_num`;
+
+ALTER TABLE `petvely`.`post` 
+ADD COLUMN `po_co_num` INT NOT NULL AFTER `po_delete`;
+
+ALTER TABLE `petvely`.`marketpost` 
+ADD COLUMN `mp_imgUrl` VARCHAR(255) NULL DEFAULT NULL AFTER `mp_gt_type`;

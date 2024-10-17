@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.petvely.dao.PostDAO">
+    <insert id="insertPost">
+    	INSERT into post(po_title, po_co_num, po_content, po_me_num,  po_viewCount, po_recommendCount, po_delete)
+    	VALUES (#{po_title}, #{po_co_num}, #{po_content}, #{po_me_num}, #{po_viewCount}, #{po_recommendCount}, #{po_delete})
+    </insert>
+    
+    <!-- 삭제되지 않은 게시글 목록 조회 (po_delete = 0 조건 추가할 예정) -->
+	<select id="selectPostList" resultType="PostVO">
+		SELECT p.*, 
+           (SELECT COUNT(*) FROM recommend WHERE re_po_num = p.po_num AND re_state = 1) AS recommendCount,
+           (SELECT COUNT(*) FROM recommend WHERE re_po_num = p.po_num AND re_state = -1) AS notRecommendCount
+    	FROM post p
+		WHERE po_co_num = #{co_num}
+	</select>
+	
+	<select id="selectCountPostList" parameterType="int" resultType="int">
+	    SELECT COUNT(*) FROM post
+	    WHERE co_num = #{co_num} AND po_delete = 0
+	</select>	
+	
+	<!-- 삭제되지 않은 게시글 목록 조회 (and po_delete 추후 추가예정 po_delete = 0) -->
+	<select id="selectPost" resultType="PostVO">
+		SELECT * from post 
+		WHERE po_num = #{po_num}
+	</select>
+	
+	<update id="updatePost">
+		UPDATE post set po_title = #{po_title}, po_content = #{po_content}
+		WHERE po_num = #{po_num} 
+	</update>
+	
+	<update id="updateView">
+		UPDATE post
+		SET
+			 po_viewCount = po_viewCount + 1
+		WHERE
+			 po_num = #{po_num}
+	</update>
+	
+	<!-- 게시글 논리적 삭제 쿼리 -->
+	<update id="logicalDeletePost">
+	    UPDATE post
+	    SET po_delete = 1
+	    WHERE po_num = #{po_num}
+	</update>
+	
+	<select id="selectCommunityList" resultType="CommunityVO">
+		SELECT * from community
+	</select>
+	
+	<!-- po_me_num을 me_id로 보여지게 -->
+	<select id="selectPostWithMemberId" resultType="kr.kh.petvely.model.vo.PostVO">
+	    SELECT p.po_num, p.po_title, p.po_content, p.po_date, p.po_co_num, m.me_id
+	    FROM Post p
+	    JOIN Member m ON p.po_me_num = m.me_num
+	</select>
+	
+	<!-- 추천 추가 -->
+	<insert id="insertRecommend">
+		INSERT into recommend(re_po_num, re_state, re_me_num)
+		VALUES (#{re_po_num}, #{re_state}, #{re_me_num})
+	</insert>
+	
+	<!-- 추천 정보 조회 (게시글 번호로 조회)-->
+	<select id="selectRecommend" resultType="RecommendVO">
+		SELECT * from recommend where re_po_num = #{re_po_num} and re_state = #{re_state}
+	</select>
+	
+	
+	<!-- 추천 삭제 -->
+	<delete id="deleteRecommend">
+		DELETE from recommend where re_num = #{re_num}
+	</delete>
+	
+	<!-- 게시글의 추천수 및 비추천수 업데이트 -->
+	<update id="updateRecommendCount">
+	    UPDATE post
+	    SET
+	        po_recommendCount = (SELECT COUNT(*) FROM recommend WHERE re_po_num = #{po_num} AND re_state = 1),
+	        po_viewCount = (SELECT COUNT(*) FROM recommend WHERE re_po_num = #{po_num} AND re_state = -1) 
+	    WHERE po_num = #{po_num};
+	</update>
+	
+</mapper>

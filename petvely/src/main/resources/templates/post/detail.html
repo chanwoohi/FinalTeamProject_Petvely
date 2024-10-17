@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<main layout:fragment="content">
+		<div th:if="${post != null}" th:object="${post}">
+			<br/>
+			<div class="from-group">
+				<label>제목 : </label>
+				<input type="text" class="form-control" readonly th:field="*{po_title}">
+			</div>
+			<div class="from-group">
+				<label>작성자 : </label>
+				<input type="text" class="form-control" readonly th:field="*{po_me_num}">
+			</div>
+			<div class="form-group">
+		    <label>작성일:</label>
+		    <input type="text" class="form-control" readonly
+		           name="po_date"
+		           th:value="*{po_date}"> <!-- 데이터 포맷 변경 없이 사용 -->
+			</div>
+			<div class="from-group">
+				<label>조회수 : </label>
+				<input type="text" class="form-control" readonly th:field="*{po_viewCount}">
+			</div>
+			<div class="text-center">
+			<br/>
+		    <a href="#" data-state="1"
+		       class="btn-up btn btn" 
+		       th:classappend="${re_state != 1} ? '-outline-danger' : '-danger'">
+		        👍추천<!-- (<span th:text="${post.recommendCount}"></span>) -->
+		    </a>
+		    &nbsp;
+		    <a href="#" data-state="-1"
+		       class="btn-down btn btn" 
+		       th:classappend="${re_state != -1} ? '-outline-danger' : '-danger'">
+		        👎비추천<!-- (<span th:text="${post.notRecommendCount}"></span>) -->
+		    </a>
+			</div>
+			<div class="form-group">
+				<label>내용:</label>
+				<div class="form-control" style="min-height: 400px; height: auto;"
+					th:utext="*{po_content}">
+				</div>
+			</div>
+			<!--  <div class="form-group" th:if="${list != null and #lists.size(list) > 0}">-->
+			<div class="form-group">
+			     <label>첨부파일 :</label>
+			    <div th:each="file : ${list}">
+			        <a th:href="@{'/download/' + ${file.fi_name}}" 
+			           class="form-control" 
+			           th:download="${file.fi_ori_name}" 
+			           th:text="${file.fi_ori_name}">
+			        </a>
+			    </div>
+			</div>
+			<a class="btn btn-outline-info" th:href="@{/post/list/{po_num}(po_num=*{po_num})}">목록으로</a>
+			<a class="btn btn-outline-info" th:href="@{/post/update/{po_num}(po_num=*{po_num})}">수정</a>
+			<a class="btn btn-outline-info" th:href="@{/post/delete/{po_num}(po_num=*{po_num})}">삭제</a>
+		</div>
+		
+		<script type="text/javascript">
+
+		let prevState = 0; // 초기 상태 (0: 아무 상태 아님)
+		//추천/비추천 버튼 클릭 이벤트
+		$('.btn-up, .btn-down').click(function(e) {
+		    e.preventDefault();
+		
+		    let state = $(this).data('state');  // 추천: 1, 비추천: -1
+		    let num = [[${post.po_num}]];       // 게시글 번호
+		    
+		    $.ajax({
+		        url: '/post/recommend',
+		        type: 'POST',
+		        dataType: 'json',  // 서버가 JSON 형식으로 응답해야 함
+		        method: 'get',
+		        data: {
+		            state: state,
+		            num: num
+		        },		        
+		    	success : function(data){
+					let res = data.result;
+					console.log(res);
+					// 상태에 따라 알림 메시지 출력
+	                // 메시지 출력 및 상태 관리
+	                if (res === 1) {
+	                    if (prevState === -1) {
+	                        alert('비추천을 취소하고 추천했습니다.'); // 비추천 취소 후 추천
+	                    } else {
+	                        alert('추천 했습니다.'); // 추천
+	                    }
+	                } else if (res === -1) {
+	                    if (prevState === 1) {
+	                        alert('추천을 취소하고 비추천했습니다.'); // 추천 취소 후 비추천
+	                    } else {
+	                        alert('비추천 했습니다.'); // 비추천
+	                    }
+	                } else if (res === 0) {
+	                    if (prevState === 1) {
+	                        alert('추천을 취소했습니다.'); // 추천 취소
+	                    } else if (prevState === -1) {
+	                        alert('비추천을 취소했습니다.'); // 비추천 취소
+	                    }
+	                }
+					
+					checkRecommendBtns(res);
+
+					prevState = res; // 현재 상태 업데이트
+
+					console.log(data);
+	                
+					let post = data.post;
+					console.log(post);
+					$('.btn-up span').text(post.recommendCount);
+					$('.btn-down span').text(post.notRecommendCount);
+				}, 
+		        error: function(xhr, status, error) {
+		            console.log('추천/비추천 요청 중 에러 발생', error);
+		        }
+		    });
+		});
+		//해당 게시글의 추천/비추천에 따라 각 버튼의 색상을 채워주는 함수
+		function checkRecommendBtns(state){
+			$('.btn-up, .btn-down').removeClass('btn-danger');
+			$('.btn-up, .btn-down').addClass('btn-outline-danger');
+			if(state != 0){
+				$(state==1?'.btn-up':'.btn-down').removeClass('btn-outline-danger');
+				$(state==1?'.btn-up':'.btn-down').addClass('btn-danger');
+			}
+
+		}
+
+		</script>
+		
+		
+	</main>
+</body>
+</html>
