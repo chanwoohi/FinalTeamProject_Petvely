@@ -28,8 +28,6 @@ public class BookmarkController {
 	private String bookmarkList(Model model,
 								BookMarkVO bookMarkVo,
 								@PathVariable int co_num) {
-		
-		
 		// 커뮤니티 리스트 가져오기
 		List<CommunityVO> communityList = postService.selectCommunityList(); 
 		model.addAttribute("communityList", communityList);
