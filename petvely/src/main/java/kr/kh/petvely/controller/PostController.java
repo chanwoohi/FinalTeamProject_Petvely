@@ -12,10 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.kh.petvely.model.vo.CommunityVO;
 import kr.kh.petvely.model.vo.PostVO;
@@ -47,8 +43,11 @@ public class PostController {
 		return "post/insert";
 	}
 	@PostMapping("/post/insert") // 글 작성 처리
-	public String postInsertPost(PostVO post) {
-		boolean res = postService.addPost(post);
+	public String postInsertPost(PostVO post, @RequestParam("co_num")int co_num) {
+		
+		post.setPo_co_num(co_num); // 선택된 카테고리(co_num)을 게시글에 설정
+		boolean res = postService.addPost(post); // 서비스 로직을 통해 게시글을 저장
+
 		if(res) {
 			return "redirect:/post/list/"+post.getPo_co_num();
 		}
@@ -136,5 +135,7 @@ public class PostController {
         // 결과를 JSON 형식으로 반환
         return ResponseEntity.ok(resultMap);
     }
+
+    
 
 }
