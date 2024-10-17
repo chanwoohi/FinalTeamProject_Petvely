@@ -6,7 +6,7 @@
     	VALUES (#{po_title}, #{po_co_num}, #{po_content}, #{po_me_num}, #{po_viewCount}, #{po_recommendCount}, #{po_delete})
     </insert>
     
-    <!-- 삭제되지 않은 게시글 목록 조회 (po_delete = 0 조건 추가할 예정) -->
+    <!-- 삭제되지 않은 게시글 목록 조회 (AND po_delete = 0 조건 추가할 예정) -->
 	<select id="selectPostList" resultType="PostVO">
 		SELECT
 		   post.*, 
@@ -16,7 +16,7 @@
 		    post
 		        LEFT JOIN
 		    recommend ON po_num = re_po_num
-		WHERE po_num = #{po_num}
+		WHERE po_co_num = #{co_num} <!-- 여기에 삭제 된 글 제외 조건 추가예정 -->
 		GROUP BY po_num 
 	</select>
 	

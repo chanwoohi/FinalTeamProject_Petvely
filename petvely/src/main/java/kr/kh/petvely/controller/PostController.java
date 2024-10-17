@@ -19,7 +19,7 @@ import kr.kh.petvely.model.vo.RecommendVO;
 import kr.kh.petvely.service.PostService;
 import lombok.AllArgsConstructor;
 
-@Controller //json 형태로 객체 데이터 반환
+@Controller
 @AllArgsConstructor
 public class PostController {
 	
@@ -32,16 +32,19 @@ public class PostController {
 		List<PostVO> list = postService.getPostList(co_num);
 		// 게시글 목록을 가져와서 화면에 전달
 		List<CommunityVO> communities = postService.getCommunityList();
-		// 커뮤니티 리스트를 가져옴
+		// 카테고리 리스트를 가져옴
 		model.addAttribute("list", list);
 		System.out.println(list);
 		model.addAttribute("communities", communities);
+		model.addAttribute("co_num", co_num);  // 현재 선택된 카테고리 번호 전달
+
 	    return "/post/list";
 	}
 	@GetMapping("/post/insert/{co_num}") // 글 작성 페이지 이동, 카테고리 목록을 전단
 	public String postInsert(Model model, @PathVariable int co_num) {
-	    List<CommunityVO> communities = postService.getCommunityList(); // 카테고리 목록을 가져옴
-        model.addAttribute("communities", communities); // 카테고리 목록을 모델에 추가
+		
+	    List<CommunityVO> communities = postService.getCommunityList(); // 카테고리 목록을 가져옴    
+	    model.addAttribute("communities", communities); // 카테고리 목록을 모델에 추가
 		return "post/insert";
 	}
 	@PostMapping("/post/insert") // 글 작성 처리
