@@ -70,7 +70,7 @@
 	
 	<!-- 추천 정보 조회 (게시글 번호로 조회)-->
 	<select id="selectRecommend" resultType="RecommendVO">
-		SELECT * from recommend where re_me_num = #{re_po_num} and re_po_num = #{re_po_num}
+		SELECT * from recommend where re_me_num = #{re_me_num} and re_po_num = #{re_po_num}
 	</select>
 	
 	
