@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.petvely.dao.AnimalDAO">
+	<select id="selectPetList" resultType="AnimalVO">
+		select * from animal
+		where ani_me_num = #{ani_me_num}
+	</select>
+	<select id="selectDetailPetList" resultType="AnimalVO">
+		select 
+			* 
+		from 
+			animal
+		join 
+			postHostSelectedPets on ani_num = phsp_ani_num
+		where
+			phsp_po_num = #{po_num}
+	</select>
+	
+	<select id="selectChoicePetList" resultType="AnimalVO">
+		select 
+			* 
+		from 
+			animal
+		join 
+			postUserSelectedPets on ani_num = pusp_ani_num
+		where
+			pusp_po_num = #{po_num}
+	</select>
+	
+</mapper>

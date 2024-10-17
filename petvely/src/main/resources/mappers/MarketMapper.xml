@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.petvely.dao.MarketPostDAO">
+	<select id="selectMarketList" resultType="MarketPostVO">
+		select * from marketpost 
+			join post using(po_num) 
+			join member  where po_me_num = me_num;
+	</select>
+	<select id="selectPost"  resultType="MarketPostVO">
+		  select * from marketpost 
+			join post using(po_num) 
+			join member on po_me_num = me_num
+			where po_num = #{po_num}	
+	</select>
+	
+	<insert id="insertPost" keyProperty="po_num" useGeneratedKeys="true">
+   	 	insert into post (po_title, po_content, po_me_num, po_co_num)
+        	values(#{po_title}, #{po_content}, #{po_me_num}, #{po_co_num})
+	</insert>	
+	
+	<insert id="insertMarketPost">
+		insert into marketpost (po_num, mp_gt_type,mp_gts_state,mp_name,mp_content,mp_price,mp_imgUrl)
+			values(#{po_num}, #{mp_gt_type},#{mp_gts_state}, #{mp_name}, #{mp_content}, #{mp_price},#{mp_imgUrl})
+	</insert>
+	
+	<insert id="insertFile">
+		insert into file (fi_ori_name, fi_name,fi_po_num, fi_date) 
+			values(#{fi_ori_name},#{fi_name},#{fi_po_num}, now())
+	</insert>
+	
+	<select id="selectTypes" resultType="GoodsTypeVO">
+		select * from goodstype;
+	</select>
+	
+	<update id="updateTradeState">
+		update marketpost
+   		set mp_gts_state = #{state}
+    	where po_num = #{po_num}
+	</update>
+	
+	<select id="selectFileList" resultType="FileVO">
+		select * from file where fi_po_num = #{fi_po_num}
+	</select>
+	
+	<select id="selectImage" resultType="FileVO">
+		select * from file join marketpost where fi_po_num = po_num
+	</select>
+  
+	
+</mapper>
