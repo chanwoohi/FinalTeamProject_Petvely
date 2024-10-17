@@ -488,4 +488,4 @@ ALTER TABLE `petvely`.`marketpost`
 ADD COLUMN `mp_imgUrl` VARCHAR(255) NULL DEFAULT NULL AFTER `mp_gt_type`;
 
 ALTER TABLE `petvely`.`member` 
-CHANGE COLUMN `me_authority` `me_authority` VARCHAR(5) NULL DEFAULT 'user' ;
+CHANGE COLUMN `me_authority` `me_authority` VARCHAR(5) NULL DEFAULT 'USER' ;
