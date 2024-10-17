@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+</head>
+<body>
+	<main th:fragment="body">
+		<div class="form-group">
+			<label>아이디:</label>
+			<input name="username" class="form-control"  
+				type="text" placeholder="Username">
+		</div>
+		<div class="form-group">
+			<label>비밀번호:</label>
+			<input name="password" class="form-control" 
+				type="password" placeholder="Password">
+		</div>
+	    <label>
+	        <input type="checkbox" name="remember-me"/> Remember Me
+	    </label>
+	</main>
+</body>
+</html>

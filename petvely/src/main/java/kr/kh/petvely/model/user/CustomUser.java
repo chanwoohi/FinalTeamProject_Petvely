@@ -1,4 +1,4 @@
-package kr.kh.petvely.model.util;
+package kr.kh.petvely.model.user;
 
 import java.util.Arrays;
 import java.util.Collection;
