@@ -1,9 +1,7 @@
 package kr.kh.petvely.model.vo;
 
-
+import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,8 +13,10 @@ public class PostVO {
 	private int po_num; // 게시글 번호
 	private String po_title; // 게시글 제목
 	private String po_content; // 게시글 내용
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	
+	//@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date po_date; // 작성일
+	
 	private String po_hidden; // 숨김여부
 	private int po_viewCount; // 조회수
 	private int po_recommendCount; // 추천수
@@ -45,6 +45,10 @@ public class PostVO {
 
     public void setNotRecommendCount(int notRecommendCount) {
         this.notRecommendCount = notRecommendCount;
+    }	
+    public String getPo_date() {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		return format.format(po_date);
     }
 	
 }

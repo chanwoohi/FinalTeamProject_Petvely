@@ -44,20 +44,15 @@ public class PostController {
 	}
 
 	@GetMapping("/post/list/{co_num}")
-	public String postList(Model model, @PathVariable int co_num, @AuthenticationPrincipal CustomUser customUser) {
-		
+	public String postList(Model model, @PathVariable int co_num) {
 
-        // 로그인 정보 가져오기
-		String user = customUser.getUsername();
-        System.out.println("디테일에서 로그인값"+user);
-        
-		
 		List<PostVO> list = postService.getPostList(co_num);
+		
+		System.out.println(list);
 		// 게시글 목록을 가져와서 화면에 전달
 		List<CommunityVO> communities = postService.getCommunityList();
 		// 카테고리 리스트를 가져옴
 		model.addAttribute("list", list);
-		System.out.println(list);
 		model.addAttribute("communities", communities);
 		model.addAttribute("co_num", co_num);  // 현재 선택된 카테고리 번호 전달
 
@@ -68,8 +63,6 @@ public class PostController {
 							@AuthenticationPrincipal CustomUser customUser ) {
 		String user = customUser.getUsername();
         System.out.println("디테일에서 로그인값"+user);
-
-		System.out.println(user);
 	    List<CommunityVO> communities = postService.getCommunityList(); // 카테고리 목록을 가져옴    
 	    model.addAttribute("communities", communities); // 카테고리 목록을 모델에 추가
 		return "post/insert";
@@ -86,13 +79,12 @@ public class PostController {
 	}
 	
 	@GetMapping("/post/detail/{po_num}") // 게시글 상세 조회
-	public String postDetail(Model model, @PathVariable int po_num, @AuthenticationPrincipal CustomUser customUser) {
-		
-        // 로그인 정보 가져오기
+	public String postDetail(Model model, @PathVariable int po_num, @AuthenticationPrincipal CustomUser customUser ) { 
+	
+		// 로그인 정보 가져오기
 		String user = customUser.getUsername();
-        System.out.println("디테일에서 로그인값"+user);
-        
-        
+		System.out.println("디테일에서 로그인값"+user);
+		        
 		postService.updateView(po_num); // 조회수 증가
 		
 		PostVO post = postService.getPost(po_num);
@@ -149,32 +141,45 @@ public class PostController {
             @AuthenticationPrincipal CustomUser customUser // 로그인한 사용자 정보
            
     ) {
-
+        System.out.println(state + " - " + num);
+        
 		String user = customUser.getUsername();
         System.out.println("추천에서 로그인값"+user);
         
         Map<String, Object> resultMap = new HashMap<>();
         
         
+        // customUser가 제대로 받아와졌는지 확인
+
         if (customUser == null) {
-            // 로그인이 되어 있지 않으면 에러 처리
             resultMap.put("error", "로그인이 필요합니다.");
             return ResponseEntity.badRequest().body(resultMap);
         }
+
+        // 로그인된 사용자 정보를 로그로 출력
+        System.out.println("로그인된 사용자: " + customUser.getMember().getMe_id());
+
         try {
-	        int me_num = customUser.getMe_num(); // 로그인된 사용자의 번호 가져옴
-       
+        	// CustomUser 객체에서 사용자 번호를 가져옴
+            int me_num = customUser.getMember().getMe_num();  // 사용자 번호 가져오기
+          //  String me_id = customUser.getMe_id();  // 사용자 ID 가져오기
+        	
         	// 게시글 번호와 추천 상태, 사용자 아이디를 기반으로 RecommendVO 객체 생성
         	RecommendVO recommend = new RecommendVO();
         	recommend.setRe_po_num(num); // 게시글 번호
         	recommend.setRe_me_num(me_num);  // 사용자 번호 설정
         	recommend.setRe_state(state); // 추천/비추천 상태
+        	
+        	System.out.println(recommend);
             
 	        // 추천 정보 처리
 	        int res = postService.insertRecommend(recommend);
-	       
+	        
+	        System.out.println(res);
 	        // 게시글 정보 다시 가져오기
 	        PostVO post = postService.getPost(num);
+	        
+	        System.out.println(post);
 	        
 	        //부트는 JSON 자동변환이라 안함.
 	        resultMap.put("result", res); // 추천 처리 결과

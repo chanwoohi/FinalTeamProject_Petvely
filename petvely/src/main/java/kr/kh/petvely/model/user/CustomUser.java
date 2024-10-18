@@ -25,10 +25,4 @@ public class CustomUser extends User {
 		System.out.println(vo.getMe_id());
 		this.member = vo;
 	}
-	public int getMe_num() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-
 }

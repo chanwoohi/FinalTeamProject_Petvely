@@ -20,6 +20,8 @@ public class MemberDetailService implements UserDetailsService{
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		MemberVO member = memberDao.selectMember(username);
 
+		 System.out.println("로그인된 사용자 정보: " + member.getMe_id());  // 디버깅 로그
+
 		return member == null ? null : new CustomUser(member);
 	}
 

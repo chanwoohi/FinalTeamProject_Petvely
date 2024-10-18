@@ -65,72 +65,83 @@
 			<a class="btn btn-outline-info" th:href="@{/post/delete/{po_num}(po_num=*{po_num})}">삭제</a>
 		</div>
 		
-		<script type="text/javascript">
+	<script th:inline="javascript">
+    // 추천/비추천 버튼 클릭 이벤트
+    $('.btn-up, .btn-down').click(function(e) {
+        e.preventDefault();
+        if (!checkLogin()) {
+            return;
+        }
+		alert(0);
 
-		//추천/비추천 버튼 클릭 이벤트
-		$('.btn-up, .btn-down').click(function(e) {
-			
-		    e.preventDefault();
-		    
-			if(!checkLogin()){
-				return;
-			}
-		
-		    let state = $(this).data('state');  // 추천: 1, 비추천: -1
-		    let num = [[${post.po_num}]];     // 게시글 번호
-		    
-		
-		    $.ajax({
-		        url: '/post/recommend',
-		        type: 'POST',
-		        dataType: 'json',  // 서버가 JSON 형식으로 응답해야 함
-		        data: {
-		            state: state,
-		            num: num
-		        },		    
-		    	success : function(data){
-					let res = data.result;
-					if(res == 1){
-						alert('추천 했습니다.');
-					}else if(res == -1){
-						alert('비추천 했습니다.');
-					}else{
-						alert(`${state == 1?'추천':'비추천'}을 취소했습니다.`);
-					}
-				
-					checkRecommendBtns(res);
-					console.log(res);
-					let post = data.post;
-					$('.btn-up span').text(post.recommendCount);
-					$('.btn-down span').text(post.notRecommendCount);
-				}, 
-		        error: function(xhr, status, error) {
-		            console.log('추천/비추천 요청 중 에러 발생', error);
-		        }
-		    });
-		});
-		//해당 게시글의 추천/비추천에 따라 각 버튼의 색상을 채워주는 함수
-		function checkRecommendBtns(state){
-			$('.btn-up, .btn-down').removeClass('btn-danger');
-			$('.btn-up, .btn-down').addClass('btn-outline-danger');
-			if(state != 0){
-				$(state==1?'.btn-up':'.btn-down').removeClass('btn-outline-danger');
-				$(state==1?'.btn-up':'.btn-down').addClass('btn-danger');
-			}
+        // 추천: 1, 비추천: -1 상태
+        let state = $(this).data('state');
+        // Thymeleaf에서 JS 변수로 게시글 번호를 전달
+        var num = /*[[${post.po_num}]]*/ "0";  
+        // 게시글 번호를 Thymeleaf로 전달
 
-		}
-		function checkLogin(){
-			if('${user != null ? user.me_id : ""}' == ''){ //로그인 여부 확인
-				if(confirm('로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?')){
-					location.href = /*[[@{/member/login}]]*/ '';  // Thymeleaf 구문을 사용해 URL을 설정
-					return false;
-				}else{
-					return false;
-				}
-			}
-			return true;
-		}
-		</script>
+        $.ajax({
+            url: '/post/recommend',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                state: state,
+                num: num
+            },
+            success: function(data) {
+                let res = data.result;
+                if (res == 1) {
+                    alert('추천했습니다.');
+                } else if (res == -1) {
+                    alert('비추천했습니다.');
+                } else {
+                    alert(`${state == 1 ? '추천' : '비추천'}을 취소했습니다.`);
+                }
+
+                checkRecommendBtns(res);
+                console.log(res);
+                
+
+                // 업데이트된 추천/비추천 수 반영
+                let post = data.post;
+                $('.btn-up span').text(post.recommendCount);
+                $('.btn-down span').text(post.notRecommendCount);
+            },
+            error: function(xhr, status, error) {
+                console.log('추천/비추천 요청 중 에러 발생', error);
+            }
+        });
+    });
+
+    // 추천/비추천 버튼의 상태에 따라 스타일 변경
+    function checkRecommendBtns(state) {
+        $('.btn-up, .btn-down').removeClass('btn-danger');
+        $('.btn-up, .btn-down').addClass('btn-outline-danger');
+        if (state != 0) {
+            $(state == 1 ? '.btn-up' : '.btn-down').removeClass('btn-outline-danger');
+            $(state == 1 ? '.btn-up' : '.btn-down').addClass('btn-danger');
+        }
+    }
+
+    // 로그인 확인 함수
+    function checkLogin(){
+    	 // 로그인된 사용자 ID를 Thymeleaf를 통해 가져옴
+        let userId = [[${#authentication.principal.member.me_id}]];
+
+		console.log("1:" + userId);
+		
+        if (userId == '') {  // 로그인되지 않은 상태
+            if (confirm('로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?')) {
+                location.href = '[[@{/member/login}]]';  // 로그인 페이지로 이동
+                return false;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+	</script>
+
 		
 		
 	</main>
