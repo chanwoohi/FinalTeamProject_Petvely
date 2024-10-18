@@ -10,6 +10,7 @@ import kr.kh.petvely.model.vo.CommentVO;
 import kr.kh.petvely.model.vo.GiveAndTakePostVO;
 import kr.kh.petvely.model.vo.GiveAndTakeStateVO;
 import kr.kh.petvely.model.vo.GiveAndTakeTypeVO;
+import kr.kh.petvely.model.vo.MemberVO;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -36,7 +37,6 @@ public class GATPostService {
 			return false;
 		}
 		try {
-			GATPost.setPo_co_num(0);
 			return gatpostDao.insertGATPost1(GATPost);
 		}catch (Exception e) {
 			e.printStackTrace();

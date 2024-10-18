@@ -9,7 +9,7 @@ layout:decorate="~{layout/layout.html}">
 </head>
 <body>
 	<main layout:fragment="content">
-		<form method="post" th:object="${GATPost}" th:action="@{/gatpost/update/{po_num}(po_num=*{po_num})}">
+		<form class="form-group" method="post" th:object="${GATPost}" th:action="@{/gatpost/update/{po_num}(po_num=*{po_num})}">
 			<input type="hidden"  th:field="*{po_num}"/>
 			<div class="form-group" id="GT">
 				<label>품앗이:</label>
@@ -26,10 +26,6 @@ layout:decorate="~{layout/layout.html}">
 			<div class="form-group">
 				<label>제목:</label>
 				<input type="text" class="form-control" th:field="*{po_title}">
-			</div>
-			<div class="form-group">
-				<label>작성자:</label>
-				<input type="text" class="form-control" th:field="*{po_me_num}">
 			</div>
 			<div class="form-group">
 				<label>내용:</label>

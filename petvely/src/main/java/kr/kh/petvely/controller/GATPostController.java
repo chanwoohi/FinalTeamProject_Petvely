@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import jakarta.servlet.http.HttpSession;
 import kr.kh.petvely.model.vo.CommentVO;
 import kr.kh.petvely.model.vo.GiveAndTakePostVO;
 import kr.kh.petvely.model.vo.GiveAndTakeStateVO;
 import kr.kh.petvely.model.vo.GiveAndTakeTypeVO;
+import kr.kh.petvely.model.vo.MemberVO;
 import kr.kh.petvely.model.vo.Sido_AreasVO;
 import kr.kh.petvely.service.AddressService;
 import kr.kh.petvely.service.GATPostService;
@@ -57,9 +59,10 @@ public class GATPostController {
 	
 	
 	@PostMapping("/gatpost/insert")
-	public String GTAPostInsertPost(GiveAndTakePostVO GATPost) {
+	public String GTAPostInsertPost(GiveAndTakePostVO GATPost, HttpSession session) {
 		boolean res = gatPostService.addGATPost1(GATPost);
 		boolean res2 = gatPostService.addGATPost2(GATPost);
+		System.out.println(GATPost);
 		if(res || res2) {
 			return "redirect:/gatpost/list";
 		}

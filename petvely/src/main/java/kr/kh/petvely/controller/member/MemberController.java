@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import jakarta.servlet.http.HttpSession;
 import kr.kh.petvely.model.vo.MemberVO;
 import kr.kh.petvely.service.member.MemberService;
 import kr.kh.petvely.utils.NoName;
@@ -50,22 +51,22 @@ public class MemberController {
 	@GetMapping("login")
 	public String memberLogin() {
 		log.info(util.getCurrentMethodName());
-		
 		return viewRoute + "login";
 	}
 	
-	/*
-	 * @PostMapping("login") public String memberLogin_post(Model model,
-	 * MemberVO memberVO, HttpSession session) {
-	 * log.info(util.getCurrentMethodName() + " : " + memberVO); MemberVO user =
-	 * memberService.login(memberVO);
-	 * 
-	 * model.addAttribute("user", user); log.info("memberLogin_pos123123t : " +
-	 * user); return "redirect:/"; }
-	 * 
-	 * @GetMapping("logout") public String memberLogout() {
-	 * log.info(util.getCurrentMethodName());
-	 * 
-	 * return viewRoute + "logout"; }
-	 */
+	
+	@PostMapping("login") 
+	public String memberLogin_post(Model model, MemberVO memberVO, HttpSession session) {
+		log.info(util.getCurrentMethodName() + " : " + memberVO); 
+		MemberVO user = memberService.login(memberVO);
+		model.addAttribute("user", user); 
+		log.info("memberLogin_pos123123t : " + user); 
+		return "redirect:/"; 
+	}
+		 
+	@GetMapping("logout") public String memberLogout() {
+	log.info(util.getCurrentMethodName());
+		return viewRoute + "logout";
+	}
+	 
 }
