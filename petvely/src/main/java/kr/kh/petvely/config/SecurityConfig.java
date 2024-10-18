@@ -36,7 +36,7 @@ public class SecurityConfig{
                 .anyRequest().permitAll()  // 그 외 요청은 인증 필요
             )
             .formLogin((form) -> form
-                .loginPage("/view/member/login")  // 커스텀 로그인 페이지 설정하는 경우, 
+                .loginPage("/member/login")  // 커스텀 로그인 페이지 설정하는 경우, 
             							//아이디창의 name을 username, 비번창의 name을 password로
                 .permitAll()           // 로그인 페이지는 접근 허용
                 .loginProcessingUrl("/member/login")//

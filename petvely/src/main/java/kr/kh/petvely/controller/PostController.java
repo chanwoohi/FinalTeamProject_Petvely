@@ -6,15 +6,18 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.servlet.http.HttpSession;
+import kr.kh.petvely.model.user.CustomUser;
 import kr.kh.petvely.model.vo.CommunityVO;
+import kr.kh.petvely.model.vo.MemberVO;
 import kr.kh.petvely.model.vo.PostVO;
 import kr.kh.petvely.model.vo.RecommendVO;
 import kr.kh.petvely.service.PostService;
@@ -41,7 +44,14 @@ public class PostController {
 	}
 
 	@GetMapping("/post/list/{co_num}")
-	public String postList(Model model, @PathVariable int co_num) {
+	public String postList(Model model, @PathVariable int co_num, @AuthenticationPrincipal CustomUser customUser) {
+		
+
+        // 로그인 정보 가져오기
+		String user = customUser.getUsername();
+        System.out.println("디테일에서 로그인값"+user);
+        
+		
 		List<PostVO> list = postService.getPostList(co_num);
 		// 게시글 목록을 가져와서 화면에 전달
 		List<CommunityVO> communities = postService.getCommunityList();
@@ -54,15 +64,18 @@ public class PostController {
 	    return "/post/list";
 	}
 	@GetMapping("/post/insert/{co_num}") // 글 작성 페이지 이동, 카테고리 목록을 전단
-	public String postInsert(Model model, @PathVariable int co_num) {
-		
+	public String postInsert(Model model, @PathVariable int co_num ,
+							@AuthenticationPrincipal CustomUser customUser ) {
+		String user = customUser.getUsername();
+        System.out.println("디테일에서 로그인값"+user);
+
+		System.out.println(user);
 	    List<CommunityVO> communities = postService.getCommunityList(); // 카테고리 목록을 가져옴    
 	    model.addAttribute("communities", communities); // 카테고리 목록을 모델에 추가
 		return "post/insert";
 	}
 	@PostMapping("/post/insert") // 글 작성 처리
 	public String postInsertPost(PostVO post, @RequestParam("po_co_num")int co_num) {
-		
 		post.setPo_co_num(co_num); // 선택된 카테고리(co_num)을 게시글에 설정
 		boolean res = postService.addPost(post); // 서비스 로직을 통해 게시글을 저장
 
@@ -73,7 +86,13 @@ public class PostController {
 	}
 	
 	@GetMapping("/post/detail/{po_num}") // 게시글 상세 조회
-	public String postDetail(Model model, @PathVariable int po_num) {
+	public String postDetail(Model model, @PathVariable int po_num, @AuthenticationPrincipal CustomUser customUser) {
+		
+        // 로그인 정보 가져오기
+		String user = customUser.getUsername();
+        System.out.println("디테일에서 로그인값"+user);
+        
+        
 		postService.updateView(po_num); // 조회수 증가
 		
 		PostVO post = postService.getPost(po_num);
@@ -120,25 +139,35 @@ public class PostController {
 		model.addAttribute("postList", postList);
 		return "post/listWithMember";
 	}
+	
 	// 추천/비추천 처리
-    @GetMapping("/post/recommend")
+    @PostMapping("/post/recommend")
     public ResponseEntity<Map<String, Object>> recommend(
     		
     		@RequestParam("state") int state, // 요청 파라미터 추천/비추천 상태를 받음
-            @RequestParam("num") int num     // 요청 파라미터 게시글 번호를 받음
+            @RequestParam("num") int num,     // 요청 파라미터 게시글 번호를 받음
+            @AuthenticationPrincipal CustomUser customUser // 로그인한 사용자 정보
            
     ) {
+
+		String user = customUser.getUsername();
+        System.out.println("추천에서 로그인값"+user);
+        
         Map<String, Object> resultMap = new HashMap<>();
         
+        
+        if (customUser == null) {
+            // 로그인이 되어 있지 않으면 에러 처리
+            resultMap.put("error", "로그인이 필요합니다.");
+            return ResponseEntity.badRequest().body(resultMap);
+        }
         try {
-            // 임시 사용자 정보 설정
-	        //String me_id = "testUser"; 아이디를 받으면 안되나?
-	        int me_num = 1; // 임시 사용자 번호
+	        int me_num = customUser.getMe_num(); // 로그인된 사용자의 번호 가져옴
        
         	// 게시글 번호와 추천 상태, 사용자 아이디를 기반으로 RecommendVO 객체 생성
         	RecommendVO recommend = new RecommendVO();
         	recommend.setRe_po_num(num); // 게시글 번호
-        	recommend.setRe_me_num(me_num); //임시 사용자 번호
+        	recommend.setRe_me_num(me_num);  // 사용자 번호 설정
         	recommend.setRe_state(state); // 추천/비추천 상태
             
 	        // 추천 정보 처리

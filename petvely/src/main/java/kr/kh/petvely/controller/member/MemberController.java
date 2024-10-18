@@ -6,8 +6,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import kr.kh.petvely.model.vo.MemberVO;
 import kr.kh.petvely.service.member.MemberService;
 import kr.kh.petvely.utils.NoName;
@@ -48,12 +51,16 @@ public class MemberController {
 	}
 	
 	@GetMapping("login")
-	public String memberLogin() {
-		log.info(util.getCurrentMethodName());
+	public String memberLogin(HttpSession session) {
+		MemberVO user = (MemberVO) session.getAttribute("user");
+	    System.out.println("멤버에서 값" + user);
+		log.info("로그인 페이지 호출: " + (user != null ? user.getMe_id() : "비로그인 상태"));
 		
 		return viewRoute + "login";
 	}
+
 	
+
 	/*
 	 * @PostMapping("login") public String memberLogin_post(Model model,
 	 * MemberVO memberVO, HttpSession session) {

@@ -69,20 +69,25 @@
 
 		//추천/비추천 버튼 클릭 이벤트
 		$('.btn-up, .btn-down').click(function(e) {
+			
 		    e.preventDefault();
+		    
+			if(!checkLogin()){
+				return;
+			}
 		
 		    let state = $(this).data('state');  // 추천: 1, 비추천: -1
-		    let num = [[${post.po_num}]];       // 게시글 번호
+		    let num = [[${post.po_num}]];     // 게시글 번호
 		    
+		
 		    $.ajax({
 		        url: '/post/recommend',
 		        type: 'POST',
 		        dataType: 'json',  // 서버가 JSON 형식으로 응답해야 함
-		        method: 'get',
 		        data: {
 		            state: state,
 		            num: num
-		        },		      
+		        },		    
 		    	success : function(data){
 					let res = data.result;
 					if(res == 1){
@@ -92,7 +97,7 @@
 					}else{
 						alert(`${state == 1?'추천':'비추천'}을 취소했습니다.`);
 					}
-					
+				
 					checkRecommendBtns(res);
 					console.log(res);
 					let post = data.post;
@@ -114,7 +119,17 @@
 			}
 
 		}
-
+		function checkLogin(){
+			if('${user != null ? user.me_id : ""}' == ''){ //로그인 여부 확인
+				if(confirm('로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?')){
+					location.href = /*[[@{/member/login}]]*/ '';  // Thymeleaf 구문을 사용해 URL을 설정
+					return false;
+				}else{
+					return false;
+				}
+			}
+			return true;
+		}
 		</script>
 		
 		

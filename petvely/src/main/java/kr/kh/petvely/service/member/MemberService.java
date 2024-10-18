@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import jakarta.servlet.http.HttpServletResponse;
 import kr.kh.petvely.dao.member.MemberDAO;
 import kr.kh.petvely.model.vo.MemberVO;
 import lombok.extern.slf4j.Slf4j;
@@ -44,6 +45,7 @@ public class MemberService {
 		return memberDao.insertMember(memberVO);
 	}
 
+	/*
 	public MemberVO login(MemberVO memberVO) {
 		if (memberVO == null)
 			return null;
@@ -61,7 +63,26 @@ public class MemberService {
 		log.info("2 : " + selectedVO);
 		return selectedVO;
 	}
+	*/
 	
+	public MemberVO login(MemberVO member) {
+		if(member == null) {
+			return null;
+		}
+		//다오에게 아이디를 주면서 아이디와 일치하는 회원 정보를 가져오라고 시킴
+		MemberVO user = memberDao.selectMember(member.getMe_id());
+		//가져온 회원 정보가 null이면 null을 리턴
+		if(user == null) {
+			return null;
+		}
+		//비번과 가져온 회원정보의 비번이 같으면 가져온 회원 정보를 리턴
+		if(user.getMe_pw().equals(member.getMe_pw())) {
+			return user;
+		}
+		//다르면 null을 리턴 
+		return null;
+	}
+
 	/*
 	 * private boolean regexCheckMember(MemberVO member) { if(member == null ||
 	 * member.getMe_pw() == null || member.getMe_id() == null) return false;

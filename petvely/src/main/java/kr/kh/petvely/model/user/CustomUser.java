@@ -22,6 +22,13 @@ public class CustomUser extends User {
 		super(	vo.getMe_id(),
 				vo.getMe_pw(), 
 				Arrays.asList(new SimpleGrantedAuthority(vo.getMe_authority())));
+		System.out.println(vo.getMe_id());
 		this.member = vo;
 	}
+	public int getMe_num() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
 }
