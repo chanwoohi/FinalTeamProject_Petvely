@@ -30,9 +30,9 @@ public class MarketController {
 	public String postList(Model model) {
 
 		List<MarketPostVO> list = marketPostService.getMarketList();
-		List<FileVO> fileList = marketPostService.getThumNail();
+
 		model.addAttribute("list",list);
-		model.addAttribute("fileList",fileList);
+
 
 		return "post/market";
 

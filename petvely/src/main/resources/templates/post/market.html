@@ -62,6 +62,9 @@
 					<td th:text="${item.po_content}"></td>
 					<td th:text="${item.mp_price}"></td>
 					<td th:text="${item.me_id}"></td>
+					<td>
+					<a th:href="@{/message/marketmessagesend}">쪽지보내기</a>
+					</td>
 				</tr>				
 			
 				<tr th:if="${list.size() == 0}">

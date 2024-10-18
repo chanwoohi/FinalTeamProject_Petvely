@@ -2,6 +2,7 @@ package kr.kh.petvely.dao;
 
 import java.util.List;
 
+import kr.kh.petvely.model.vo.MarketPostVO;
 import kr.kh.petvely.model.vo.MemberVO;
 import kr.kh.petvely.model.vo.MessageVO;
 
@@ -16,6 +17,10 @@ public interface MessageDAO {
 	Integer selectReceiverId(String receiverId);
 
 	Integer selectsenderId(String senderId);
+
+	List<MarketPostVO> selectPostUserId(Integer postUser);
+
+	MarketPostVO selectMarketPostUserId();
 
 
 	

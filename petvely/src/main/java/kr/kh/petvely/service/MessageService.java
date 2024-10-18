@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.kh.petvely.dao.MessageDAO;
+import kr.kh.petvely.model.vo.MarketPostVO;
 import kr.kh.petvely.model.vo.MemberVO;
 import kr.kh.petvely.model.vo.MessageVO;
 
@@ -37,5 +38,10 @@ public class MessageService {
 	}
 	public Integer getsenderId(String senderId) {
 		return messageDao.selectsenderId(senderId);
+	}
+	
+	public MarketPostVO getMarketPostUserId() {
+
+		return messageDao.selectMarketPostUserId();
 	}
 }
