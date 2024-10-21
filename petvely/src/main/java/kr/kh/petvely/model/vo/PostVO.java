@@ -22,7 +22,7 @@ public class PostVO {
 	private int po_recommendCount; // 추천수
 	private int po_reportCount; // 신고수
 	private String po_notice; // 공지
-	private int po_me_num; // 작성자
+	private int po_me_num; // 작성자 ID (회원의 숫자)
 	private int po_co_num; // 커뮤니티 번호
 	private int po_delete; // 삭제처리
 

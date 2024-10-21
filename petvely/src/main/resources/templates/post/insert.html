@@ -29,10 +29,9 @@
 				<label>제목</label>
 				<input type="text" class="form-control" name="po_title">
 			</div>
-			<div class="form-group">
-				<label>작성자</label>
-				<input type="text" class="form-control" name="me_id" >
-			</div>
+		    <!-- 작성자 ID를 숨겨진 필드로 전달 -->
+    		<input type="hidden" name="po_me_num" th:value="${me_num}">
+    		
 			<div class="form-group">
 				<label>내용</label>
 				<textarea class="form-control" style="min-height: 400px; height: auto;" name="po_content">
@@ -44,16 +43,12 @@
 				<br/>
 			</div>
 			<button class="btn btn-outline-info col-12">게시글 등록</button>
-			<input type="hidden" name="po_co_num" value="${co_num }">
+			<input type="hidden" name="po_co_num" value="${co_num}">
 		</form>
 		<a class="btn btn-outline-info" style="margin-top:10px;"th:href="@{/post/list/{co_num}(co_num=${co_num})}">목록으로</a>
 	</main>
 	<script>
-	$('#content').summernote({
-		placeholder: '내용을 작성하세요.',
-		tabsize: 2,
-		height: 400
-	});
+
     </script>
 </body>
 </html>
