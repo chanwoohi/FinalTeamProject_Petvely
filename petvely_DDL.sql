@@ -31,7 +31,7 @@ DROP TABLE IF EXISTS `Comment`;
 CREATE TABLE `Comment` (
 	`cm_num`	int primary key auto_increment	NOT NULL,
 	`cm_content`	varchar(200)	NULL,
-	`cm_date`	datetime	NULL,
+	`cm_date`	datetime	NULL default current_timestamp,
 	`cm_state`	int	NULL,
 	`cm_reportCount`	int	NULL,
 	`cm_me_num`	int	NOT NULL,
@@ -171,7 +171,7 @@ CREATE TABLE `Post` (
 DROP TABLE IF EXISTS `WalkMatePost`;
 
 CREATE TABLE `WalkMatePost` (
-	`po_num`	int primary key auto_increment	NOT NULL,
+	`po_num`	int primary key NOT NULL,
 	`wm_date`	datetime	NULL,
 	`wm_time`	varchar(255)	NULL,
 	`wm_wms_state`	varchar(50)	NOT NULL DEFAULT "진행중"
@@ -180,7 +180,7 @@ CREATE TABLE `WalkMatePost` (
 DROP TABLE IF EXISTS `MarketPost`;
 
 CREATE TABLE `MarketPost` (
-	`po_num`	int primary key auto_increment	NOT NULL,
+	`po_num`	int primary key NOT NULL,
 	`mp_gts_state`	varchar(50)	NOT NULL,
 	`mp_name`	varchar(50)	NULL,
 	`mp_content`	varchar(500)	NULL,

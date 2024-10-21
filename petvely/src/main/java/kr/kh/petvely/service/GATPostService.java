@@ -96,8 +96,4 @@ public class GATPostService {
 		return gatpostDao.selectGATTypeList();
 	}
 
-	public List<CommentVO> getCommentList(int po_num) {
-		return gatpostDao.selectCommentList(po_num);
-	}
-
 }

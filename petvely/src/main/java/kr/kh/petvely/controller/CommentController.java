@@ -3,11 +3,17 @@ package kr.kh.petvely.controller;
 
 import java.util.List;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.kh.petvely.model.user.CustomUser;
 import kr.kh.petvely.model.vo.CommentVO;
+import kr.kh.petvely.model.vo.MemberVO;
 import kr.kh.petvely.service.CommentService;
 import lombok.AllArgsConstructor;
 
@@ -21,9 +27,23 @@ public class CommentController {
 	public String CommentList(Model model) {
 		List<CommentVO> list = commentService.getCommentList();
 		model.addAttribute("list", list);
-		System.out.println(list);
 		return "comment/list";
 	}
 
+	@PostMapping("/comment/list")
+	@ResponseBody
+	public List<CommentVO> ComentListPost(Model model, @RequestBody int po_num) {
+		List<CommentVO> list = commentService.getCommentList(po_num);
+		model.addAttribute("list",list);
+		return list;
+		
+	}
+	@PostMapping("/comment/insert")
+	@ResponseBody
+	public boolean insertPost(@RequestBody CommentVO comment, @AuthenticationPrincipal CustomUser customUser) {
+		MemberVO user = customUser.getMember();
+		System.out.println(comment);
+		return commentService.insertComment(comment, user);
+	}
 	
 }

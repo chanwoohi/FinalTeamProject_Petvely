@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import kr.kh.petvely.dao.CommentDAO;
 import kr.kh.petvely.model.vo.CommentVO;
+import kr.kh.petvely.model.vo.MemberVO;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -18,4 +19,16 @@ public class CommentService {
 		return commentDao.selectCommentList();
 	}
 	
+	public List<CommentVO> getCommentList(int po_num) {
+		return commentDao.selectCommentList(po_num);
+	}
+
+	public boolean insertComment(CommentVO comment, MemberVO user) {
+		if(comment == null || user == null) {
+			return false;
+		}
+		comment.setMe_num(user.getMe_num());
+		return commentDao.insertComment(comment);
+	}
+
 }

@@ -31,6 +31,4 @@ public interface GATPostDAO {
 
 	void updateView(Integer po_num);
 
-	List<CommentVO> selectCommentList(int po_num);
-
 }

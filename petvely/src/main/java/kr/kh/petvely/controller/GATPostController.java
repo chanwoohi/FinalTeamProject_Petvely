@@ -3,16 +3,15 @@ package kr.kh.petvely.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.servlet.http.HttpSession;
-import kr.kh.petvely.model.vo.CommentVO;
+import kr.kh.petvely.model.user.CustomUser;
 import kr.kh.petvely.model.vo.GiveAndTakePostVO;
 import kr.kh.petvely.model.vo.GiveAndTakeStateVO;
 import kr.kh.petvely.model.vo.GiveAndTakeTypeVO;
@@ -38,16 +37,19 @@ public class GATPostController {
 	}
 	
 	@GetMapping("/gatpost/detail/{po_num}")
-	public String postDetail(Model model, @PathVariable int po_num) {
+	public String postDetail(Model model, @PathVariable int po_num,@AuthenticationPrincipal CustomUser customUser) {
 		gatPostService.updatePostView(po_num);
 		GiveAndTakePostVO GATPost = gatPostService.getGATPost(po_num);
-		System.out.println(GATPost);
 		model.addAttribute("GATPost", GATPost);
+		MemberVO Userlist = customUser.getMember();
+		model.addAttribute("Userlist", Userlist);
 		return "gatpost/detail";
 	}
 	
 	@GetMapping("/gatpost/insert")
-	public String GATPostInsert(Model model) {
+	public String GATPostInsert(Model model,@AuthenticationPrincipal CustomUser customUser) {
+		MemberVO Userlist = customUser.getMember();
+		model.addAttribute("Userlist", Userlist);
 		List<Sido_AreasVO> sidoList = addressService.getSidoList();
 		model.addAttribute("sidoList", sidoList);
 		List<GiveAndTakeStateVO> gatstateList = gatPostService.gatStateList();
@@ -62,7 +64,6 @@ public class GATPostController {
 	public String GTAPostInsertPost(GiveAndTakePostVO GATPost, HttpSession session) {
 		boolean res = gatPostService.addGATPost1(GATPost);
 		boolean res2 = gatPostService.addGATPost2(GATPost);
-		System.out.println(GATPost);
 		if(res || res2) {
 			return "redirect:/gatpost/list";
 		}
@@ -102,15 +103,6 @@ public class GATPostController {
 			return "redirect:/gatpost/list";
 		}
 		return "redirect:/gatpost/detail/" + po_num;
-	}
-	
-	@PostMapping("/comment/list")
-	@ResponseBody
-	public List<CommentVO> ComentListPost(Model model, @RequestBody int po_num) {
-		List<CommentVO> list = gatPostService.getCommentList(po_num);
-		model.addAttribute("list",list);
-		return list;
-		
 	}
 	
 }

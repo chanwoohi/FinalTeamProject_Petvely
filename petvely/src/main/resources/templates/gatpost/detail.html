@@ -76,14 +76,20 @@
 			</div>
 			<div class="form-group">
 				<a class="btn btn-outline-info" th:href="@{/gatpost/list}">목록으로</a>
+				<th:if test="${post.po_me_id eq user.me_id }">
 				<a class="btn btn-outline-info" th:href="@{/gatpost/update/{po_num}(po_num=*{po_num})}">수정</a>
 				<a class="btn btn-outline-info" th:href="@{/gatpost/delete/{po_num}(po_num=*{po_num})}">삭제</a>
+				</th:if>
 			</div>
 		</div>
 		<script type="text/javascript">
 		
 			let po_num = '[[${GATPost.po_num}]]';
-			$ (document).ready(function getCommentList() {
+			let me_num = '[[${Userlist.me_num}]]';
+			$ (document).ready();
+			
+			function getCommentList() {
+				console.log(11);
 				$.ajax({
 					async : true, 
 					url : '/comment/list',
@@ -91,34 +97,47 @@
 					data : JSON.stringify(po_num), 
 					contentType : "application/json; charset=utf-8",
 					success : function (data){
-						console.log(data);
 						DisplayCommentList(data);
 					}, 
 					error : function(jqXHR, textStatus, errorThrown){
 					}
 				});
-			});
+			}
 			
 			var str = '';
+			var btn0 = '';
+			var btn1 = '';
+			var btns = '';
+			btn0 = `
+				<button class="btn btn-outline-primary" id="commentButton0">대댓글</button>
+			`
+			btn1 = `
+				<button class="btn btn-outline-primary" id="commentButton1">대대댓글</button>
+			`
 			function DisplayCommentList(data){
 				if(data == null || data.length == 0){
-					console.log(1);
 					$("#comment").html('<li class="comment-item">등록된 댓글이 없습니다.</li>');
 					return;
 				}
+					
 				for(comment of data){
+					if(comment.me_num == me_num){
+						btns = `
+							<button class="btn btn-outline-info">수정</button>
+							<button class="btn btn-outline-dark">삭제</button>
+						`
+					}
+					
+					
 					if (comment.cm_layer == 0) {
-						console.log(0);
-						console.log(comment);
 						str += `
 							<div class="comment-item">
 								<div>
 									<div style="float: left; line-height: 40px;">${comment.me_id}</div>
 									<div style="line-height: 40px;">(${comment.cm_date})</div>
 									<div class="float-right">
-										<button class="btn btn-outline-info">수정</button>
-										<button class="btn btn-outline-dark">삭제</button>
-										<button class="btn btn-outline-primary" id="commentButton00">대댓글</button>
+										${btns}
+										${btn0}
 									</div>
 								</div>
 								<div>
@@ -127,49 +146,42 @@
 								<div class="input-group mb-3" style="padding-left:20px;">
 							    <textarea class="form-control" placeholder="댓글 입력" id="input-comment0"></textarea>
 							    <div class="input-group-append">
-									<span class="input-group-text btn-insert">등록</span>
+									<span class="input-group-text btn-insert" id="btn_insert1">등록</span>
 								</div>
-						    </div>
 							</div>
 						`;
 					}
 					if (comment.cm_layer == 1) {
-						console.log(1);
-						console.log(comment);
 						str += `
-							<div class="comment-item" style="padding-left: 40px">
+							<div class="comment-item" style="padding-left: 40px" id="commentList0">
 								<div>
 									<div style="float: left; line-height: 40px;">${comment.me_id}</div>
 									<div style="line-height: 40px;">(${comment.cm_date})</div>
 									<div class="float-right">
-										<button class="btn btn-outline-info">수정</button>
-										<button class="btn btn-outline-dark">삭제</button>
-										<button class="btn btn-outline-primary" id="commentButton11">대대댓글</button>
+										${btns}
+										${btn1}
 									</div>
 								</div>
 								<div>
 									<div style="padding-left:20px; line-height: 40px;">${comment.cm_content}</div>
 								</div>
 								<div class="input-group mb-3" style="padding-left:20px;">
-								    <textarea class="form-control" placeholder="댓글 입력" id="input-comment1"></textarea>
+								    <textarea class="form-control" placeholder="댓글 입력" id="input-comment0"></textarea>
 								    <div class="input-group-append">
-										<span class="input-group-text btn-insert">등록</span>
-									</div>
-							    </div>
+										<span class="input-group-text btn-insert" id="btn_insert2">등록</span>
+										</div>
+								</div>
 							</div>
 						`;
 					}
 					if (comment.cm_layer == 2) {
-						console.log(2);
-						console.log(comment);
 						str += `
-							<div class="comment-item" style="padding-left: 80px">
+							<div class="comment-item" style="padding-left: 80px" id="commentList1">
 								<div>
 									<div style="float: left; line-height: 40px;">${comment.me_id}</div>
 									<div style="line-height: 40px;">(${comment.cm_date})</div>
 									<div class="float-right">
-										<button class="btn btn-outline-info">수정</button>
-										<button class="btn btn-outline-dark">삭제</button>
+										${btns}
 									</div>
 								</div>
 								<div>
@@ -182,14 +194,121 @@
 				}
 			}
 			
+			$("#btn_insert0").click(function name() {
+				console.log(1000);
+				var cm_content = $('#input-comment').val();
+				var cm_po_num = po_num;
+				var cm_replay = cm_replay;
+				var cm_ord = 0;
+				var cm_layer = 0;
+				var comment = {
+						cm_content : cm_content,
+						cm_po_num : cm_po_num,
+						cm_ord : cm_ord,
+						cm_layer : cm_layer
+					}
+				console.log(comment);
+				$.ajax({
+					async : true,
+					url : '/comment/insert', 
+					type : 'post', 
+					data : JSON.stringify(comment), 
+					contentType : "application/json; charset=utf-8",
+					success : function (data){
+						if(data){
+							$('#input-comment').val('');
+						}
+					}, 
+					error : function(jqXHR, textStatus, errorThrown){
+						console.log(jqXHR);
+					}
+				});
+			})
+			
+			$("#btn_insert1").click(function name() {
+				console.log(1000);
+				var cm_content = $('#input-comment').val();
+				var cm_po_num = po_num;
+				var cm_replay = cm_replay;
+				var cm_ord = cm_ord;
+				var cm_layer = 1;
+				var comment = {
+						cm_content : cm_content,
+						cm_po_num : cm_po_num,
+						cm_ord : cm_ord,
+						cm_layer : cm_layer
+					}
+				console.log(comment);
+				$.ajax({
+					async : true,
+					url : '/comment/insert', 
+					type : 'post', 
+					data : JSON.stringify(comment), 
+					contentType : "application/json; charset=utf-8",
+					success : function (data){
+						if(data){
+							$('#input-comment').val('');
+						}
+					}, 
+					error : function(jqXHR, textStatus, errorThrown){
+						console.log(jqXHR);
+					}
+				});
+			})
+			
+			$("#btn_insert2").click(function name() {
+				console.log(1000);
+				var cm_content = $('#input-comment').val();
+				var cm_po_num = po_num;
+				var cm_replay = cm_replay;
+				var cm_ord = 2;
+				var cm_layer = 2;
+				var comment = {
+						cm_content : cm_content,
+						cm_po_num : cm_po_num,
+						cm_ord : cm_ord,
+						cm_layer : cm_layer
+					}
+				console.log(comment);
+				$.ajax({
+					async : true,
+					url : '/comment/insert', 
+					type : 'post', 
+					data : JSON.stringify(comment), 
+					contentType : "application/json; charset=utf-8",
+					success : function (data){
+						if(data){
+							$('#input-comment').val('');
+						}
+					}, 
+					error : function(jqXHR, textStatus, errorThrown){
+						console.log(jqXHR);
+					}
+				});
+			})
+			
+			$(function(){
+			    getCommentList();
+			});
+			
 			$(".commentList").hide();
 			$("#commentButton").click(function() {
 				$(".commentList").toggle();
 			})
 			
-			$("#commentButton00").click(function() {
-				$("#commentList00").toggle();
+			$("#commentList0").hide();
+			$(document).on('click', "#commentButton0",  function() {
+				console.log(0);
+				$("#commentList0").toggle();
+				$("#commentList1").toggle();
 			})
+			
+			$("#commentList1").hide();
+			$("#commentButton1").click(function() {
+				console.log(1);
+				$("#commentList1").toggle();
+			})
+			
 			
 		</script>
 	</main>

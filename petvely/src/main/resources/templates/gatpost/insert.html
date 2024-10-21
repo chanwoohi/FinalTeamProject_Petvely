@@ -10,7 +10,8 @@ layout:decorate="~{layout/layout.html}">
 <body>
 	<main layout:fragment="content">
 		<form class="form-group" method="post" th:action="@{/gatpost/insert}">
-		<input type="hidden" class="form-control" name="po_title" required="required" value="6">
+			<input type="hidden" class="form-control" name="po_title" required="required" value="6">
+			<input type="hidden" class="form-control" name="po_me_num" th:value="${Userlist.me_num}">
 			<div class="form-group" id="GT">
 				<label>품앗이:</label>
 				<!-- 유효성 검사로 오류 표시로 바꿀것 -->
@@ -21,10 +22,6 @@ layout:decorate="~{layout/layout.html}">
 			<div class="form-group">
 				<label>제목:</label>
 				<input type="text" class="form-control" name="po_title" required="required">
-			</div>
-			<div class="form-group">
-				<label>작성자:</label>
-				<input type="text" class="form-control" name="po_me_num">
 			</div>
 			<div class="form-group">
 				<label>내용:</label>

@@ -59,12 +59,14 @@ public class MemberController {
 	public String memberLogin_post(Model model, MemberVO memberVO, HttpSession session) {
 		log.info(util.getCurrentMethodName() + " : " + memberVO); 
 		MemberVO user = memberService.login(memberVO);
+		System.out.println(user);
 		model.addAttribute("user", user); 
 		log.info("memberLogin_pos123123t : " + user); 
 		return "redirect:/"; 
 	}
 		 
-	@GetMapping("logout") public String memberLogout() {
+	@GetMapping("logout") 
+	public String memberLogout() {
 	log.info(util.getCurrentMethodName());
 		return viewRoute + "logout";
 	}
