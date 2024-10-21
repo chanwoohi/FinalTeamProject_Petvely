@@ -114,7 +114,9 @@ public class PostController {
 	public String postUpdate(Model model, @PathVariable int po_num) {
 		PostVO post = postService.getPost(po_num); // 게시글 정보 가져오기
 		List<CommunityVO> communities = postService.getCommunityList(); // 카테고리 목록을 가져옴    
-	
+		
+		System.out.println("po_date: " + post.getPo_date());  // po_date 로그 확인
+
 		model.addAttribute("post", post); // 게시글 정보 전달
 		model.addAttribute("communities", communities); // 카테고리 목록 전달
 		model.addAttribute("co_num", post.getPo_co_num());  // 선택된 카테고리 전달
@@ -152,66 +154,53 @@ public class PostController {
 	}
 	
 	// 추천/비추천 처리
-    @PostMapping("/post/recommend")
-    public ResponseEntity<Map<String, Object>> recommend(
-    		
-    		@RequestParam("state") int state, // 요청 파라미터 추천/비추천 상태를 받음
-            @RequestParam("num") int num,     // 요청 파라미터 게시글 번호를 받음
-            @AuthenticationPrincipal CustomUser customUser // 로그인한 사용자 정보
-           
-    ) {
-        System.out.println(state + " - " + num);
-        
-		String user = customUser.getUsername();
-        System.out.println("추천에서 로그인값"+user);
-        
-        Map<String, Object> resultMap = new HashMap<>();
-        
-        
-        // customUser가 제대로 받아와졌는지 확인
+	@PostMapping("/post/recommend")
+	public ResponseEntity<Map<String, Object>> recommend(
+	        @RequestParam("state") int state, // 추천/비추천 상태
+	        @RequestParam("num") int num,     // 게시글 번호
+	        @AuthenticationPrincipal CustomUser customUser // 로그인한 사용자 정보
+	) {
+	    Map<String, Object> resultMap = new HashMap<>();
 
-        if (customUser == null) {
-            resultMap.put("error", "로그인이 필요합니다.");
-            return ResponseEntity.badRequest().body(resultMap);
-        }
+	    // 로그인 확인
+	    if (customUser == null) {
+	        resultMap.put("error", "로그인이 필요합니다.");
+	        return ResponseEntity.badRequest().body(resultMap); // 400 에러 반환
+	    }
 
-        // 로그인된 사용자 정보를 로그로 출력
-        System.out.println("로그인된 사용자: " + customUser.getMember().getMe_id());
+	    try {
+	        // 로그인된 사용자 정보를 사용
+	        int me_num = customUser.getMember().getMe_num();  // 사용자 번호 가져오기
+	        String me_id = customUser.getMember().getMe_id(); // 사용자 ID 가져오기
 
-        try {
-        	// CustomUser 객체에서 사용자 번호를 가져옴
-            int me_num = customUser.getMember().getMe_num();  // 사용자 번호 가져오기
-          //  String me_id = customUser.getMe_id();  // 사용자 ID 가져오기
-        	
-        	// 게시글 번호와 추천 상태, 사용자 아이디를 기반으로 RecommendVO 객체 생성
-        	RecommendVO recommend = new RecommendVO();
-        	recommend.setRe_po_num(num); // 게시글 번호
-        	recommend.setRe_me_num(me_num);  // 사용자 번호 설정
-        	recommend.setRe_state(state); // 추천/비추천 상태
-        	
-        	System.out.println(recommend);
-            
+	        // 로그로 사용자 정보 출력
+	        System.out.println("추천하는 사용자: " + me_id);
+
+	        // 추천/비추천 처리
+	        RecommendVO recommend = new RecommendVO();
+	        recommend.setRe_po_num(num);  // 게시글 번호
+	        recommend.setRe_me_num(me_num);  // 사용자 번호
+	        recommend.setRe_state(state);  // 추천/비추천 상태
+
 	        // 추천 정보 처리
 	        int res = postService.insertRecommend(recommend);
-	        
-	        System.out.println(res);
+
 	        // 게시글 정보 다시 가져오기
 	        PostVO post = postService.getPost(num);
-	        
-	        System.out.println(post);
-	        
-	        //부트는 JSON 자동변환이라 안함.
-	        resultMap.put("result", res); // 추천 처리 결과
-	        resultMap.put("post", post); // 업데이트된 게시글 정보
-	        
-        } catch (Exception e) {
-        	e.printStackTrace();
-        	resultMap.put("error", "Exception 발생 : " + e.getMessage());
-        }
-        
-        // 결과를 JSON 형식으로 반환
-        return ResponseEntity.ok(resultMap);
-    }
+
+	        // 처리 결과를 응답으로 전송
+	        resultMap.put("result", res);  // 추천 처리 결과
+	        resultMap.put("post", post);   // 업데이트된 게시글 정보
+
+	        return ResponseEntity.ok(resultMap);  // 성공적인 응답
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        resultMap.put("error", "Exception 발생: " + e.getMessage());
+	        return ResponseEntity.badRequest().body(resultMap);  // 예외 발생 시 400 에러 반환
+	    }
+	}
+
 
     
 

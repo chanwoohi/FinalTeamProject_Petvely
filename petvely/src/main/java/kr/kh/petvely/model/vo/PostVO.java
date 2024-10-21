@@ -3,6 +3,8 @@ package kr.kh.petvely.model.vo;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -46,9 +48,10 @@ public class PostVO {
     public void setNotRecommendCount(int notRecommendCount) {
         this.notRecommendCount = notRecommendCount;
     }	
-    public String getPo_date() {
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		return format.format(po_date);
-    }
+    
+//    public String getPo_date() {
+//	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+//	return format.format(po_date);
+//    }
 	
 }

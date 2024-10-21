@@ -30,6 +30,7 @@ public class CustomUser extends User {
 	public String getMeId() {
 		return this.member.getMe_id();
 	}
+	// me_mum을 반환하는 메서드 추가
 	public int getMeNum() {
 		return this.member.getMe_num();
 	}
