@@ -147,9 +147,12 @@ public class PostController {
 	    int co_num = post.getPo_co_num(); // 커뮤니티 번호 가져오기
 	    
 	    boolean res;
-	    
+	    System.out.println("사용자 권한: " + customUser.getMember().getMe_authority());
+
 	    // 삭제 로직 실행
-	    if ("admin".equals(customUser.getMember().getMe_authority())) {
+	    System.out.println("ADMIN".equals(customUser.getMember().getMe_authority()));
+	    if ("ADMIN".equals(customUser.getMember().getMe_authority())) {
+	    	  System.out.println("관리자 권한 확인됨");
 	        // 관리자 권한인 경우 논리적 삭제 처리
 	        res = postService.logicalDeletePost(po_num);  // 논리적 삭제
 	    } else {
