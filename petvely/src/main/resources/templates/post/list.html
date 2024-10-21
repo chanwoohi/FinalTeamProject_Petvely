@@ -30,21 +30,20 @@
                 <!-- 데이터가 있을 경우 렌더링 -->
                 <tr th:each="post : ${list}">
                     <td th:text="${post.po_num}"></td> <!-- 번호 -->
-					<td>
-					    <!-- 관리자 권한 확인: post.po_delete == 1인 경우, 관리자만 삭제된 글을 볼 수 있음 -->
-					    <a th:if="${post.po_delete == 1} and ${#authentication.principal.member.me_authority == 'ADMIN'}">
-					        <span class="text-muted">이 글은 관리자에 의해 삭제된 글입니다.</span>
-					    </a>
+					<td>									
+						<!-- 관리자 권한 확인: post.po_delete == 1인 경우, 관리자만 삭제된 글을 볼 수 있음 -->
+						<a th:if="${post.po_delete == 1} and ${#authorization.expression('hasAuthority(''ADMIN'')')}">
+						    <span class="text-muted">이 글은 관리자에 의해 삭제된 글입니다.</span>
+						</a>
+
 					    <!-- 글이 삭제되지 않았을 때만 제목을 표시 -->
 					    <a th:if="${post.po_delete == 0}" th:text="${post.po_title}" th:href="@{/post/detail/{po_num}(po_num=${post.po_num})}"></a>
 					</td>
                     <td th:text="${post.me_id}"></td>
-                     <!-- <td th:text="${post.me_id != null ? post.me_id : '익명'}">작성자</td>-->
                     <td th:text="${#dates.format(post.po_date, 'yyyy-MM-dd')}"></td> <!-- 작성일 -->
                     <td th:text="${post.recommendCount} + ' / ' + ${post.notRecommendCount}"></td> <!-- 추천수 / 비추천수 -->
                     <td th:text="${post.po_viewCount}"></td> <!-- 조회수 -->
                 </tr>
-
             </tbody>
         </table>
 
