@@ -134,18 +134,39 @@ public class PostController {
 		return "redirect:/post/update/" + po_num;
 	}
 	@GetMapping("/post/delete/{po_num}") // 삭제 (게시글 번호 받기)
-	public String postDelete(Model model, @PathVariable int po_num) {
-	
-			boolean res = postService.deletePost(po_num);
-			if(res) {
-			// 삭제한 게시글의 커뮤니티 번호를 가져와서 해당 커뮤니티로 리디렉션
-			PostVO post = postService.getPost(po_num); // 삭제된 게시글 정보를 다시 가져옴
-			int co_num = post.getPo_co_num(); // 커뮤니티 번호 가져오기
-			return "redirect:/post/list/" + co_num;
-		}
-		return "redirect:/post/detail/" + po_num; // 삭제 실패 시 다시 상세보기로 리디렉션
-	
+	public String postDelete(Model model, @PathVariable int po_num, @AuthenticationPrincipal CustomUser customUser) {
+
+	    // 로그인된 사용자 권한 확인
+	    if (customUser == null) {
+	        model.addAttribute("error", "로그인이 필요합니다.");
+	        return "redirect:/member/login";  // 비회원일 경우 로그인 페이지로 리디렉션
+	    }
+	    
+	    // 삭제 전에 커뮤니티 번호를 미리 가져옴
+	    PostVO post = postService.getPost(po_num);
+	    int co_num = post.getPo_co_num(); // 커뮤니티 번호 가져오기
+	    
+	    boolean res;
+	    
+	    // 삭제 로직 실행
+	    if ("admin".equals(customUser.getMember().getMe_authority())) {
+	        // 관리자 권한인 경우 논리적 삭제 처리
+	        res = postService.logicalDeletePost(po_num);  // 논리적 삭제
+	    } else {
+	        // 일반 사용자일 경우 물리적 삭제 처리
+	        res = postService.physicalDeletePost(po_num);  // 물리적 삭제
+	    }
+
+	    // 삭제가 성공했는지 확인
+	    if (res) {
+	        // 커뮤니티 목록으로 리디렉션
+	        return "redirect:/post/list/" + co_num;  // 커뮤니티 번호로 리디렉션
+	    } else {
+	        // 삭제 실패 시 다시 상세보기로 리디렉션
+	        return "redirect:/post/detail/" + po_num;
+	    }
 	}
+
 	@GetMapping("/listWithMember")  //게시글 목록과 작성자 ID 조회
 	public String postListWithMemberId(Model model) {
 		List<PostVO> postList = postService.getPostpostListWithMemberId();

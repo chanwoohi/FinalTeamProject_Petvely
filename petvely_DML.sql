@@ -1,6 +1,5 @@
 use petvely;
 
-
 # 관리자가 '강아지', '고양이', '도마뱀', '고슴도치' 커뮤니티를 추가했을 때 필요한 쿼리
 INSERT INTO COMMUNITY(CO_NAME) VALUES('강아지');
 INSERT INTO COMMUNITY(CO_NAME) VALUES('고양이');
@@ -67,3 +66,29 @@ VALUES
 ('달이', 3, 'W', '2021-05-18', 3, 0, '강아지', 3),
 ('메시', 37, 'M', '1987-06-25', 67, 0, '사람', 3),
 ('초코', 1, 'M', '2024-03-03', 3, 0, '강아지', 4);
+
+-- admin 계정 생성 SQL 예시
+INSERT INTO member (
+    me_id, me_pw, me_nickname, me_email, me_authority, me_cookie, me_limit, 
+    me_loginType, me_addressDetail, me_phone, me_wm_point, me_ga_point, 
+    me_mp_point, me_total_point, me_fakeReportNum, me_ms_status
+) 
+VALUES (
+    'admin123', -- me_id: 관리자 아이디
+    '$2a$10$zoIkkMbb/CH/Ey8bBC0QfuKEEha30LR.56.0/hr4/c/SjseCv3sPe', -- me_pw: 해시된 비밀번호를 사용해야 함
+    '관리자', -- me_nickname: 관리자 닉네임
+    'admin@example.com', -- me_email: 관리자 이메일
+    'admin', -- me_authority: 관리자 권한
+    NULL, -- me_cookie: 로그인 쿠키
+    NULL, -- me_limit: 로그인 제한 시간
+    'local', -- me_loginType: 로그인 타입 (로컬 로그인)
+    '서울시 강남구', -- me_addressDetail: 관리자 주소
+    '01012345678', -- me_phone: 전화번호
+    0, -- me_wm_point: 초기 포인트 (웹 포인트)
+    0, -- me_ga_point: 초기 포인트 (게임 포인트)
+    0, -- me_mp_point: 초기 포인트 (마일리지 포인트)
+    0, -- me_total_point: 초기 총 포인트
+    0, -- me_fakeReportNum: 신고 횟수 (관리자이므로 0)
+    'active' -- me_ms_status: 관리자 상태 (active 상태)
+);
+

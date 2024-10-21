@@ -64,11 +64,6 @@ public class PostService {
 		postDao.updateView(po_num);
 		
 	}
-	// 게시글 논리적 삭제 (po_delete 값을 1로 업데이트)
-	public boolean deletePost(int po_num) {
-		// 실제 삭제가 아니라 po_delete를 1로 변경하여 논리적 삭제 처리
-		return postDao.logicalDeletePost(po_num);  // PostDAO의 논리적 삭제 메서드 호출
-	}
 	public List<CommunityVO> getCommunityList() {
 		return postDao.selectCommunityList();
 	}
@@ -111,5 +106,14 @@ public class PostService {
 	postDao.insertRecommend(recommend);
 	return recommend.getRe_state();
 	}
-
+	
+	// 게시글 논리적 삭제 (po_delete 값을 1로 업데이트)
+	public boolean logicalDeletePost(int po_num) {
+	    return postDao.logicalDeletePost(po_num);  // 논리적 삭제
+	}
+	
+	
+	public boolean physicalDeletePost(int po_num) {
+	    return postDao.deletePost(po_num);  // 실제 삭제
+	}
 }

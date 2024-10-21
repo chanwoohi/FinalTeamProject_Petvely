@@ -5,6 +5,13 @@
 		INSERT into post(po_title, po_co_num, po_content, po_me_num,  po_viewCount, po_recommendCount, po_delete)
 		VALUES (#{po_title}, #{po_co_num}, #{po_content}, #{po_me_num}, #{po_viewCount}, #{po_recommendCount}, #{po_delete})
 	</insert>
+	
+    <select id="selectPost" resultType="kr.kh.petvely.model.vo.PostVO">
+    SELECT po_num, po_title, po_content, po_date, po_hidden, po_viewCount, po_recommendCount,
+           po_reportCount, po_notice, po_me_num, po_co_num, po_delete
+    FROM post
+    WHERE po_num = #{po_num}
+	</select>
     
     <!-- 삭제되지 않은 게시글 목록 조회--> <!--  (AND po_delete = 0 조건 추가할 예정) -->
 	<select id="selectPostList" resultType="PostVO">
@@ -31,12 +38,6 @@
 	    WHERE co_num = #{co_num} AND po_delete = 0
 	</select>	
 	
-	<!-- 삭제되지 않은 게시글 목록 조회 (and po_delete 추후 추가예정 po_delete = 0) -->
-	<select id="selectPost" resultType="PostVO">
-		SELECT * from post 
-		WHERE po_num = #{po_num}
-	</select>
-	
 	<update id="updatePost">
 		UPDATE post set po_title = #{po_title}, po_content = #{po_content}
 		WHERE po_num = #{po_num} 
@@ -56,6 +57,10 @@
 	    SET po_delete = 1
 	    WHERE po_num = #{po_num}
 	</update>
+	
+	<delete id="deletePost">
+		delete from post where po_num = #{po_num}
+	</delete>
 	
 	<select id="selectCommunityList" resultType="CommunityVO">
 		SELECT * from community
