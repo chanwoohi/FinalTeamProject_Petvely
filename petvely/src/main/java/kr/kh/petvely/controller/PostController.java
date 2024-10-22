@@ -95,15 +95,7 @@ public class PostController {
 
 	
 	@GetMapping("/post/detail/{po_num}") // 게시글 상세 조회
-	public String postDetail(Model model, @PathVariable int po_num, @AuthenticationPrincipal CustomUser customUser) {
-
-	    // 로그인 상태 확인
-	    if (customUser != null) {
-	        String username = customUser.getUsername();  // 로그인된 사용자의 이름을 가져옴
-	        model.addAttribute("username", username);    // 사용자 이름을 모델에 추가
-	    } else {
-	        model.addAttribute("username", "guest");    // 비회원일 경우 'guest'를 모델에 추가
-	    }
+	public String postDetail(Model model, @PathVariable int po_num) {
 
 	    postService.updateView(po_num); // 조회수 증가
 
@@ -116,11 +108,8 @@ public class PostController {
 	@GetMapping("/post/update/{po_num}") // 게시글 수정 페이지 이동, 카테고리 목록 전달
 	public String postUpdate(Model model, @PathVariable int po_num) {
 		
-		PostVO post = postService.getPost(po_num); // 게시글 정보 가져오기
-		  System.out.println("작성자 아이디: " + post.getMe_id());  // me_id 값 확인
+		PostVO post = postService.getPost(po_num); // 게시글 정보 가져오기		
 		List<CommunityVO> communities = postService.getCommunityList(); // 카테고리 목록을 가져옴    
-		
-		System.out.println("po_date: " + post.getPo_date());  // po_date 로그 확인
 
 		model.addAttribute("post", post); // 게시글 정보 전달
 		model.addAttribute("communities", communities); // 카테고리 목록 전달

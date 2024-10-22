@@ -8,8 +8,9 @@
 	
     <select id="selectPost" resultType="kr.kh.petvely.model.vo.PostVO">
     SELECT po_num, po_title, po_content, po_date, po_hidden, po_viewCount, po_recommendCount,
-           po_reportCount, po_notice, po_me_num, po_co_num, po_delete
+           po_reportCount, po_notice, po_me_num, po_co_num, po_delete, me_id
     FROM post
+    	 JOIN member ON po_me_num = me_num
     WHERE po_num = #{po_num}
 	</select>
     
