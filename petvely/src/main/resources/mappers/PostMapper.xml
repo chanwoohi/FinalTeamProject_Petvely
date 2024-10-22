@@ -2,16 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.petvely.dao.PostDAO">
 	<insert id="insertPost" keyProperty="po_num" useGeneratedKeys="true">
-		INSERT into post(po_title, po_co_num, po_content, po_me_num,  po_viewCount, recommendCount, notRecommendCount, po_delete)
-		VALUES (#{po_title}, #{po_co_num}, #{po_content}, #{po_me_num}, #{po_viewCount}, #{recommendCount}, #{notRecommendCount}, #{po_delete})
+		INSERT into post(po_title, po_co_num, po_content, po_me_num,  po_viewCount, po_recommendCount, po_notRecommendCount, po_delete)
+		VALUES (#{po_title}, #{po_co_num}, #{po_content}, #{po_me_num}, #{po_viewCount}, #{po_recommendCount}, #{po_notRecommendCount}, #{po_delete})
 	</insert>
 	
     <select id="selectPost" resultType="kr.kh.petvely.model.vo.PostVO">
-    SELECT po_num, po_title, po_content, po_date, po_hidden, po_viewCount, recommendCount, notRecommendCount,
+    	SELECT po_num, po_title, po_content, po_date, po_hidden, po_viewCount, po_recommendCount, po_notRecommendCount,
            po_reportCount, po_notice, po_me_num, po_co_num, po_delete, me_id
-    FROM post
-    	 JOIN member ON po_me_num = me_num
-    WHERE po_num = #{po_num}
+	    FROM post
+	    	 JOIN member ON po_me_num = me_num
+	    WHERE po_num = #{po_num}
 	</select>
     
     <!-- 삭제되지 않은 게시글 목록 조회--> <!--  (AND po_delete = 0 조건 추가할 예정) -->
@@ -19,8 +19,8 @@
 	    SELECT
 	        post.*, 
 	        me_id,
-	        count(if(re_state = 1, re_state, null)) AS recommendCount,
-	        count(if(re_state = -1, re_state, null)) AS notRecommendCount
+	        count(if(re_state = 1, re_state, null)) AS po_recommendCount,
+	        count(if(re_state = -1, re_state, null)) AS po_notRecommendCount
 	    FROM
 	        post
 	        LEFT JOIN recommend ON po_num = re_po_num
@@ -69,7 +69,14 @@
 	<select id="selectCommunityList" resultType="CommunityVO">
 		SELECT * from community
 	</select>
-	
+		<!-- 추천 및 비추천 수 업데이트 -->
+	<update id="updateRecommendCount">
+	    UPDATE post
+	    SET 
+	        po_recommendCount = (SELECT COUNT(*) FROM recommend WHERE re_po_num = #{po_num} AND re_state = 1),
+	        po_notRecommendCount = (SELECT COUNT(*) FROM recommend WHERE re_po_num = #{po_num} AND re_state = -1)
+	    WHERE po_num = #{po_num};
+	</update>
 	<!-- 추천 추가 -->
 	<insert id="insertRecommend">
 		INSERT into recommend(re_po_num, re_state, re_me_num)
@@ -77,8 +84,10 @@
 	</insert>
 	
 	<!-- 추천 정보 조회 (게시글 번호로 조회)-->
-	<select id="selectRecommend" resultType="RecommendVO">
-		SELECT * from recommend where re_me_num = #{re_me_num} and re_po_num = #{re_po_num}
+	<select id="selectRecommend" resultType="RecommendVO" parameterType="map">
+	    SELECT * FROM recommend 
+	    WHERE re_me_num = #{re_me_num} 
+	    AND re_po_num = #{re_po_num}
 	</select>
 	
 	<!-- 추천 삭제 -->

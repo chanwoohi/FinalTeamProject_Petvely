@@ -86,7 +86,9 @@
                 state: state,
                 num: num
             },
+            
             success: function(data) {
+            	
                 let res = data.result;
                 if (res == 1) {
                     alert('추천했습니다.');
@@ -99,11 +101,12 @@
                 checkRecommendBtns(res);
                 console.log(res);
                 
+                
 
                 // 업데이트된 추천/비추천 수 반영
                 let post = data.post;
-                $('.btn-up span').text(post.recommendCount);
-                $('.btn-down span').text(post.notRecommendCount);
+                $('.btn-up span').text(post.po_recommendCount);
+                $('.btn-down span').text(post.po_notRecommendCount);
             },
             error: function(xhr) {
                 if (xhr.status === 400) {  // 400 에러 처리

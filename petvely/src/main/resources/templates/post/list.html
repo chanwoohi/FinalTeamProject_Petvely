@@ -50,7 +50,7 @@
 					</td>
                     <td th:text="${post.me_id}"></td>
                     <td th:text="${#dates.format(post.po_date, 'yyyy-MM-dd')}"></td> <!-- 작성일 -->
-                    <td th:text="${post.recommendCount} + ' / ' + ${post.notRecommendCount}"></td> <!-- 추천수 / 비추천수 -->
+                    <td th:text="${post.po_recommendCount} + ' / ' + ${post.po_notRecommendCount}"></td> <!-- 추천수 / 비추천수 -->
                     <td th:text="${post.po_viewCount}"></td> <!-- 조회수 -->
                 </tr>
             </tbody>
