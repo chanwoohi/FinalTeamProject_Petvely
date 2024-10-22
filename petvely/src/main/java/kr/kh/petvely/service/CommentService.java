@@ -30,5 +30,21 @@ public class CommentService {
 		comment.setMe_num(user.getMe_num());
 		return commentDao.insertComment(comment);
 	}
+	
+	public boolean insertComment1(CommentVO comment, MemberVO user) {
+		if(comment == null || user == null) {
+			return false;
+		}
+		comment.setMe_num(user.getMe_num());
+		return commentDao.insertComment1(comment);
+	}
+	
+	public boolean insertComment2(CommentVO comment, MemberVO user) {
+		if(comment == null || user == null) {
+			return false;
+		}
+		comment.setMe_num(user.getMe_num());
+		return commentDao.insertComment1(comment);
+	}
 
 }

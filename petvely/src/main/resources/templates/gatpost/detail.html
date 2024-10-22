@@ -6,6 +6,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+	.comment-item.comment-layer-1{
+		padding-left: 40px; display: none;
+	}
+	.comment-item.comment-layer-2{
+		padding-left: 80px; display: none;
+	}
+	
+</style>
 </head>
 <body>
 	<main layout:fragment="content">
@@ -64,6 +73,7 @@
 			</div>
 			<div class="form-group commentList" id="commentList" style="display: none;">
 				<div id="comment">
+					
 				</div>
 				<div class="input-group mb-3">
 				    <textarea class="form-control" placeholder="댓글 입력" id="input-comment"></textarea>
@@ -115,100 +125,73 @@
 				<button class="btn btn-outline-primary" id="commentButton${num}">대대댓글</button>
 			`
 			function DisplayCommentList(data){
+				str = '';
 				if(data == null || data.length == 0){
 					$("#comment").html('<li class="comment-item">등록된 댓글이 없습니다.</li>');
 					return;
 				}
 				for(comment of data){
+					let reBtn = '';
+					let reInput = '';
 					if(comment.me_num == me_num){
 						btns = `
 							<button class="btn btn-outline-info">수정</button>
 							<button class="btn btn-outline-dark">삭제</button>
 						`
 					}
+					let commentLayer = '';
+					
 					if (comment.cm_layer == 0){
-						num += 1;
-						num1 = 0;
-						console.log('num',num);
-						console.log('num1',num1);
-						console.log('num2',num2);
-						str += `
-							<div class="comment-item">
-								<div>
-									<div style="float: left; line-height: 40px;">${comment.me_id}</div>
-									<div style="line-height: 40px;">(${comment.cm_date})</div>
-									<div class="float-right">
-										${btns}
-										<button class="btn btn-outline-primary" id="commentButton${num}">대댓글</button>
-									</div>
-								</div>
-								<div>
-									<div style="padding-left:20px; line-height: 40px;">${comment.cm_content}</div>
-								</div>
-								<div class="input-group mb-3 commentListInput${num}" style="padding-left:20px; display: none;">
-							    <textarea class="form-control input-comment1" placeholder="댓글 입력" id="input-comment1"></textarea>
+						reBtn = `<button class="btn btn-outline-primary btn-comment btn-comment1" data-reply="${comment.cm_reply}" data-ord="${comment.cm_ord}" data-layer="${comment.cm_layer}">대댓글</button>`;
+						reInput =`
+							<div class="input-group mb-3 commnet-input commentListInput" style="padding-left:20px; display: none;">
+							    <textarea class="form-control input-comment1" id="input-comment1" placeholder="댓글 입력"></textarea>
 							    <div class="input-group-append">
-									<span class="input-group-text btn-insert" id="btn_insert1">등록</span>
-								</div>
+									<span class="input-group-text btn-insert1" id="btn_insert1" data-reply="${comment.cm_reply}"  data-ord="${comment.cm_ord}">등록</span>
+									</div>
 							</div>
-						`;
+						`
 					}
 					if (comment.cm_layer == 1) {
-						num1 += 1;
-						num2 = 0;
-						console.log('num',num);
-						console.log('num1',num1);
-						console.log('num2',num2);
-						str += `
-							<div class="comment-item commentList${num}${num1}" style="padding-left: 40px; display: none;" id="commentList0">
-								<div>
-									<div style="float: left; line-height: 40px;">${comment.me_id}</div>
-									<div style="line-height: 40px;">(${comment.cm_date})</div>
-									<div class="float-right">
-										${btns}
-										<button class="btn btn-outline-primary" id="commentButton${num}${num1}">대대댓글</button>
+						commentLayer = 'comment-layer-1';
+						reBtn = `<button class="btn btn-outline-primary btn-comment btn-comment2" data-reply="${comment.cm_reply}"  data-ord="${comment.cm_ord}" data-layer="${comment.cm_layer}">대대댓글</button>`;
+						reInput =`
+							<div class="input-group commnet-input mb-3 commentListInput" style="padding-left:20px; display: none;">
+							    <textarea class="form-control input-comment2" id="input-comment2" placeholder="댓글 입력" ></textarea>
+							    <div class="input-group-append">
+									<span class="input-group-text btn-insert2" id="btn-insert2" data-reply="${comment.cm_reply}"  data-ord="${comment.cm_ord}">등록</span>
 									</div>
-								</div>
-								<div>
-									<div style="padding-left:20px; line-height: 40px;">${comment.cm_content}</div>
-								</div>
-								<div class="input-group mb-3 commentListInput${num}${num1}" style="padding-left:20px; display: none;">
-								    <textarea class="form-control input-comment2" placeholder="댓글 입력" id="input-comment2"></textarea>
-								    <div class="input-group-append">
-										<span class="input-group-text btn-insert" id="btn_insert2">등록</span>
-										</div>
-								</div>
 							</div>
-						`;
+						`
 					}
 					if (comment.cm_layer == 2) {
-						num2 += 1;
-						console.log('num',num);
-						console.log('num1',num1);
-						console.log('num2',num2);
-						str += `
-							<div class="comment-item commentList${num}${num1}${num2}" style="padding-left: 80px; display: none;" id="commentList1">
-								<div>
-									<div style="float: left; line-height: 40px;">${comment.me_id}</div>
-									<div style="line-height: 40px;">(${comment.cm_date})</div>
-									<div class="float-right">
-										${btns}
-									</div>
-								</div>
-								<div>
-									<div style="padding-left:20px; line-height: 40px;">${comment.cm_content}</div>
+						commentLayer = 'comment-layer-2';
+						reBtn = '';
+					}
+					str += `
+						<div class="comment-item ${commentLayer} " id="commentList1" data-reply="${comment.cm_reply}" data-ord="${comment.cm_ord}" data-layer="${comment.cm_layer}">
+							<div>
+								<div style="float: left; line-height: 40px;">${comment.me_id}</div>
+								<div style="line-height: 40px;">(${comment.cm_date})</div>
+								<div class="float-right">
+									${btns}
+									${reBtn}
 								</div>
 							</div>
-						`;
-					}
+							<div>
+								<div style="padding-left:20px; line-height: 40px;">${comment.cm_content}</div>
+							</div>
+							${reInput}
+						</div>
+					`;
 					$("#comment").html(str);
 				}
+				
 			}
 			
 			$("#btn_insert0").click(function name() {
 				var cm_content = $('#input-comment').val();
 				var cm_po_num = po_num;
-				var cm_replay = cm_replay;
 				var cm_ord = 0;
 				var cm_layer = 0;
 				var comment = {
@@ -236,27 +219,29 @@
 			})
 			
 			$(document).on('click', "#btn_insert1",  function() {
-				var cm_content = $('.input-comment1').val();
+				console.log(11);
+				var cm_content = $('#input-comment1').val();
 				var cm_po_num = po_num;
-				var cm_replay = cm_replay;
-				var cm_ord = 1;
+				var cm_reply = $(this).data('reply');
+				var cm_ord = $(this).data('ord');
 				var cm_layer = 1;
 				var comment = {
 						cm_content : cm_content,
 						cm_po_num : cm_po_num,
-						cm_ord : cm_ord,
+						cm_reply : cm_reply,
+						cm_ord : cm_ord + 1,
 						cm_layer : cm_layer
 					}
 				console.log(comment);
 				$.ajax({
 					async : true,
-					url : '/comment/insert', 
+					url : '/comment/insert1', 
 					type : 'post', 
 					data : JSON.stringify(comment), 
 					contentType : "application/json; charset=utf-8",
 					success : function (data){
 						if(data){
-							$('.input-comment1').val('');
+							$('#input-comment1').val('');
 						}
 					}, 
 					error : function(jqXHR, textStatus, errorThrown){
@@ -265,22 +250,23 @@
 				});
 			})
 			
-			$(document).on('click', "#btn_insert2",  function() {
-				var cm_content = $('.input-comment2').val();
+			$(document).on('click', "#btn-insert2",  function() {
+				var cm_content = $('#input-comment2').val();
 				var cm_po_num = po_num;
-				var cm_replay = cm_replay;
-				var cm_ord = 2;
+				var cm_reply = $(this).data('reply');
+				var cm_ord = $(this).data('ord');
 				var cm_layer = 2;
 				var comment = {
 						cm_content : cm_content,
 						cm_po_num : cm_po_num,
+						cm_reply : cm_reply,
 						cm_ord : cm_ord,
 						cm_layer : cm_layer
 					}
 				console.log(comment);
 				$.ajax({
 					async : true,
-					url : '/comment/insert', 
+					url : '/comment/insert2', 
 					type : 'post', 
 					data : JSON.stringify(comment), 
 					contentType : "application/json; charset=utf-8",
@@ -308,47 +294,52 @@
 				$(".commentList").toggle();
 			})
 			
-			console.log(num);
-			console.log(num1);
-			console.log(num2);
-			for (var i = 1; i <= num; i++) {
-				$(document).on('click', "#commentButton(i)",  function() {
-					$(".commentListInput(i)").toggle();
-					if (num1 > 0) {
-						for (var j = 1; j < num1; j++) {
-							$(".commentList1(i)(j)").toggle();
-						}
+			//댓글의 대댓글
+			$(document).on('click', ".btn-comment1",  function() {
+				//대댓에 layer값과 댓글 값을 지정
+				let reply = $(this).data('reply');
+				let ord = $(this).data('ord');
+				let layer = $(this).data('layer');
+				
+				$('.comment-item').each(function(){
+					let t_reply = $(this).data('reply');
+					let t_ord = $(this).data('ord');
+					let t_layer = $(this).data('layer');
+					if(t_reply != reply){
+						return;
+					}
+					if(t_ord < ord){
+						return;
+					}
+					if(t_layer != layer+1){
+						return;
+					}
+					$(this).toggle();
+				})
+				$(this).parents('.comment-item').find('.commnet-input').toggle();
+
+			})
+			
+			//대댓글의 대대댓글
+			$(document).on('click', ".btn-comment2",  function() {
+				console.log('btn1')
+				//대댓에 layer값과 댓글 값을 지정
+				let reply = $(this).data('reply');
+				let ord = $(this).data('ord');
+				let layer = $(this).data('layer');
+				let curObj = $(this).parents('.comment-item'); 
+				let nextObj = null;
+				$('.comment-item').each(function(){
+					let t_reply = $(this).data('reply');
+					let t_ord = $(this).data('ord');
+					let t_layer = $(this).data('layer');
+					if(t_reply == reply && t_layer == layer && ord < t_ord && nextObj == null){
+						nextObj = $(this);
 					}
 				})
-				if (num1 > 0) {
-						for (var j = 1; j < num1; j++) {
-							$(document).on('click', "#commentButton(i)(j)",  function() {
-								for (var k = 0; k < num3; k++) {
-									$(".commentListInput(i)(j)").toggle();
-									$(".commentList1(i)(j)(k)").toggle();
-								}
-							})
-						}
-				}
-						
-			}
-			
-			$(document).on('click', "#commentButton1",  function() {
-				$(".commentListInput1").toggle();
-				$(".commentList11").toggle();
-			})
-			$(document).on('click', "#commentButton2",  function() {
-				$(".commentListInput2").toggle();
-				$(".commentList21").toggle();
-				$(".commentList22").toggle();
-			})
-			$(document).on('click', "#commentButton21",  function() {
-				$(".commentListInput21").toggle();
-				$(".commentList211").toggle();
-			})
-			$(document).on('click', "#commentButton22",  function() {
-				$(".commentListInput22").toggle();
-				$(".commentList221").toggle();
+				curObj.nextUntil(nextObj).toggle();
+				$(this).parents('.comment-item').find('.commnet-input').toggle();
+
 			})
 			
 		</script>

@@ -14,4 +14,8 @@ public interface CommentDAO {
 
 	boolean insertComment(CommentVO comment);
 	
+	boolean insertComment1(CommentVO comment);
+	
+	boolean insertComment2(CommentVO comment);
+	
 }

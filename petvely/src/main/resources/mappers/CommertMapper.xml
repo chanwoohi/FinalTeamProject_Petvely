@@ -19,4 +19,26 @@
 			#{cm_layer}
 		from comment
 	</insert>
+	 <insert id="insertComment1">
+		insert into comment(cm_content, cm_me_num, cm_po_num, cm_reply, cm_ord, cm_layer) 
+		select 
+			#{cm_content}, 
+			#{me_num},
+			#{cm_po_num},
+			#{cm_reply},
+			ifnull(max(cm_ord), 0)+ 1 ,
+			#{cm_layer}
+		from comment 
+		where cm_reply = #{cm_reply}
+	</insert>
+	<insert id="insertComment2">
+		insert into comment(cm_content, cm_me_num, cm_po_num, cm_reply, cm_ord, cm_layer) 
+		select 
+			#{cm_content}, 
+			#{me_num},
+			#{cm_po_num},
+			#{cm_reply},
+			#{cm_ord},
+			#{cm_layer}
+	</insert>
 </mapper>

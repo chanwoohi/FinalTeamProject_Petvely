@@ -46,4 +46,20 @@ public class CommentController {
 		return commentService.insertComment(comment, user);
 	}
 	
+	@PostMapping("/comment/insert1")
+	@ResponseBody
+	public boolean insertPost1(@RequestBody CommentVO comment, @AuthenticationPrincipal CustomUser customUser) {
+		MemberVO user = customUser.getMember();
+		System.out.println(comment);
+		return commentService.insertComment1(comment, user);
+	}
+	
+	@PostMapping("/comment/insert2")
+	@ResponseBody
+	public boolean insertPost2(@RequestBody CommentVO comment, @AuthenticationPrincipal CustomUser customUser) {
+		MemberVO user = customUser.getMember();
+		System.out.println(comment);
+		return commentService.insertComment1(comment, user);
+	}
+	
 }
