@@ -9,7 +9,7 @@ DROP TABLE IF EXISTS `Member`;
 CREATE TABLE `Member` (
 	`me_num`	int primary key auto_increment	NOT NULL,
 	`me_id`	varchar(13) unique	NOT NULL,
-	`me_pw`	varchar(20)	NULL,
+	`me_pw`	varchar(255)	NULL,
 	`me_nickname`	varchar(20) unique	NULL,
 	`me_email`	varchar(50) unique	NULL,
 	`me_authority`	varchar(5)	NULL,
