@@ -169,8 +169,6 @@ public class PostController {
 	        return "redirect:/post/detail/" + po_num;
 	    }
 	}
-
-	
 	// 추천/비추천 처리
 	@PostMapping("/post/recommend")
 	public ResponseEntity<Map<String, Object>> recommend(
@@ -218,8 +216,4 @@ public class PostController {
 	        return ResponseEntity.badRequest().body(resultMap);  // 예외 발생 시 400 에러 반환
 	    }
 	}
-
-
-    
-
 }

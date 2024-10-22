@@ -78,7 +78,7 @@ VALUES (
     '$2a$10$zoIkkMbb/CH/Ey8bBC0QfuKEEha30LR.56.0/hr4/c/SjseCv3sPe', -- me_pw: 해시된 비밀번호를 사용해야 함
     '관리자', -- me_nickname: 관리자 닉네임
     'admin@example.com', -- me_email: 관리자 이메일
-    'admin', -- me_authority: 관리자 권한
+    'ADMIN', -- me_authority: 관리자 권한
     NULL, -- me_cookie: 로그인 쿠키
     NULL, -- me_limit: 로그인 제한 시간
     'local', -- me_loginType: 로그인 타입 (로컬 로그인)

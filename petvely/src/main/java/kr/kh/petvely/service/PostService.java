@@ -122,6 +122,4 @@ public class PostService {
 	public boolean physicalDeletePost(int po_num) {
 	    return postDao.deletePost(po_num);  // 실제 삭제
 	}
-
-
 }
