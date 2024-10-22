@@ -117,8 +117,7 @@ public class PostService {
 	public boolean logicalDeletePost(int po_num) {
 	    return postDao.logicalDeletePost(po_num);  // 논리적 삭제
 	}
-	
-	
+	// 게시글 물리적 삭제
 	public boolean physicalDeletePost(int po_num) {
 	    return postDao.deletePost(po_num);  // 실제 삭제
 	}
