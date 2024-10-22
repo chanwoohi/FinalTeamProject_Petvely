@@ -162,7 +162,8 @@ CREATE TABLE `Post` (
 	`po_date`	datetime	NULL default current_timestamp,
 	`po_hidden`	varchar(1)	NULL,
 	`po_viewCount`	int	NULL,
-	`po_recommendCount`	int	NULL,
+    `notRecommendCount` int NULL,
+	`recommendCount`	int	NULL,
 	`po_reportCount`	int	NULL,
 	`po_notice`	varchar(1)	NULL,
 	`po_me_num`	int	NOT NULL

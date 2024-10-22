@@ -19,7 +19,7 @@ public class PostVO {
 	
 	private String po_hidden; // 숨김여부
 	private int po_viewCount; // 조회수
-	private int po_recommendCount; // 추천수
+	//private int po_recommendCount; // 추천수
 	private int po_reportCount; // 신고수
 	private String po_notice; // 공지
 	private int po_me_num; // 작성자 ID (회원의 숫자)

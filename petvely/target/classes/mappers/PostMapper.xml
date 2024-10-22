@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.petvely.dao.PostDAO">
 	<insert id="insertPost" keyProperty="po_num" useGeneratedKeys="true">
-		INSERT into post(po_title, po_co_num, po_content, po_me_num,  po_viewCount, po_recommendCount, po_delete)
-		VALUES (#{po_title}, #{po_co_num}, #{po_content}, #{po_me_num}, #{po_viewCount}, #{po_recommendCount}, #{po_delete})
+		INSERT into post(po_title, po_co_num, po_content, po_me_num,  po_viewCount, recommendCount, notRecommendCount, po_delete)
+		VALUES (#{po_title}, #{po_co_num}, #{po_content}, #{po_me_num}, #{po_viewCount}, #{recommendCount}, #{notRecommendCount}, #{po_delete})
 	</insert>
 	
     <select id="selectPost" resultType="kr.kh.petvely.model.vo.PostVO">
-    SELECT po_num, po_title, po_content, po_date, po_hidden, po_viewCount, po_recommendCount,
+    SELECT po_num, po_title, po_content, po_date, po_hidden, po_viewCount, recommendCount, notRecommendCount,
            po_reportCount, po_notice, po_me_num, po_co_num, po_delete, me_id
     FROM post
     	 JOIN member ON po_me_num = me_num
