@@ -102,6 +102,7 @@ insert into goodstype values
 -- Animal 테이블에 반려동물 정보 추가
 INSERT INTO petvely.Animal (ani_name, ani_age, ani_gender, ani_birth, ani_weight, ani_neutralization, ani_at_type, ani_me_num)
 VALUES 
+('캥순이', 7, 'W', '2017-07-14', 8.4, 0, '캥거루', 7),
 ('캥돌이', 7, 'M', '2017-07-14', 8.4, 0, '캥거루', 6),
 ('냥돌이', 7, 'M', '2017-07-14', 8.4, 0, '고양이', 6),
 ('람돌이', 7, 'M', '2017-07-14', 8.4, 0, '다람쥐', 6),

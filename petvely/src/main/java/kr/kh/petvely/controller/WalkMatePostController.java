@@ -71,7 +71,9 @@ public class WalkMatePostController {
 	
 	@GetMapping("/walkmatepost/detail/{po_num}")
 	public String walkmatepostDetail(Model model, 
-									@PathVariable int po_num, AnimalVO animal) {
+									@PathVariable int po_num, 
+									AnimalVO animal, 
+									@AuthenticationPrincipal CustomUser customUser) {
 		System.out.println("po_num : " + po_num);
 		//조회수 증가
 		postService.updateView(po_num);
@@ -82,19 +84,29 @@ public class WalkMatePostController {
 		List<AnimalVO> detailPetList = animalService.selectDetailPetList(po_num);
 		model.addAttribute("detailPetList", detailPetList);
 		
-		// 로그인 기능 구현 완료 하면 me_num 서버에서 로그인 되어있는 아이디 가져오면 됨
-		animal.setAni_me_num(3);
-		List<AnimalVO> petList = animalService.selectPetList(animal);
-		System.out.println(petList);
-		model.addAttribute("petList", petList);
+		if(customUser != null) {
+			// 로그인 기능 구현 완료 하면 me_num 서버에서 로그인 되어있는 아이디 가져오면 됨
+			MemberVO user = customUser.getMember();
+			
+			animal.setAni_me_num(user.getMe_num());
+			
+			List<AnimalVO> petList = animalService.selectPetList(animal);
+			System.out.println(petList);
+			model.addAttribute("petList", petList);
+		}
 		
-		// 로그인 도입되면 바꿔야함
-		int bm_me_num = 3;
-		
-		Integer bookmark = postService.selectBookmark(bm_me_num, po_num);
-		if (bookmark != null) {
-			System.out.println("bookmark : " + bookmark);
-			model.addAttribute("bookmark", bookmark);
+		if(customUser != null) {
+			// 로그인 도입 후 변경 완료!
+			MemberVO user = customUser.getMember();
+			
+			int bm_me_num = user.getMe_num();
+			
+			Integer bookmark = postService.selectBookmark(bm_me_num, po_num);
+			if (bookmark != null) {
+				System.out.println("bookmark : " + bookmark);
+				model.addAttribute("bookmark", bookmark);
+			}
+			
 		}
 		
 		model.addAttribute("po_num", po_num);
@@ -114,9 +126,10 @@ public class WalkMatePostController {
 	public String walkmatepostDetailPost(Model model,
 										WalkMatePostVO walkMatePost,
 										@PathVariable int po_num,
-            							int [] selectedUserAniNums) {
-		
-		if(walkMatePostService.insertWalkMateMember(walkMatePost, selectedUserAniNums)) {
+            							int [] selectedUserAniNums,
+										@AuthenticationPrincipal CustomUser customUser) {
+		System.out.println("숫자배열? : "+selectedUserAniNums);
+		if(walkMatePostService.insertWalkMateMember(walkMatePost, selectedUserAniNums, customUser)) {
 			List<WalkMateMemberVO> walkMateMemberList = walkMatePostService.selectWalkMateMember(po_num);
 			
 			System.out.println("walkMateMemberList : " + walkMateMemberList);
