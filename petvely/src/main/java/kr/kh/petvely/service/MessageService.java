@@ -17,9 +17,9 @@ public class MessageService {
 	@Autowired
 	MessageDAO messageDao;
 	
-	public List<MessageVO> getMessageList(int mes_num) {
+	public List<MessageVO> getMessageList(int me_num) {
 
-		return messageDao.selectMessages(mes_num);
+		return messageDao.selectMessages(me_num);
 	}
 	public List<MemberVO> getMemberIds(int senderNum) {
 		
@@ -55,6 +55,10 @@ public class MessageService {
 			return false;
 		}
 	
+	}
+	public MessageVO getMessageDetail(int mes_num) {
+			
+		return messageDao.selectMessageDetail(mes_num);
 	}
 
 

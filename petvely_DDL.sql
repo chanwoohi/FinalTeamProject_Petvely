@@ -455,15 +455,7 @@ ADD CONSTRAINT `fk_Dibs_post`
   ON DELETE CASCADE
   ON UPDATE CASCADE;
 
-ALTER TABLE `Message`
-ADD COLUMN `mes_po_num` INT NOT NULL;
 
-ALTER TABLE `Message`
-ADD CONSTRAINT `fk_Message_post`
-  FOREIGN KEY (`mes_po_num`)
-  REFERENCES `Post` (`po_num`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
 
 ALTER TABLE `WalkMateMember`
 ADD CONSTRAINT `fk_WalkMateMember_post`

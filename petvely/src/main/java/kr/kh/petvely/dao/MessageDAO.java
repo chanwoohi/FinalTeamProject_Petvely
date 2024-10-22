@@ -11,7 +11,7 @@ public interface MessageDAO {
 
 	boolean insertMessage(MessageVO message);
 
-	List<MessageVO> selectMessages(int mes_num);
+	List<MessageVO> selectMessages(int me_num);
 
 	List<MemberVO> selectMemberIds(int senderNum);
 
@@ -22,6 +22,8 @@ public interface MessageDAO {
 	PostVO selectPostUserNum(int po_num);
 
 	boolean insertMarketMessage(MessageVO message);
+
+	MessageVO selectMessageDetail(int mes_num);
 
 
 

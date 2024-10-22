@@ -9,7 +9,7 @@
 </head>
 <body>
     <main layout:fragment="content">
-        <form th:action="@{/message/marketmessagesend}" method="post">
+        <form th:action="@{/message/send}" method="post">
             <input type="hidden" name="mes_num" th:value="${mes_num}"/>
 			
             <div class="form-group">

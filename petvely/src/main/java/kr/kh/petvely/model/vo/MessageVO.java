@@ -14,4 +14,5 @@ public class MessageVO {
 	private int mes_me_receiverNum;
 	private int mes_me_senderNum;
 	private String mes_readingCheck;
+	private String me_id;
 }
