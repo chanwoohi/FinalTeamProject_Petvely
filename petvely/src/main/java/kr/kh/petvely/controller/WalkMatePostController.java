@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import jakarta.servlet.http.HttpSession;
 import kr.kh.petvely.model.vo.AnimalVO;
+import kr.kh.petvely.model.vo.MemberVO;
 import kr.kh.petvely.model.vo.WalkMateMemberVO;
 import kr.kh.petvely.model.vo.WalkMatePostVO;
 import kr.kh.petvely.service.AnimalService;
@@ -39,13 +41,26 @@ public class WalkMatePostController {
 	}
 	
 	@GetMapping("/walkmatepost/insert")
-	public String walkmatepostInsert(Model model, AnimalVO animal) {
-		// 로그인 기능 구현 완료 하면 me_num 서버에서 로그인 되어있는 아이디 가져오면 됨
-		animal.setAni_me_num(2);
-		List<AnimalVO> petList = animalService.selectPetList(animal);
-		System.out.println(petList);
-		model.addAttribute("petList", petList);
-		return "/walkmatepost/insert";
+	public String walkmatepostInsert(Model model, AnimalVO animal, HttpSession session) {
+	    // 세션에서 로그인된 사용자의 정보 가져오기
+	    MemberVO loggedInUser = (MemberVO)session.getAttribute("user");
+	    System.out.println("얘가 null이라는 거야??? : " + loggedInUser);
+	    
+	    
+	    if (loggedInUser != null) {
+	        // 로그인된 사용자 정보에서 me_num 가져와서 설정
+	        animal.setAni_me_num(loggedInUser.getMe_num());
+
+	        // 사용자의 애완동물 리스트를 가져옴
+	        List<AnimalVO> petList = animalService.selectPetList(animal);
+	        System.out.println(petList);
+	        model.addAttribute("petList", petList);
+	    } else {
+	        // 로그인되지 않은 경우 처리 (예: 로그인 페이지로 리다이렉트)
+	        return "redirect:/member/login";
+	    }
+
+	    return "/walkmatepost/insert";
 	}
 	
 	@PostMapping("/walkmatepost/insert")
