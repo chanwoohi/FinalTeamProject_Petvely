@@ -137,18 +137,18 @@ public class WalkMatePostController {
 		return "redirect:/walkmatepost/detail/"+po_num;
 	}
 	
-	@GetMapping("/walkmatepost/delete/{po_num}")
-	public String walkmatepostDelete(Model model, @PathVariable int po_num) {
-		/*
-		 * postService에 맡긴 이유는 삭제 했을 때 DB에서 CASCADE 설정하면 어차피 같이 지워짐 ( po_num 공유라 상관 없나? )
-		 * 상관 있는데 mysql 자체에서 설정해서 같이 삭제 시키게 했음
-		 * 작동하면 다른 게시판에서 쓸 수 있으니까 postService로 보냄	
-		*/ 
-		
-		if(postService.deletePost(po_num)) {
-			return "redirect:/walkmatepost/list";
-		}
-		return "redirect:/walkmatepost/detail/"+po_num;
-	}
+//	@GetMapping("/walkmatepost/delete/{po_num}")
+//	public String walkmatepostDelete(Model model, @PathVariable int po_num) {
+//		/*
+//		 * postService에 맡긴 이유는 삭제 했을 때 DB에서 CASCADE 설정하면 어차피 같이 지워짐 ( po_num 공유라 상관 없나? )
+//		 * 상관 있는데 mysql 자체에서 설정해서 같이 삭제 시키게 했음
+//		 * 작동하면 다른 게시판에서 쓸 수 있으니까 postService로 보냄	
+//		*/ 
+//		
+//		if(postService.deletePost(po_num)) {
+//			return "redirect:/walkmatepost/list";
+//		}
+//		return "redirect:/walkmatepost/detail/"+po_num;
+//	}
 	
 }
