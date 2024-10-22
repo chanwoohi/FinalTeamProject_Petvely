@@ -137,9 +137,7 @@
 			
 			<!-- 나중에 펫 등록 안돼 있으면 등록 못하게 추가할 예정  -->
 			<button class="btn btn-outline-info col-12" id="submitBtn" >게시글 등록</button>
-			<div id="selectedPets">
-				
-			</div>
+			<input type="hidden" id="selectedPets" name="selectedPets" value="">
 		</form>
 		<a class="btn btn-outline-info" th:href="@{/walkmatepost/list}">목록으로</a>
 		
@@ -241,6 +239,19 @@
 
 		            tbody.appendChild(newRow);
 		        });
+		    });
+		    // 펫 등록을 안하면, 게시글 등록이 안되게 막는 jQuery
+		    document.querySelector('.btn-outline-info.col-12').addEventListener('click', function(event) {
+		        // 체크된 체크박스 확인
+		        const checkedBoxes = document.querySelectorAll('input[name="check"]:checked');
+
+		        // 체크된 체크박스가 없으면 경고창 표시하고 폼 제출 중단
+		        if (checkedBoxes.length === 0) {
+		            alert("펫 등록을 해야 게시글 등록이 가능합니다.");
+		            event.preventDefault(); // 폼 제출 중단
+		        } else {
+		            document.querySelector('form').submit(); // 체크된 경우 폼 제출
+		        }
 		    });
 		    
 		    document.querySelector('.btn-outline-info.col-12').addEventListener('click', function() {

@@ -3,13 +3,16 @@ package kr.kh.petvely.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import kr.kh.petvely.model.user.CustomUser;
 import kr.kh.petvely.model.vo.AnimalVO;
+import kr.kh.petvely.model.vo.MemberVO;
 import kr.kh.petvely.model.vo.WalkMateMemberVO;
 import kr.kh.petvely.model.vo.WalkMatePostVO;
 import kr.kh.petvely.service.AnimalService;
@@ -39,12 +42,20 @@ public class WalkMatePostController {
 	}
 	
 	@GetMapping("/walkmatepost/insert")
-	public String walkmatepostInsert(Model model, AnimalVO animal) {
-		// 로그인 기능 구현 완료 하면 me_num 서버에서 로그인 되어있는 아이디 가져오면 됨
-		animal.setAni_me_num(2);
-		List<AnimalVO> petList = animalService.selectPetList(animal);
-		System.out.println(petList);
-		model.addAttribute("petList", petList);
+	public String walkmatepostInsert(Model model, AnimalVO animal,
+			@AuthenticationPrincipal CustomUser customUser) {
+		
+		if(customUser != null) {
+			MemberVO user = customUser.getMember();
+			System.out.println(user.getMe_id() + user.getMe_num());
+			animal.setAni_me_num(user.getMe_num());
+			
+			List<AnimalVO> petList = animalService.selectPetList(animal);
+			System.out.println(petList);
+			
+			model.addAttribute("petList", petList);
+			
+		}
 		return "/walkmatepost/insert";
 	}
 	
