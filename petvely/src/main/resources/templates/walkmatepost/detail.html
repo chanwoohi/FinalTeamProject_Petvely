@@ -8,37 +8,282 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<main layout:fragment="content">
-		<div th:object="${walkMatePost}">
-			<div class="form-group">
-				<label>제목</label>
-				<input type="text" class="form-control" th:field="*{po_title}" readonly>
-			</div>
-			
-			<!-- 로그인 기능 미구현으로 작성자 직접 입력해야함... 추후 수정 -->
-			<div class="form-group">
+	<main layout:fragment="content" id="main">
+		<form method="post" th:action="@{/walkmatepost/detail/{po_num}(po_num=*{po_num})}">
+			<div th:object="${walkMatePost}">
+				<div class="form-group">
+					<label>제목</label>
+					<input type="text" class="form-control" th:field="*{po_title}" readonly>
+				</div>
+				
+				<!-- 로그인 기능 미구현으로 작성자 직접 입력해야함... 추후 수정 -->
+				<div class="form-group">
+					<label>작성자</label>
+					<input type="text" class="form-control" th:field="*{me_id}" readonly>
+				</div>
+				
+				<!-- 추후에 달력 api 추가 예정 -->
+				<div class="form-group">
+					<label>날짜</label>
+					<input type="text" class="form-control" th:field="*{wm_date}" readonly>
+				</div>
+				<div class="form-group">
+					<label>시간</label>
+					<input type="text" class="form-control" th:field="*{wm_time}" readonly>
+				</div>
+				<div class="form-group">
+					<label>내용</label>
+					<textarea class="form-control" style="min-height: 400px; height: auto;" th:utext="*{po_content}" readonly>
+					</textarea>
+				</div>
+				<div>
 				<label>작성자</label>
-				<input type="text" class="form-control" th:field="*{me_id}" readonly>
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>이름</th>
+								<th>나이</th>
+								<th>성별</th>
+								<th>중성화 여부</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="item : ${detailPetList}">
+								<td th:text="${item.ani_name}"></td>
+								<td th:text="${item.ani_age}"></td>
+								<td th:text="${item.ani_gender}"></td>
+								<td th:text="${item.ani_neutralization}"></td>
+							</tr>
+						</tbody>
+					</table>
+					<br>
+					<label>신청자</label>
+					<table class="table table-striped" id="myTable">
+						<thead>
+							<tr>
+								<th>이름</th>
+								<th>나이</th>
+								<th>성별</th>
+								<th>중성화 여부</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="item : ${choicePetList}">
+								<td th:text="${item.ani_name}"></td>
+								<td th:text="${item.ani_age}"></td>
+								<td th:text="${item.ani_gender}"></td>
+								<td th:text="${item.ani_neutralization}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!-- The Modal -->
+				<div class="modal" id="myModal">
+					<div class="modal-dialog">
+						<div class="modal-content">
+						
+							<!-- Modal Header -->
+							<div class="modal-header">
+								<h4 class="modal-title">내 펫 등록하기</h4>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+							
+							<!-- Modal body -->
+							<div class="modal-body">
+								산책할 펫을 등록하시겠습니까?
+							</div>
+							
+							<!-- Modal footer -->
+							<div class="modal-footer">
+								<button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#myModal2">수락</button>
+								<button type="button" class="btn btn-outline-danger" data-dismiss="modal">거절</button>
+							</div>
+						
+						</div>
+					</div>
+				</div>
+				<div class="modal" id="myModal2">
+					<div class="modal-dialog">
+						<div class="modal-content">
+						
+							<!-- Modal Header -->
+							<div class="modal-header">
+								<h4 class="modal-title">산책 메이트 펫 등록하기</h4>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+							
+							<!-- Modal body -->
+							<div>
+								<div class="modal-body">
+									<table class="table table-striped">
+										<thead>
+											<tr>
+												<th>선택</th>
+												<th>이름</th>
+												<th>나이</th>
+												<th>성별</th>
+												<th>중성화 여부</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="item : ${petList}">
+												<td>
+													<input type="checkbox" name="check" value="선택" th:value="${item.ani_num}"/>
+												</td>
+												<td th:text="${item.ani_name}"></td>
+												<td th:text="${item.ani_age}"></td>
+												<td th:text="${item.ani_gender}"></td>
+												<td th:text="${item.ani_neutralization}"></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<br>
+								
+								<!-- Modal footer -->
+								<div class="modal-footer">
+									<button name="petEnroll" class="btn btn-outline-info" >산책 메이트 펫 등록하기</button>
+									<button type="button" class="btn btn-outline-danger" data-dismiss="modal">닫기</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal" id="myModal3">
+					<div class="modal-dialog">
+						<div class="modal-content">
+						
+							<!-- Modal Header -->
+							<div class="modal-header">
+								<h4 class="modal-title">산책 메이트 펫 등록하기</h4>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+							<!-- Modal body -->
+							<div>
+								<div class="modal-body">
+			                        <table class="table table-striped">
+			                            <thead>
+			                                <tr>
+			                                    <th>선택</th>
+			                                    <th>아이디</th>
+			                                    <th>이름</th>
+			                                    <th>나이</th>
+			                                    <th>성별</th>
+			                                    <th>중성화 여부</th>
+			                                </tr>
+			                            </thead>
+			                            <tbody>
+			                                <tr th:each="item : ${walkMateMember}">
+			                                    <td>
+			                                         <input type="checkbox" name="selectedMembers" th:value="${item.ani_num}" />
+			                                    </td>
+			                                    <td th:text="${item.me_id}"></td>
+			                                    <td th:text="${item.ani_name}"></td>
+			                                    <td th:text="${item.ani_age}"></td>
+			                                    <td th:text="${item.ani_gender}"></td>
+			                                    <td th:text="${item.ani_neutralization}"></td>
+			                                </tr>
+			                            </tbody>
+			                        </table>
+			                        
+			                        <!-- Modal footer with submit button -->
+			                        <div class="modal-footer">
+			                            <button id="approveButton" class="btn btn-outline-info">산책 메이트 수락하기</button>
+			                            <button type="button" class="btn btn-outline-danger" data-dismiss="modal">닫기</button>
+			                        </div>
+				                 </div>   
+							</div>
+						</div>
+					</div>
+				</div>
+				<a class="btn btn-outline-warning" th:href="@{/post/bookmark/{po_num}(po_num=*{po_num})}" >즐겨찾기⭐</a>
+				<br>
+				<!-- 신청자 전용 -->
+				<a class="btn btn-outline-info" data-toggle="modal" data-target="#myModal">산책 메이트 신청하기</a>
+				<br>
+				<!-- 글 작성자 전용 -->
+				<a class="btn btn-outline-info" data-toggle="modal" data-target="#myModal3">산책 메이트 수락하기</a>
+				<!-- 로그인 기능 구현 완료되면 작성자만 보이게 수정할 것 -->
+				<a class="btn btn-outline-primary" th:href="@{/walkmatepost/update/{po_num}(po_num=*{po_num})}">수정</a>
+				<a class="btn btn-outline-warning" th:href="@{/walkmatepost/delete/{po_num}(po_num=*{po_num})}">삭제</a>
+				
+				<div id="selectedPets"></div> <!-- selectedPets를 출력할 요소 추가 -->
 			</div>
-			
-			<!-- 추후에 달력 api 추가 예정 -->
-			<div class="form-group">
-				<label>날짜</label>
-				<input type="text" class="form-control" th:field="*{wm_date}" readonly>
-			</div>
-			<div class="form-group">
-				<label>시간</label>
-				<input type="text" class="form-control" th:field="*{wm_time}" readonly>
-			</div>
-			<div class="form-group">
-				<label>내용</label>
-				<textarea class="form-control" style="min-height: 400px; height: auto;" th:utext="*{po_content}" readonly>
-				</textarea>
-			</div>
-			<!-- 로그인 기능 구현 완료되면 작성자만 보이게 수정할 것 -->
-			<a class="btn btn-outline-primary" th:href="@{/walkmatepost/update/{po_num}(po_num=*{po_num})}">수정</a>
-			<a class="btn btn-outline-warning" th:href="@{/walkmatepost/delete/{po_num}(po_num=*{po_num})}">삭제</a>
-		</div>
+		</form>
+	<script>
+		// myModal2를 열 때 myModal을 닫는 함수
+	    $('#myModal2').on('show.bs.modal', function () {
+	        $('#myModal').modal('hide');
+	    });
+		
+		
+	    // 페이지 로드가 완료된 후에 스크립트를 실행하도록 설정
+	    document.addEventListener('DOMContentLoaded', function() {
+	        const petEnrollButton = document.querySelector('button[name="petEnroll"]');
+	
+	        if (petEnrollButton) {
+	            petEnrollButton.addEventListener('click', function(event) {
+	                const checkedBoxes = document.querySelectorAll('input[name="check"]:checked');
+	                
+	                let selectedUserAniNums = [];
+	                const selectedPetsEl = document.querySelector('#selectedPets');
+	                selectedPetsEl.innerHTML = '';
+	                let str = '';
+	                
+	                checkedBoxes.forEach(function(checkbox) {
+	                    let aniNum = checkbox.value;  // 체크된 체크박스의 value가 ani_num
+	                    let petData = {
+	                        phsp_po_num: null,
+	                        phsp_ani_num: aniNum
+	                    };
+	                    console.log(aniNum);
+	                    selectedUserAniNums.push(petData);  // 객체 배열에 추가
+	                    str += `<input type="text" name="selectedUserAniNums" value="${aniNum}"/>`;
+	                });
+	                
+	                selectedPetsEl.innerHTML = str;
+	                console.log(JSON.stringify(selectedUserAniNums));
+	                
+	                let selectedPets = [];
+	                checkedBoxes.forEach(function(checkbox) {
+	                    let row = checkbox.closest('tr');
+	                    let petData = {
+	                        name: row.querySelector('td:nth-child(2)').innerText,
+	                        age: row.querySelector('td:nth-child(3)').innerText,
+	                        gender: row.querySelector('td:nth-child(4)').innerText,
+	                        neutralization: row.querySelector('td:nth-child(5)').innerText
+	                    };
+	                    selectedPets.push(petData);
+	                });
+	                
+	                const hiddenInput = document.createElement('input');
+	                hiddenInput.type = 'hidden';
+	                hiddenInput.name = 'selectedPets';
+	                hiddenInput.value = JSON.stringify(selectedPets);
+	                document.querySelector('#main').appendChild(hiddenInput);
+	                
+	                console.log(selectedPets);
+	                
+	                const tbody = document.querySelector('#myTable tbody');
+	                if (tbody) {
+	                    tbody.innerHTML = '';  // 기존 내용 초기화
+	                    selectedPets.forEach(function(pet) {
+	                        const newRow = document.createElement('tr');
+	                        newRow.innerHTML = `
+	                            <td>${pet.name}</td>
+	                            <td>${pet.age}</td>
+	                            <td>${pet.gender}</td>
+	                            <td>${pet.neutralization}</td>
+	                        `;
+	                        tbody.appendChild(newRow);
+	                    });
+	                } else {
+	                    console.error('#myTable tbody not found');
+	                }
+	            });
+	        }
+	    });
+	</script>
 	</main>
 </body>
 </html>

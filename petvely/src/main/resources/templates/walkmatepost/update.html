@@ -38,13 +38,204 @@
 						th:field는 name이 필요 없는 반면, th:utext는 name을 따로 설정해야 함.
 						나중에 섬머노트 쓰게되면 th:utext를 고려 해야하는데 그 때 참고
 				  	-->
-					<textarea class="form-control" style="min-height: 400px; height: auto;" th:field="*{po_content}">
-					</textarea>
+					<textarea class="form-control" style="min-height: 400px; height: auto;" th:field="*{po_content}"></textarea>
 				</div>
-				<button class="btn btn-outline-info col-12">게시글 수정</button>
+				<div>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>이름</th>
+							<th>나이</th>
+							<th>성별</th>
+							<th>중성화 여부</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+				내 펫 등록하기
+			</button>
+			
+			<!-- The Modal (부트스트랩4 고마워) -->
+			<div class="modal" id="myModal">
+				<div class="modal-dialog">
+					<div class="modal-content">
+					
+						<!-- Modal Header -->
+						<div class="modal-header">
+							<h4 class="modal-title">내 펫 등록하기</h4>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+						
+						<!-- Modal body -->
+						<div class="modal-body">
+							산책할 펫을 등록하시겠습니까?
+						</div>
+						
+						<!-- Modal footer -->
+						<div class="modal-footer">
+							<button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#myModal2">수락</button>
+							<button type="button" class="btn btn-outline-danger" data-dismiss="modal">거절</button>
+						</div>
+					
+					</div>
+				</div>
+			</div>
+			
+			<div class="modal" id="myModal2">
+				<div class="modal-dialog">
+					<div class="modal-content">
+					
+						<!-- Modal Header -->
+						<div class="modal-header">
+							<h4 class="modal-title">내 펫 등록하기</h4>
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+						
+						<!-- Modal body -->
+						<div>
+							<div class="modal-body">
+								<table class="table table-striped">
+									<thead>
+										<tr>
+											<th>선택</th>
+											<th>이름</th>
+											<th>나이</th>
+											<th>성별</th>
+											<th>중성화 여부</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="item : ${petList}">
+											<td>
+												<input type="checkbox" name="check" value="선택" th:value="${item.ani_num}"/>
+											</td>
+											<td th:text="${item.ani_name}"></td>
+											<td th:text="${item.ani_age}"></td>
+											<td th:text="${item.ani_gender}"></td>
+											<td th:text="${item.ani_neutralization}"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						
+							<!-- Modal footer -->
+							<div class="modal-footer">
+								<button name="petEnroll" class="btn btn-outline-info" data-dismiss="modal">내 펫 등록</button>
+								<button type="button" class="btn btn-outline-danger" data-dismiss="modal">닫기</button>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			
+			<!-- 나중에 펫 등록 안돼 있으면 등록 못하게 추가할 예정  -->
+			<button class="btn btn-outline-info col-12" id="submitBtn" >게시글 등록</button>
+			<div id="selectedPets">
+				
+			</div>
 			</form>
 		</th:block>
 		<a class="btn btn-outline-info" th:href="@{/walkmatepost/list}">목록으로</a>
+		<script>
+		    // myModal2를 열 때 myModal을 닫는 함수
+		    $('#myModal2').on('show.bs.modal', function () {
+		        $('#myModal').modal('hide');
+		    });
+		    
+		    document.querySelector('button[name="petEnroll"]').addEventListener('click', function(event) {
+		        event.preventDefault(); // 기본 폼 제출 방지 : 얘 없으면 펫 등록하기 눌렀을 때 게시글 전송됨;;;
+
+		        const checkedBoxes = document.querySelectorAll('input[name="check"]:checked');
+		        
+		        let selectedHostAniNums = [];
+				const selectedPetsEl = document.querySelector('#selectedPets');
+				selectedPetsEl.innerHTML = '';
+				var str = '';
+		    	// 체크된 항목의 ani_num 값 추출
+		        checkedBoxes.forEach(function(checkbox) {
+		            let aniNum = checkbox.value;  // 체크된 체크박스의 value가 ani_num
+		            
+		            // PostHostSelectedPetsVO 객체 생성
+		            let petData = {
+		                phsp_po_num: null, // 서버에서 자동 생성하므로 null 또는 아예 생략 가능
+		                phsp_ani_num: aniNum
+		            };
+					console.log(aniNum)
+		            selectedHostAniNums.push(petData); // 객체를 배열에 추가
+		            str += `<input type="text" name="selectedHostAniNums" value="${aniNum}"/>`;
+		        });
+		        selectedPetsEl.innerHTML = str;
+		       
+		        console.log(JSON.stringify(selectedHostAniNums));
+		        
+		        console.log(selectedHostAniNums);
+		        
+		        let selectedPets = [];
+
+		        //배열에 저장
+		        checkedBoxes.forEach(function(checkbox) {
+		            let row = checkbox.closest('tr');
+		            let petData = {
+		                name: row.querySelector('td:nth-child(2)').innerText,
+		                age: row.querySelector('td:nth-child(3)').innerText,
+		                gender: row.querySelector('td:nth-child(4)').innerText,
+		                neutralization: row.querySelector('td:nth-child(5)').innerText
+		            };
+		            selectedPets.push(petData);
+		        });
+
+		        // 배열을 JSON 형태로 변환하여 hidden input에 추가
+		        const hiddenInput = document.createElement('input');
+		        hiddenInput.type = 'hidden';
+		        hiddenInput.name = 'selectedPets';
+		        hiddenInput.value = JSON.stringify(selectedPets);
+		        document.querySelector('form').appendChild(hiddenInput);
+				
+		        console.log(selectedPets);
+		        
+		     	// 테이블에 데이터를 동적으로 추가
+		        const tbody = document.querySelector('tbody'); 
+		        tbody.innerHTML = '';  // 기존 내용 초기화
+
+		        selectedPets.forEach(function(pet) {
+		            const newRow = document.createElement('tr');
+
+		            const nameCell = document.createElement('td');
+		            nameCell.innerText = pet.name;
+
+		            const ageCell = document.createElement('td');
+		            ageCell.innerText = pet.age;
+
+		            const genderCell = document.createElement('td');
+		            genderCell.innerText = pet.gender;
+
+		            const neutralizationCell = document.createElement('td');
+		            neutralizationCell.innerText = pet.neutralization;
+		            
+		            newRow.appendChild(nameCell);
+		            newRow.appendChild(ageCell);
+		            newRow.appendChild(genderCell);
+		            newRow.appendChild(neutralizationCell);
+
+		            tbody.appendChild(newRow);
+		        });
+		    });
+		    
+		    document.querySelector('.btn-outline-info.col-12').addEventListener('click', function() {
+		        document.querySelector('form').submit();  // 폼 제출 : 기본 폼 제출 방지 때문에 직접 밑에 적어주기~
+		    });
+		</script>
 	</main>
 </body>
 </html>

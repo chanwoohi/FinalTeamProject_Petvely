@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout.html}">
+	
+<head layout:fragment="head">
+	<head th:replace="~{ui/member/login.html :: head}"></head>
+</head>
+<body>
+	<main layout:fragment="content">
+		<form method="post" th:action="@{/member/login}">
+	   		<div th:replace="~{ui/member/login.html :: body}"></div>
+	   		
+			<button class="btn btn-outline-info col-12">로그인</button>	    
+		</form>
+    </main>
+</body>
+</html>

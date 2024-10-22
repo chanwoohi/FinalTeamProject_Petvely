@@ -1,7 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.kh.petvely.dao.MemberDAO">
-	<select id="selectMember" resultType="MemberVO">
-		select * from member where me_id = #{id}
+<mapper namespace="kr.kh.petvely.dao.member.MemberDAO">
+	<select id="checkRedundancy" resultType="boolean">
+		select IF(COUNT(*) = 1, 1, 0)
+		from member 
+		<choose>
+			<when test="type == 'id'">
+				where me_id = #{value}
+			</when>
+			<when test="type == 'nickname'">
+				where me_nickname = #{value}
+			</when>
+			<when test="type == 'phone'">
+				where me_phone = #{value}
+			</when>
+		</choose>
 	</select>
+	
+	<select id="selectMember" resultType="MemberVO">
+		select *
+		from member
+		where me_id = #{me_id}
+	</select>
+	
+	<insert id="insertMember">
+		insert into member(me_id, me_pw, me_nickname, me_email, me_phone, me_ms_status)
+		values
+		(#{me_id}, #{me_pw}, #{me_nickname}, #{me_email}, #{me_phone}, #{me_ms_status})
+		
+<!-- 		select #{me_id}, #{me_pw}, #{me_nickname}, #{me_email}, #{me_phone}, #{me_ms_status}
+		where exists(
+			select ms_status
+			from memberstatus
+			where ms_status = #{me_ms_status}
+		) -->
+	</insert>
 </mapper>
