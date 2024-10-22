@@ -45,7 +45,7 @@ public class MemberService {
 	}
 
 	public MemberVO login(MemberVO memberVO) {
-		if (memberVO == null)
+		if (memberVO == null) 
 			return null;
 		
 		MemberVO selectedVO = memberDao.selectMember(memberVO.getMe_id());
