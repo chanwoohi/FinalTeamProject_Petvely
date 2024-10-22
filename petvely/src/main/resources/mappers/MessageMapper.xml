@@ -11,6 +11,7 @@
     <select id="selectMemberIds" resultType="MemberVO">
     	select * from member where me_id = #{senderNum}
     </select>
+    
     <insert id="insertMessage" parameterType="MessageVO">
         insert 
         	into
@@ -28,8 +29,14 @@
         select me_num from member where me_id = #{senderId}
     </select>
     
-    <select id="selectMarketPostUserId" resultType="Integer">
-    	select * from marketpost where po_me_num = #{postUser}
-    </select>
+	<select id="selectPostUserNum" resultType="PostVO">
+		select * from post where po_num = #{po_num}
+	</select>
+	
+	<insert id="insertMarketMessage" parameterType="MessageVO">
+		insert into message (mes_me_senderNum, mes_me_receiverNum,mes_content, mes_date)
+			values(#{mes_me_senderNum}, #{mes_me_receiverNum}, #{mes_content}, now())
+	</insert>
 
+	
 </mapper>

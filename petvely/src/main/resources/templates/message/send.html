@@ -9,8 +9,8 @@
 </head>
 <body>
     <main layout:fragment="content">
-        <form th:action="@{/message/send}" method="post">
-            <input type="hidden" name="mes_num" th:value="${me_num}"/>
+        <form th:action="@{/message/marketmessagesend}" method="post">
+            <input type="hidden" name="mes_num" th:value="${mes_num}"/>
 			
             <div class="form-group">
                 <label for="receiverNum">받는 이:</label>

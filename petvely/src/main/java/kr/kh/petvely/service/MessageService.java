@@ -9,6 +9,7 @@ import kr.kh.petvely.dao.MessageDAO;
 import kr.kh.petvely.model.vo.MarketPostVO;
 import kr.kh.petvely.model.vo.MemberVO;
 import kr.kh.petvely.model.vo.MessageVO;
+import kr.kh.petvely.model.vo.PostVO;
 
 @Service
 public class MessageService {
@@ -40,8 +41,25 @@ public class MessageService {
 		return messageDao.selectsenderId(senderId);
 	}
 	
-	public MarketPostVO getMarketPostUserId() {
-
-		return messageDao.selectMarketPostUserId();
+	
+	public PostVO getPostUserNum(int po_num) {
+		
+		return messageDao.selectPostUserNum(po_num);
 	}
+	public boolean MarketMessageSend(MessageVO message) {
+		try {
+			messageDao.insertMarketMessage(message);
+			return true;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	
+	}
+
+
+
+
+
+
 }

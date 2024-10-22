@@ -15,7 +15,7 @@
     </header>
     <main layout:fragment="content">
         <div class="text" 
-   th:each="item : ${messages}" 
+   th:each="item : ${messages}"
    th:text="${item.mes_content}" ></div>
    <a th:href="@{/message/send/0}">쪽지 보내기</a>
     </main>

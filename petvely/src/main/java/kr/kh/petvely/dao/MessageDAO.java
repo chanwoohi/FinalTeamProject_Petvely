@@ -5,6 +5,7 @@ import java.util.List;
 import kr.kh.petvely.model.vo.MarketPostVO;
 import kr.kh.petvely.model.vo.MemberVO;
 import kr.kh.petvely.model.vo.MessageVO;
+import kr.kh.petvely.model.vo.PostVO;
 
 public interface MessageDAO {
 
@@ -18,9 +19,12 @@ public interface MessageDAO {
 
 	Integer selectsenderId(String senderId);
 
-	List<MarketPostVO> selectPostUserId(Integer postUser);
+	PostVO selectPostUserNum(int po_num);
 
-	MarketPostVO selectMarketPostUserId();
+	boolean insertMarketMessage(MessageVO message);
+
+
+
 
 
 	

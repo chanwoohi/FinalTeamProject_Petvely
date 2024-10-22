@@ -47,10 +47,6 @@ public class MessageController {
     		message.setMes_me_receiverNum(receiverNum);
     		message.setMes_content(content);
     		boolean res = messageService.sendMessage(message);
-    		System.out.println(senderNum);
-    		System.out.println(receiverNum);
-    		System.out.println(content);
-    		System.out.println(message);
     		model.addAttribute("senderNum",senderNum);
     		model.addAttribute("receiverNum",receiverNum);
     		
@@ -62,25 +58,44 @@ public class MessageController {
     	return "/message/send";
     }
     @GetMapping("/message/send/{senderNum}")
-    public String messageSend(Model model, 
+    public String messageSend( Model model, 
                                @PathVariable int senderNum) {
         List<MemberVO> senderId = messageService.getMemberIds(senderNum);
         model.addAttribute("senderId", senderId);
-        return "/message/send";
+        return "message/send";
+    }
+    @GetMapping("/message/marketmessagesend/{po_num}")
+    public String MarketMessage(Model model, @PathVariable int po_num) {
+    	
+    	PostVO post = messageService.getPostUserNum(po_num);
+    	model.addAttribute("post",post);
+
+        return "message/marketmessagesend"; 
     }
     
-    @GetMapping("/message/marketmessagesend/{postId}")
-    public String marketMessageSend(Model model, @PathVariable int postId ) {
-    	MarketPostVO post = messageService.getMarketPostUserId();
-    	Integer senderNum = 2;
-    	Integer receiverNum = post.getPo_me_num();
+    @PostMapping("/message/marketmessagesend/{po_num}")
+    public String MarketMessage_post(Model model, @PathVariable int po_num,String content) {
     	
-    	model.addAttribute(senderNum);
-    	model.addAttribute(receiverNum);
+    	PostVO post = messageService.getPostUserNum(po_num);
     	System.out.println(post);
-    	System.out.println(senderNum);
-    	System.out.println(receiverNum);
-		return "/post/market";
+    
+    	Integer senderNum = 2;
+    	int receiverNum = post.getPo_me_num();
     	
+    	model.addAttribute("receiverNum",receiverNum);
+    	model.addAttribute("senderNum",senderNum);
+
+    	MessageVO message = new MessageVO();
+    	message.setMes_me_receiverNum(receiverNum);
+    	message.setMes_me_senderNum(senderNum);
+    	message.setMes_content(content);
+    	boolean res = messageService.MarketMessageSend(message);
+    	System.out.println("content : "+content);
+    	System.out.println("senderNum:"+senderNum);
+    	System.out.println("receiverNum :" + receiverNum );
+  
+        return "redirect:/post/market"; 
     }
+    
+
 }

@@ -44,5 +44,8 @@ public class PostVO {
     public void setNotRecommendCount(int notRecommendCount) {
         this.notRecommendCount = notRecommendCount;
     }
+
+	
+	
 	
 }
