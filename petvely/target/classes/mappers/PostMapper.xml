@@ -14,7 +14,7 @@
 	    WHERE po_num = #{po_num}
 	</select>
     
-    <!-- 삭제되지 않은 게시글 목록 조회--> <!--  (AND po_delete = 0 조건 추가할 예정) -->
+    <!-- 삭제되지 않은 게시글 목록 조회-->
 	<select id="selectPostList" resultType="PostVO">
 	    SELECT
 	        post.*, 

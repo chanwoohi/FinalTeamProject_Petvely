@@ -92,13 +92,11 @@ public class PostController {
 	    }
 	    return "redirect:/post/insert"; // 실패 시 글쓰기 페이지로
 	}
-
 	
 	@GetMapping("/post/detail/{po_num}") // 게시글 상세 조회
 	public String postDetail(Model model, @PathVariable int po_num) {
 
 	    postService.updateView(po_num); // 조회수 증가
-
 	    PostVO post = postService.getPost(po_num);
 	    model.addAttribute("post", post);
 
