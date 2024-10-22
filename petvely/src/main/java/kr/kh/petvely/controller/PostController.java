@@ -74,9 +74,11 @@ public class PostController {
 	}
 	
 	@PostMapping("/post/insert") // 글 작성 처리
-	public String postInsertPost(Model model, PostVO post, @RequestParam("po_co_num") int co_num, @AuthenticationPrincipal CustomUser customUser) {
-	    post.setPo_co_num(co_num); // 선택된 카테고리 설정
-
+	public String postInsertPost(Model model, PostVO post, 
+								@RequestParam("po_co_num") int co_num,
+								@AuthenticationPrincipal CustomUser customUser) {
+	  
+		post.setPo_co_num(co_num); // 선택된 카테고리 설정
 	    int meNum = customUser.getMeNum(); // 로그인된 사용자의 meNum 가져오기
 	    post.setPo_me_num(meNum);  // 작성자의 meNum을 po_me_num에 설정
 	    
@@ -86,7 +88,7 @@ public class PostController {
 
 	    // 게시글 저장 처리
 	    boolean res = postService.addPost(post);
-	    System.out.println("po_me_num: " + post.getPo_me_num());
+	    
 	    if (res) {
 	        return "redirect:/post/list/" + co_num; // 성공 시 카테고리로
 	    }
