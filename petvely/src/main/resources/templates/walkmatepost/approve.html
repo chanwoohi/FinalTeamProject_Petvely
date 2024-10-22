@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<main layout:fragment="content">
+		<form method="post" th:action="@{/walkmatepost/approve/{po_num}(po_num=${po_num})}">
+			<table class="table table-striped">
+                 <thead>
+                     <tr>
+                         <th>선택</th>
+                         <th>아이디</th>
+                         <th>이름</th>
+                         <th>나이</th>
+                         <th>성별</th>
+                         <th>중성화 여부</th>
+                     </tr>
+                 </thead>
+                 <tbody>
+                     <tr th:each="item : ${walkMateMember}">
+                         <td>
+                              <input type="checkbox" name="selectedMembers" th:value="${item.ani_num}" />
+                         </td>
+                         <td th:text="${item.me_id}"></td>
+                         <td th:text="${item.ani_name}"></td>
+                         <td th:text="${item.ani_age}"></td>
+                         <td th:text="${item.ani_gender}"></td>
+                         <td th:text="${item.ani_neutralization}"></td>
+                     </tr>
+                 </tbody>
+             </table>
+             <button>눌러주세요</button>
+		</form>
+	</main>
+</body>
+</html>

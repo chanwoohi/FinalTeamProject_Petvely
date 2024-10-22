@@ -18,7 +18,7 @@ import kr.kh.petvely.model.vo.WalkMatePostVO;
 import kr.kh.petvely.service.AnimalService;
 import kr.kh.petvely.service.PostService;
 import kr.kh.petvely.service.WalkMatePostService;
-import lombok.AllArgsConstructor;
+import kr.kh.petvely.service.WalkMateService;
 
 
 @Controller
@@ -32,6 +32,9 @@ public class WalkMatePostController {
 	
 	@Autowired
 	private AnimalService animalService;
+	
+	@Autowired
+	private WalkMateService walkMateService;
 	
 	@GetMapping("/walkmatepost/list")
 	public String walkmatepostList(Model model) {
@@ -113,11 +116,6 @@ public class WalkMatePostController {
 		
 		List<AnimalVO> choicePetList = animalService.selectChoicePetList(po_num);
 		model.addAttribute("choicePetList", choicePetList);
-		
-		List<WalkMateMemberVO> walkMateMember = walkMatePostService.selectWalkMateMember(po_num);
-		model.addAttribute("walkMateMember", walkMateMember);
-		
-		System.out.println(walkMateMember);
 				
 		return "/walkmatepost/detail";
 	}
@@ -189,4 +187,26 @@ public class WalkMatePostController {
 		return "redirect:/walkmatepost/detail/"+po_num;
 	}
 	
+	@GetMapping("/walkmatepost/approve/{po_num}")
+	public String walkmatepostApprove(Model model, 
+									  @PathVariable int po_num) {
+		System.out.println("123123");
+		List<WalkMateMemberVO> walkMateMember = walkMatePostService.selectWalkMateMember(po_num);
+		model.addAttribute("walkMateMember", walkMateMember);
+		
+		System.out.println(walkMateMember);
+		
+		return "/walkmatepost/approve";
+		
+	}
+	@PostMapping("/walkmatepost/approve/{po_num}")
+	public String walkmatepostApprove(@PathVariable int po_num) {
+		System.out.println("실행됨?");
+		int [] num = {3,4,5};
+		
+		walkMateService.updateWalkMateMember(num, po_num);
+		
+		
+		return "/walkmatepost/list";
+	}
 }

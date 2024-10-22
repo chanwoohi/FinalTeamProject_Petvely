@@ -107,8 +107,6 @@ public class WalkMatePostService {
 			return false;
 		}
 		try {
-			postHostSelectedPetsDao.deletePostUserSelectedPets(walkMatePost.getPo_num());
-			walkMatePostDao.deleteWalkMateMember(walkMatePost.getPo_num());
 			for (int num : selectedUserAniNums) {
 				if( customUser != null ) {
 					MemberVO user = customUser.getMember();

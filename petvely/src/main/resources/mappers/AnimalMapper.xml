@@ -17,14 +17,13 @@
 	</select>
 	
 	<select id="selectChoicePetList" resultType="AnimalVO">
-		select 
-			* 
-		from 
-			animal
-		join 
-			postUserSelectedPets on ani_num = pusp_ani_num
-		where
-			pusp_po_num = #{po_num}
+	    SELECT * 
+	    FROM animal 
+	    WHERE ani_num IN (
+	        SELECT DISTINCT p.pusp_ani_num 
+	        FROM postUserSelectedPets p 
+	        WHERE p.pusp_po_num = #{po_num}
+	    )
 	</select>
 	
 </mapper>
