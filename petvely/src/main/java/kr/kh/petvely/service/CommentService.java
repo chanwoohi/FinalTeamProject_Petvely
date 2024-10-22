@@ -44,7 +44,7 @@ public class CommentService {
 			return false;
 		}
 		comment.setMe_num(user.getMe_num());
-		return commentDao.insertComment1(comment);
+		return commentDao.insertComment2(comment);
 	}
 
 }

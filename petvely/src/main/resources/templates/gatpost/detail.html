@@ -136,7 +136,7 @@
 					if(comment.me_num == me_num){
 						btns = `
 							<button class="btn btn-outline-info">수정</button>
-							<button class="btn btn-outline-dark">삭제</button>
+							<button class="btn btn-outline-dark" th:href="@{/comment/delete/{cm_num}(cm_num=*{cm_num})}">삭제</button>
 						`
 					}
 					let commentLayer = '';
@@ -218,18 +218,16 @@
 				});
 			})
 			
-			$(document).on('click', "#btn_insert1",  function() {
+			$(document).on('click', ".btn-insert1",  function() {
 				console.log(11);
-				var cm_content = $('#input-comment1').val();
+				var cm_content = $(this).parent().prev().val();
 				var cm_po_num = po_num;
 				var cm_reply = $(this).data('reply');
-				var cm_ord = $(this).data('ord');
 				var cm_layer = 1;
 				var comment = {
 						cm_content : cm_content,
 						cm_po_num : cm_po_num,
 						cm_reply : cm_reply,
-						cm_ord : cm_ord + 1,
 						cm_layer : cm_layer
 					}
 				console.log(comment);
@@ -241,7 +239,7 @@
 					contentType : "application/json; charset=utf-8",
 					success : function (data){
 						if(data){
-							$('#input-comment1').val('');
+							$('.input-comment1').val('');
 						}
 					}, 
 					error : function(jqXHR, textStatus, errorThrown){
@@ -250,8 +248,8 @@
 				});
 			})
 			
-			$(document).on('click', "#btn-insert2",  function() {
-				var cm_content = $('#input-comment2').val();
+			$(document).on('click', ".btn-insert2",  function() {
+				var cm_content = $(this).parent().prev().val();
 				var cm_po_num = po_num;
 				var cm_reply = $(this).data('reply');
 				var cm_ord = $(this).data('ord');

@@ -59,7 +59,8 @@ public class CommentController {
 	public boolean insertPost2(@RequestBody CommentVO comment, @AuthenticationPrincipal CustomUser customUser) {
 		MemberVO user = customUser.getMember();
 		System.out.println(comment);
-		return commentService.insertComment1(comment, user);
+		return commentService.insertComment2(comment, user);
 	}
+	
 	
 }
