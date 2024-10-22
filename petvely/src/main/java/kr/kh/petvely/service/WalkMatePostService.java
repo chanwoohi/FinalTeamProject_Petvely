@@ -15,7 +15,6 @@ import kr.kh.petvely.model.vo.WalkMatePostVO;
 import lombok.AllArgsConstructor;
 
 @Service
-@AllArgsConstructor
 public class WalkMatePostService {
 	
 	@Autowired

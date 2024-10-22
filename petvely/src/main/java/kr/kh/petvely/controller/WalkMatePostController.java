@@ -22,7 +22,6 @@ import lombok.AllArgsConstructor;
 
 
 @Controller
-@AllArgsConstructor
 public class WalkMatePostController {
 	
 	@Autowired
@@ -42,8 +41,8 @@ public class WalkMatePostController {
 	}
 	
 	@GetMapping("/walkmatepost/insert")
-	public String walkmatepostInsert(Model model, AnimalVO animal,
-			@AuthenticationPrincipal CustomUser customUser) {
+	public String walkmatepostInsert(Model model, AnimalVO animal
+			,@AuthenticationPrincipal CustomUser customUser) {
 		
 		if(customUser != null) {
 			MemberVO user = customUser.getMember();
@@ -54,7 +53,7 @@ public class WalkMatePostController {
 			System.out.println(petList);
 			
 			model.addAttribute("petList", petList);
-			
+			model.addAttribute("me_num", user.getMe_num());
 		}
 		return "/walkmatepost/insert";
 	}
