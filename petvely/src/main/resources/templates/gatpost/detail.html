@@ -62,11 +62,9 @@
 			<div class="form-group">
 				<button class="btn btn-outline-info" id="commentButton">댓글</button>
 			</div>
-			<div class="form-group commentList" id="commentList">
+			<div class="form-group commentList" id="commentList" style="display: none;">
 				<div id="comment">
 				</div>
-			</div>
-			<div class="form-group commentList" id="commentList">
 				<div class="input-group mb-3">
 				    <textarea class="form-control" placeholder="댓글 입력" id="input-comment"></textarea>
 				    <div class="input-group-append">
@@ -89,7 +87,6 @@
 			$ (document).ready();
 			
 			function getCommentList() {
-				console.log(11);
 				$.ajax({
 					async : true, 
 					url : '/comment/list',
@@ -104,22 +101,24 @@
 				});
 			}
 			
+			var num = 0;
+			var num1 = 0;
+			var num2 = 0;
 			var str = '';
 			var btn0 = '';
 			var btn1 = '';
 			var btns = '';
 			btn0 = `
-				<button class="btn btn-outline-primary" id="commentButton0">대댓글</button>
+				<button class="btn btn-outline-primary" id="commentButton${num}">대댓글</button>
 			`
 			btn1 = `
-				<button class="btn btn-outline-primary" id="commentButton1">대대댓글</button>
+				<button class="btn btn-outline-primary" id="commentButton${num}">대대댓글</button>
 			`
 			function DisplayCommentList(data){
 				if(data == null || data.length == 0){
 					$("#comment").html('<li class="comment-item">등록된 댓글이 없습니다.</li>');
 					return;
 				}
-					
 				for(comment of data){
 					if(comment.me_num == me_num){
 						btns = `
@@ -127,9 +126,12 @@
 							<button class="btn btn-outline-dark">삭제</button>
 						`
 					}
-					
-					
-					if (comment.cm_layer == 0) {
+					if (comment.cm_layer == 0){
+						num += 1;
+						num1 = 0;
+						console.log('num',num);
+						console.log('num1',num1);
+						console.log('num2',num2);
 						str += `
 							<div class="comment-item">
 								<div>
@@ -137,14 +139,14 @@
 									<div style="line-height: 40px;">(${comment.cm_date})</div>
 									<div class="float-right">
 										${btns}
-										${btn0}
+										<button class="btn btn-outline-primary" id="commentButton${num}">대댓글</button>
 									</div>
 								</div>
 								<div>
 									<div style="padding-left:20px; line-height: 40px;">${comment.cm_content}</div>
 								</div>
-								<div class="input-group mb-3" style="padding-left:20px;">
-							    <textarea class="form-control" placeholder="댓글 입력" id="input-comment0"></textarea>
+								<div class="input-group mb-3 commentListInput${num}" style="padding-left:20px; display: none;">
+							    <textarea class="form-control input-comment1" placeholder="댓글 입력" id="input-comment1"></textarea>
 							    <div class="input-group-append">
 									<span class="input-group-text btn-insert" id="btn_insert1">등록</span>
 								</div>
@@ -152,21 +154,26 @@
 						`;
 					}
 					if (comment.cm_layer == 1) {
+						num1 += 1;
+						num2 = 0;
+						console.log('num',num);
+						console.log('num1',num1);
+						console.log('num2',num2);
 						str += `
-							<div class="comment-item" style="padding-left: 40px" id="commentList0">
+							<div class="comment-item commentList${num}${num1}" style="padding-left: 40px; display: none;" id="commentList0">
 								<div>
 									<div style="float: left; line-height: 40px;">${comment.me_id}</div>
 									<div style="line-height: 40px;">(${comment.cm_date})</div>
 									<div class="float-right">
 										${btns}
-										${btn1}
+										<button class="btn btn-outline-primary" id="commentButton${num}${num1}">대대댓글</button>
 									</div>
 								</div>
 								<div>
 									<div style="padding-left:20px; line-height: 40px;">${comment.cm_content}</div>
 								</div>
-								<div class="input-group mb-3" style="padding-left:20px;">
-								    <textarea class="form-control" placeholder="댓글 입력" id="input-comment0"></textarea>
+								<div class="input-group mb-3 commentListInput${num}${num1}" style="padding-left:20px; display: none;">
+								    <textarea class="form-control input-comment2" placeholder="댓글 입력" id="input-comment2"></textarea>
 								    <div class="input-group-append">
 										<span class="input-group-text btn-insert" id="btn_insert2">등록</span>
 										</div>
@@ -175,8 +182,12 @@
 						`;
 					}
 					if (comment.cm_layer == 2) {
+						num2 += 1;
+						console.log('num',num);
+						console.log('num1',num1);
+						console.log('num2',num2);
 						str += `
-							<div class="comment-item" style="padding-left: 80px" id="commentList1">
+							<div class="comment-item commentList${num}${num1}${num2}" style="padding-left: 80px; display: none;" id="commentList1">
 								<div>
 									<div style="float: left; line-height: 40px;">${comment.me_id}</div>
 									<div style="line-height: 40px;">(${comment.cm_date})</div>
@@ -195,7 +206,6 @@
 			}
 			
 			$("#btn_insert0").click(function name() {
-				console.log(1000);
 				var cm_content = $('#input-comment').val();
 				var cm_po_num = po_num;
 				var cm_replay = cm_replay;
@@ -225,12 +235,11 @@
 				});
 			})
 			
-			$("#btn_insert1").click(function name() {
-				console.log(1000);
-				var cm_content = $('#input-comment').val();
+			$(document).on('click', "#btn_insert1",  function() {
+				var cm_content = $('.input-comment1').val();
 				var cm_po_num = po_num;
 				var cm_replay = cm_replay;
-				var cm_ord = cm_ord;
+				var cm_ord = 1;
 				var cm_layer = 1;
 				var comment = {
 						cm_content : cm_content,
@@ -247,7 +256,7 @@
 					contentType : "application/json; charset=utf-8",
 					success : function (data){
 						if(data){
-							$('#input-comment').val('');
+							$('.input-comment1').val('');
 						}
 					}, 
 					error : function(jqXHR, textStatus, errorThrown){
@@ -256,9 +265,8 @@
 				});
 			})
 			
-			$("#btn_insert2").click(function name() {
-				console.log(1000);
-				var cm_content = $('#input-comment').val();
+			$(document).on('click', "#btn_insert2",  function() {
+				var cm_content = $('.input-comment2').val();
 				var cm_po_num = po_num;
 				var cm_replay = cm_replay;
 				var cm_ord = 2;
@@ -278,7 +286,7 @@
 					contentType : "application/json; charset=utf-8",
 					success : function (data){
 						if(data){
-							$('#input-comment').val('');
+							$('.input-comment2').val('');
 						}
 					}, 
 					error : function(jqXHR, textStatus, errorThrown){
@@ -287,28 +295,61 @@
 				});
 			})
 			
+			
 			$(function(){
 			    getCommentList();
 			});
 			
-			$(".commentList").hide();
+			$(".btn_insert").click(function() {
+			    getCommentList();
+			});
+			
 			$("#commentButton").click(function() {
 				$(".commentList").toggle();
 			})
 			
-			$("#commentList0").hide();
-			$(document).on('click', "#commentButton0",  function() {
-				console.log(0);
-				$("#commentList0").toggle();
-				$("#commentList1").toggle();
-			})
+			console.log(num);
+			console.log(num1);
+			console.log(num2);
+			for (var i = 1; i <= num; i++) {
+				$(document).on('click', "#commentButton(i)",  function() {
+					$(".commentListInput(i)").toggle();
+					if (num1 > 0) {
+						for (var j = 1; j < num1; j++) {
+							$(".commentList1(i)(j)").toggle();
+						}
+					}
+				})
+				if (num1 > 0) {
+						for (var j = 1; j < num1; j++) {
+							$(document).on('click', "#commentButton(i)(j)",  function() {
+								for (var k = 0; k < num3; k++) {
+									$(".commentListInput(i)(j)").toggle();
+									$(".commentList1(i)(j)(k)").toggle();
+								}
+							})
+						}
+				}
+						
+			}
 			
-			$("#commentList1").hide();
-			$("#commentButton1").click(function() {
-				console.log(1);
-				$("#commentList1").toggle();
+			$(document).on('click', "#commentButton1",  function() {
+				$(".commentListInput1").toggle();
+				$(".commentList11").toggle();
 			})
-			
+			$(document).on('click', "#commentButton2",  function() {
+				$(".commentListInput2").toggle();
+				$(".commentList21").toggle();
+				$(".commentList22").toggle();
+			})
+			$(document).on('click', "#commentButton21",  function() {
+				$(".commentListInput21").toggle();
+				$(".commentList211").toggle();
+			})
+			$(document).on('click', "#commentButton22",  function() {
+				$(".commentListInput22").toggle();
+				$(".commentList221").toggle();
+			})
 			
 		</script>
 	</main>
