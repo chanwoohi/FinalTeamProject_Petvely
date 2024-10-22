@@ -24,7 +24,7 @@ public interface PostDAO {
 	// 특정 게시글 조회 (po_delete가 0인 것만 메퍼 추후처리)
 	PostVO selectPost(int po_num);
 
-	boolean updatePost(PostVO post);
+	boolean updatePost(@Param("po")PostVO post, @Param("co_num")int co_num);
 
 	boolean deletePost(int po_num);
 

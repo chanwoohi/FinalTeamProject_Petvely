@@ -48,12 +48,12 @@ public class PostService {
 	}
 	
 	
-	public boolean updatePost(PostVO post) {
+	public boolean updatePost(PostVO post, int co_num) {
 		if(post == null) {
 			return false;
 		}
 		try {
-			return postDao.updatePost(post);
+			return postDao.updatePost(post, co_num);
 		}catch (Exception e) {
 			e.printStackTrace();
 			return false;

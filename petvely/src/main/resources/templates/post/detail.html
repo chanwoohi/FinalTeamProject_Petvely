@@ -17,13 +17,13 @@
 			</div>
 			<div class="from-group">
 				<label>작성자 : </label>
-				<input type="text" class="form-control" readonly th:field="${post.me_id}">
+				<input type="text" class="form-control" readonly th:value="${post.me_id}">
 			</div>
 			<div class="form-group">
 		 	<label>작성일:</label>
 		    <input type="text" class="form-control" readonly 
-       		th:value="*{po_date != null ? #dates.format(po_date, 'yyyy-MM-dd') : '날짜 없음'}">
-			</div>
+     		th:value="${post.po_date != null ? #dates.format(post.po_date, 'yyyy-MM-dd') : '날짜 없음'}">
+
 			<div class="from-group">
 				<label>조회수 : </label>
 				<input type="text" class="form-control" readonly th:field="*{po_viewCount}">
