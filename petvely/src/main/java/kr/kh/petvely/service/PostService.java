@@ -67,10 +67,6 @@ public class PostService {
 	public List<CommunityVO> getCommunityList() {
 		return postDao.selectCommunityList();
 	}
-	// me_id와 함께 게시글 목록을 조회하는 메서드
-	public List<PostVO> getPostpostListWithMemberId() {
-		return postDao.selectPostWithMemberId();
-	}
 
 	// 커뮤니티 번호에 맞는 게시글 목록을 가져오는 메서드
 	public List<PostVO> getAllPosts(int co_num) {
@@ -116,4 +112,6 @@ public class PostService {
 	public boolean physicalDeletePost(int po_num) {
 	    return postDao.deletePost(po_num);  // 실제 삭제
 	}
+
+
 }

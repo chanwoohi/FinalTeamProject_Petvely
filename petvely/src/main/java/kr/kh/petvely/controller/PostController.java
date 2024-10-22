@@ -43,12 +43,14 @@ public class PostController {
 
 	@GetMapping("/post/list/{co_num}")
 	public String postList(Model model, @PathVariable int co_num) {
-
+		
+		// 게시글 목록을 가져와서 화면에 전달
 		List<PostVO> list = postService.getPostList(co_num);
+		// 커뮤니티 목록을 가져와서 화면에 전달
+		List<CommunityVO> communities = postService.getCommunityList();
 		
 		System.out.println(list);
-		// 게시글 목록을 가져와서 화면에 전달
-		List<CommunityVO> communities = postService.getCommunityList();
+	
 		// 카테고리 리스트를 가져옴
 		model.addAttribute("list", list);
 		model.addAttribute("communities", communities);
@@ -56,6 +58,7 @@ public class PostController {
 
 	    return "/post/list";
 	}
+	
 	@GetMapping("/post/insert/{co_num}")
 	public String postInsert(Model model, @PathVariable int co_num, @AuthenticationPrincipal CustomUser customUser) {
 	    int meNum = customUser.getMeNum(); // 로그인된 사용자의 meNum 가져오기
@@ -112,7 +115,9 @@ public class PostController {
 
 	@GetMapping("/post/update/{po_num}") // 게시글 수정 페이지 이동, 카테고리 목록 전달
 	public String postUpdate(Model model, @PathVariable int po_num) {
+		
 		PostVO post = postService.getPost(po_num); // 게시글 정보 가져오기
+		  System.out.println("작성자 아이디: " + post.getMe_id());  // me_id 값 확인
 		List<CommunityVO> communities = postService.getCommunityList(); // 카테고리 목록을 가져옴    
 		
 		System.out.println("po_date: " + post.getPo_date());  // po_date 로그 확인
@@ -170,12 +175,6 @@ public class PostController {
 	    }
 	}
 
-	@GetMapping("/listWithMember")  //게시글 목록과 작성자 ID 조회
-	public String postListWithMemberId(Model model) {
-		List<PostVO> postList = postService.getPostpostListWithMemberId();
-		model.addAttribute("postList", postList);
-		return "post/listWithMember";
-	}
 	
 	// 추천/비추천 처리
 	@PostMapping("/post/recommend")

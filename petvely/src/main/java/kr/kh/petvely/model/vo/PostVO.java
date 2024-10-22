@@ -1,9 +1,7 @@
 package kr.kh.petvely.model.vo;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,26 +30,8 @@ public class PostVO {
     private int recommendCount; // 추천 수
     private int notRecommendCount; // 비추천 수
 	
-    // Getter, Setter
-    public int getRecommendCount() {
-        return recommendCount;
-    }
 
-    public void setRecommendCount(int recommendCount) {
-        this.recommendCount = recommendCount;
-    }
 
-    public int getNotRecommendCount() {
-        return notRecommendCount;
-    }
-
-    public void setNotRecommendCount(int notRecommendCount) {
-        this.notRecommendCount = notRecommendCount;
-    }	
     
-//    public String getPo_date() {
-//	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-//	return format.format(po_date);
-//    }
 	
 }

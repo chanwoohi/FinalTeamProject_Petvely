@@ -66,13 +66,6 @@
 		SELECT * from community
 	</select>
 	
-	<!-- po_me_num을 me_id로 보여지게 -->
-	<select id="selectPostWithMemberId" resultType="kr.kh.petvely.model.vo.PostVO">
-	    SELECT p.po_num, p.po_title, p.po_content, p.po_date, p.po_co_num, m.me_id
-	    FROM Post p
-	    JOIN Member m ON p.po_me_num = m.me_num
-	</select>
-	
 	<!-- 추천 추가 -->
 	<insert id="insertRecommend">
 		INSERT into recommend(re_po_num, re_state, re_me_num)
@@ -84,23 +77,15 @@
 		SELECT * from recommend where re_me_num = #{re_me_num} and re_po_num = #{re_po_num}
 	</select>
 	
-	
 	<!-- 추천 삭제 -->
 	<delete id="deleteRecommend">
 		DELETE from recommend where re_num = #{re_num}
 	</delete>
+	
 	<insert id="insertBookmark">
 		insert into bookmark(bm_me_num, bm_po_num)
 		values(#{bm_me_num}, #{po_num})
 	</insert>
-	
-	<!-- 게시글의 추천수 및 비추천수 업데이트 -->
-	<update id="updateRecommendCount">
-	    UPDATE post
-	    SET
-	        po_recommendCount = (SELECT COUNT(*) FROM recommend WHERE re_po_num = #{po_num} AND re_state = 1),
-	        po_viewCount = (SELECT COUNT(*) FROM recommend WHERE re_po_num = #{po_num} AND re_state = -1) 
-	    WHERE po_num = #{po_num};
-	</update>
+
 	
 </mapper>
