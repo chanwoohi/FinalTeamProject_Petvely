@@ -21,7 +21,7 @@
 				    <option th:each="item : ${communities}" 
 				            th:value="${item.co_num}" 
 				            th:text="${item.co_name}" 
-				            th:selected="${post.po_co_num == item.co_num}">
+				            th:selected="${post.po_co_num eq item.co_num}">
 				    </option>
 				</select>
             </div>
