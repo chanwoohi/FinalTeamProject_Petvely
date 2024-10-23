@@ -143,38 +143,25 @@ public class PostController {
 	        return "redirect:/member/login";  // 비회원일 경우 로그인 페이지로 리디렉션
 	    }
 	    
-	    // 삭제 전에 번호를 미리 가져옴
-	    PostVO post = postService.getPost(po_num); // 게시글 정보
+	    model.addAttribute("post", post);
+	    model.addAttribute("communities", communities);
+	    return "post/update";  // 수정 페이지로 이동
+	}
+	
+	@PostMapping("/post/update/{po_num}")
+	public String postUpdatePost(@PathVariable int po_num, PostVO post, 
+	                             @AuthenticationPrincipal CustomUser customUser) {
+	    // 로그인 사용자와 게시글 작성자가 동일한지 확인 (또는 관리자)
+	    PostVO existingPost = postService.getPost(po_num);
+	    if (existingPost == null || (!"ADMIN".equals(customUser.getMember().getMe_authority()) && existingPost.getPo_me_num() != customUser.getMember().getMe_num())) {
+	        return "redirect:/error";  // 권한이 없거나 게시글이 없으면 에러 페이지로 리디렉션
+	    }
 	    
-	    int me_num = customUser.getMember().getMe_num(); // 로그인 된 사용자 정보
-	    String me_authority = customUser.getMember().getMe_authority(); // 로그인 된 사용자 권한
-	    int co_num = post.getPo_co_num(); // 커뮤니티 번호 가져오기
+	    // 수정된 내용 저장 처리
+	    post.setPo_num(po_num);  // 수정할 게시글 번호 설정
+	    postService.updatePost(post, po_num);
 	    
-	    boolean res;
-	    System.out.println("사용자 권한: " + customUser.getMember().getMe_authority());
-
-	    if ("ADMIN".equals(me_authority)) {
-	    	  System.out.println("관리자 권한 확인됨");
-	        // 관리자 권한인 경우 논리적 삭제 처리
-	        res = postService.logicalDeletePost(po_num);  // 논리적 삭제
-	    } else if (post.getPo_me_num() == me_num){
-	        // 일반 사용자는  본인이 작성한 글만 물리적 삭제 처리
-	        res = postService.physicalDeletePost(po_num);  // 물리적 삭제
-	    }
-	    else {
-	    	// 로그인 된 사용자와 게시글 작성자가 다르면 삭제 불가
-	    	model.addAttribute("error", "삭제 권한이 없습니다.");
-	        return "redirect:/post/detail/" + po_num; // 상세보기로 리디렉션
-	    }
-
-	    // 삭제가 성공했는지 확인
-	    if (res) {
-	        // 커뮤니티 목록으로 리디렉션
-	        return "redirect:/post/list/" + co_num;  // 커뮤니티 번호로 리디렉션
-	    } else {
-	        // 삭제 실패 시 다시 상세보기로 리디렉션
-	        return "redirect:/post/detail/" + po_num;
-	    }
+	    return "redirect:/post/detail/" + po_num;  // 수정 완료 후 상세 페이지로 이동
 	}
 	// 추천/비추천 처리
 	@PostMapping("/post/recommend")
