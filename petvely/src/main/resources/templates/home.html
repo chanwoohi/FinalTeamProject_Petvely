@@ -2,6 +2,7 @@
 <html 
     xmlns:th="http://www.thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security" 
     layout:decorate="~{layout/layout.html}">
 <head>
     <meta charset="UTF-8">
@@ -9,9 +10,13 @@
 </head>
 <body >
 	<main layout:fragment="content">
-		<a class="btn btn-outline-info" th:href="@{/comment/list}">댓글</a>
-
+		</br>
 		<p>펫블리</p>
+		<p sec:authorize="isAuthenticated()">
+		<span th:text="${#authentication.principal.member.me_id}"></span>님 반갑습니다.<br>
+		</p>
+		<a class="btn btn-outline-info" th:href="@{/comment/list}">댓글보기</a>
+		
 	</main>
 </body>
 </html>
