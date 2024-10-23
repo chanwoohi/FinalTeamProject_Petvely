@@ -85,7 +85,7 @@ public class GATPostController {
 	}
 	
 	@PostMapping("/gatpost/update/{po_num}")
-	public String postUpdatePost(Model model, @PathVariable int po_num, GiveAndTakePostVO GATPost) {
+	public String postUpdatePost(@PathVariable int po_num, GiveAndTakePostVO GATPost) {
 		GATPost.setPo_num(po_num);
 		boolean res = gatPostService.updateGATPost1(GATPost);
 		boolean res2 = gatPostService.updateGATPost2(GATPost);

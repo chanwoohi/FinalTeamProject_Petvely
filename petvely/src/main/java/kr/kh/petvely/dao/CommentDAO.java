@@ -2,8 +2,6 @@ package kr.kh.petvely.dao;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
 import kr.kh.petvely.model.vo.CommentVO;
 
 public interface CommentDAO {
@@ -17,5 +15,10 @@ public interface CommentDAO {
 	boolean insertComment1(CommentVO comment);
 	
 	boolean insertComment2(CommentVO comment);
-	
+
+	boolean deleteComment(CommentVO comment);
+
+	boolean updateComment(CommentVO comment);
+
+	CommentVO selectComment(int cm_num);
 }

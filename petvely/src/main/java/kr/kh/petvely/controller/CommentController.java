@@ -62,5 +62,30 @@ public class CommentController {
 		return commentService.insertComment2(comment, user);
 	}
 	
+	@PostMapping("/comment/delete")
+	@ResponseBody
+	public boolean deleteComment(@RequestBody CommentVO comment) {
+		System.out.println(comment);
+		return commentService.deleteComment(comment);
+	}
+	
+	@GetMapping("/comment/update")
+	public String updateComment(Model model, int cm_num) {
+		CommentVO comment = commentService.selectComment(cm_num);
+		System.out.println(comment);
+		model.addAttribute("comment", comment);
+		return "comment/update";
+	}
+	
+	@PostMapping("/comment/update")
+	public String updateComment(CommentVO comment, int cm_num) {
+		comment.setPo_num(cm_num);
+		boolean res =commentService.deleteComment(comment);
+		System.out.println(res);
+		if(res) {
+			return "/gatpost/detail/" + comment.getCm_po_num();
+		}
+		return "/comment/update";
+	}
 	
 }

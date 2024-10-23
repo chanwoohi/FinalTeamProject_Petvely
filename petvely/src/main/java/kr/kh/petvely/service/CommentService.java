@@ -47,4 +47,24 @@ public class CommentService {
 		return commentDao.insertComment2(comment);
 	}
 
+	public boolean deleteComment(CommentVO comment) {
+		return commentDao.deleteComment(comment);
+	}
+
+	public CommentVO selectComment(int cm_num) {
+		return commentDao.selectComment(cm_num);
+	}
+
+	public boolean updateComment(CommentVO comment) {
+		if(comment == null) {
+			return false;
+		}
+		try {
+			return commentDao.updateComment(comment);
+		}catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 }

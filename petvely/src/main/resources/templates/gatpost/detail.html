@@ -135,8 +135,8 @@
 					let reInput = '';
 					if(comment.me_num == me_num){
 						btns = `
-							<button class="btn btn-outline-info">수정</button>
-							<button class="btn btn-outline-dark" th:href="@{/comment/delete/{cm_num}(cm_num=*{cm_num})}">삭제</button>
+							<button class="btn btn-outline-info btn-update" data-num="${comment.cm_num}">수정</button>
+							<button class="btn btn-outline-dark btn-delete" data-num="${comment.cm_num}">삭제</button>
 						`
 					}
 					let commentLayer = '';
@@ -200,7 +200,6 @@
 						cm_ord : cm_ord,
 						cm_layer : cm_layer
 					}
-				console.log(comment);
 				$.ajax({
 					async : true,
 					url : '/comment/insert', 
@@ -219,7 +218,6 @@
 			})
 			
 			$(document).on('click', ".btn-insert1",  function() {
-				console.log(11);
 				var cm_content = $(this).parent().prev().val();
 				var cm_po_num = po_num;
 				var cm_reply = $(this).data('reply');
@@ -230,7 +228,6 @@
 						cm_reply : cm_reply,
 						cm_layer : cm_layer
 					}
-				console.log(comment);
 				$.ajax({
 					async : true,
 					url : '/comment/insert1', 
@@ -261,7 +258,6 @@
 						cm_ord : cm_ord,
 						cm_layer : cm_layer
 					}
-				console.log(comment);
 				$.ajax({
 					async : true,
 					url : '/comment/insert2', 
@@ -315,7 +311,6 @@
 					$(this).toggle();
 				})
 				$(this).parents('.comment-item').find('.commnet-input').toggle();
-
 			})
 			
 			//대댓글의 대대댓글
@@ -337,7 +332,31 @@
 				})
 				curObj.nextUntil(nextObj).toggle();
 				$(this).parents('.comment-item').find('.commnet-input').toggle();
-
+			})
+			
+			$(document).on('click', ".btn-delete",  function() {
+				var cm_num = $(this).data('num');
+				var comment = {
+						cm_num : cm_num
+					}
+				console.log(comment);
+				$.ajax({
+					async : true,
+					url : '/comment/delete', 
+					type : 'post', 
+					data : JSON.stringify(comment), 
+					contentType : "application/json; charset=utf-8",
+					error : function(jqXHR, textStatus, errorThrown){
+						console.log(jqXHR);
+					}
+				});
+			})
+			
+			$(document).on('click', ".btn-update",  function() {
+				var cm_num = $(this).data('num');
+				let popOption = "width=300,height=300, top=300, left=1000";
+				let openUrl = '/comment/update?cm_num=' + cm_num
+				window.open(openUrl, 'pop', popOption);
 			})
 			
 		</script>
