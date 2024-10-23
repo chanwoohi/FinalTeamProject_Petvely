@@ -58,9 +58,9 @@ public class MarketController {
 		
 		boolean res = marketPostService.addPost(marketPost,fileList);
 		if(res) {
-			return "redirect:/post/marketinsert";
+			return "redirect:/post/market";
 		}
-		return "redirect:/post/market";
+		return "redirect:/post/marketinsert";
 		
 	}
 	@PostMapping("/post/marketcomplete/{po_num}")

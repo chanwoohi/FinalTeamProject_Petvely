@@ -41,8 +41,9 @@
 						</a>
 						
 						<!-- 관리자 확인 -->
-						<a th:if="${post.po_delete == 1}" sec:authorize="hasAuthority('ADMIN')" th:text="${post.po_title}" th:href="@{/post/detail/{po_num}(po_num=${post.po_num})}">
-						    <span class="text">삭제글:</span>
+						<a th:if="${post.po_delete == 1}" sec:authorize="hasAuthority('ADMIN')">
+							<span class="text">[삭제글]</span>
+							<span th:text="${post.po_title}"></span> 
 						</a>
 
 					    <!-- 글이 삭제되지 않았을 때만 제목을 표시 -->
