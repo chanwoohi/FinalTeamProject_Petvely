@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.kh.petvely.model.user.CustomUser;
 import kr.kh.petvely.model.vo.CommunityVO;
@@ -105,58 +106,38 @@ public class PostController {
 	    return "post/detail"; // 뷰 템플릿 반환
 	}
 
-	@GetMapping("/post/update/{po_num}") // 게시글 수정 페이지 이동, 카테고리 목록 전달
-	public String postUpdate(Model model, @PathVariable int po_num) {
-		
-		PostVO post = postService.getPost(po_num); // 게시글 정보 가져오기
-		List<CommunityVO> communities = postService.getCommunityList(); // 카테고리 목록을 가져옴    
-		System.out.println("게시글 정보: " + post); // 로그로 확인
-		if (post == null) {
-		        // 게시글을 찾지 못한 경우 에러 처리
-		        return "redirect:/error";  // 또는 적절한 에러 페이지로 리디렉션
-		}
-		model.addAttribute("post", post); // 게시글 정보 전달
-		model.addAttribute("communities", communities); // 카테고리 목록 전달
-		model.addAttribute("co_num", post.getPo_co_num());  // 선택된 카테고리 전달
+	@GetMapping("/post/update/{po_num}")
+	public String postUpdate(Model model, @PathVariable int po_num, 
+	                         @AuthenticationPrincipal CustomUser customUser, RedirectAttributes redirectAttributes) {
+	    
+	    PostVO post = postService.getPost(po_num);
+	    List<CommunityVO> communities = postService.getCommunityList();
 
-		return "post/update"; // 뷰 템플릿 반환
-	}
-	@PostMapping("/post/update/{po_num}") //게시글 수정 페이지 글 작성 처리
-	public String postUpdatePost(PostVO post, @PathVariable int po_num, @RequestParam("po_co_num")int co_num) {
-		post.setPo_num(po_num);
-		post.setPo_co_num(co_num); //선택된 카테고리를 게시글에 설정
-		
-		System.out.println(co_num);
-		boolean res = postService.updatePost(post, co_num);
-		if(res) {
-			return "redirect:/post/detail/" + po_num; //성공 시 게시글 페이지로
-		}
-		return "redirect:/post/update/" + po_num;
-	}
-	@GetMapping("/post/delete/{po_num}") // 삭제 (게시글 번호 받기)
-	public String postDelete(Model model, @PathVariable int po_num,
-										  @AuthenticationPrincipal CustomUser customUser) {
+	    if (post == null) {
+	        // 게시글이 없는 경우
+	        redirectAttributes.addFlashAttribute("errorMessage", "존재하지 않는 게시글입니다.");
+	        return "redirect:/post/list";  // 수정 페이지가 아닌 목록 페이지로 리디렉션
+	    }
 
 	    // 로그인된 사용자 권한 확인
-	    if (customUser == null) {
-	        model.addAttribute("error", "로그인이 필요합니다.");
-	        return "redirect:/member/login";  // 비회원일 경우 로그인 페이지로 리디렉션
+	    if (!"ADMIN".equals(customUser.getMember().getMe_authority()) && post.getPo_me_num() != customUser.getMember().getMe_num()) {
+	        redirectAttributes.addFlashAttribute("errorMessage", "수정 권한이 없습니다.");
+	        return "redirect:/post/list";  // 수정 페이지가 아닌 목록 페이지로 리디렉션
 	    }
 	    
 	    model.addAttribute("post", post);
 	    model.addAttribute("communities", communities);
-	    return "post/update";  // 수정 페이지로 이동
+	    return "post/update";
 	}
-	
 	@PostMapping("/post/update/{po_num}")
 	public String postUpdatePost(@PathVariable int po_num, PostVO post, 
 	                             @AuthenticationPrincipal CustomUser customUser) {
 	    // 로그인 사용자와 게시글 작성자가 동일한지 확인 (또는 관리자)
 	    PostVO existingPost = postService.getPost(po_num);
-	    if (existingPost == null || (!"ADMIN".equals(customUser.getMember().getMe_authority()) && existingPost.getPo_me_num() != customUser.getMember().getMe_num())) {
+	    if (existingPost == null || (existingPost.getPo_me_num() != customUser.getMember().getMe_num())) {
 	        return "redirect:/error";  // 권한이 없거나 게시글이 없으면 에러 페이지로 리디렉션
 	    }
-	    
+	
 	    // 수정된 내용 저장 처리
 	    post.setPo_num(po_num);  // 수정할 게시글 번호 설정
 	    postService.updatePost(post, po_num);
