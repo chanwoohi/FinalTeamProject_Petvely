@@ -43,12 +43,11 @@
 								type="submit" onclick="javascript:logoutForm.submit();">로그아웃</a>
 						</form>
 					</li>
-					<li class="nav-profile">
+					<li class="nav-profile" sec:authorize="isAuthenticated()">
 						<img class="profile-icon" th:src="@{/image/profile.png}" alt="Profile" id="profileIcon">
 						<div class="profile-popup" id="profilePopup">
 							<div class="popup-item">프로필 보기</div>
-							<div class="popup-item">설정</div>
-							<div class="popup-item">로그아웃</div>
+							<a class="popup-item" onclick="javascript:logoutForm.submit();">로그아웃</a>
 						</div>
 					</li>
        		 	</ul>
