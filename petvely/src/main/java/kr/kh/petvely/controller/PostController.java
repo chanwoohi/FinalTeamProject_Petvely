@@ -193,7 +193,8 @@ public class PostController {
 	}
 	
 	@GetMapping("/post/delete/{po_num}") // 삭제 (게시글 번호 받기)
-	public String postDelete(Model model, @PathVariable int po_num, @AuthenticationPrincipal CustomUser customUser) {
+	public String postDelete(Model model, @PathVariable int po_num, 
+	                         @AuthenticationPrincipal CustomUser customUser) {
 
 	    // 로그인된 사용자 권한 확인
 	    if (customUser == null) {
@@ -201,17 +202,32 @@ public class PostController {
 	        return "redirect:/member/login";  // 비회원일 경우 로그인 페이지로 리디렉션
 	    }
 
-	    // 삭제 전에 커뮤니티 번호를 미리 가져옴
+	    // 게시글 정보 가져오기
 	    PostVO post = postService.getPost(po_num);
+	    if (post == null) {
+	        model.addAttribute("error", "존재하지 않는 게시글입니다.");
+	        return "redirect:/post/list";  // 게시글이 없는 경우 목록으로 리디렉션
+	    }
+
+	    // 로그인된 사용자 정보
+	    int me_num = customUser.getMember().getMe_num();  // 로그인된 사용자 번호 가져오기
+	    String me_authority = customUser.getMember().getMe_authority(); // 로그인된 사용자 권한
 	    int co_num = post.getPo_co_num(); // 커뮤니티 번호 가져오기
 
 	    boolean res;
-	    if ("admin".equals(customUser.getMember().getMe_authority())) {
-	        // 관리자 권한인 경우 논리적 삭제 처리
+
+	    // 관리자 권한이 있는 경우 논리적 삭제 처리
+	    if ("ADMIN".equals(me_authority)) {
 	        res = postService.logicalDeletePost(po_num);  // 논리적 삭제
-	    } else {
-	        // 일반 사용자일 경우 물리적 삭제 처리
+	    } 
+	    // 일반 사용자는 본인이 작성한 글만 삭제 가능
+	    else if (post.getPo_me_num() == me_num) {
 	        res = postService.physicalDeletePost(po_num);  // 물리적 삭제
+	    } 
+	    else {
+	        // 로그인된 사용자와 게시글 작성자가 다르면 삭제 불가
+	        model.addAttribute("error", "삭제 권한이 없습니다.");
+	        return "redirect:/post/detail/" + po_num;  // 권한이 없으면 다시 상세보기로 리디렉션
 	    }
 
 	    // 삭제가 성공했는지 확인
