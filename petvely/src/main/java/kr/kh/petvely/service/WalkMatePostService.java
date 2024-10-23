@@ -47,8 +47,8 @@ public class WalkMatePostService {
 		}
 		 try {
 	        // 포스트를 데이터베이스에 저장
-			// po_co_num을 10으로~~ 변경하고 commit하기
-			walkMatePost.setPo_co_num(1);
+			// po_co_num을 10으로 변경
+			walkMatePost.setPo_co_num(10);
 	        postDao.insertPost(walkMatePost);
 	        // po_num = post.getPo_num(); // DB에 저장 후 po_num을 가져옴
 
@@ -67,7 +67,6 @@ public class WalkMatePostService {
 	            postHostSelectedPetsDao.insertPostHostSelectedPets(pet); // DB에 저장
 	            
         }
-
 	        	return true;
 
 		    } catch (Exception e) {
@@ -115,7 +114,6 @@ public class WalkMatePostService {
 				walkMateDao.deleteWalkMate(user.getMe_num(), walkMatePost.getPo_num());
 			
 			}
-			
 			
 			for (int num : selectedUserAniNums) {
 				if( customUser != null ) {

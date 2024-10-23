@@ -6,7 +6,7 @@ import kr.kh.petvely.model.vo.AnimalVO;
 
 public interface AnimalDAO {
 
-	List<AnimalVO> selectPetList(AnimalVO animal);
+	List<AnimalVO> selectPetList(int me_num);
 
 	List<AnimalVO> selectDetailPetList(int po_num);
 

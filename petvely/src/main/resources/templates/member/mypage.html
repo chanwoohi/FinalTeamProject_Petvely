@@ -9,7 +9,35 @@
 </head>
 <body>
 	<main layout:fragment="content">
-		<header>Maypage</header>
+		<h2>즐겨찾기 목록</h2>
+		<div class="mt-3">
+			<a 	class="btn mr-3 mb-3"
+				th:each="item : ${communityList}" 
+				th:text="${item.co_name}"
+				th:href="@{/member/mypage/{co_num}(co_num=${item.co_num})}"></a>
+		</div>
+		<!-- 펫 정보 클릭시에만 보이게!  -->
+		<div th:if="${co_num}==13">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>펫 이름</th>
+						<th>종류</th>
+						<th>나이</th>
+						<th>성별</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="item : ${petList}" th:if="${item != null}">
+						<td th:text="${item.ani_name}"></td>
+						<td th:text="${item.ani_at_type}"></td>
+						<td th:text="${item.ani_age}"></td>
+						<td th:text="${item.ani_gender}"></td>
+					</tr>
+				</tbody>
+			</table>
+			<a class="btn btn-outline-info" th:href="@{/animalcontroller/">펫 등록하기</a>
+		</div>
 	</main>
 </body>
 </html>

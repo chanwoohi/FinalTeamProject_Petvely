@@ -3,7 +3,7 @@
 <mapper namespace="kr.kh.petvely.dao.AnimalDAO">
 	<select id="selectPetList" resultType="AnimalVO">
 		select * from animal
-		where ani_me_num = #{ani_me_num}
+		where ani_me_num = #{me_num}
 	</select>
 	<select id="selectDetailPetList" resultType="AnimalVO">
 		select 

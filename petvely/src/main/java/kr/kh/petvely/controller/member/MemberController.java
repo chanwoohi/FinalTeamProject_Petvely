@@ -1,14 +1,23 @@
 package kr.kh.petvely.controller.member;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.kh.petvely.model.user.CustomUser;
+import kr.kh.petvely.model.vo.AnimalVO;
+import kr.kh.petvely.model.vo.CommunityVO;
 import kr.kh.petvely.model.vo.MemberVO;
+import kr.kh.petvely.service.AnimalService;
+import kr.kh.petvely.service.PostService;
 import kr.kh.petvely.service.member.MemberService;
 import kr.kh.petvely.utils.NoName;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +28,12 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 	private final String viewRoute = "view/member/";
 	private final NoName util = NoName.getInstance();
+	
+	@Autowired
+	private PostService postService;
+	
+	@Autowired
+	private AnimalService animalService;
 	
 	@Autowired
 	private MemberService memberService;
@@ -52,6 +67,28 @@ public class MemberController {
 		log.info(util.getCurrentMethodName());
 		
 		return viewRoute + "login";
+	}
+	
+	@GetMapping("mypage/{co_num}")
+	public String myPage(Model model,
+						 @AuthenticationPrincipal CustomUser customUser,
+						 CommunityVO communityVo,
+						 @PathVariable int co_num) {
+		// 커뮤니티 리스트 가져오기
+		List<CommunityVO> communityList = postService.selectCommunityList();
+		model.addAttribute("communityList", communityList);
+		if (communityList == null || communityList.isEmpty()) {
+		    System.out.println("커뮤니티 리스트가 비어 있습니다.");
+		}
+		model.addAttribute("co_num", co_num);
+		
+		if(customUser != null) {
+			MemberVO user = customUser.getMember();
+			List<AnimalVO> petList = animalService.selectPetList(user.getMe_num());
+			
+			model.addAttribute("petList", petList);
+		}
+		return "/member/mypage";
 	}
 	
 	/*

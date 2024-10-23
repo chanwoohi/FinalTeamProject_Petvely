@@ -16,9 +16,9 @@ public class AnimalService {
 	@Autowired
 	AnimalDAO animalDao;
 	
-	public List<AnimalVO> selectPetList(AnimalVO animal) {
+	public List<AnimalVO> selectPetList(int me_num) {
 		
-		return animalDao.selectPetList(animal);
+		return animalDao.selectPetList(me_num);
 	}
 
 	public List<AnimalVO> selectDetailPetList(int po_num) {

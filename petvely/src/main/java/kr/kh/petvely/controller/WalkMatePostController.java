@@ -50,9 +50,8 @@ public class WalkMatePostController {
 		if(customUser != null) {
 			MemberVO user = customUser.getMember();
 			System.out.println(user.getMe_id() + user.getMe_num());
-			animal.setAni_me_num(user.getMe_num());
 			
-			List<AnimalVO> petList = animalService.selectPetList(animal);
+			List<AnimalVO> petList = animalService.selectPetList(user.getMe_num());
 			System.out.println(petList);
 			
 			model.addAttribute("petList", petList);
@@ -92,8 +91,8 @@ public class WalkMatePostController {
 			MemberVO user = customUser.getMember();
 			
 			animal.setAni_me_num(user.getMe_num());
-			
-			List<AnimalVO> petList = animalService.selectPetList(animal);
+
+			List<AnimalVO> petList = animalService.selectPetList(user.getMe_num());
 			System.out.println(petList);
 			model.addAttribute("petList", petList);
 		}
@@ -126,7 +125,7 @@ public class WalkMatePostController {
 										@PathVariable int po_num,
             							int [] selectedUserAniNums,
 										@AuthenticationPrincipal CustomUser customUser) {
-		System.out.println("숫자배열? : "+selectedUserAniNums);
+		System.out.println("숫자배열 들어왔어?? : " + selectedUserAniNums);
 		if(walkMatePostService.insertWalkMateMember(walkMatePost, selectedUserAniNums, customUser)) {
 			List<WalkMateMemberVO> walkMateMemberList = walkMatePostService.selectWalkMateMember(po_num);
 			
@@ -141,14 +140,16 @@ public class WalkMatePostController {
 	@GetMapping("/walkmatepost/update/{po_num}")
 	public String walkmatepostUpdate(Model model, 
 									 @PathVariable int po_num,
-									 AnimalVO animal) {
+									 AnimalVO animal,
+									 @AuthenticationPrincipal CustomUser customUser) {
 		
 		WalkMatePostVO walkMatePost = walkMatePostService.getWalkMatePost(po_num);
 		model.addAttribute("walkMatePost", walkMatePost);
-		
-		List<AnimalVO> petList = animalService.selectPetList(animal);
-		model.addAttribute("petList", petList);
-		
+		if(customUser!=null) {
+			MemberVO user = customUser.getMember();
+			List<AnimalVO> petList = animalService.selectPetList(user.getMe_num());
+			model.addAttribute("petList", petList);
+		}
 		List<WalkMateMemberVO> walkMateMemberList = walkMatePostService.selectWalkMateMember(po_num);
 		model.addAttribute("walkMateMemberList", walkMateMemberList);
 		
