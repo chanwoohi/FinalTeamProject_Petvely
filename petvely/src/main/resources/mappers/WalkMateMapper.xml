@@ -6,4 +6,8 @@
 		set wmm_approve = 1
 		where wmm_ani_num = #{aniNum} and wmm_po_num = #{po_num}
 	</update>
+	<delete id="deleteWalkMate">
+		delete from walkmatemember
+		where wmm_po_num = #{po_num} and wmm_me_num = #{me_num}
+	</delete>
 </mapper>

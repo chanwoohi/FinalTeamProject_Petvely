@@ -17,5 +17,4 @@
 		delete from postUserSelectedPets
 		where pusp_po_num = #{po_num}
 	</delete>
-	<update id=""></update>
 </mapper>

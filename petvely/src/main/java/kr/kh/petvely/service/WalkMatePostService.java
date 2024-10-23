@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import kr.kh.petvely.dao.PostDAO;
 import kr.kh.petvely.dao.PostHostSelectedPetsDAO;
+import kr.kh.petvely.dao.WalkMateDAO;
 import kr.kh.petvely.dao.WalkMatePostDAO;
 import kr.kh.petvely.model.user.CustomUser;
 import kr.kh.petvely.model.vo.MemberVO;
@@ -21,6 +22,9 @@ public class WalkMatePostService {
 	
 	@Autowired
 	private PostDAO postDao;
+	
+	@Autowired
+	private WalkMateDAO walkMateDao;
 	
 	@Autowired
 	private WalkMatePostDAO walkMatePostDao;
@@ -43,7 +47,7 @@ public class WalkMatePostService {
 		}
 		 try {
 	        // 포스트를 데이터베이스에 저장
-			// po_co_num을 지금은 1로 다른 곳에서는 해당하는 co_num 골라가야함 방법을 찾아보자~
+			// po_co_num을 10으로~~ 변경하고 commit하기
 			walkMatePost.setPo_co_num(1);
 	        postDao.insertPost(walkMatePost);
 	        // po_num = post.getPo_num(); // DB에 저장 후 po_num을 가져옴
@@ -107,6 +111,14 @@ public class WalkMatePostService {
 			return false;
 		}
 		try {
+			// 여기서 그... po_num and user.getMe_num을 where로 해서 delete 하면?
+			if(customUser != null) {
+				MemberVO user = customUser.getMember();
+				walkMateDao.deleteWalkMate(user.getMe_num(), walkMatePost.getPo_num());
+			
+			}
+			
+			
 			for (int num : selectedUserAniNums) {
 				if( customUser != null ) {
 					MemberVO user = customUser.getMember();

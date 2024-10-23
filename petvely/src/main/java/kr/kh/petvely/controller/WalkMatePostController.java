@@ -200,12 +200,10 @@ public class WalkMatePostController {
 		
 	}
 	@PostMapping("/walkmatepost/approve/{po_num}")
-	public String walkmatepostApprove(@PathVariable int po_num) {
-		System.out.println("실행됨?");
-		int [] num = {3,4,5};
+	public String walkmatepostApprove(@PathVariable int po_num,
+									  int [] selectedAniNums) {
 		
-		walkMateService.updateWalkMateMember(num, po_num);
-		
+		walkMateService.updateWalkMateMember(selectedAniNums, po_num);
 		
 		return "/walkmatepost/list";
 	}
