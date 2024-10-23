@@ -35,6 +35,7 @@ public class MessageController {
     	       
     	        List<MessageVO> messages = messageService.getMessageList(me_num);
     	        System.out.println(messages);
+    	        System.out.println(me_num);
     	        model.addAttribute("messages", messages);
     	    } else {
 
@@ -134,7 +135,7 @@ public class MessageController {
     				MessageVO message = messageService.getMessageDetail(mes_num);
     				model.addAttribute("message",message);
     				System.out.println(user);
-    				System.out.println(mes_num);
+    				System.out.println("mes_num :"+mes_num);
     				System.out.println(message);
     				
     			}

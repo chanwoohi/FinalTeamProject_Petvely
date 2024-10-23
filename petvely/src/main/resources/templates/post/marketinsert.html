@@ -9,7 +9,7 @@
 </head>
 <body>
     <main layout:fragment="content">
-        <form method="post" th:action="@{/post/marketinsert}" enctype="multipart/form-data">
+        <form method="post" th:action="@{/post/marketinsert/11}" enctype="multipart/form-data">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <div class="form-group">
                 <label>게시글 제목:</label>

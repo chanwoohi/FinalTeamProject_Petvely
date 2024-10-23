@@ -40,6 +40,7 @@ public class MarketPostService {
 			return res;
 		}try {
 			marketPost.setPo_me_num(1);
+			marketPost.setPo_co_num(11);
 			res = marketPostDao.insertPost(marketPost);
 			if(res) {
 				

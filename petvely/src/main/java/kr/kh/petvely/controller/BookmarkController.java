@@ -45,7 +45,7 @@ public class BookmarkController {
 	    } else if (co_num == 2) {
 	        // GATPost 조인
 	        bookMarkList = bookmarkService.selectGATBookmarks(me_num);
-	    } else if (co_num == 3) {
+	    } else if (co_num == 11) {
 	        // MarketPost 조인
 	        bookMarkList = bookmarkService.selectMarketBookmarks(me_num);
 	    }

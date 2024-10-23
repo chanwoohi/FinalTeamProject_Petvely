@@ -26,13 +26,13 @@ public class MarketController {
 	GoodsService goodsService;
 
 	
-	@GetMapping("/post/market")
-	public String postList(Model model) {
-
+	@GetMapping("/post/market/{co_num}")
+	public String postList(Model model,@PathVariable int co_num) {
+		
 		List<MarketPostVO> list = marketPostService.getMarketList();
-
+		
 		model.addAttribute("list",list);
-
+		
 
 		return "post/market";
 
@@ -52,12 +52,18 @@ public class MarketController {
 		model.addAttribute("types",types);
 		return "post/marketinsert";
 	}
-	@PostMapping("/post/marketinsert")
-	public String marketPostInsertPost(MarketPostVO marketPost, MultipartFile[] fileList) {
-		marketPost.setMp_gts_state("판매중");
-		
+	@PostMapping("/post/marketinsert/{co_num}")
+	public String marketPostInsertPost(MarketPostVO marketPost, MultipartFile[] fileList,
+										@PathVariable int co_num) {
+		marketPost.setMp_gts_state("판매중");	
 		boolean res = marketPostService.addPost(marketPost,fileList);
 		if(res) {
+			marketPost.getPo_co_num();
+			
+			
+			
+			System.out.println("co_num: " + co_num);
+			System.out.println(marketPost);
 			return "redirect:/post/marketinsert";
 		}
 		return "redirect:/post/market";

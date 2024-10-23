@@ -39,9 +39,10 @@
         <div class="message-container">
             <div class="message-content" th:text="${message.mes_content}">쪽지 내용</div>
             <div class="message-footer">
-                <span th:text="'보낸 사람: ' + ${message.mes_me_senderNum}"></span>
+                <span th:text="'보낸 사람: ' + ${message.mes_me_senderId}"></span>
                 <span th:text="'보낸 날짜: ' + ${message.mes_date}"></span>
             </div>
+            
         </div>
         <a class="btn btn-primary" th:href="@{/message/send}">쪽지 보내기</a>
         <a class="btn btn-secondary" th:href="@{/message/messagebox}">목록으로 돌아가기</a>

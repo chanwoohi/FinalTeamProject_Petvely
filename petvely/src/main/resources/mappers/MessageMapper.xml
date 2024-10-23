@@ -2,14 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.petvely.dao.MessageDAO">
 	<select id="selectMessages"  resultType="MessageVO">
-   		select 
-   			* 
-   		from 
+   		select
+   			message.*, rm.me_id as mes_me_receiverId, sm.me_id as mes_me_senderId
+   		from
    			message
-        where
-        	mes_me_receiverNum = #{me_num}
-        order by
-        	mes_date desc
+   		join
+   			(select * from member) rm on mes_me_receiverNum = rm.me_num
+   		join
+   			(select * from member) sm on mes_me_senderNum = sm.me_num
+   		where
+   			mes_me_receiverNum = #{me_num}
+   		order by
+   			mes_date desc
+   			 
         
     </select>
     <select id="selectMemberIds" resultType="MemberVO">
@@ -55,6 +60,15 @@
 	</insert>
 
 	<select id="selectMessageDetail" resultType="MessageVO">
-		select * from message where mes_num = #{mes_num}
+			select
+   			message.*, rm.me_id as mes_me_receiverId, sm.me_id as mes_me_senderId
+   		from
+   			message
+   		join
+   			(select * from member) rm on mes_me_receiverNum = rm.me_num
+   		join
+   			(select * from member) sm on mes_me_senderNum = sm.me_num
+   		where
+   			mes_num = #{mes_num}
 	</select>
 </mapper>
