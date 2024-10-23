@@ -1,25 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-	<head>
-	 <style>
-        .profile-popup {
-            display: none;
-            position: absolute;
-            top: 50px;
-            right: 0px;
-            width: 150px;
-            background-color: white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-            z-index: 10;
-        }
-
-       
-    </style>
-	</head>
-	<body>
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <header th:fragment="header">
+    
 		<nav class="navbar navbar-expand-md bg-dark navbar-dark">
 			<a class="navbar-brand" href="/">Home</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -37,7 +20,7 @@
 						<a class="nav-link" th:href="@{/gatpost/list}">품앗이 리스트</a>
 					</li>
 					<li class="nav-item">
-							<a class="nav-link" th:href="@{/post/market}">중고거래</a>
+						<a class="nav-link" th:href="@{/post/market}">중고거래</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" th:href="@{/bookmark/list/1}">즐겨찾기</a>
@@ -61,22 +44,29 @@
 						</form>
 					</li>
 					<li class="nav-item">
-						<ul>
-				            <li>
-				               <img class="profile-icon" th:src="@{/image/profile.png}" alt="Profile">
-				                <div class="profile-popup" id="profilePopup">
-				                    <div class="popup-item">프로필 보기</div>
-				                    <div class="popup-item">설정</div>
-				                    <div class="popup-item">로그아웃</div>
-				                </div>
-				            </li>
-				       </ul>
-				   </li>
-       		 </ul>
-						
+						<img class="profile-icon" th:src="@{/image/profile.png}" alt="Profile" id="profileIcon">
+						<div class="profile-popup" id="profilePopup">
+							<div class="popup-item">프로필 보기</div>
+							<div class="popup-item">설정</div>
+							<div class="popup-item">로그아웃</div>
+						</div>
+					</li>
+       		 	</ul>
 			</div>  
 		</nav>
     </header>
-		
-</body>
-</html>
+
+    <script>
+        const profileIcon = document.getElementById('profileIcon');
+        const profilePopup = document.getElementById('profilePopup');
+
+        profileIcon.addEventListener('click', () => {
+            profilePopup.classList.toggle('open');
+        });
+
+        window.addEventListener('click', (event) => {
+            if (!profileIcon.contains(event.target) && !profilePopup.contains(event.target)) {
+                profilePopup.classList.remove('open');
+            }
+        });
+    </script>

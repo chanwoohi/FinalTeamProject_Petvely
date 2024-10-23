@@ -1,0 +1,11 @@
+.profile-popup {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 0px;
+            width: 150px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 5px !important;
+            z-index: 10 !important;
+        }
