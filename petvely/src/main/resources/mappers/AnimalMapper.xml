@@ -20,9 +20,9 @@
 	    SELECT * 
 	    FROM animal 
 	    WHERE ani_num IN (
-	        SELECT DISTINCT p.pusp_ani_num 
-	        FROM postUserSelectedPets p 
-	        WHERE p.pusp_po_num = #{po_num}
+	        SELECT DISTINCT w.wmm_ani_num
+	        FROM walkmatemember w 
+	        WHERE w.wmm_po_num = #{po_num}
 	    )
 	</select>
 	

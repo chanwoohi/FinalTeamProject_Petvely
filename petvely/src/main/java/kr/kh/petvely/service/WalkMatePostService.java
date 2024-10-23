@@ -52,8 +52,6 @@ public class WalkMatePostService {
 	        postDao.insertPost(walkMatePost);
 	        // po_num = post.getPo_num(); // DB에 저장 후 po_num을 가져옴
 
-	        // walkMatePost에 포스트 번호를 설정
-	        // walkMatePost.setPo_num(po_num);
 	        System.out.println(walkMatePost);
 
 	        // walkMatePost를 데이터베이스에 저장
@@ -130,7 +128,6 @@ public class WalkMatePostService {
 		            pet.setWmm_me_num(user.getMe_num());
 		            System.out.println("이거야 Inserting animal: " + pet.getPusp_ani_num() + " with po_num: " + walkMatePost.getPo_num() + " and me_num: " + pet.getWmm_me_num());
 		    		// 여기에서 deleteWalkmateMember(pet) 넣고 하려고 했다가 Mapper에 Distinct로 중복 제거하기로 함...
-		            
 		            walkMatePostDao.insertWalkMateMember(pet);
 		            
 		            postHostSelectedPetsDao.insertPostUserSelectedPets(pet); // DB에 저장
