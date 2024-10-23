@@ -122,7 +122,7 @@ public class PostController {
 	    // 로그인된 사용자 권한 확인
 	    if (!"ADMIN".equals(customUser.getMember().getMe_authority()) && post.getPo_me_num() != customUser.getMember().getMe_num()) {
 	        redirectAttributes.addFlashAttribute("errorMessage", "수정 권한이 없습니다.");
-	        return "redirect:/post/list";  // 수정 페이지가 아닌 목록 페이지로 리디렉션
+	        return "redirect:/post/list/" + post.getPo_co_num();  // 수정 페이지가 아닌 목록 페이지로 리디렉션
 	    }
 	    
 	    model.addAttribute("post", post);
@@ -135,7 +135,7 @@ public class PostController {
 	    // 로그인 사용자와 게시글 작성자가 동일한지 확인 (또는 관리자)
 	    PostVO existingPost = postService.getPost(po_num);
 	    if (existingPost == null || (existingPost.getPo_me_num() != customUser.getMember().getMe_num())) {
-	        return "redirect:/error";  // 권한이 없거나 게시글이 없으면 에러 페이지로 리디렉션
+	        return "redirect:/post/list/" + post.getPo_co_num();  // 권한이 없거나 게시글이 없으면 리스트로 리디엑션
 	    }
 	
 	    // 수정된 내용 저장 처리
@@ -191,4 +191,37 @@ public class PostController {
 	        return ResponseEntity.badRequest().body(resultMap);  // 예외 발생 시 400 에러 반환
 	    }
 	}
+	
+	@GetMapping("/post/delete/{po_num}") // 삭제 (게시글 번호 받기)
+	public String postDelete(Model model, @PathVariable int po_num, @AuthenticationPrincipal CustomUser customUser) {
+
+	    // 로그인된 사용자 권한 확인
+	    if (customUser == null) {
+	        model.addAttribute("error", "로그인이 필요합니다.");
+	        return "redirect:/member/login";  // 비회원일 경우 로그인 페이지로 리디렉션
+	    }
+
+	    // 삭제 전에 커뮤니티 번호를 미리 가져옴
+	    PostVO post = postService.getPost(po_num);
+	    int co_num = post.getPo_co_num(); // 커뮤니티 번호 가져오기
+
+	    boolean res;
+	    if ("admin".equals(customUser.getMember().getMe_authority())) {
+	        // 관리자 권한인 경우 논리적 삭제 처리
+	        res = postService.logicalDeletePost(po_num);  // 논리적 삭제
+	    } else {
+	        // 일반 사용자일 경우 물리적 삭제 처리
+	        res = postService.physicalDeletePost(po_num);  // 물리적 삭제
+	    }
+
+	    // 삭제가 성공했는지 확인
+	    if (res) {
+	        // 커뮤니티 목록으로 리디렉션
+	        return "redirect:/post/list/" + co_num;  // 커뮤니티 번호로 리디렉션
+	    } else {
+	        // 삭제 실패 시 다시 상세보기로 리디렉션
+	        return "redirect:/post/detail/" + po_num;
+	    }
+	}
+
 }
