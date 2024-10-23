@@ -2,6 +2,8 @@ package kr.kh.petvely.model.vo;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,7 +14,10 @@ public class AnimalVO {
 	private String ani_name;
 	private int ani_age;
 	private String ani_gender;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date ani_birth;
+	
 	private float ani_weight;
 	private String ani_img;
 	private String ani_info;

@@ -30,6 +30,11 @@ public class AnimalService {
 		
 		return animalDao.selectChoicePetList(po_num);
 	}
+
+	public boolean insertMyPet(AnimalVO animalVo, int me_num) {
+		
+		return animalDao.insertMyPet(animalVo, me_num);
+	}
 	
 
 }
