@@ -1,11 +1,39 @@
-.profile-popup {
+		
+		.nav-profile{
+			position: absolute;
+            top: 10px;
+            right: 150px;
+			
+		}
+		.profile-popup {
             display: none;
             position: absolute;
             top: 50px;
-            right: 0px;
+            right: -55px;
             width: 150px;
             background-color: white;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 5px !important;
             z-index: 10 !important;
+        }
+  
+        .profile-popup.open {
+            display: block;
+        }
+
+        .profile-icon {
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .popup-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            text-align: center;
+        }
+
+        .popup-item:last-child {
+            border-bottom: none;
         }

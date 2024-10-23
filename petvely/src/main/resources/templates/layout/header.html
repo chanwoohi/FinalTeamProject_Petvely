@@ -43,7 +43,7 @@
 								type="submit" onclick="javascript:logoutForm.submit();">로그아웃</a>
 						</form>
 					</li>
-					<li class="nav-item">
+					<li class="nav-profile">
 						<img class="profile-icon" th:src="@{/image/profile.png}" alt="Profile" id="profileIcon">
 						<div class="profile-popup" id="profilePopup">
 							<div class="popup-item">프로필 보기</div>
@@ -52,21 +52,22 @@
 						</div>
 					</li>
        		 	</ul>
-			</div>  
+			</div>
+			<script>
+	        const profileIcon = document.getElementById('profileIcon');
+	        const profilePopup = document.getElementById('profilePopup');
+	
+	        profileIcon.addEventListener('click', () => {
+	            profilePopup.classList.toggle('open');
+	        });
+	
+	        window.addEventListener('click', (event) => {
+	            if (!profileIcon.contains(event.target) && !profilePopup.contains(event.target)) {
+	                profilePopup.classList.remove('open');
+	            }
+	        });
+ 		   </script>  
 		</nav>
     </header>
 
-    <script>
-        const profileIcon = document.getElementById('profileIcon');
-        const profilePopup = document.getElementById('profilePopup');
-
-        profileIcon.addEventListener('click', () => {
-            profilePopup.classList.toggle('open');
-        });
-
-        window.addEventListener('click', (event) => {
-            if (!profileIcon.contains(event.target) && !profilePopup.contains(event.target)) {
-                profilePopup.classList.remove('open');
-            }
-        });
-    </script>
+ 
