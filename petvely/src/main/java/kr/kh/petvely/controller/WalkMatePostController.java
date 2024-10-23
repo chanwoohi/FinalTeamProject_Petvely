@@ -205,6 +205,8 @@ public class WalkMatePostController {
 		
 		walkMateService.updateWalkMateMember(selectedAniNums, po_num);
 		
+		walkMatePostService.updateWalkmatePostState(po_num);
+		
 		return "/walkmatepost/list";
 	}
 }

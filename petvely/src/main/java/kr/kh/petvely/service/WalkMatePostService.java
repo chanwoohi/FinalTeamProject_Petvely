@@ -141,6 +141,11 @@ public class WalkMatePostService {
 	}
 
 	public List<WalkMateMemberVO> selectWalkMateMember(int po_num) {
+		System.out.println("?");
 		return walkMatePostDao.selectWalkMateMember(po_num);
+	}
+
+	public boolean updateWalkmatePostState(int po_num) {
+		return walkMatePostDao.updateWalkMatePostState(po_num);
 	}
 }
