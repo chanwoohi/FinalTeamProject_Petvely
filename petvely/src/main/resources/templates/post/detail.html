@@ -1,70 +1,86 @@
 <!DOCTYPE html>
 <html 
 	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/layout.html}">
 <head>
+<link rel="stylesheet" type="text/css" href="/css/project.css">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
 	<main layout:fragment="content">
-		<div th:if="${post != null}" th:object="${post}">
-			<br/>
-			<div class="from-group">
-				<label>제목 : </label>
-				<input type="text" class="form-control" readonly th:field="*{po_title}">
-			</div>
-			<div class="from-group">
-				<label>작성자 : </label>
-				<input type="text" class="form-control" readonly th:value="${post.me_id}">
-			</div>
-			<div class="form-group">
-		 	<label>작성일:</label>
-		    <input type="text" class="form-control" readonly 
-     		th:value="${post.po_date != null ? #dates.format(post.po_date, 'yyyy-MM-dd') : '날짜 없음'}">
-
-			<div class="from-group">
-				<label>조회수 : </label>
-				<input type="text" class="form-control" readonly th:field="*{po_viewCount}">
-			</div>
-			<div class="text-center">
-			<br/>
-		    <a href="#" data-state="1"
-		       class="btn-up btn btn" 
-		       th:classappend="${re_state != 1} ? '-outline-danger' : '-danger'">
-		        👍추천
-		    </a>
-		    &nbsp;
-		    <a href="#" data-state="-1"
-		       class="btn-down btn btn" 
-		       th:classappend="${re_state != -1} ? '-outline-danger' : '-danger'">
-		        👎비추천
-		    </a>
-			</div>
-			<div class="form-group">
-				<label>내용:</label>
-				<div class="form-control" style="min-height: 400px; height: auto;"
-					th:utext="*{po_content}">
+		<div class="contents">
+			<div th:if="${post != null}" th:object="${post}">
+					<div class="article_header">
+						<div class="title_area">
+							<h3 class="title_text" th:text ="*{po_title}"></h3>
+						</div>
+						<!-- 닉네임 클릭 시 팝업 -->
+	                    <div class="nickname-container" style="position: relative;">
+	                        <div th:text="${post.me_id}" class="nickname" onclick="togglePopup()">닉네임</div>
+	                        <div class="nickname-popup" id="nicknamePopup">
+	                            <div class="popup-item">프로필 보기</div>
+	                            <div class="popup-item">쪽지 보내기</div>
+	                            <div class="popup-item">신고 하기</div>
+	                        </div>
+	                    </div>
+						<div class="article_info">
+						    <span class="date" th:text="${post.po_date != null ? #dates.format(post.po_date, 'yyyy-MM-dd') : '날짜 없음'}"></span>
+						    조회 <span class="count" th:text="*{po_viewCount}"></span>
+				     	</div>
+				     	 <a href="#" data-state="1"
+					       class="btn-up btn btn" 
+					       th:classappend="${re_state != 1} ? '-outline-danger' : '-danger'">
+					        👍추천
+					    </a>
+					    &nbsp;
+					    <a href="#" data-state="-1"
+					       class="btn-down btn btn" 
+					       th:classappend="${re_state != -1} ? '-outline-danger' : '-danger'">
+					        👎비추천
+					    </a>
+					    
+					</div>
+					<div class="main-contents">
+							<div th:utext="*{po_content}"></div>
+					</div>
+				<div class="form-group">
+				     <label>첨부파일 :</label>
+				    <div th:each="file : ${list}">
+				        <a th:href="@{'/download/' + ${file.fi_name}}" 
+				           class="form-control" 
+				           th:download="${file.fi_ori_name}" 
+				           th:text="${file.fi_ori_name}">
+				        </a>
+				    </div>
 				</div>
+				</div>
+				<a class="btn btn-outline-info" th:href="@{/post/list/{po_num}(po_num=*{po_num})}">목록으로</a>
+				<a class="btn btn-outline-info" th:href="@{/post/update/{po_num}(po_num=*{po_num})}">수정</a>
+				<a class="btn btn-outline-info" th:href="@{/post/delete/{po_num}(po_num=*{po_num})}">삭제</a>
 			</div>
-			<!--  <div class="form-group" th:if="${list != null and #lists.size(list) > 0}">-->
-			<div class="form-group">
-			     <label>첨부파일 :</label>
-			    <div th:each="file : ${list}">
-			        <a th:href="@{'/download/' + ${file.fi_name}}" 
-			           class="form-control" 
-			           th:download="${file.fi_ori_name}" 
-			           th:text="${file.fi_ori_name}">
-			        </a>
-			    </div>
-			</div>
-			<a class="btn btn-outline-info" th:href="@{/post/list/{po_num}(po_num=*{po_num})}">목록으로</a>
-			<a class="btn btn-outline-info" th:href="@{/post/update/{po_num}(po_num=*{po_num})}">수정</a>
-			<a class="btn btn-outline-info" th:href="@{/post/delete/{po_num}(po_num=*{po_num})}">삭제</a>
-		</div>
-	</div>
+
 	<script th:inline="javascript">
+	// 팝업 토글 함수
+    function togglePopup() {
+        const popup = document.getElementById('nicknamePopup');
+        if (popup.style.display === 'none' || popup.style.display === '') {
+            popup.style.display = 'block';  // 팝업을 보여줌
+        } else {
+            popup.style.display = 'none';  // 팝업을 숨김
+        }
+    }
+
+    // 페이지 외부를 클릭하면 팝업을 닫음
+    window.onclick = function(event) {
+        const popup = document.getElementById('nicknamePopup');
+        if (!event.target.matches('.nickname')) {
+            if (popup.style.display === 'block') {
+                popup.style.display = 'none';
+            }
+        }
+    }
     // 추천/비추천 버튼 클릭 이벤트
     $('.btn-up, .btn-down').click(function(e) {
         e.preventDefault();
