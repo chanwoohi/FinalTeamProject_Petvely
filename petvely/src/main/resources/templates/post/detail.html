@@ -73,7 +73,7 @@
 		    e.preventDefault();
 		
 		    let state = $(this).data('state');  // 추천: 1, 비추천: -1
-		    let num = [[${post.po_num}]];       // 게시글 번호
+		    let num = '[[${post.po_num}]]';       // 게시글 번호
 		    
 		    $.ajax({
 		        url: '/post/recommend',
