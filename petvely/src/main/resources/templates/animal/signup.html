@@ -15,15 +15,12 @@ layout:decorate="~{layout/layout.html}">
                <input type="text" class="form-control" name="ani_name" >
            </div>
            <div class="form-group">
-               <label>나이</label>
-               <input type="number" class="form-control" name="ani_age" >
-           </div>
-           <!-- select 태그 써보기 -->
-           <div class="form-group">
                <label>성별</label>
-               <input type="text" class="form-control" name="ani_gender" >
+               <select class="form-control" name="ani_gender">
+                   <option value="M">수컷</option>
+                   <option value="W">암컷</option>
+               </select>
            </div>
-           
            <div class="form-group">
                <label>소개</label>
                <textarea id="content" class="form-control" style="min-height: 400px; height: auto;" name="ani_info"></textarea>
@@ -32,14 +29,16 @@ layout:decorate="~{layout/layout.html}">
                <label>생일</label>
                <input type="date" class="form-control" name="ani_birth" >
            </div>
-            <div class="form-group">
+           <div class="form-group">
                <label>무게</label>
                <input type="text" class="form-control" name="ani_weight" >
            </div>
-           <!-- select 태그 써보기  -->
            <div class="form-group">
                <label>중성화 여부</label>
-               <input type="number" class="form-control" name="ani_neutralization" >
+               <select class="form-control" name="ani_neutralization">
+                   <option value="0">O</option>
+                   <option value="1">X</option>
+               </select>
            </div>
            <div class="form-group">
                <label>종</label>

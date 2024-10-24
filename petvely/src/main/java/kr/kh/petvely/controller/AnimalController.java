@@ -117,11 +117,18 @@ public class AnimalController {
                 return "redirect:/error";
             }
         }
+        // 여기서 보면 animal.getAni_img == null file 첨부 안하면
+        System.out.println("과연 ? : " + animal.getAni_img());
+        if(animal.getAni_img() == null) {
+        	// 기존 이미지(ani.getAni_img())를 update에 넣을 animal 오브젝트에 넣기
+        	AnimalVO ani = animalService.selectMyPet(ani_num);
+        	animal.setAni_img(ani.getAni_img());
+        }
         animal.setAni_num(ani_num);
         if(animalService.updateMyPet(animal)) {
         	System.out.println("마이펫 정보 수정 성공!");
         }else {
-        System.out.println("마이펫 정보 수정 실패!");
+        	System.out.println("마이펫 정보 수정 실패!");
         }
 		return "redirect:/member/mypage/13";
 	}
