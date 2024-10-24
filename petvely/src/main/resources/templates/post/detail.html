@@ -30,7 +30,7 @@
 			                        </div>
 			                        	<div class="article_info">
 								    <span class="date" th:text="${post.po_date != null ? #dates.format(post.po_date, 'yyyy-MM-dd') : '날짜 없음'}"></span>
-								    조회 <span class="count" th:text="*{po_viewCount}"></span>
+								    &nbsp;조회 <span class="count" th:text="*{po_viewCount}"></span>
 						     	</div>
 			                    </div>
 					     </div>
@@ -50,7 +50,7 @@
 					<div class="main-contents">
 							<div th:utext="*{po_content}"></div>
 					</div>
-				<div class="form-group">
+				<div class="file">
 				     <label>첨부파일 :</label>
 				    <div th:each="file : ${list}">
 				        <a th:href="@{'/download/' + ${file.fi_name}}" 

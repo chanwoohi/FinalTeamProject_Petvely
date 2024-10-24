@@ -133,7 +133,7 @@
 .nickname-popup {
     display: none;
     position: absolute;
-    top: 100%;
+    top: 25px;
     left: 0;
     background-color: white;
     border: 1px solid #ccc;
@@ -151,12 +151,6 @@
 
 .nickname-popup .popup-item:hover {
     background-color: #f1f1f1;
-}
-    
-label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 5px;
 }
 
 .main-contents {
@@ -209,6 +203,9 @@ label {
 }
 
 /* 파일 링크 스타일 */
+.file{
+	margin:20px;
+}
 .file-link {
     color: #007bff;
     text-decoration: underline;
