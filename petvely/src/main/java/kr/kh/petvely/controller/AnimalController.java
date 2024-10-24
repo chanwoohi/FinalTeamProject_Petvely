@@ -125,4 +125,16 @@ public class AnimalController {
         }
 		return "redirect:/member/mypage/13";
 	}
+	
+	@GetMapping("/animal/profile/{ani_num}")
+	public String animalProfile(Model model,
+								@PathVariable int ani_num) {
+		AnimalVO myPet = animalService.selectMyPet(ani_num);
+		// 확인용
+		System.out.println(myPet);
+		model.addAttribute("myPet", myPet);
+		
+		return "/animal/profile";
+	}
+	
 }

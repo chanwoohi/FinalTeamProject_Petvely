@@ -30,7 +30,11 @@
 				</thead>
 				<tbody>
 					<tr th:each="item : ${petList}" th:if="${item != null}">
-						<td th:text="${item.ani_name}"></td>
+						<td>
+						    <button type="button" class="btn btn-link"
+								    th:onclick="'window.open(\'/animal/profile/' + ${item.ani_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'"
+								    th:text="${item.ani_name}"></button>
+						</td>
 						<td th:text="${item.ani_at_type}"></td>
 						<td th:text="${item.ani_age}"></td>
 						<td th:text="${item.ani_gender}"></td>
