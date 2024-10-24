@@ -39,7 +39,6 @@ public class MarketPostService {
 		if(marketPost == null) {
 			return res;
 		}try {
-			marketPost.setPo_me_num(1);
 			marketPost.setPo_co_num(11);
 			res = marketPostDao.insertPost(marketPost);
 			if(res) {
@@ -63,7 +62,6 @@ public class MarketPostService {
 		}
 		return res;
 	}
-
 	private void uploadFile(MultipartFile file, int po_num, MarketPostVO marketPost) {
 		if(file == null || file.getOriginalFilename().length() == 0) {
 			return;
@@ -83,10 +81,11 @@ public class MarketPostService {
 		}
 	}
 
-	public boolean marketComplete(int po_num) {
+	public boolean marketComplete(int po_num, int me_num) {
 		
 	    try {
-	        marketPostDao.updateTradeState(po_num, "판매완료");
+	        marketPostDao.updateTradeState(po_num, "판매완료",me_num);
+	        
 	        return true;
 	    } catch (Exception e) {
 	        e.printStackTrace();

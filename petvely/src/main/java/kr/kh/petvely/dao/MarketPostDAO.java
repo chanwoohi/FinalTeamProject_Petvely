@@ -16,11 +16,11 @@ public interface MarketPostDAO {
 
 	boolean insertMarketPost(MarketPostVO marketPost);
 
-	boolean insertPost(MarketPostVO marketPost);
+	boolean insertPost(PostVO post);
 
 	List<GoodsTypeVO> selectTypes();
 
-	boolean updateTradeState(int po_num, String state);
+	boolean updateTradeState(int po_num, String state, int me_num);
 
 	void insertFile(FileVO fileVo);
 

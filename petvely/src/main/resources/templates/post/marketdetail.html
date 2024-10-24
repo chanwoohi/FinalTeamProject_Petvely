@@ -61,9 +61,11 @@
         </div>
         <div th:if="${me_num == post.po_me_num}">
             <form method="post" th:action="@{/post/marketcomplete/{po_num}(po_num=${post.po_num})}">
+            	
                 <button type="submit" class="btn btn-outline-dark">거래완료</button>
             </form>
         </div>
+        <span th:text="${post.po_me_num}"></span>
     </main>
 
 </body>
