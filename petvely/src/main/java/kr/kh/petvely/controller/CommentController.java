@@ -78,14 +78,14 @@ public class CommentController {
 	}
 	
 	@PostMapping("/comment/update")
-	public String updateComment(CommentVO comment, int cm_num) {
-		comment.setPo_num(cm_num);
-		boolean res =commentService.deleteComment(comment);
-		System.out.println(res);
+	public String updateComment(CommentVO comment) {
+		boolean res =commentService.updateComment(comment);
+		System.out.println(comment);
 		if(res) {
-			return "/gatpost/detail/" + comment.getCm_po_num();
+			return "comment/close";
 		}
-		return "/comment/update";
+		return "redirect:/comment/update/"+comment.getCm_num();
 	}
+	
 	
 }

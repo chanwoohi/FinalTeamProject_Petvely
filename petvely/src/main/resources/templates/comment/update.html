@@ -16,15 +16,17 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 </head>
 <body>
 	<main>
-		<form class="form-group" method="post" th:object="${comment}" th:action="@{/comment/update?cm_num=*{cm_num}}">
+		<form class="form-group" method="post" th:object="${comment}" th:action="@{/comment/update?cm_num={cm_num}(cm_num=*{cm_num})}">
 			<div class="form-group">
 				<div class="form-group" id="comment"></div>
 				<label>내용:</label>
 				<textarea class="form-control" style="min-height: 100px; height: auto;" th:field="*{cm_content}">
 				</textarea>
 			</div>
-			<button class="btn btn-outline-info col-12">수정</button>
+			<button class="btn btn-outline-info col-12" id="btn_commentclose">수정</button>
 		</form>
+		<script type="text/javascript">
+		</script>
 	</main>
 </body>
 </html>
