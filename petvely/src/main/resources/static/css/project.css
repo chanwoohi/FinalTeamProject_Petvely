@@ -61,7 +61,7 @@
 	position: relative;
     margin-bottom: 20px;
     padding-bottom: 20px;
-    border-bottom: 1px solid var(--skinLayoutBorder);
+    border-bottom: 1px solid #eee;
 }
 .ArticleTitle .title_area .title_text {
     margin-top: 7px;
@@ -90,7 +90,7 @@
 .profile-sectio{
 	padding-top: 5px;
 }
-/* 닉네임과 날짜/조회수 영역 */
+/* 닉네임과 날짜/조회수 영역 *
 .user-details {
     display: flex;
     flex-direction: column;
@@ -164,10 +164,8 @@ label {
     min-height: 400px;
     height: auto;
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
     box-sizing: border-box;
-    background-color: #fff;
+    border-bottom: solid 1px #eee;
 }
 
 .form-control[readonly] {
