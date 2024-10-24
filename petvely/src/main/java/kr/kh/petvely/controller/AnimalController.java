@@ -33,7 +33,7 @@ public class AnimalController {
 	@PostMapping("/animal/signup")
 	public String animalInsertPost(@AuthenticationPrincipal CustomUser customUser,
 	                               AnimalVO animalVo,
-	                               @RequestParam("ani_img") MultipartFile file) {
+	                               MultipartFile file) {
 		// 넘어오는지 확인용
 		System.out.println(animalVo);
 		
@@ -44,14 +44,14 @@ public class AnimalController {
 	        if (!file.isEmpty()) {
 	            try {
 	                // 파일을 특정 경로에 저장
-	                String filePath = "src/main/resources/static/uploads/" + file.getOriginalFilename(); // 저장할 경로 설정
+	                String filePath = "D:\\git\\FinalTeamProject\\petvely\\src\\main\\resources\\static\\uploads\\" + file.getOriginalFilename(); // 저장할 경로 설정
 	                file.transferTo(new File(filePath)); // 파일 저장
 
 	                // VO에 파일 경로 저장
 	                animalVo.setAni_img(filePath); // 파일 경로를 VO에 저장
 	            } catch (IOException e) {
 	                e.printStackTrace();
-	                // 예외 처리
+	                return "redirect:/error";
 	            }
 	        }
 

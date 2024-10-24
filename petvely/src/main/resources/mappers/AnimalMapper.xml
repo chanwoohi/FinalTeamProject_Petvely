@@ -25,5 +25,10 @@
 	        WHERE w.wmm_po_num = #{po_num}
 	    )
 	</select>
-	
+	<insert id="insertMyPet">
+	    INSERT INTO animal (ani_name, ani_age, ani_gender, ani_birth, ani_weight, ani_img, ani_info, ani_neutralization, ani_at_type, ani_me_num)
+	    VALUES (#{ani.ani_name}, #{ani.ani_age}, #{ani.ani_gender},
+	    		#{ani.ani_birth}, #{ani.ani_weight}, #{ani.ani_img}, 
+	    		#{ani.ani_info}, #{ani.ani_neutralization}, #{ani.ani_at_type}, #{me_num})
+	</insert>
 </mapper>
