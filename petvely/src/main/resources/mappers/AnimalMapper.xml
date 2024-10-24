@@ -31,4 +31,8 @@
 	    		#{ani.ani_birth}, #{ani.ani_weight}, #{ani.ani_img}, 
 	    		#{ani.ani_info}, #{ani.ani_neutralization}, #{ani.ani_at_type}, #{me_num})
 	</insert>
+	<delete id="deleteMyPet">
+		delete from animal
+		where ani_num = #{ani_num}
+	</delete>
 </mapper>

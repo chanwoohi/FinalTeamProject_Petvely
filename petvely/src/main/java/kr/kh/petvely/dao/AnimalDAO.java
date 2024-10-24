@@ -16,4 +16,6 @@ public interface AnimalDAO {
 
 	boolean insertMyPet(@Param("ani")AnimalVO animalVo, @Param("me_num")int me_num);
 
+	boolean deleteMyPet(int ani_num);
+
 }

@@ -35,6 +35,10 @@ public class AnimalService {
 		
 		return animalDao.insertMyPet(animalVo, me_num);
 	}
+
+	public boolean deleteMyPet(int ani_num) {
+		return animalDao.deleteMyPet(ani_num);
+	}
 	
 
 }

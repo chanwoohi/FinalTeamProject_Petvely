@@ -25,6 +25,7 @@
 						<th>종류</th>
 						<th>나이</th>
 						<th>성별</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -33,10 +34,21 @@
 						<td th:text="${item.ani_at_type}"></td>
 						<td th:text="${item.ani_age}"></td>
 						<td th:text="${item.ani_gender}"></td>
+						<td>
+							<a class="btn btn-outline-warning" 
+								th:href="@{/animal/update/{ani_num}(ani_num=${item.ani_num})}">수정</a>
+							<a class="btn btn-outline-danger" 
+								th:href="@{/animal/delete/{ani_num}(ani_num=${item.ani_num})}" 
+								onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
+						</td>
 					</tr>
 				</tbody>
 			</table>
 			<a class="btn btn-outline-info" th:href="@{/animal/signup}">펫 등록하기</a>
+		</div>
+		<div th:if="${co_num}!=13">
+			<h1>다른 애들 클릭하면 보이는 문구</h1>
+			<h3>아직 구상중...</h3>
 		</div>
 	</main>
 </body>
