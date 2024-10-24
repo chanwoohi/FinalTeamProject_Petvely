@@ -46,7 +46,15 @@
 					<li class="nav-profile" sec:authorize="isAuthenticated()">
 						<img class="profile-icon" th:src="@{/image/profile.png}" alt="Profile" id="profileIcon">
 						<div class="profile-popup" id="profilePopup">
-							<div class="popup-item">프로필 보기</div>
+						<div class="popup-item">
+							<p sec:authorize="isAuthenticated()">
+							<span th:text="${#authentication.principal.member.me_nickname}"></span>님
+							</br>ID:
+							<span th:text="${#authentication.principal.member.me_id}" style="font-size:13px;"></span> <br>
+							</p></div>
+							<div class="popup-item">내 프로필</div>
+							<div class="popup-item">평점</div>
+							<div class="popup-item">등록된 펫</div>
 							<a class="popup-item" onclick="javascript:logoutForm.submit();">로그아웃</a>
 						</div>
 					</li>
@@ -68,5 +76,3 @@
  		   </script>  
 		</nav>
     </header>
-
- 
