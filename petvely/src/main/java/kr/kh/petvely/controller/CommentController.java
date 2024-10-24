@@ -78,7 +78,8 @@ public class CommentController {
 	}
 	
 	@PostMapping("/comment/update")
-	public String updateComment(CommentVO comment) {
+	public String updateComment(CommentVO comment, int cm_num) {
+		comment.setCm_num(cm_num);
 		boolean res =commentService.updateComment(comment);
 		System.out.println(comment);
 		if(res) {
