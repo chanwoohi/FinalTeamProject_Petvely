@@ -3,11 +3,11 @@ package kr.kh.petvely.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,21 +36,26 @@ public class AnimalController {
 	public String animalInsertPost(@AuthenticationPrincipal CustomUser customUser,
 	                               AnimalVO animalVo,
 	                               MultipartFile file) {
-		// 넘어오는지 확인용
-		System.out.println(animalVo);
-		
+	    // 넘어오는지 확인용
+	    System.out.println(animalVo);
+	    
 	    if (customUser != null) {
 	        MemberVO user = customUser.getMember();
 
 	        // 파일이 비어 있지 않은 경우에만 처리
-	        if (!file.isEmpty()) {
+	        if (file != null && !file.isEmpty()) {
 	            try {
-	                // 파일을 특정 경로에 저장
-	                String filePath = "D:\\git\\FinalTeamProject\\petvely\\src\\main\\resources\\static\\uploads\\" + file.getOriginalFilename(); // 저장할 경로 설정
+	                // UUID 생성
+	                String uuid = UUID.randomUUID().toString();
+	                // 파일명을 UUID와 원래 파일명으로 설정
+	                String fileName = uuid + "_" + file.getOriginalFilename();
+	                // 파일을 저장할 경로 설정
+	                String filePath = "D:/uploads/" + fileName; // 파일 저장 경로
+	                // 실제로 파일 저장
 	                file.transferTo(new File(filePath)); // 파일 저장
 
-	                // VO에 파일 경로 저장
-	                animalVo.setAni_img(filePath); // 파일 경로를 VO에 저장
+	                // VO에 파일 경로 저장 (여기서 fileName을 사용해야 함)
+	                animalVo.setAni_img("uploads/" + fileName); // 상대 경로로 설정
 	            } catch (IOException e) {
 	                e.printStackTrace();
 	                return "redirect:/error";
@@ -66,6 +71,7 @@ public class AnimalController {
 	    System.out.println("마이펫 등록 실패 !");
 	    return "redirect:/member/mypage/13";
 	}
+
 	
 	@GetMapping("/animal/delete/{ani_num}")
 	public String walkmatepostDelete(@PathVariable int ani_num) {
