@@ -34,6 +34,9 @@
     text-align: center;
     display: block;
 }
+.popup-item p {
+	margin:0;
+}
 
 .popup-item:last-child {
     border-bottom: none;
@@ -54,10 +57,6 @@
     padding: 20px;
 }
 
-/* 폼 그룹 스타일 */
-.form-group {
-    margin-bottom: 15px;
-}
 .article_header {
 	position: relative;
     margin-bottom: 20px;
@@ -72,30 +71,87 @@
     font-size: 14px;
     line-height: 30px;
     color: #C1C1C1;
+    float: left;
 }
-/*닉네임 팝업*/
-.nickname{
-	cursor: pointer;
+/* WriterInfo 섹션 스타일 */
+.WriterInfo {
+    display: flex;
+    margin-bottom: 10px;
 }
+
+/* 프로필 이미지 스타일 */
+.user-profile-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+
+}
+.profile-sectio{
+	padding-top: 5px;
+}
+/* 닉네임과 날짜/조회수 영역 */
+.user-details {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 닉네임 스타일 */
+.nickname-container {
+    display: block;
+}
+
+.nickname {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+/* 날짜와 조회수 스타일 */
+.article-info {
+    font-size: 14px;
+    color: #666;
+    display: flex;
+    align-items: center;
+}
+
+.article-info .date {
+    margin-right: 15px;
+}
+/* 프로필 아이콘과 팝업 스타일 */
+.user-profile-icon {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    padding: 0;
+}
+
+.nickname-container {
+    position: relative;
+    display: inline-block;
+}
+
 .nickname-popup {
-        display: none;
-        position: absolute;
-        background-color: white;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-        border-radius: 5px;
-        width: 150px;
-        cursor: pointer;
-        z-index: 10;
-        
-    }
-.popup-item {
-        padding: 10px;
-        cursor: pointer;
-        border-bottom: 1px solid #ddd;
-    }
-.popup-item:hover {
-        background-color: #f0f0f0;
-    }
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 150px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    z-index: 10;
+}
+
+.nickname-popup .popup-item {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.nickname-popup .popup-item:hover {
+    background-color: #f1f1f1;
+}
     
 label {
     font-weight: bold;

@@ -16,19 +16,24 @@
 						<div class="title_area">
 							<h3 class="title_text" th:text ="*{po_title}"></h3>
 						</div>
-						<!-- 닉네임 클릭 시 팝업 -->
-	                    <div class="nickname-container" style="position: relative;">
-	                        <div th:text="${post.me_id}" class="nickname" onclick="togglePopup()">닉네임</div>
-	                        <div class="nickname-popup" id="nicknamePopup">
-	                            <div class="popup-item">프로필 보기</div>
-	                            <div class="popup-item">쪽지 보내기</div>
-	                            <div class="popup-item">신고 하기</div>
-	                        </div>
-	                    </div>
-						<div class="article_info">
-						    <span class="date" th:text="${post.po_date != null ? #dates.format(post.po_date, 'yyyy-MM-dd') : '날짜 없음'}"></span>
-						    조회 <span class="count" th:text="*{po_viewCount}"></span>
-				     	</div>
+							<div class="WriterInfo">
+								<div class="profile-sectio">
+								<img class="user-profile-icon" th:src="@{/image/user_profile.png}" alt="UserProfile">
+								</div>
+								<!-- 닉네임 클릭 시 팝업 -->
+			                    <div class="nickname-container" style="position: relative;">
+			                        <div th:text="${post.me_id}" class="nickname" onclick="togglePopup()">닉네임</div>
+			                        <div class="nickname-popup" id="nicknamePopup">
+			                            <div class="popup-item">프로필 보기</div>
+			                            <div class="popup-item">쪽지 보내기</div>
+			                            <div class="popup-item">신고 하기</div>
+			                        </div>
+			                        	<div class="article_info">
+								    <span class="date" th:text="${post.po_date != null ? #dates.format(post.po_date, 'yyyy-MM-dd') : '날짜 없음'}"></span>
+								    조회 <span class="count" th:text="*{po_viewCount}"></span>
+						     	</div>
+			                    </div>
+					     </div>
 				     	 <a href="#" data-state="1"
 					       class="btn-up btn btn" 
 					       th:classappend="${re_state != 1} ? '-outline-danger' : '-danger'">
