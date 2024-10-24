@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html 
+xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>마이 펫 수정</title>
+</head>
+<body>
+    <main layout:fragment="content">
+       <form method="post" th:object="${myPet}" 
+       		th:action="@{/animal/update/{ani_num}(ani_num=*{ani_num})}" enctype="multipart/form-data">
+           <div class="form-group">
+               <label>이름</label>
+               <input type="text" th:field="*{ani_name}" class="form-control">
+           </div>
+           <div class="form-group">
+               <label>나이</label>
+               <input type="number" th:field="*{ani_age}" class="form-control">
+           </div>
+           <!-- select 태그 써보기 -->
+           <div class="form-group">
+               <label>성별</label>
+               <input type="text" th:field="*{ani_gender}" class="form-control">
+           </div>
+           
+           <div class="form-group">
+               <label>소개</label>
+               <textarea id="content" th:field="*{ani_info}" class="form-control" style="min-height: 400px; height: auto;"></textarea>
+           </div>
+           <div class="form-group">
+               <label>생일</label>
+               <input type="date" th:field="*{ani_birth}" class="form-control">
+           </div>
+            <div class="form-group">
+               <label>무게</label>
+               <input type="text" th:field="*{ani_weight}" class="form-control" >
+           </div>
+           <!-- select 태그 써보기  -->
+           <div class="form-group">
+               <label>중성화 여부</label>
+               <input type="number" th:field="*{ani_neutralization}" class="form-control" >
+           </div>
+           <div class="form-group">
+               <label>종</label>
+               <input type="text" th:field="*{ani_at_type}" class="form-control">
+           </div>
+           <div class="form-group">
+               <label>프로필 사진 첨부</label>
+               <input type="file" class="form-control" name="file" required/>
+           </div>
+           <input type="hidden" th:field="*{ani_num}"/>
+           <button class="btn btn-outline-info col-12" type="submit">마이펫 수정</button>
+        </form>
+        <script type="text/javascript">
+        	// 파일 첨부 유무를 확인 시켜주는 함수 < 그 기존 프로필 사용하는 기능은 그대로 vo update안시키면됨
+	        function confirmSubmission(event) {
+	            const fileInput = document.querySelector('input[type="file"]');
+	            if (!fileInput.files.length) {
+	                // 파일이 첨부되지 않은 경우
+	                const confirmSubmit = confirm("새 프로필 사진을 등록하지 않으셨습니다. 기존 프로필 사진을 사용하시겠습니까?");
+	                if (!confirmSubmit) {
+	                    // 확인을 누르지 않으면 폼 제출을 막음
+	                    event.preventDefault();
+	                }
+	            }
+	        }
+        </script>
+    </main>
+</body>
+</html>

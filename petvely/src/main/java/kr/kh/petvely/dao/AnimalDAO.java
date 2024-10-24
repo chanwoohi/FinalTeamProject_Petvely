@@ -18,4 +18,8 @@ public interface AnimalDAO {
 
 	boolean deleteMyPet(int ani_num);
 
+	AnimalVO selectMyPet(int ani_num);
+
+	boolean updateMyPet(AnimalVO animal);
+
 }

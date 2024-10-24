@@ -35,4 +35,25 @@
 		delete from animal
 		where ani_num = #{ani_num}
 	</delete>
+	<select id="selectMyPet" resultType="AnimalVO">
+		select *
+		from animal
+		where ani_num = #{ani_num}
+	</select>
+	<update id="updateMyPet">
+		update animal
+		set
+			ani_name = #{ani_name},
+			ani_age = #{ani_age},
+			ani_gender = #{ani_gender},
+			ani_birth = #{ani_birth},
+			ani_weight = #{ani_weight},
+			ani_img = #{ani_img},
+			ani_info = #{ani_info},
+			ani_neutralization = #{ani_neutralization},
+			ani_at_type = #{ani_at_type}
+			
+			
+		where ani_num = #{ani_num}
+	</update>
 </mapper>

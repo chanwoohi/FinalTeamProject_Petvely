@@ -8,10 +8,10 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.petvely.model.user.CustomUser;
@@ -55,7 +55,7 @@ public class AnimalController {
 	                file.transferTo(new File(filePath)); // 파일 저장
 
 	                // VO에 파일 경로 저장 (여기서 fileName을 사용해야 함)
-	                animalVo.setAni_img("uploads/" + fileName); // 상대 경로로 설정
+	                animalVo.setAni_img("/uploads/" + fileName); // 상대 경로로 설정
 	            } catch (IOException e) {
 	                e.printStackTrace();
 	                return "redirect:/error";
@@ -74,12 +74,55 @@ public class AnimalController {
 
 	
 	@GetMapping("/animal/delete/{ani_num}")
-	public String walkmatepostDelete(@PathVariable int ani_num) {
+	public String animalDelete(@PathVariable int ani_num) {
 		
 		if(animalService.deleteMyPet(ani_num)) {
 			System.out.println("펫 삭제 성공!");
 		}
 		System.out.println("펫 삭제 실패!");
+		return "redirect:/member/mypage/13";
+	}
+	
+	@GetMapping("/animal/update/{ani_num}")
+	public String animalUpdate(Model model,
+							   @PathVariable int ani_num) {
+		AnimalVO myPet = animalService.selectMyPet(ani_num);
+		//잘 넘어왔는지 확인용
+		System.out.println(myPet);
+		model.addAttribute("myPet", myPet);
+		
+		return "/animal/update";
+	}
+	
+	@PostMapping("/animal/update/{ani_num}")
+	public String animalUpdatePost(@PathVariable int ani_num,
+								   AnimalVO animal,
+            					   MultipartFile file) {
+        // 새 프로필 사진 파일이 비어 있지 않은 경우에만 처리
+        if (file != null && !file.isEmpty()) {
+            try {
+                // UUID 생성
+                String uuid = UUID.randomUUID().toString();
+                // 파일명을 UUID와 원래 파일명으로 설정
+                String fileName = uuid + "_" + file.getOriginalFilename();
+                // 파일을 저장할 경로 설정
+                String filePath = "D:/uploads/" + fileName; // 파일 저장 경로
+                // 실제로 파일 저장
+                file.transferTo(new File(filePath)); // 파일 저장
+
+                // VO에 파일 경로 저장 (여기서 fileName을 사용해야 함)
+                animal.setAni_img("/uploads/" + fileName); // 상대 경로로 설정
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "redirect:/error";
+            }
+        }
+        animal.setAni_num(ani_num);
+        if(animalService.updateMyPet(animal)) {
+        	System.out.println("마이펫 정보 수정 성공!");
+        }else {
+        System.out.println("마이펫 정보 수정 실패!");
+        }
 		return "redirect:/member/mypage/13";
 	}
 }
