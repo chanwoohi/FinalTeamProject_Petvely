@@ -38,13 +38,6 @@
 							<a class="nav-link" 
 								th:href="@{/member/login}" sec:authorize="isAnonymous()">로그인</a>
 						</li>
-						<li class="nav-item">
-							<form name="logoutForm" 
-								th:action="@{/member/logout}" sec:authorize="isAuthenticated()">
-								<!--  <a class="nav-link" 
-									type="submit" onclick="javascript:logoutForm.submit();">로그아웃</a>-->
-							</form>
-						</li>
 						<li class="nav-profile" sec:authorize="isAuthenticated()">
 							<img class="profile-icon" th:src="@{/image/profile.png}" alt="Profile" id="profileIcon">
 							<div class="profile-popup" id="profilePopup">
@@ -57,7 +50,10 @@
 								<div class="popup-item">내 프로필</div>
 								<div class="popup-item">평점</div>
 								<div class="popup-item">등록된 펫</div>
-								<a class="popup-item" onclick="javascript:logoutForm.submit();">로그아웃</a>
+								<form name="logoutForm" 
+									th:action="@{/member/logout}" sec:authorize="isAuthenticated()">
+									<a class="popup-item" onclick="javascript:logoutForm.submit();">로그아웃</a>
+								</form>
 							</div>
 						</li>
 	       		 	</ul>

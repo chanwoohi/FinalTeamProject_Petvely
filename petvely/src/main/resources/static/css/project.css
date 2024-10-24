@@ -19,6 +19,19 @@
     margin: 0;
 }
 
+/* 메뉴 아이템 */
+.header_menu li {
+    margin-left: 30px; /* 각 메뉴 간 간격 */
+    font-size: 16px; /* 텍스트 크기 설정 */
+}
+
+/* 링크 스타일 */
+.header_menu li a {
+    text-decoration: none; /* 밑줄 제거 */
+    color: black; /* 텍스트 색상 설정 */
+    transition: color 0.3s ease; /* 마우스 호버 시 부드러운 색상 변경 */
+}
+
 .nav-link {
     color: #585858;
     font-weight: 700;
@@ -28,6 +41,7 @@
 .nav-profile{
 	position: relative;
 }
+
 .profile-popup {
     display: none;
     position: absolute;
@@ -63,6 +77,7 @@
 
 .popup-item:last-child {
     border-bottom: none;
+    cursor: pointer;
 }
 
 /* 게시글 상세 */
