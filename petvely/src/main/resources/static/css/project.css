@@ -127,6 +127,7 @@
 .nickname {
     font-weight: bold;
     margin-right: 5px;
+    cursor: pointer;
 }
 
 /* 날짜와 조회수 스타일 */
