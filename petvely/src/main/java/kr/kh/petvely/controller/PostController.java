@@ -107,8 +107,9 @@ public class PostController {
 	}
 
 	@GetMapping("/post/update/{po_num}")
-	public String postUpdate(Model model, @PathVariable int po_num, 
-	                         @AuthenticationPrincipal CustomUser customUser, RedirectAttributes redirectAttributes) {
+	public String postUpdate(Model model, @PathVariable int po_num,
+	                         @AuthenticationPrincipal CustomUser customUser, 
+	                         RedirectAttributes redirectAttributes) {
 	    
 	    PostVO post = postService.getPost(po_num);
 	    List<CommunityVO> communities = postService.getCommunityList();
@@ -130,8 +131,8 @@ public class PostController {
 	    return "post/update";
 	}
 	@PostMapping("/post/update/{po_num}")
-	public String postUpdatePost(@PathVariable int po_num, PostVO post, 
-	                             @AuthenticationPrincipal CustomUser customUser) {
+	public String postUpdatePost(@PathVariable int po_num, @RequestParam("po_co_num") int co_num,
+								 PostVO post, @AuthenticationPrincipal CustomUser customUser) {
 	    // 로그인 사용자와 게시글 작성자가 동일한지 확인 (또는 관리자)
 	    PostVO existingPost = postService.getPost(po_num);
 	    if (existingPost == null || (existingPost.getPo_me_num() != customUser.getMember().getMe_num())) {
@@ -140,10 +141,12 @@ public class PostController {
 	
 	    // 수정된 내용 저장 처리
 	    post.setPo_num(po_num);  // 수정할 게시글 번호 설정
-	    postService.updatePost(post, po_num);
+	    post.setPo_co_num(co_num); //수정할 커뮤니티 번호
+	    postService.updatePost(post);
 	    
-	    return "redirect:/post/detail/" + po_num;  // 수정 완료 후 상세 페이지로 이동
+	    return "redirect:/post/list/" + post.getPo_co_num();  // 수정 완료 후 해당 페이지로 이동
 	}
+	
 	// 추천/비추천 처리
 	@PostMapping("/post/recommend")
 	public ResponseEntity<Map<String, Object>> recommend(

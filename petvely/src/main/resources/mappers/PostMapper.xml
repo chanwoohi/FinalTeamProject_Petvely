@@ -43,7 +43,7 @@
 		UPDATE post set
 			po_title = #{po.po_title},
 			po_content = #{po.po_content},
-			po_co_num = #{co_num}
+			po_co_num = #{po.po_co_num}
 		WHERE po_num = #{po.po_num} 
 	</update>
 	
