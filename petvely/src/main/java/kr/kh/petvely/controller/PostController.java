@@ -216,14 +216,15 @@ public class PostController {
 
 	    boolean res;
 
-	    // 관리자 권한이 있는 경우 논리적 삭제 처리
-	    if ("ADMIN".equals(me_authority)) {
-	        res = postService.logicalDeletePost(po_num);  // 논리적 삭제
-	    } 
+
 	    // 일반 사용자는 본인이 작성한 글만 삭제 가능
-	    else if (post.getPo_me_num() == me_num) {
+	    if (post.getPo_me_num() == me_num && "ADMIN".equals(me_authority)) {
 	        res = postService.physicalDeletePost(po_num);  // 물리적 삭제
 	    } 
+	    // 관리자 권한이 있는 경우 논리적 삭제 처리
+	    else if ("ADMIN".equals(me_authority)) {
+		        res = postService.logicalDeletePost(po_num);  // 논리적 삭제
+		    } 
 	    else {
 	        // 로그인된 사용자와 게시글 작성자가 다르면 삭제 불가
 	        model.addAttribute("error", "삭제 권한이 없습니다.");
