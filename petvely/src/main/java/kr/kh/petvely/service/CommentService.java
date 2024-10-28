@@ -19,8 +19,8 @@ public class CommentService {
 		return commentDao.selectCommentList();
 	}
 	
-	public List<CommentVO> getCommentList(int po_num) {
-		return commentDao.selectCommentList(po_num);
+	public List<CommentVO> getCommentListin(int po_num) {
+		return commentDao.selectCommentListin(po_num);
 	}
 
 	public boolean insertComment(CommentVO comment, MemberVO user) {

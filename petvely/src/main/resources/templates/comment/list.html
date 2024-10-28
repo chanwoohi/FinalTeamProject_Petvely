@@ -2,13 +2,13 @@
 <html 
 xmlns:th="http://www.thymeleaf.org"
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-layout:decorate="~{layout/layout.html}">
+layout:decorate="~{member/mypage.html}">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-	<main layout:fragment="content">
+	<main th:fragment="commnetlist">
 		<div style="font-size: 40px; text-align: center;">
 			<header>댓글</header>
 		</div>
@@ -24,6 +24,7 @@ layout:decorate="~{layout/layout.html}">
 				</thead>
 				<tbody>
 					<tr th:each="item : ${list}">
+						
 						<td th:text="${item.cm_num}"></td>
 						<td>
 							<a th:text="${item.cm_content}" th:href="@{/gatpost/detail/{po_num}(po_num=${item.po_num})}"></a>

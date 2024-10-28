@@ -8,7 +8,7 @@ public interface CommentDAO {
 
 	List<CommentVO> selectCommentList();
 
-	List<CommentVO> selectCommentList(int po_num);
+	List<CommentVO> selectCommentListin(int po_num);
 
 	boolean insertComment(CommentVO comment);
 	

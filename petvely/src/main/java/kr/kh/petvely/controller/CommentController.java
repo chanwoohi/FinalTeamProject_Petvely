@@ -24,16 +24,19 @@ public class CommentController {
 	private CommentService commentService;
 	
 	@GetMapping("/comment/list")
-	public String CommentList(Model model) {
+	public String CommentList(Model model, @AuthenticationPrincipal CustomUser customUser) {
+		MemberVO user = customUser.getMember();
+		System.out.println(user);
 		List<CommentVO> list = commentService.getCommentList();
 		model.addAttribute("list", list);
+		System.out.println(list);
 		return "comment/list";
 	}
-
-	@PostMapping("/comment/list")
+	
+	@PostMapping("/comment/listin")
 	@ResponseBody
 	public List<CommentVO> ComentListPost(Model model, @RequestBody int po_num) {
-		List<CommentVO> list = commentService.getCommentList(po_num);
+		List<CommentVO> list = commentService.getCommentListin(po_num);
 		model.addAttribute("list",list);
 		return list;
 		

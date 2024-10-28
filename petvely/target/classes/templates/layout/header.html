@@ -37,20 +37,19 @@
 							th:href="@{/member/login}" sec:authorize="isAnonymous()">로그인</a>
 					</li>
 					<li class="nav-item">
+						<a class="nav-link" 
+							th:href="@{/member/mypage}" sec:authorize="isAuthenticated()">마이페이지</a>
+					</li>
+					<li class="nav-item">
 						<form name="logoutForm" 
 							th:action="@{/member/logout}" sec:authorize="isAuthenticated()">
 							<a class="nav-link" 
 								type="submit" onclick="javascript:logoutForm.submit();">로그아웃</a>
 						</form>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" 
-							th:href="@{/member/mypage}" sec:authorize="isAnonymous()">마이페이지</a>
-					</li>
 				</ul>
 			</div>  
 		</nav>
     </header>
-		
 </body>
 </html>

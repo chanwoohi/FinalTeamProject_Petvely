@@ -22,11 +22,11 @@
 			<div class="form-group">
 				<div th:if="${GATPost.gat_gat.equals('o')}">
 					<input class="btn btn-outline-info text-center" type="text" readonly value="GIVE">
-					<input class="btn btn-outline-info text-center" type="text" readonly th:field="*{gat_gats_state}">
+					<input class="btn btn-outline-info text-center btn-state" type="text" readonly th:field="*{gat_gats_state}" th:value="*{gat_gats_state}">
 				</div>
 				<div th:if="${GATPost.gat_gat.equals('x')}">
 					<input class="btn btn-outline-info text-center" type="text" readonly value="TAKE">
-					<input class="btn btn-outline-info text-center" type="text" readonly th:field="*{gat_gats_state}">
+					<input class="btn btn-outline-info text-center btn-state" type="text" readonly th:field="*{gat_gats_state}" th:value="*{gat_gats_state}">
 				</div>
 			</div>
 			<div class="form-group">
@@ -92,21 +92,26 @@
 		</div>
 		<script type="text/javascript">
 		
-			/*
-				document.getElementById("commentButton").click();
-			*/
+			document.getElementById("commentButton").click();
+			
+			let state = '[[${GATPost.gat_gats_state}]]';
+			
+			$(".btn-state").click(function() {
+				console.log(1);
+				console.log(state);
+			})
 			
 			$("#commentButton").click(function() {
 				$(".commentList").toggle();
 			})
 		
 			let po_num = '[[${GATPost.po_num}]]';
-			let me_num = '[[${Userlist.me_num}]]';
+			let me_num = '[[${user.me_num}]]';
 			
 			function getCommentList() {
 				$.ajax({
 					async : true, 
-					url : '/comment/list',
+					url : '/comment/listin',
 					method : "post",
 					data : JSON.stringify(po_num), 
 					contentType : "application/json; charset=utf-8",
@@ -127,6 +132,7 @@
 				for(comment of data){
 					let reBtn = '';
 					let reInput = '';
+					let btns = '';
 					if(comment.me_num == me_num){
 						btns = `
 							<button class="btn btn-outline-info btn-update" data-num="${comment.cm_num}">수정</button>
