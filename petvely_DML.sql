@@ -1,14 +1,5 @@
 use petvely;
 
--- Member 테이블에 회원 추가
-INSERT INTO petvely.Member (me_id, me_pw, me_nickname, me_email, me_authority, me_phone, me_ms_status)
-VALUES 
-('user01', 'password111', 'nickname01', 'user01@example.com', 'user', '01011111111', 'active'), 
-('user02', 'password222', 'nickname02', 'user02@example.com', 'user', '01022222222', 'active'), 
-('user03', 'password333', 'nickname03', 'user03@example.com', 'user', '01033333333', 'active'), 
-('user04', 'password444', 'nickname04', 'user04@example.com', 'user', '01044444444', 'active'), 
-('user05', 'password555', 'nickname05', 'user05@example.com', 'user', '01055555555', 'active');
-
 -- 새로운 게시글 추가 (user01이 작성)
 INSERT INTO petvely.Post (po_title, po_content, po_date, po_co_num, po_hidden, po_viewCount, po_recommendCount, po_reportCount, po_notice, po_me_num, po_delete)
 VALUES 
@@ -42,10 +33,11 @@ VALUES
 );
 
 # 관리자가 '강아지', '고양이', '도마뱀', '고슴도치' 커뮤니티를 추가했을 때 필요한 쿼리
-INSERT INTO COMMUNITY(CO_NAME) 
-VALUES('산책 메이트'),
-('품앗이'),
-('중고거래');
+INSERT INTO COMMUNITY(CO_NAME, CO_NUM) 
+VALUES('산책 메이트', 10),
+('품앗이', 12),
+('중고거래', 11),
+('펫 정보', 13);
 
 
 insert into petvely.regex(re_regex)
@@ -102,16 +94,16 @@ insert into goodstype values
 -- Animal 테이블에 반려동물 정보 추가
 INSERT INTO petvely.Animal (ani_name, ani_age, ani_gender, ani_birth, ani_weight, ani_neutralization, ani_at_type, ani_me_num)
 VALUES 
-('캥순이', 7, 'W', '2017-07-14', 8.4, 0, '캥거루', 7),
-('캥돌이', 7, 'M', '2017-07-14', 8.4, 0, '캥거루', 6),
-('냥돌이', 7, 'M', '2017-07-14', 8.4, 0, '고양이', 6),
-('람돌이', 7, 'M', '2017-07-14', 8.4, 0, '다람쥐', 6),
+('캥순이', 7, 'W', '2017-07-14', 8.4, 0, '캥거루', 3),
+('캥돌이', 7, 'M', '2017-07-14', 8.4, 0, '캥거루', 3),
+('냥돌이', 7, 'M', '2017-07-14', 8.4, 0, '고양이', 3),
+('람돌이', 7, 'M', '2017-07-14', 8.4, 0, '다람쥐', 3),
 ('다초', 7, 'M', '2017-07-14', 8.4, 0, '강아지', 2),
 ('잠자리', 1, 'M', '2024-09-18', 0.01, 0, '잠자리', 2),
-('호날두', 39, 'M', '1985-02-05', 85, 0, '사람', 3),
-('달이', 3, 'W', '2021-05-18', 3, 0, '강아지', 3),
-('메시', 37, 'M', '1987-06-25', 67, 0, '사람', 3),
-('초코', 1, 'M', '2024-03-03', 3, 0, '강아지', 4);
+('호날두', 39, 'M', '1985-02-05', 85, 0, '사람', 2),
+('달이', 3, 'W', '2021-05-18', 3, 0, '강아지', 1),
+('메시', 37, 'M', '1987-06-25', 67, 0, '사람', 1),
+('초코', 1, 'M', '2024-03-03', 3, 0, '강아지', 1);
 
 INSERT INTO petvely.reporttargettype (rtt_type)
 VALUES
@@ -125,7 +117,6 @@ VALUES
 # 네이버 신고타입 따왔음.
 INSERT INTO petvely.reporttype (rt_type)
 VALUES
-('기타'),
 ('스팸홍보/도배입니다.'),
 ('음란물입니다.'),
 ('불법정보를 포함하고 있습니다.'),

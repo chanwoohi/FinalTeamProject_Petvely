@@ -10,12 +10,12 @@
     <main layout:fragment="content">
     	<div class="report-modal">
 		    <h2 class="modal-title">신고하기</h2>
-		    <div th:object="${post}">
+		    <div>
 		    	<label>작성자</label>
-		    	<span th:text="*{me_id}"></span>
+		    	<span th:text="${writer}"></span>
 		    	<br>
 		    	<label>내용</label>
-		    	<span th:text="*{po_title}"></span>
+		    	<span th:text="${content}"></span>
 		    </div>
 		    <hr>
 		    <form th:action="@{/report/post/{po_num}(po_num=${po_num})}" method="post">

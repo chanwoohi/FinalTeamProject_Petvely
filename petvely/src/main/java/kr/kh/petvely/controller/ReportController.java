@@ -38,18 +38,12 @@ public class ReportController {
 		MemberVO member = memberService.getMeId(post.getPo_me_num());
 		
 		post.setMe_id(member.getMe_id());
-		
 		System.out.println(post.getMe_id());
 		
-		model.addAttribute("post", post);
-		
-		if(customUser != null) {
-			
-			MemberVO user = customUser.getMember();
-			
-			model.addAttribute("user", user);
-			
-		}
+		//작성자 post.getMe_id()만 바꾸면 알아서 적용
+		model.addAttribute("writer", post.getMe_id());
+		//내용 post.getPo_title()만 바꾸면 알아서 적용
+		model.addAttribute("content", post.getPo_title());
 		
 		return "/report/post";
 	}
@@ -70,6 +64,6 @@ public class ReportController {
 			int rp_rtt_num = po_num;
 			reportService.insertReport(rp_me_num, rp_rtt_num, rp_rt_type, re_rtt_type);
 		}
-		return "/";
+		return "/close/close";
 	}
 }
