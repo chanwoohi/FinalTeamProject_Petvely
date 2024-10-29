@@ -15,10 +15,6 @@ public class CommentService {
 	
 	private CommentDAO commentDao;
 	
-	public List<CommentVO> getCommentList() {
-		return commentDao.selectCommentList();
-	}
-	
 	public List<CommentVO> getCommentListin(int po_num) {
 		return commentDao.selectCommentListin(po_num);
 	}

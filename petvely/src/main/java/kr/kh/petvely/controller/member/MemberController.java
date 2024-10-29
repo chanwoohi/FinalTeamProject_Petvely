@@ -71,10 +71,4 @@ public class MemberController {
 		return viewRoute + "logout";
 	}
 	 
-	@GetMapping("mypage")
-	public String memberMypage() {
-		log.info(util.getCurrentMethodName());
-		return "member/mypage";
-	}
-	
 }

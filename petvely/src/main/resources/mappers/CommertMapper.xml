@@ -8,11 +8,6 @@
     	where cm_po_num = #{po_num}
     	order by cm_reply, cm_ord
     </select>
-     <select id="selectCommentList" resultType="commentVO">
-    	select * from comment 
-    	left join member on me_num = cm_me_num
-    	left join post on po_num = cm_po_num
-    </select>
     <insert id="insertComment">
 		insert into comment(cm_content, cm_me_num, cm_po_num, cm_reply, cm_ord, cm_layer) 
 		select 

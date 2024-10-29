@@ -6,8 +6,6 @@ import kr.kh.petvely.model.vo.CommentVO;
 
 public interface CommentDAO {
 
-	List<CommentVO> selectCommentList();
-
 	List<CommentVO> selectCommentListin(int po_num);
 
 	boolean insertComment(CommentVO comment);
