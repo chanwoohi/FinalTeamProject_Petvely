@@ -339,4 +339,10 @@
 .btn_box{
 	padding-top:10px;
 }
-
+/* 푸터 */
+.petfooter{
+    padding: 20px;
+    text-align: center;
+    height: 70px;
+    background-color: #fdfdfd;
+}
