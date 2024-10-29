@@ -12,7 +12,7 @@ import kr.kh.petvely.model.vo.MemberVO;
 
 @Service
 public class MemberDetailService implements UserDetailsService{
-
+	// 시큐리티 내가 추가하려고 했을 때 만든 애인데 얘 떄문에 오류 발생?? 잠시 지우자
 	@Autowired
 	MemberDAO memberDao;
 	
