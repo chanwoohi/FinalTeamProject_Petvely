@@ -118,4 +118,11 @@ public class PostService {
 	public boolean physicalDeletePost(int po_num) {
 	    return postDao.deletePost(po_num);  // 실제 삭제
 	}
+	public boolean deleteBookmark(int po_num, int bm_me_num) {
+		return postDao.deleteBookmark(po_num, bm_me_num);
+	}
+	public Integer selectBookmark(int bm_me_num, int po_num) {
+		
+		return postDao.selectBookmark(bm_me_num, po_num);
+	}
 }

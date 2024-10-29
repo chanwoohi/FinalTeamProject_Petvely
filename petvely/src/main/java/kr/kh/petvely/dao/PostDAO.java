@@ -52,4 +52,8 @@ public interface PostDAO {
     
     // 게시글 총 개수를 가져오는 메서드
 	int selectCountPostList(int co_num);
+	
+	boolean deleteBookmark(@Param("po_num")int po_num, @Param("bm_me_num")int bm_me_num);
+
+	Integer selectBookmark(@Param("bm_me_num")int bm_me_num, @Param("po_num")int po_num);
 }
