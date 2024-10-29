@@ -1,5 +1,6 @@
 package kr.kh.petvely.model.vo;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import lombok.Data;
@@ -16,4 +17,8 @@ public class MessageVO {
 	private String mes_readingCheck;
 	private String mes_me_senderId;
 	private String mes_me_receiverId;
+	
+	private LocalDateTime messageTOA;
+	private LocalDateTime messageExpiration;
+
 }

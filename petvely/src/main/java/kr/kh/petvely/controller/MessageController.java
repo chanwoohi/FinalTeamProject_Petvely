@@ -1,5 +1,6 @@
 package kr.kh.petvely.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +60,9 @@ public class MessageController {
     			message.setMes_me_senderNum(senderNum);
     			message.setMes_me_receiverNum(receiverNum);
     			message.setMes_content(content);
+    			message.setMessageTOA(LocalDateTime.now());
+    			message.setMessageExpiration(LocalDateTime.now().plusDays(1));
+    			
     			boolean res = messageService.sendMessage(message);
     			model.addAttribute("senderNum",senderNum);
     			model.addAttribute("receiverNum",receiverNum);

@@ -41,12 +41,24 @@ public class MarketController {
 
 }
 	@GetMapping("/post/marketdetail/{po_num}")
-	public String marketPostDetail(Model model, @PathVariable int po_num){
-		PostVO post = marketPostService.getMarketPost(po_num);
-		List<FileVO> fileList = marketPostService.getFileList(po_num);
-		model.addAttribute("fileList",fileList);
-		model.addAttribute("post",post);
-		model.addAttribute("me_num", 1);
+	public String marketPostDetail(	Model model,
+									@PathVariable int po_num,
+									@AuthenticationPrincipal CustomUser CustomUser){
+		if(CustomUser != null) {
+			MarketPostVO post = marketPostService.getMarketPost(po_num);
+			
+			List<FileVO> fileList = marketPostService.getFileList(po_num);
+			MemberVO user = CustomUser.getMember();
+			int me_num = user.getMe_num();
+			model.addAttribute("me_num",me_num);
+			model.addAttribute("user", user);
+			model.addAttribute("fileList",fileList);
+			model.addAttribute("post",post);
+
+
+			
+		}
+		
 		return "post/marketdetail";
 }
 	@GetMapping("/post/marketinsert")
@@ -81,23 +93,14 @@ public class MarketController {
 		
 	}
 	@PostMapping("/post/marketcomplete/{po_num}")
-	public String marketComplete(@PathVariable int po_num, 
-								@AuthenticationPrincipal CustomUser CustomUser,Model model, MarketPostVO marketPost) {
-		if(CustomUser != null) {
-			MemberVO user = CustomUser.getMember();
-			marketPost.setPo_co_num(11);
-			
-			int me_num = user.getMe_num();
-			model.addAttribute("me_num",me_num);
-			boolean res = marketPostService.marketComplete(po_num,me_num);
-			System.out.println("po_co_num:"+ marketPost);
-			System.out.println("me_num:"+ me_num);
-			if(res) {
+	public String marketComplete(@PathVariable int po_num,MarketPostVO marketPost) {
+		
+			boolean res = marketPostService.marketComplete(po_num);
+		
+		if(res) {
 				return "redirect:/post/market/" + marketPost.getPo_co_num();
+		
 			}
-				
-			
-		}
 		return "redirect:/post/marketdetail/" + po_num;
 	}
 

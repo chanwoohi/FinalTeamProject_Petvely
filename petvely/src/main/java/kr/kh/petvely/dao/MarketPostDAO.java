@@ -12,7 +12,7 @@ public interface MarketPostDAO {
 
 	List<MarketPostVO> selectMarketList();
 
-	PostVO selectPost(int po_num);
+	MarketPostVO selectPost(int po_num);
 
 	boolean insertMarketPost(MarketPostVO marketPost);
 
@@ -20,7 +20,7 @@ public interface MarketPostDAO {
 
 	List<GoodsTypeVO> selectTypes();
 
-	boolean updateTradeState(int po_num, String state, int me_num);
+	boolean updateTradeState(int po_num, String state);
 
 	void insertFile(FileVO fileVo);
 

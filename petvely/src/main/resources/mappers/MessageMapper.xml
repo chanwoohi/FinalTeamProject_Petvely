@@ -71,4 +71,8 @@
    		where
    			mes_num = #{mes_num}
 	</select>
+	    <delete id="deleteMessageExpiration">
+        DELETE FROM message
+        WHERE mes_date &lt; NOW() - INTERVAL 1 DAY
+    </delete>
 </mapper>

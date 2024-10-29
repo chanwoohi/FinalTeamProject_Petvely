@@ -30,7 +30,7 @@ public class MarketPostService {
 		return marketPostDao.selectMarketList();
 	}
 
-	public PostVO getMarketPost(int po_num) {
+	public MarketPostVO getMarketPost(int po_num) {
 		return marketPostDao.selectPost(po_num);
 	}
 
@@ -81,10 +81,10 @@ public class MarketPostService {
 		}
 	}
 
-	public boolean marketComplete(int po_num, int me_num) {
+	public boolean marketComplete(int po_num) {
 		
 	    try {
-	        marketPostDao.updateTradeState(po_num, "판매완료",me_num);
+	        marketPostDao.updateTradeState(po_num, "판매완료");
 	        
 	        return true;
 	    } catch (Exception e) {

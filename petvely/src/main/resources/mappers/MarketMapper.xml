@@ -13,7 +13,7 @@
 		where 
 			po_me_num = me_num;
 	</select>
-	<select id="selectPost"  resultType="MarketPostVO">
+	<select id="selectPost" resultType="MarketPostVO">
 		select 
 			* 
 		from 
@@ -63,8 +63,7 @@
    			mp_gts_state = #{state}
     	where 
     		po_num = #{po_num}
-    	and
-    		po_me_num = #{me_num}
+    	
 	</update>
 	
 	<select id="selectFileList" resultType="FileVO">
