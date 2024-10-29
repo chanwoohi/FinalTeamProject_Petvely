@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.petvely.model.user.CustomUser;
@@ -97,7 +98,8 @@ public class AnimalController {
 	@PostMapping("/animal/update/{ani_num}")
 	public String animalUpdatePost(@PathVariable int ani_num,
 								   AnimalVO animal,
-            					   MultipartFile file) {
+            					   MultipartFile file,
+            					   @RequestParam String profileAction) {
         // 새 프로필 사진 파일이 비어 있지 않은 경우에만 처리
         if (file != null && !file.isEmpty()) {
             try {
@@ -117,12 +119,16 @@ public class AnimalController {
                 return "redirect:/error";
             }
         }
-        // 여기서 보면 animal.getAni_img == null file 첨부 안하면
-        System.out.println("과연 ? : " + animal.getAni_img());
-        if(animal.getAni_img() == null) {
-        	// 기존 이미지(ani.getAni_img())를 update에 넣을 animal 오브젝트에 넣기
-        	AnimalVO ani = animalService.selectMyPet(ani_num);
-        	animal.setAni_img(ani.getAni_img());
+        if (profileAction.equals("useExisting")) {
+            // 기존 이미지 사용
+        	System.out.println("과연 ? : " + animal.getAni_img());
+        	if(animal.getAni_img() == null) {
+        		// 기존 이미지(ani.getAni_img())를 update에 넣을 animal 오브젝트에 넣기
+        		AnimalVO ani = animalService.selectMyPet(ani_num);
+        		animal.setAni_img(ani.getAni_img());
+        	}
+        } else if (profileAction.equals("discardExisting")) {
+            // 이미지 무시하고 다른 처리
         }
         animal.setAni_num(ani_num);
         if(animalService.updateMyPet(animal)) {
