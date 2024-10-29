@@ -1,10 +1,12 @@
 use petvely;
 
 # 관리자가 '강아지', '고양이', '도마뱀', '고슴도치' 커뮤니티를 추가했을 때 필요한 쿼리
-INSERT INTO COMMUNITY(CO_NAME) VALUES('강아지');
-INSERT INTO COMMUNITY(CO_NAME) VALUES('고양이');
-INSERT INTO COMMUNITY(CO_NAME) VALUES('도마뱀');
-INSERT INTO COMMUNITY(CO_NAME) VALUES('고슴도치');
+INSERT INTO COMMUNITY(CO_NAME, CO_NUM) 
+VALUES('산책 메이트', 10),
+('품앗이', 12),
+('중고거래', 11),
+('펫 정보', 13);
+
 
 insert into petvely.regex(re_regex)
 values
@@ -60,6 +62,10 @@ insert into goodstype values
 -- Animal 테이블에 반려동물 정보 추가
 INSERT INTO petvely.Animal (ani_name, ani_age, ani_gender, ani_birth, ani_weight, ani_neutralization, ani_at_type, ani_me_num)
 VALUES 
+('캥순이', 7, 'W', '2017-07-14', 8.4, 0, '캥거루', 3),
+('캥돌이', 7, 'M', '2017-07-14', 8.4, 0, '캥거루', 3),
+('냥돌이', 7, 'M', '2017-07-14', 8.4, 0, '고양이', 3),
+('람돌이', 7, 'M', '2017-07-14', 8.4, 0, '다람쥐', 3),
 ('다초', 7, 'M', '2017-07-14', 8.4, 0, '강아지', 2),
 ('잠자리', 1, 'M', '2024-09-18', 0.01, 0, '잠자리', 2),
 ('호날두', 39, 'M', '1985-02-05', 85, 0, '사람', 3),
@@ -92,3 +98,27 @@ VALUES (
     'active' -- me_ms_status: 관리자 상태 (active 상태)
 );
 
+('호날두', 39, 'M', '1985-02-05', 85, 0, '사람', 2),
+('달이', 3, 'W', '2021-05-18', 3, 0, '강아지', 1),
+('메시', 37, 'M', '1987-06-25', 67, 0, '사람', 1),
+('초코', 1, 'M', '2024-03-03', 3, 0, '강아지', 1);
+
+INSERT INTO petvely.reporttargettype (rtt_type)
+VALUES
+('message'),
+('comment'),
+('member'),
+('review'),
+('map'),
+('post');
+
+# 네이버 신고타입 따왔음.
+INSERT INTO petvely.reporttype (rt_type)
+VALUES
+('스팸홍보/도배입니다.'),
+('음란물입니다.'),
+('불법정보를 포함하고 있습니다.'),
+('청소년에게 유해한 내용입니다.'),
+('욕설/생명경시/혐오/차별적 표현입니다.'),
+('개인정보가 노출되었습니다.'),
+('불쾌한 표현이 있습니다.');

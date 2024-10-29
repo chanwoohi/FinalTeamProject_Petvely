@@ -3,6 +3,7 @@ package kr.kh.petvely.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,18 +12,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.kh.petvely.model.user.CustomUser;
 import kr.kh.petvely.model.vo.CommentVO;
 import kr.kh.petvely.model.vo.GiveAndTakePostVO;
 import kr.kh.petvely.model.vo.GiveAndTakeStateVO;
 import kr.kh.petvely.model.vo.GiveAndTakeTypeVO;
+import kr.kh.petvely.model.vo.MemberVO;
 import kr.kh.petvely.model.vo.Sido_AreasVO;
 import kr.kh.petvely.service.AddressService;
 import kr.kh.petvely.service.GATPostService;
+import kr.kh.petvely.service.PostService;
 import lombok.AllArgsConstructor;
 
 @Controller
 @AllArgsConstructor
 public class GATPostController {
+	@Autowired
+	private PostService postService;
 	
 	@Autowired
 	private GATPostService gatPostService;
@@ -36,7 +42,21 @@ public class GATPostController {
 	}
 	
 	@GetMapping("/gatpost/detail/{po_num}")
-	public String postDetail(Model model, @PathVariable int po_num) {
+	public String postDetail(Model model, 
+							@PathVariable int po_num,
+							@AuthenticationPrincipal CustomUser customUser) {
+		MemberVO user = customUser.getMember();
+		int bm_me_num = user.getMe_num();
+		
+		System.out.println("gatpost가 받는 po_num : " + po_num);
+		Integer bookmark = postService.selectBookmark(bm_me_num, po_num);
+		if (bookmark != null) {
+			System.out.println("bookmark : " + bookmark);
+			model.addAttribute("bookmark", bookmark);
+		}
+		
+		model.addAttribute("po_num", po_num);
+		
 		gatPostService.updatePostView(po_num);
 		GiveAndTakePostVO GATPost = gatPostService.getGATPost(po_num);
 		System.out.println(GATPost);

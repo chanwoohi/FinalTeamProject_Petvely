@@ -24,4 +24,6 @@ public interface WalkMatePostDAO {
 
 	void deleteWalkMateMember(int po_num);
 
+	boolean updateWalkMatePostState(int po_num);
+
 }
