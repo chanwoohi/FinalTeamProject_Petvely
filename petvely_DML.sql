@@ -115,6 +115,7 @@ VALUES
 
 INSERT INTO petvely.reporttargettype (rtt_type)
 VALUES
+('message'),
 ('comment'),
 ('member'),
 ('review'),
@@ -124,10 +125,11 @@ VALUES
 # 네이버 신고타입 따왔음.
 INSERT INTO petvely.reporttype (rt_type)
 VALUES
+('기타'),
 ('스팸홍보/도배입니다.'),
 ('음란물입니다.'),
 ('불법정보를 포함하고 있습니다.'),
 ('청소년에게 유해한 내용입니다.'),
 ('욕설/생명경시/혐오/차별적 표현입니다.'),
 ('개인정보가 노출되었습니다.'),
-('불쾌한 표현이 있습니다.'),
+('불쾌한 표현이 있습니다.');

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.petvely.dao.ReportDAO">
+	<insert id="insertReport">
+		insert into report(rp_me_num, rp_rt_type, rp_rtt_type, rp_rtt_num)
+		values(#{rp_me_num}, #{rp_rt_type}, #{rp_rtt_type}, #{rp_rtt_num})
+	</insert>
+</mapper>

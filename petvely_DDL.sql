@@ -489,3 +489,7 @@ ADD COLUMN `mp_imgUrl` VARCHAR(255) NULL DEFAULT NULL AFTER `mp_gt_type`;
 
 ALTER TABLE `petvely`.`member` 
 CHANGE COLUMN `me_authority` `me_authority` VARCHAR(5) NULL DEFAULT 'USER';
+
+# 신고시간 기준으로 rp_date 저장
+ALTER TABLE `Report`
+MODIFY `rp_date` DATETIME DEFAULT CURRENT_TIMESTAMP;

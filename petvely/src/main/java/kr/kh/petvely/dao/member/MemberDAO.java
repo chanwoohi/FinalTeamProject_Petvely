@@ -10,4 +10,6 @@ public interface MemberDAO {
 	
 	MemberVO selectMember(String me_id);
 
+	MemberVO selectMeId(int po_me_num);
+
 }

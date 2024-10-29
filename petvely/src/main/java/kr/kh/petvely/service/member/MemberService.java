@@ -61,6 +61,11 @@ public class MemberService {
 		log.info("2 : " + selectedVO);
 		return selectedVO;
 	}
+
+	public MemberVO getMeId(int po_me_num) {
+		
+		return memberDao.selectMeId(po_me_num);
+	}
 	
 	/*
 	 * private boolean regexCheckMember(MemberVO member) { if(member == null ||
