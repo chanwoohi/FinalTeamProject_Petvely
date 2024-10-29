@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import jakarta.servlet.http.HttpServletResponse;
 import kr.kh.petvely.dao.member.MemberDAO;
 import kr.kh.petvely.model.vo.MemberVO;
 import lombok.extern.slf4j.Slf4j;

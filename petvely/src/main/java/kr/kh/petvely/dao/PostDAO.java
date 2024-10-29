@@ -2,12 +2,11 @@ package kr.kh.petvely.dao;
 
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.apache.ibatis.annotations.Param;
 
 import kr.kh.petvely.model.vo.CommunityVO;
-
-import javax.sql.DataSource;
-
 import kr.kh.petvely.model.vo.FileVO;
 import kr.kh.petvely.model.vo.PostVO;
 import kr.kh.petvely.model.vo.RecommendVO;

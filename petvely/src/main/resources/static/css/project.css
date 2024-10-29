@@ -1,8 +1,9 @@
-/*nav*/
+
 *{
 	textarea:focus {
     outline: none;
 }
+/*nav*/
 }
 .logo_icon {
     cursor: pointer;
@@ -294,7 +295,7 @@
 }
 .text_category {
     width: 100%;
-    max-width: 500px; /*조정중*/
+    max-width: 300px; /*조정중*/
     margin: 10px 0;
     position: relative;
 }
@@ -337,3 +338,4 @@
 .btn_box{
 	padding-top:10px;
 }
+

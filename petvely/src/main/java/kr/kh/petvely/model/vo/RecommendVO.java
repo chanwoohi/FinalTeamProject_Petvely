@@ -1,7 +1,6 @@
 package kr.kh.petvely.model.vo;
 
 
-import kr.kh.petvely.service.PostService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
