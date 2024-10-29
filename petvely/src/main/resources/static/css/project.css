@@ -1,8 +1,8 @@
 /*nav*/
 .logo_icon {
     cursor: pointer;
-
 }
+
 .header_container {
     display: flex;
     justify-content: space-evenly;
@@ -261,5 +261,74 @@
     text-align: center;
 }
 
-
+/*수정페이지*/
+.title_text_input{
 	
+    min-height: 48px;
+    width: 100%;
+    padding: 13px 16px 11px;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+    border-radius: 10px;
+    background-color: #f5f6f8;
+    font-size: 16px;
+    line-height: 22px;
+	resize : none;
+	
+}
+/*카테고리 수정*/
+.header{
+	padding-top:30px;
+}
+.update_header{
+	padding: 20px 28px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 1px solid #ededed;
+    background-color: #fff;
+}
+.text_category {
+    width: 100%;
+    max-width: 500px; /*조정중*/
+    margin: 10px 0;
+    position: relative;
+}
+
+.text_category select {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 16px;
+    color: #333;
+    border:none;
+	border-bottom: 1px solid #ededed;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+.text_category::after {
+    content: '▼';
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #999;
+    pointer-events: none; /* 아이콘 클릭 방지 */
+}
+/*카테고리 내용*/
+.content{
+	padding-top:20px;
+}
+.update_content{
+    width: 100%;
+    padding: 13px 16px 11px;
+    border: 1px solid #ededed;
+    box-sizing: border-box;
+    font-size: 16px;
+    line-height: 22px;
+	resize : none;
+}
+.btn_box{
+	padding-top:10px;
+}

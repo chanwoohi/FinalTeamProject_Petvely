@@ -6,7 +6,7 @@
 <head>
 <link rel="stylesheet" type="text/css" href="/css/project.css">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>detail</title>
 </head>
 <body>
 	<main layout:fragment="content">
@@ -28,10 +28,10 @@
 			                            <div class="popup-item">쪽지 보내기</div>
 			                            <div class="popup-item">신고 하기</div>
 			                        </div>
-			                        	<div class="article_info">
-								    <span class="date" th:text="${post.po_date != null ? #dates.format(post.po_date, 'yyyy-MM-dd') : '날짜 없음'}"></span>
-								    &nbsp;조회 <span class="count" th:text="*{po_viewCount}"></span>
-						     	</div>
+			                       <div class="article_info">
+									    <span class="date" th:text="${post.po_date != null ? #dates.format(post.po_date, 'yyyy-MM-dd') : '날짜 없음'}"></span>
+									    &nbsp;조회 <span class="count" th:text="*{po_viewCount}"></span>
+							     	</div>
 			                    </div>
 					     </div>
 				     	 <a href="#" data-state="1"
