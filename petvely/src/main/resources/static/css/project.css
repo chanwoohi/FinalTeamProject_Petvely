@@ -14,7 +14,7 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    padding: 10px 50px; /* 좌우 패딩 설정 */
+    padding: 20px 50px; /* 좌우 패딩 설정 */
     background-color: white; /* 배경색 설정 */
     border-bottom: 1px solid #eaeaea; /* 하단에 얇은 경계선 */
 }
@@ -345,4 +345,5 @@
     text-align: center;
     height: 70px;
     background-color: #fdfdfd;
+    border-top: 1px solid #ddd;
 }

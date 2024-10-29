@@ -1,4 +1,5 @@
 @charset "utf-8";
+
 /* fluid 여백수정 */
 .container-fluid{
     padding-right: 0px;
@@ -42,6 +43,7 @@ body {
 .user_community a{
 	padding: 30px;
 	text-decoration: none;
+	color: #000;
 	cursor: pointer;
 }
 /* 탭 버튼 스타일 */
@@ -49,14 +51,15 @@ body {
 	border-bottom: 1px solid #e8e8e8;
 	display: flex;
 	justify-content: center;
-	margin-bottom: 20px;
 }
 .tab-buttons a {
 	border: none;
+	color: #000;
 	padding: 10px 20px;
 	font-size: 16px;
 	cursor: pointer;
 	transition: background-color 0.3s;
+	text-decoration: none;
 	margin: 0 10px;
 }
 
@@ -72,7 +75,9 @@ body {
 
 .tab-content {
 	display: none;
+	min-height: calc(100vh - 140px);
 	padding: 20px;
+	background-color: #fffdf4;
 }
 
 .tab-content.active {
@@ -122,3 +127,4 @@ body {
 .btn_update:hover, .pet_update:hover {
 	background-color: #ffc107;
 }
+
