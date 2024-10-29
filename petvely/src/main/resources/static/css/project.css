@@ -1,4 +1,9 @@
 /*nav*/
+*{
+	textarea:focus {
+    outline: none;
+}
+}
 .logo_icon {
     cursor: pointer;
 }
