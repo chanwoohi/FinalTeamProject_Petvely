@@ -89,5 +89,10 @@ public class MemberService {
 	 * if(!Pattern.matches("^[a-zA-Z0-9!@#$]{6,15}$", member.getMe_pw())) return
 	 * false; return true; }
 	 */
+
+	public MemberVO getMeId(int po_me_num) {
+		
+		return memberDao.selectMeId(po_me_num);
+	}
 }
 	
