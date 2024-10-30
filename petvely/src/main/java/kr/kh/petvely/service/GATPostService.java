@@ -94,4 +94,8 @@ public class GATPostService {
 		return gatpostDao.selectGATTypeList();
 	}
 
+	public boolean updateat_gat(GiveAndTakePostVO gATPost) {
+		return gatpostDao.updategat_gat(gATPost);
+	}
+
 }

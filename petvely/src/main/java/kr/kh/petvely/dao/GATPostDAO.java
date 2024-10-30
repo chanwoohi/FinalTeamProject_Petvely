@@ -31,4 +31,6 @@ public interface GATPostDAO {
 
 	void updateView(Integer po_num);
 
+	boolean updategat_gat(GiveAndTakePostVO gATPost);
+
 }

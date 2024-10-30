@@ -13,7 +13,7 @@ layout:decorate="~{layout/layout.html}">
 			<input type="hidden"  th:field="*{po_num}"/>
 			<div class="form-group" id="GT">
 				<label>품앗이:</label>
-				<input type="hidden" id="gat_gat" name="gat_gat" required="required" th:field="*{gat_gat}">
+				<input type="text" id="gat_gat" name="gat_gat" required="required" th:field="*{gat_gat}" style="display: none;">
 				<a id="give" class="btn btn-outline-info" onclick="">GIVE</a>
 				<a id="take" class="btn btn-outline-info" onclick="">TAKE</a>
 			</div>

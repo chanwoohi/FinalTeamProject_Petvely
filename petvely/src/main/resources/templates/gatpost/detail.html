@@ -94,19 +94,49 @@
 		
 			document.getElementById("commentButton").click();
 			
-			let state = '[[${GATPost.gat_gats_state}]]';
+			
+			let gat_gats_state = '[[${GATPost.gat_gats_state}]]';
+			console.log(gat_gats_state)
+			let po_num = '[[${GATPost.po_num}]]';
+			let me_num = '[[${user.me_num}]]';
+			
 			
 			$(".btn-state").click(function() {
-				console.log(1);
-				console.log(state);
+				console.log(1)
+				var change_state ='';
+				if (gat_gats_state == "진행 중") {
+					change_state ='완료';
+				}
+				console.log(2)
+				if (gat_gats_state == "완료") {
+					change_state ='진행 중';
+				}
+				console.log(3)
+				var comment = {
+						gat_gats_state : change_state,
+						po_num : po_num,
+					}
+				console.log(4)
+				$.ajax({
+					async : true,
+					url : '/gat_gat/update', 
+					type : 'post', 
+					data : JSON.stringify(comment),
+					contentType : "application/json; charset=utf-8",
+					success : function (data){
+					},
+					error : function(jqXHR, textStatus, errorThrown){
+					}
+				});
+				location.reload(true);
+				console.log(5)
 			})
 			
 			$("#commentButton").click(function() {
 				$(".commentList").toggle();
 			})
 		
-			let po_num = '[[${GATPost.po_num}]]';
-			let me_num = '[[${user.me_num}]]';
+			
 			
 			function getCommentList() {
 				$.ajax({

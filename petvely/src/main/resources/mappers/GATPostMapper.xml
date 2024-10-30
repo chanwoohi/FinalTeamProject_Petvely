@@ -61,4 +61,7 @@
     <select id="selectGATTypeList"  resultType="GiveAndTakeTypeVO">
     	select * from GATType
     </select>
+    <update id="updategat_gat">
+    	update GATPost set gat_gats_state = #{gat_gats_state} where po_num = #{po_num}
+    </update>
 </mapper>
