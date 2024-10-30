@@ -99,32 +99,36 @@
 			
 			let gat_gats_state = '[[${GATPost.gat_gats_state}]]';
 			let po_num = '[[${GATPost.po_num}]]';
+			let gatme_id= '[[${GATPost.me_id}]]';
 			let me_num = '[[${user.me_num}]]';
-			
+			let me_id = '[[${user.me_id}]]';
 			$(".btn-state").click(function() {
-				var change_state ='';
-				if (gat_gats_state == "진행 중") {
-					change_state ='완료';
-				}
-				if (gat_gats_state == "완료") {
-					change_state ='진행 중';
-				}
-				var comment = {
-						gat_gats_state : change_state,
-						po_num : po_num,
+				if (me_id == gatme_id) {
+					var change_state ='';
+					if (gat_gats_state == "진행 중") {
+						change_state ='완료';
 					}
-				$.ajax({
-					async : true,
-					url : '/gat_gat/update', 
-					type : 'post', 
-					data : JSON.stringify(comment),
-					contentType : "application/json; charset=utf-8",
-					success : function (data){
-					},
-					error : function(jqXHR, textStatus, errorThrown){
+					if (gat_gats_state == "완료") {
+						change_state ='진행 중';
 					}
-				});
+					var comment = {
+							gat_gats_state : change_state,
+							po_num : po_num,
+						}
+					$.ajax({
+						async : true,
+						url : '/gat_gat/update', 
+						type : 'post', 
+						data : JSON.stringify(comment),
+						contentType : "application/json; charset=utf-8",
+						success : function (data){
+						},
+						error : function(jqXHR, textStatus, errorThrown){
+						}
+					});
 				location.reload(true);
+				}
+				return;
 			})
 			
 			$("#commentButton").click(function() {
