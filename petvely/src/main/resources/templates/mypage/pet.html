@@ -34,22 +34,27 @@
 							<h1 class="pet_title">나의 반려동물</h1>
 							<!--  <div class="pet_icon">반려동물</div>
 							<div class="pet_name">반려동물이름</div> -->
-							<div class="pet_petContents">
+							<div class="pet_petContents" th:each="item : ${petList}" th:if="${item != null}">
 								<ul>
-									<li class="pet_Petslist">
+									<li class="pet_Petslist" >
 										<div class="pet_mypets">
-												<div class="pet_Petimg">
-													<img class="pet_Petimg"src="/image/pet.PNG" alt="petIcon">
-												</div>
+												<div>
+								                    <div th:if="${item.ani_img} != null">
+								                        <img class="pet_Petimg" th:src="@{${item.ani_img}}" alt="펫 이미지" />
+								                    </div>
+								                    <div th:if="${item.ani_img} == null">
+								                        <img class="pet_Petimg" th:src="@{/uploads/default-image.jpg}" alt="기본 이미지" />
+								              		</div>
+            									</div>
 												<div class="pet_ct">
-													<div class="pet_Petname" th:text="*{ani_name}">펫 이름</div>
-													<div class="pet_PetAge" th:text="*{ani_birth} + '살'">펫나이</div>
+													<div class="pet_Petname" th:text="${item.ani_name}">펫 이름</div>
+													<div class="pet_PetAge" th:text="${item.ani_age} + '살'">펫나이</div>
 												</div>
 										</div>
 									</li>
 								</ul>
 							</div>
-						<button class="pet_update">추가하기</button>
+						<a class="pet_update" th:href="@{/animal/signup}">추가하기</a>
 					</div>
 				   </div>
 			  </div>

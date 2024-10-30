@@ -29,16 +29,15 @@ public class MypageController {
 	@GetMapping("/mypage/pet")
 	public String showgetProfilePage(Model model, @AuthenticationPrincipal CustomUser customUser) {
 		model.addAttribute("currentPage", "pet");
-		
 
 		if(customUser != null) {
 			MemberVO user = customUser.getMember();
 			List<AnimalVO> petList = animalService.selectPetList(user.getMe_num());
-			
 			model.addAttribute("petList", petList);
 		}
 		
 		return "/mypage/pet";
 	}
 
+	
 }
