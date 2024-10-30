@@ -192,3 +192,6 @@ ul {
 .pet_ct{
 	display: block;
 }    
+.pet_title{
+	font-weight: 600;
+}
