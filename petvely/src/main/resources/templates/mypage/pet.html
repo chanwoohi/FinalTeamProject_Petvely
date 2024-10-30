@@ -21,7 +21,6 @@
 						<a class="user_report">신고하기</a>
 						<a class="user_rating">평점</a>
 					</div>
-					<p th:text="${petList}"></p>
 				</div>
 				<div class="sub-container">
 			      <div class="tab-buttons">
@@ -43,8 +42,8 @@
 													<img class="pet_Petimg"src="/image/pet.PNG" alt="petIcon">
 												</div>
 												<div class="pet_ct">
-													<div class="pet_Petname" th:field="*{ani_name}">펫 이름</div>
-													<div class="pet_PetAge"  th:field="*{ani_birth}">펫나이</div>
+													<div class="pet_Petname" th:text="*{ani_name}">펫 이름</div>
+													<div class="pet_PetAge" th:text="*{ani_birth} + '살'">펫나이</div>
 												</div>
 										</div>
 									</li>

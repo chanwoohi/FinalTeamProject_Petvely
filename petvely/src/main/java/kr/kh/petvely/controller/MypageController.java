@@ -16,7 +16,7 @@ import lombok.AllArgsConstructor;
 
 @Controller
 @AllArgsConstructor
-public class mypageController {
+public class MypageController {
 	
 	@Autowired
 	private AnimalService animalService;
@@ -41,6 +41,4 @@ public class mypageController {
 		return "/mypage/pet";
 	}
 
-	
-	
 }
