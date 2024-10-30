@@ -4,8 +4,7 @@ use petvely;
 INSERT INTO COMMUNITY(CO_NAME, CO_NUM) 
 VALUES('산책 메이트', 10),
 ('품앗이', 12),
-('중고거래', 11),
-('펫 정보', 13);
+('중고거래', 11);
 
 
 insert into petvely.regex(re_regex)
@@ -98,10 +97,6 @@ VALUES (
     'active' -- me_ms_status: 관리자 상태 (active 상태)
 );
 
-('호날두', 39, 'M', '1985-02-05', 85, 0, '사람', 2),
-('달이', 3, 'W', '2021-05-18', 3, 0, '강아지', 1),
-('메시', 37, 'M', '1987-06-25', 67, 0, '사람', 1),
-('초코', 1, 'M', '2024-03-03', 3, 0, '강아지', 1);
 
 INSERT INTO petvely.reporttargettype (rtt_type)
 VALUES
