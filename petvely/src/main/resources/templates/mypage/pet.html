@@ -21,37 +21,40 @@
 						<a class="user_report">신고하기</a>
 						<a class="user_rating">평점</a>
 					</div>
+					<p th:text="${petList}"></p>
 				</div>
 				<div class="sub-container">
-					<!-- 탭 버튼 -->
 			      <div class="tab-buttons">
 				    <a th:href="@{/mypage/mypage}" 
 				       th:classappend="${currentPage == 'user'} ? ' active' : ''">내 프로필</a>
 				    <a th:href="@{/mypage/pet}" 
 				       th:classappend="${currentPage == 'pet'} ? ' active' : ''">펫 프로필</a>
 				  </div>
-					<div class="tab-content active">
-							<div class="pet_profile">
-									<h1 class="pet_title">반려동물 추가하기</h1>
-									<!--  <div class="pet_icon">반려동물</div>
-									<div class="pet_name">반려동물이름</div> -->
-									<ul>
-										<li class="pet_Petslist">
-											<div class="pet_mypets">
-													<div class="pet_Petimg"><img th:src="@{/image/pet.png}" alt="petIcon">
-														<div class="pet_ct">
-															<div class="pet_Petname">펫이름</div>
-															<div class="pet_PetAge">펫나이</div>
-														</div>
-													</div>
-											</div>
-										</li>
-									</ul>
-									<button class="pet_update">추가하기</button>
+				  <div class="tab-content active">
+					<div class="pet_profile">
+							<h1 class="pet_title">나의 반려동물</h1>
+							<!--  <div class="pet_icon">반려동물</div>
+							<div class="pet_name">반려동물이름</div> -->
+							<div class="pet_petContents">
+								<ul>
+									<li class="pet_Petslist">
+										<div class="pet_mypets">
+												<div class="pet_Petimg">
+													<img class="pet_Petimg"src="/image/pet.PNG" alt="petIcon">
+												</div>
+												<div class="pet_ct">
+													<div class="pet_Petname" th:field="*{ani_name}">펫 이름</div>
+													<div class="pet_PetAge"  th:field="*{ani_birth}">펫나이</div>
+												</div>
+										</div>
+									</li>
+								</ul>
 							</div>
+						<button class="pet_update">추가하기</button>
 					</div>
-				</div>
-			</div>
+				   </div>
+			  </div>
+		</div>
     </main>
 </body>
 </html>
