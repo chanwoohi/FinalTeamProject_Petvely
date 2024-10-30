@@ -40,7 +40,7 @@
 									th:href="@{/gatpost/detail/{po_num}(po_num=${item.po_num})}"></a>
 								<a 	th:case="11" 
 									th:text="${item.po_title}" 
-									th:href="@{/marketpost/detail/{po_num}(po_num=${item.po_num})}"></a>
+									th:href="@{/post/marketdetail/{po_num}(po_num=${item.po_num})}"></a>
 								<span th:case="*">해당하는 포스트가 없습니다.</span>
 							</div>	
 						</td>

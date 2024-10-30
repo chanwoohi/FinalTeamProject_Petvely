@@ -45,22 +45,27 @@ public class GATPostController {
 	public String postDetail(Model model, 
 							@PathVariable int po_num,
 							@AuthenticationPrincipal CustomUser customUser) {
-		MemberVO user = customUser.getMember();
-		int bm_me_num = user.getMe_num();
-		
-		System.out.println("gatpost가 받는 po_num : " + po_num);
-		Integer bookmark = postService.selectBookmark(bm_me_num, po_num);
-		if (bookmark != null) {
-			System.out.println("bookmark : " + bookmark);
-			model.addAttribute("bookmark", bookmark);
+		if(customUser != null) {
+			// 즐겨찾기 기능
+			MemberVO user = customUser.getMember();
+			
+			int bm_me_num = user.getMe_num();
+			
+			System.out.println("gatpost가 받는 po_num : " + po_num);
+			Integer bookmark = postService.selectBookmark(bm_me_num, po_num);
+			
+			if (bookmark != null) {
+				System.out.println("bookmark : " + bookmark);
+				model.addAttribute("bookmark", bookmark);
+			}
+			
+			model.addAttribute("po_num", po_num);
+			
+			gatPostService.updatePostView(po_num);
+			GiveAndTakePostVO GATPost = gatPostService.getGATPost(po_num);
+			System.out.println(GATPost);
+			model.addAttribute("GATPost", GATPost);
 		}
-		
-		model.addAttribute("po_num", po_num);
-		
-		gatPostService.updatePostView(po_num);
-		GiveAndTakePostVO GATPost = gatPostService.getGATPost(po_num);
-		System.out.println(GATPost);
-		model.addAttribute("GATPost", GATPost);
 		return "gatpost/detail";
 	}
 	

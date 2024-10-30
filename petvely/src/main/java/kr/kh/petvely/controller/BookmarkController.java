@@ -39,7 +39,7 @@ public class BookmarkController {
 		}
 		System.out.println(co_num);
 		MemberVO user = customUser.getMember();
-		int me_num = user.getMe_num(); // << 추후에 로그인 추가하면 세션에서 따와야함
+		int me_num = user.getMe_num();
 		
 	    List<BookMarkVO> bookMarkList = new ArrayList<>();
 	    

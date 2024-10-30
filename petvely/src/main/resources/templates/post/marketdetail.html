@@ -59,6 +59,10 @@
                     th:value="${post.mp_gt_type}">
             </div>
         </div>
+        <div>
+	   		<a th:if="${bookmark}!=${po_num}" class="btn btn-outline-warning" th:href="@{/post/bookmark/insert/{po_num}(po_num=*{po_num})}" >찜⭐</a>
+			<a th:if="${bookmark}==${po_num}" class="btn btn-warning" th:href="@{/post/bookmark/delete/{po_num}(po_num=*{po_num})}" >찜⭐</a>
+		</div>			
         <div th:if="${me_num == post.po_me_num}">
             <form method="post" th:action="@{/post/marketcomplete/{po_num}(po_num=${post.po_num})}">
                 <button type="submit" class="btn btn-outline-dark">거래완료</button>
