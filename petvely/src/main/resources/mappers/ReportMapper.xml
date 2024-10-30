@@ -2,7 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.petvely.dao.ReportDAO">
 	<insert id="insertReport">
-		insert into report(rp_me_num, rp_rt_type, rp_rtt_type, rp_rtt_num)
-		values(#{rp_me_num}, #{rp_rt_type}, #{rp_rtt_type}, #{rp_rtt_num})
+		insert into report(rp_me_num, rp_rt_type, rp_rtt_type, rp_rtt_num, rp_cause)
+		values(#{rp_me_num}, #{rp_rt_type}, #{rp_rtt_type}, #{rp_rtt_num}, #{rp_cause})
 	</insert>
+	<select id="selectReportList" resultType="ReportVO">
+		select * from report
+		where
+			rp_rtt_type = #{rp_rtt_type}
+	</select>
+	<select id="selectRTTList" resultType="ReportTargetTypeVO">
+		select * from reporttargettype
+	</select>
 </mapper>

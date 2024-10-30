@@ -43,7 +43,8 @@ public class MarketController {
 
 		return "post/market";
 
-}
+	}
+	
 	@GetMapping("/post/marketdetail/{po_num}")
 	public String marketPostDetail(Model model, @PathVariable int po_num,
 								   @AuthenticationPrincipal CustomUser customUser){
@@ -70,14 +71,17 @@ public class MarketController {
 			model.addAttribute("post",post);
 			model.addAttribute("me_num", 1);
 		}
+		
 		return "post/marketdetail";
-}
+	}
+	
 	@GetMapping("/post/marketinsert")
 	public String marketPostInsert(Model model) {
 		List<GoodsTypeVO> types = goodsService.getTypes();
 		model.addAttribute("types",types);
 		return "post/marketinsert";
 	}
+	
 	@PostMapping("/post/marketinsert")
 	public String marketPostInsertPost(MarketPostVO marketPost, MultipartFile[] fileList) {
 		marketPost.setMp_gts_state("판매중");
@@ -89,6 +93,7 @@ public class MarketController {
 		return "redirect:/post/market";
 		
 	}
+	
 	@PostMapping("/post/marketcomplete/{po_num}")
 	public String marketComplete(@PathVariable int po_num) {
 		boolean res = marketPostService.marketComplete(po_num);

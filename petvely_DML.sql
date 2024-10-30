@@ -110,9 +110,9 @@ VALUES
 ('message'),
 ('comment'),
 ('member'),
-('review'),
-('map'),
-('post');
+('gatpost'),
+('marketpost'),
+('walkmatepost');
 
 # 네이버 신고타입 따왔음.
 INSERT INTO petvely.reporttype (rt_type)

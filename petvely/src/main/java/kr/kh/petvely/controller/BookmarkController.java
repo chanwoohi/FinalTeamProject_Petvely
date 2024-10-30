@@ -47,6 +47,6 @@ public class BookmarkController {
 
 	    model.addAttribute("bookMarkList", bookMarkList);
 		
-		return "/bookmark/list";
+		return "/member/mypage";
 	}
 }
