@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import kr.kh.petvely.dao.member.MypageDAO;
 import kr.kh.petvely.model.vo.CommentVO;
 import kr.kh.petvely.model.vo.CommunityVO;
+import kr.kh.petvely.model.vo.PostVO;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -21,6 +22,10 @@ public class MypageService {
 
 	public List<CommunityVO> getCommunityList() {
 		return mypageDao.selectCommunityList();
+	}
+
+	public List<PostVO> getPostList(int co_num, int me_num) {
+		return mypageDao.selectPostList(co_num, me_num);
 	}
 
 }

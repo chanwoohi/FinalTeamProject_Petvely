@@ -12,6 +12,7 @@ import kr.kh.petvely.model.user.CustomUser;
 import kr.kh.petvely.model.vo.CommentVO;
 import kr.kh.petvely.model.vo.CommunityVO;
 import kr.kh.petvely.model.vo.MemberVO;
+import kr.kh.petvely.model.vo.PostVO;
 import kr.kh.petvely.service.member.MypageService;
 import kr.kh.petvely.utils.NoName;
 import lombok.AllArgsConstructor;
@@ -46,7 +47,9 @@ public class Mypagecontroller{
 		MemberVO user = customUser.getMember();
 		int me_num = user.getMe_num();
 		List<CommunityVO> communities = mypageService.getCommunityList();
+		List<PostVO> list = mypageService.getPostList(co_num, me_num);
 		model.addAttribute("communities", communities);
+		model.addAttribute("list", list);
 		return "member/mypage/postList";
 	}
 	
