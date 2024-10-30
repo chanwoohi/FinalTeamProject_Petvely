@@ -26,6 +26,12 @@ public interface MarketPostDAO {
 
 	List<FileVO> selectFileList(int po_num);
 
+	boolean updateMarketPost(MarketPostVO marketPost);
+
+	FileVO selectFile(int fi_num, MarketPostVO marketPost);
+
+	boolean deletFile(String fi_name);
+
 
 
 	

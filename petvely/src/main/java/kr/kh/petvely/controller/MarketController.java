@@ -54,6 +54,7 @@ public class MarketController {
 			model.addAttribute("user", user);
 			model.addAttribute("fileList",fileList);
 			model.addAttribute("post",post);
+			
 
 
 			
@@ -104,7 +105,31 @@ public class MarketController {
 		return "redirect:/post/marketdetail/" + po_num;
 	}
 
+	@GetMapping("/post/marketupdate/{po_num}")
+	public String marketUpdate(@PathVariable int po_num,Model model) {
+		MarketPostVO marketPost = marketPostService.getMarketPost(po_num);
+		model.addAttribute("marketPost",marketPost);
+		List<GoodsTypeVO> types = goodsService.getTypes();
+		model.addAttribute("types",types);
 
+
+		return "post/marketupdate";
+		
+	}
+	@PostMapping("/post/marketupdate/{po_num}")
+	public String marketUpdatePost(@PathVariable int po_num,Model model, 
+									MarketPostVO marketPost, MultipartFile[] fileList,int[] nums) {
+		
+		marketPost.setPo_num(po_num);
+		marketPost.setPo_co_num(11);
+		boolean res = marketPostService.updateMarketPost(marketPost,fileList,nums);
+		
+		System.out.println("업데이트할때 : "+marketPost);
+		if(res) {
+			return "redirect:/post/market/" + marketPost.getPo_co_num();
+		}
+		return "redirect:/post/marketupdate/{po_num}";
+	}
 }
 
 

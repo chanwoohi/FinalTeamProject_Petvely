@@ -72,9 +72,12 @@ public class MarketPostService {
 			String basePath = "/uploads";
 			String imgUrl = basePath + fi_name;
 			marketPost.setMp_imgUrl(imgUrl);
+			System.out.println("ImgURL " + imgUrl);
 			
 			FileVO fileVo = new FileVO(fi_ori_name, fi_name, po_num);
+			
 			marketPostDao.insertFile(fileVo);
+			System.out.println("파일VO " +  fileVo);
 
 		}catch(Exception e){
 			e.printStackTrace();
@@ -98,18 +101,52 @@ public class MarketPostService {
 		return marketPostDao.selectFileList(po_num);
 	}
 
-
-
-
-
-
+	public boolean updateMarketPost(MarketPostVO marketPost, MultipartFile[] fileList, int[] nums) {
+		if(marketPost == null) {
+			return false;
+		}
+		boolean res = marketPostDao.updateMarketPost(marketPost);
+		System.out.println("updateMarketPost : "+marketPost);
+		if(!res) {
+			return false;
+		}
+	
+		uploadFileList(fileList,marketPost.getPo_num(), marketPost);
+		if(nums == null || nums.length == 0) {
+			return true;
+		}
+		for(int fi_num : nums) {
+			FileVO file = marketPostDao.selectFile(fi_num,marketPost);
+			deleteFile(file);
+		}
+		
+		
+		return true;
+}
 	
 
 	
-	
 
-	
+	private void deleteFile(FileVO file) {
+		if(file == null) {
+			return;
+		}
+		UploadFileUtils.delteFile(uploadPath, file.getFi_name());
+		marketPostDao.deletFile(file.getFi_name());
+		
+	}
 
+	private void uploadFileList(MultipartFile[] fileList, int po_num,MarketPostVO marketPost) {
+		if(fileList == null || fileList.length == 0) {
+			return;
+		}
+		for(MultipartFile file : fileList) {
+			uploadFile(file, po_num, marketPost);
+			
+			System.out.println("uploadFile : " + marketPost);
+		}
+		
+	}
 
 	
 

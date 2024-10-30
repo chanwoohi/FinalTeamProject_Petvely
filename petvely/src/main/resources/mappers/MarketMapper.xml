@@ -71,10 +71,34 @@
 			* 
 		from 
 			file 
-		where fi_po_num = #{fi_po_num}
+		join
+			post
+		where 
+			fi_po_num = #{po_num}
+		and 
+			fi_po_num = po_num 
+		order by
+			fi_num asc
 	</select>
-	
 
-  
+	<update id="updateMarketPost">
+		update 
+			marketpost 
+	 	join 
+			post using(po_num)
+		set
+			po_title = #{po_title},
+			po_content = #{po_content},
+			mp_price = #{mp_price},
+			mp_gt_type = #{mp_gt_type},
+			mp_imgUrl = #{mp_imgUrl}
+		
+	</update>
 	
+	<select id="selectFile">
+		select * from file where fi_num = #{fi_num}
+	</select>
+	<delete id="deletFile">
+		delete from file where fi_num = #{fi_num}
+	</delete>
 </mapper>
