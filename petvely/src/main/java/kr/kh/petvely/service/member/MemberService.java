@@ -44,6 +44,7 @@ public class MemberService {
 		return memberDao.insertMember(memberVO);
 	}
 
+	/*
 	public MemberVO login(MemberVO memberVO) {
 		if (memberVO == null)
 			return null;
@@ -61,12 +62,26 @@ public class MemberService {
 		log.info("2 : " + selectedVO);
 		return selectedVO;
 	}
-
-	public MemberVO getMeId(int po_me_num) {
-		
-		return memberDao.selectMeId(po_me_num);
-	}
+	*/
 	
+	public MemberVO login(MemberVO member) {
+		if(member == null) {
+			return null;
+		}
+		//다오에게 아이디를 주면서 아이디와 일치하는 회원 정보를 가져오라고 시킴
+		MemberVO user = memberDao.selectMember(member.getMe_id());
+		//가져온 회원 정보가 null이면 null을 리턴
+		if(user == null) {
+			return null;
+		}
+		//비번과 가져온 회원정보의 비번이 같으면 가져온 회원 정보를 리턴
+		if(user.getMe_pw().equals(member.getMe_pw())) {
+			return user;
+		}
+		//다르면 null을 리턴 
+		return null;
+	}
+
 	/*
 	 * private boolean regexCheckMember(MemberVO member) { if(member == null ||
 	 * member.getMe_pw() == null || member.getMe_id() == null) return false;
@@ -74,5 +89,10 @@ public class MemberService {
 	 * if(!Pattern.matches("^[a-zA-Z0-9!@#$]{6,15}$", member.getMe_pw())) return
 	 * false; return true; }
 	 */
+
+	public MemberVO getMeId(int po_me_num) {
+		
+		return memberDao.selectMeId(po_me_num);
+	}
 }
 	

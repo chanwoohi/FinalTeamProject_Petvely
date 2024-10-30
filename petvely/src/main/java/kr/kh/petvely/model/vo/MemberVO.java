@@ -2,11 +2,13 @@ package kr.kh.petvely.model.vo;
 
 import java.util.Date;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class MemberVO {
 
 	private int me_num;

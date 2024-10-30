@@ -2,33 +2,49 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.petvely.dao.PostDAO">
 	<insert id="insertPost" keyProperty="po_num" useGeneratedKeys="true">
-		INSERT into post(po_title, po_co_num, po_content, po_me_num,  po_viewCount, po_recommendCount, po_delete)
-		VALUES (#{po_title}, #{po_co_num}, #{po_content}, #{po_me_num}, #{po_viewCount}, #{po_recommendCount}, #{po_delete})
+		INSERT into post(po_title, po_co_num, po_content, po_me_num,  po_viewCount, po_recommendCount, po_notRecommendCount, po_delete)
+		VALUES (#{po_title}, #{po_co_num}, #{po_content}, #{po_me_num}, #{po_viewCount}, #{po_recommendCount}, #{po_notRecommendCount}, #{po_delete})
 	</insert>
-    
-    <!-- 삭제되지 않은 게시글 목록 조회 (po_delete = 0 조건 추가할 예정) -->
-	<select id="selectPostList" resultType="PostVO">
-		SELECT p.*, 
-           (SELECT COUNT(*) FROM recommend WHERE re_po_num = p.po_num AND re_state = 1) AS recommendCount,
-           (SELECT COUNT(*) FROM recommend WHERE re_po_num = p.po_num AND re_state = -1) AS notRecommendCount
-    	FROM post p
-		WHERE po_co_num = #{co_num}
+	
+    <select id="selectPost" resultType="kr.kh.petvely.model.vo.PostVO">
+    	SELECT po_num, po_title, po_content, po_date, po_hidden, po_viewCount, po_recommendCount, po_notRecommendCount,
+           po_reportCount, po_notice, po_me_num, po_co_num, po_delete, me_id
+	    FROM post
+	    	 JOIN member ON po_me_num = me_num
+	    WHERE po_num = #{po_num}
 	</select>
+    
+    <!-- 삭제되지 않은 게시글 목록 조회-->
+	<select id="selectPostList" resultType="PostVO">
+	    SELECT
+	        post.*, 
+	        me_id,
+	        count(if(re_state = 1, re_state, null)) AS po_recommendCount,
+	        count(if(re_state = -1, re_state, null)) AS po_notRecommendCount
+	    FROM
+	        post
+	        LEFT JOIN recommend ON po_num = re_po_num
+	        JOIN member ON po_me_num = me_num
+	    WHERE
+	        po_co_num = #{co_num} 
+	       
+	    GROUP BY
+	        po_num
+	    ORDER BY
+	        po_num DESC 
+	 </select>
 	
 	<select id="selectCountPostList" parameterType="int" resultType="int">
 	    SELECT COUNT(*) FROM post
 	    WHERE co_num = #{co_num} AND po_delete = 0
 	</select>	
 	
-	<!-- 삭제되지 않은 게시글 목록 조회 (and po_delete 추후 추가예정 po_delete = 0) -->
-	<select id="selectPost" resultType="PostVO">
-		SELECT * from post 
-		WHERE po_num = #{po_num}
-	</select>
-	
 	<update id="updatePost">
-		UPDATE post set po_title = #{po_title}, po_content = #{po_content}
-		WHERE po_num = #{po_num} 
+		UPDATE post set
+			po_title = #{po.po_title},
+			po_content = #{po.po_content},
+			po_co_num = #{po.po_co_num}
+		WHERE po_num = #{po.po_num} 
 	</update>
 	
 	<update id="updateView">
@@ -46,17 +62,21 @@
 	    WHERE po_num = #{po_num}
 	</update>
 	
+	<delete id="deletePost">
+		delete from post where po_num = #{po_num}
+	</delete>
+	
 	<select id="selectCommunityList" resultType="CommunityVO">
 		SELECT * from community
 	</select>
-	
-	<!-- po_me_num을 me_id로 보여지게 -->
-	<select id="selectPostWithMemberId" resultType="kr.kh.petvely.model.vo.PostVO">
-	    SELECT p.po_num, p.po_title, p.po_content, p.po_date, p.po_co_num, m.me_id
-	    FROM Post p
-	    JOIN Member m ON p.po_me_num = m.me_num
-	</select>
-	
+		<!-- 추천 및 비추천 수 업데이트 -->
+	<update id="updateRecommendCount">
+	    UPDATE post
+	    SET 
+	        po_recommendCount = (SELECT COUNT(*) FROM recommend WHERE re_po_num = #{po_num} AND re_state = 1),
+	        po_notRecommendCount = (SELECT COUNT(*) FROM recommend WHERE re_po_num = #{po_num} AND re_state = -1)
+	    WHERE po_num = #{po_num};
+	</update>
 	<!-- 추천 추가 -->
 	<insert id="insertRecommend">
 		INSERT into recommend(re_po_num, re_state, re_me_num)
@@ -64,35 +84,31 @@
 	</insert>
 	
 	<!-- 추천 정보 조회 (게시글 번호로 조회)-->
-	<select id="selectRecommend" resultType="RecommendVO">
-		SELECT * from recommend where re_po_num = #{re_po_num} and re_state = #{re_state}
+	<select id="selectRecommend" resultType="RecommendVO" parameterType="map">
+	    SELECT * FROM recommend 
+	    WHERE re_me_num = #{re_me_num} 
+	    AND re_po_num = #{re_po_num}
 	</select>
-	
 	
 	<!-- 추천 삭제 -->
 	<delete id="deleteRecommend">
 		DELETE from recommend where re_num = #{re_num}
 	</delete>
+	
 	<insert id="insertBookmark">
 		insert into bookmark(bm_me_num, bm_po_num)
 		values(#{bm_me_num}, #{po_num})
 	</insert>
-	
-	<!-- 게시글의 추천수 및 비추천수 업데이트 -->
-	<update id="updateRecommendCount">
-	    UPDATE post
-	    SET
-	        po_recommendCount = (SELECT COUNT(*) FROM recommend WHERE re_po_num = #{po_num} AND re_state = 1),
-	        po_viewCount = (SELECT COUNT(*) FROM recommend WHERE re_po_num = #{po_num} AND re_state = -1) 
-	    WHERE po_num = #{po_num};
-	</update>
+
 	<delete id="deleteBookmark">
 		delete from bookmark where bm_me_num = #{bm_me_num} and bm_po_num = #{po_num}
 	</delete>
+	
 	<select id="selectBookmark" resultType="Integer">
 		select distinct bm_po_num 
 		from bookmark 
 		where bm_po_num = #{po_num} and bm_me_num = #{bm_me_num}
 		limit 1
 	</select>
+	
 </mapper>

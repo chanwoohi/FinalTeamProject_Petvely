@@ -6,7 +6,6 @@ import kr.kh.petvely.model.vo.FileVO;
 import kr.kh.petvely.model.vo.GoodsTypeVO;
 import kr.kh.petvely.model.vo.MarketPostVO;
 import kr.kh.petvely.model.vo.PostVO;
-import kr.kh.petvely.pagination.PostCriteria;
 
 public interface MarketPostDAO {
 
