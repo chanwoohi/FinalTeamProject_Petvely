@@ -31,10 +31,14 @@ public class SecurityConfig{
         http.csrf(csrf ->csrf.disable())
         	//URL에 접근 권한을 설정. MemberInterceptor, AdminInterceptor를 합친거라고 생각하면 됨
             .authorizeHttpRequests((requests) -> requests
-                .requestMatchers("/post/insert/*","/post/update/*", "/post/delete/*,"
-                		+ "/walkmatepost/insert/*", "/walkmatepost/update/*", "/walkmatepost/delete/*").hasAnyAuthority(UserRole.USER.name(), UserRole.ADMIN.name())
-                .requestMatchers("/admin/**").hasAnyAuthority(UserRole.ADMIN.name())
-                .anyRequest().permitAll()  // 그 외 요청은 인증 필요
+                    .requestMatchers("/post/insert/*", "/post/update/*", "/post/delete/*")
+                    .hasAnyAuthority(UserRole.USER.name(), UserRole.ADMIN.name())
+	                .requestMatchers("/walkmatepost/insert/*", "/walkmatepost/update/*", "/walkmatepost/delete/*")
+	                .hasAnyAuthority(UserRole.USER.name(), UserRole.ADMIN.name())
+	                .requestMatchers("/gatpost/update/*", "/gatpost/delete/*", "/gatpost/detail/*", "/member/mypage")
+	                .hasAnyAuthority(UserRole.USER.name(), UserRole.ADMIN.name())
+	                .requestMatchers("/admin/**").hasAnyAuthority(UserRole.ADMIN.name())
+	                .anyRequest().permitAll()  // 그 외 요청은 인증 필요
             )
             .formLogin((form) -> form
                 .loginPage("/member/login")  // 커스텀 로그인 페이지 설정하는 경우, 

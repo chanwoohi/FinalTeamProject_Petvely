@@ -10,7 +10,7 @@ layout:decorate="~{layout/layout.html}">
 <body>
 	<main layout:fragment="content">
 		<form class="form-group" method="post" th:action="@{/gatpost/insert}">
-			<input type="hidden" class="form-control" name="po_co_num" required="required" value="6">
+			<input type="hidden" class="form-control" name="po_co_num" required="required" value="12">
 			<input type="hidden" class="form-control" name="po_me_num" th:value="${Userlist.me_num}">
 			<div class="form-group" id="GT">
 				<label>품앗이:</label>
