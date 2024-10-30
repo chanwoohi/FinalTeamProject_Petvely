@@ -12,7 +12,6 @@ import kr.kh.petvely.model.user.CustomUser;
 import kr.kh.petvely.model.vo.CommentVO;
 import kr.kh.petvely.model.vo.CommunityVO;
 import kr.kh.petvely.model.vo.MemberVO;
-import kr.kh.petvely.service.PostService;
 import kr.kh.petvely.service.member.MypageService;
 import kr.kh.petvely.utils.NoName;
 import lombok.AllArgsConstructor;
@@ -25,7 +24,6 @@ public class Mypagecontroller{
 
 	private final NoName util = NoName.getInstance();
 	private MypageService mypageService;
-	private PostService postService;
 	
 	@GetMapping("/member/mypage")
 	public String memberMypage() {
@@ -47,7 +45,7 @@ public class Mypagecontroller{
 	public String PostList(Model model, @AuthenticationPrincipal CustomUser customUser, @PathVariable int co_num) {
 		MemberVO user = customUser.getMember();
 		int me_num = user.getMe_num();
-		List<CommunityVO> communities = postService.getCommunityList();
+		List<CommunityVO> communities = mypageService.getCommunityList();
 		model.addAttribute("communities", communities);
 		return "member/mypage/postList";
 	}

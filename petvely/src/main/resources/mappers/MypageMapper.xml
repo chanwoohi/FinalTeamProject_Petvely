@@ -7,4 +7,7 @@
     	left join post on po_num = cm_po_num
     	where cm_me_num = #{me_num}
     </select>
+    <select id="selectCommunityList" resultType="CommunityVO">
+		SELECT * from community
+	</select>
 </mapper>
