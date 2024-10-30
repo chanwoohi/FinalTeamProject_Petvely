@@ -150,8 +150,8 @@ ul {
 /* 펫등록 */
 .pet_petContents{
 	margin: 22px auto;
-	padding: 9px 26px 9px 9px;
-	max-width: 381px;
+	padding: 9px 23px 3px 10px;
+	max-width: 350px;
 	list-style: none;
 	background-color: #fff;
 	-webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, .15);
