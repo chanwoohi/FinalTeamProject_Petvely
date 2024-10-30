@@ -2,7 +2,6 @@ package kr.kh.petvely.dao;
 
 import java.util.List;
 
-import kr.kh.petvely.model.vo.CommentVO;
 import kr.kh.petvely.model.vo.GiveAndTakePostVO;
 import kr.kh.petvely.model.vo.GiveAndTakeStateVO;
 import kr.kh.petvely.model.vo.GiveAndTakeTypeVO;

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.servlet.http.HttpSession;
 import kr.kh.petvely.model.user.CustomUser;
-import kr.kh.petvely.model.vo.CommentVO;
 import kr.kh.petvely.model.vo.GiveAndTakePostVO;
 import kr.kh.petvely.model.vo.GiveAndTakeStateVO;
 import kr.kh.petvely.model.vo.GiveAndTakeTypeVO;
