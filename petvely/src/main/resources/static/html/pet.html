@@ -24,26 +24,37 @@
 				</div>
 				<div class="sub-container">
 					<!-- 탭 버튼 -->
-				 <div class="tab-buttons">
+			      <div class="tab-buttons">
 				    <a th:href="@{/mypage/mypage}" 
 				       th:classappend="${currentPage == 'user'} ? ' active' : ''">내 프로필</a>
 				    <a th:href="@{/mypage/pet}" 
 				       th:classappend="${currentPage == 'pet'} ? ' active' : ''">펫 프로필</a>
-				 </div>
-					<!-- 탭 콘텐츠 -->
+				  </div>
 					<div class="tab-content active">
-							<div class="user_profile">
-									<div class="user_icon">사용자</div>
-									<div class="user_name">
-										<span>닉네임</span>
-										<input type="text" th:value="${#authentication.principal.member.me_nickname}"></input>
-									</div>
-									<div class="btn_update">
-										<span>회원정보 수정</span>
-									</div>
+						
+							<div class="pet_profile">
+									<h1 class="pet_title">나의 반려동물</h1>
+									<!--  <div class="pet_icon">반려동물</div>
+									<div class="pet_name">반려동물이름</div> -->
+									<div class="pet_petContents">
+									<ul>
+										<li class="pet_Petslist">
+											<div class="pet_mypets">
+													<div class="pet_Petimg">
+														<img class="pet_Petimg"src="/image/pet.PNG" alt="petIcon">
+													</div>
+													<div class="pet_ct">
+														<div class="pet_Petname">펫 이름</div>
+														<div class="pet_PetAge">펫나이</div>
+													</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+									<button class="pet_update">추가하기</button>
 							</div>
 					</div>
-
+				</div>
     </main>
 </body>
 </html>
