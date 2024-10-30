@@ -16,18 +16,9 @@ public class BookmarkService {
 	@Autowired
 	private BookmarkDAO bookmarkDao;
 
-
-	public List<BookMarkVO> selectWalkMateBookmarks(int me_num) {
+	public List<BookMarkVO> selectBookmarks(int me_num, int co_num ) {
 		
-		return bookmarkDao.selectWalkMateBookmarks(me_num);
-	}
-
-	public List<BookMarkVO> selectGATBookmarks(int me_num) {
-		return bookmarkDao.selectGATBookmarks(me_num);
-	}
-
-	public List<BookMarkVO> selectMarketBookmarks(int me_num) {
-		return bookmarkDao.selectMarketBookmarks(me_num);
+		return bookmarkDao.selectBookmarks(me_num, co_num);
 	}
 
 }

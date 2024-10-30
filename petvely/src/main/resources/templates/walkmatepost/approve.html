@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<main layout:fragment="content">
+		<form method="post" th:action="@{/walkmatepost/approve/{po_num}(po_num=${po_num})}" id="approvalForm">
+			<table class="table table-striped">
+                 <thead>
+                     <tr>
+                         <th>선택</th>
+                         <th>아이디</th>
+                         <th>이름</th>
+                         <th>나이</th>
+                         <th>성별</th>
+                         <th>중성화 여부</th>
+                     </tr>
+                 </thead>
+                 <tbody>
+                     <tr th:each="item : ${walkMateMember}">
+                         <td>
+                              <input type="checkbox" name="selectedAniNums" th:value="${item.ani_num}"/>
+                         </td>
+                         <td th:text="${item.me_id}"></td>
+                         <td th:text="${item.ani_name}"></td>
+                         <td th:text="${item.ani_age}"></td>
+                         <td th:text="${item.ani_gender}"></td>
+                         <td th:text="${item.ani_neutralization}"></td>
+                     </tr>
+                 </tbody>
+             </table>
+             <input type="hidden" name="hiddenSelectedAniNums" id="hiddenSelectedAniNums" value=""/>
+             <button type="button" class="btn btn-outline-info" id="submitButton">산책 메이트 수락</button>
+             <a class="btn btn-outline-warning" th:href="@{/walkmatepost/list}">목록으로</a>
+		</form>
+		
+		<script>
+			document.getElementById('submitButton').addEventListener('click', function(event) {
+				event.preventDefault(); // 체크 없는 제출 방지
+		
+				// 체크된 체크박스 값 수집
+				const checkboxes = document.querySelectorAll('input[name="selectedAniNums"]:checked');
+				const selectedAniNums = [];
+		
+				checkboxes.forEach((checkbox) => {
+					selectedAniNums.push(checkbox.value); // 체크된 체크박스의 값을 배열에 추가
+				});
+		
+				// 체크된 체크박스가 없으면 경고창 표시
+				if (selectedAniNums.length === 0) {
+					alert("하나 이상의 메이트를 선택해야 합니다.");
+				} else {
+					// 숨겨진 입력 필드에 배열 값 설정
+					document.getElementById('hiddenSelectedAniNums').value = selectedAniNums.join(',');
+					
+					// 폼 제출
+					document.querySelector('form').submit();
+				}
+			});
+		</script>
+	</main>
+</body>
+</html>

@@ -1,8 +1,5 @@
 package kr.kh.petvely.model.vo;
 
-import java.util.Date;
-
-import kr.kh.petvely.model.vo.CommunityVO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

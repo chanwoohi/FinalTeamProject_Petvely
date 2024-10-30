@@ -23,6 +23,12 @@
 		where me_id = #{me_id}
 	</select>
 	
+	<select id="selectMeId" resultType="MemberVO">
+		select *
+		from member
+		where me_num = #{po_me_num}
+	</select>
+	
 	<insert id="insertMember">
 		insert into member(me_id, me_pw, me_nickname, me_email, me_phone, me_ms_status)
 		values

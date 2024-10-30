@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html 
+xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>마이 펫 수정</title>
+</head>
+<body>
+    <main layout:fragment="content">
+       <form method="post" th:object="${myPet}" 
+            th:action="@{/animal/update/{ani_num}(ani_num=*{ani_num})}" enctype="multipart/form-data">
+           <div class="form-group">
+               <label>이름</label>
+               <input type="text" th:field="*{ani_name}" class="form-control">
+           </div>
+           <div class="form-group">
+               <label>성별</label>
+               <select th:field="*{ani_gender}" class="form-control">
+                   <option value="W">암컷</option>
+                   <option value="M">수컷</option>
+               </select>
+           </div>
+           <div class="form-group">
+               <label>소개</label>
+               <textarea id="content" th:field="*{ani_info}" class="form-control" style="min-height: 400px; height: auto;"></textarea>
+           </div>
+           <div class="form-group">
+               <label>생일</label>
+               <input type="date" th:field="*{ani_birth}" class="form-control">
+           </div>
+           <div class="form-group">
+               <label>무게</label>
+               <input type="text" th:field="*{ani_weight}" class="form-control" >
+           </div>
+           <div class="form-group">
+               <label>중성화 여부</label>
+               <select th:field="*{ani_neutralization}" class="form-control">
+                   <option value="0">O</option>
+                   <option value="1">X</option>
+               </select>
+           </div>
+           <div class="form-group">
+               <label>종</label>
+               <input type="text" th:field="*{ani_at_type}" class="form-control">
+           </div>
+           <div class="form-group">
+               <label>프로필 사진 첨부</label>
+               <input type="file" class="form-control" name="file"/>
+           </div>
+           <input type="hidden" th:field="*{ani_num}"/>
+           <input type="hidden" name="profileAction" id="profileAction" value="default" />
+           <button class="btn btn-outline-info col-12" type="submit" onclick="confirmSubmission(event)">마이펫 수정</button>
+        </form>
+		<script type="text/javascript">
+		    function confirmSubmission(event) {
+		        const fileInput = document.querySelector('input[type="file"]');
+		        const actionInput = document.getElementById('profileAction');
+		        if (!fileInput.files.length) {
+		            const confirmSubmit = confirm("새 프로필 사진을 등록하지 않으셨습니다. 기존 프로필 사진을 사용하시겠습니까?");
+		            if (confirmSubmit) {
+		                actionInput.value = "useExisting";  // '확인'을 눌렀을 때
+		            } else {
+		                actionInput.value = "discardExisting"; // '취소'를 눌렀을 때
+		            }
+		        }
+		    }
+		</script>
+    </main>
+</body>
+</html>

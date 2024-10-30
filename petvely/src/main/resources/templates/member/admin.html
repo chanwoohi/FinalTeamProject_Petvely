@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/layout.html}">
+<head>
+<meta charset="UTF-8">
+<title>관리자</title>
+</head>
+<body>
+	<main layout:fragment="content">
+		<h1>신고 리스트</h1>
+		<a 	class="btn mr-3 mb-3"
+				th:each="item : ${rttList}" 
+				th:text="${item.rtt_type}"
+				th:href="@{/member/admin/{rtt_type}(rtt_type=${item.rtt_type})}"></a>
+		<div>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>신고자 아이디</th>
+						<th>신고 유형</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="item : ${reportList}" th:if="${item != null}">
+						<td th:text="${item.rp_me_num}"></td>
+						<td th:text="${item.rp_rt_type}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</main>
+</body>
+</html>

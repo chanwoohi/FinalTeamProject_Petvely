@@ -1,42 +1,12 @@
 use petvely;
 
--- 새로운 게시글 추가 (user01이 작성)
-INSERT INTO petvely.Post (po_title, po_content, po_date, po_co_num, po_hidden, po_viewCount, po_recommendCount, po_reportCount, po_notice, po_me_num, po_delete)
-VALUES 
-('고양이 키우면 게추', 
- '히히',
- NOW(), 
- 1,        -- 커뮤니티 번호 (정수로 입력)
- 0,        -- 숨김 여부 (0: 숨김 아님)
- 0,        -- 조회수
- 0,        -- 추천 수
- 0,        -- 신고 수
- 'N',      -- 공지 여부 (N: 공지 아님)
- (SELECT me_num FROM petvely.Member WHERE me_id = 'user01'), -- user01의 회원 번호 조회
- 0         -- 삭제 여부 (0: 삭제되지 않음)
-);
-
--- 새로운 게시글 추가 (user02이 작성)
-INSERT INTO petvely.Post (po_title, po_content, po_date, po_co_num, po_hidden, po_viewCount, po_recommendCount, po_reportCount, po_notice, po_me_num, po_delete)
-VALUES 
-('강아지 키우면 게추', 
- '히히',
- NOW(), 
- 1,        -- 커뮤니티 번호 (정수로 입력)
- 0,        -- 숨김 여부 (0: 숨김 아님)
- 0,        -- 조회수
- 0,        -- 추천 수
- 0,        -- 신고 수
- 'N',      -- 공지 여부 (N: 공지 아님)
- (SELECT me_num FROM petvely.Member WHERE me_id = 'user02'), -- user02의 회원 번호 조회
- 0         -- 삭제 여부 (0: 삭제되지 않음)
-);
-
 # 관리자가 '강아지', '고양이', '도마뱀', '고슴도치' 커뮤니티를 추가했을 때 필요한 쿼리
-INSERT INTO COMMUNITY(CO_NAME) VALUES('강아지');
-INSERT INTO COMMUNITY(CO_NAME) VALUES('고양이');
-INSERT INTO COMMUNITY(CO_NAME) VALUES('도마뱀');
-INSERT INTO COMMUNITY(CO_NAME) VALUES('고슴도치');
+INSERT INTO COMMUNITY(CO_NAME, CO_NUM) 
+VALUES('산책 메이트', 10),
+('품앗이', 12),
+('중고거래', 11),
+('펫 정보', 13);
+
 
 insert into petvely.regex(re_regex)
 values
@@ -92,9 +62,63 @@ insert into goodstype values
 -- Animal 테이블에 반려동물 정보 추가
 INSERT INTO petvely.Animal (ani_name, ani_age, ani_gender, ani_birth, ani_weight, ani_neutralization, ani_at_type, ani_me_num)
 VALUES 
+('캥순이', 7, 'W', '2017-07-14', 8.4, 0, '캥거루', 3),
+('캥돌이', 7, 'M', '2017-07-14', 8.4, 0, '캥거루', 3),
+('냥돌이', 7, 'M', '2017-07-14', 8.4, 0, '고양이', 3),
+('람돌이', 7, 'M', '2017-07-14', 8.4, 0, '다람쥐', 3),
 ('다초', 7, 'M', '2017-07-14', 8.4, 0, '강아지', 2),
 ('잠자리', 1, 'M', '2024-09-18', 0.01, 0, '잠자리', 2),
 ('호날두', 39, 'M', '1985-02-05', 85, 0, '사람', 3),
 ('달이', 3, 'W', '2021-05-18', 3, 0, '강아지', 3),
 ('메시', 37, 'M', '1987-06-25', 67, 0, '사람', 3),
 ('초코', 1, 'M', '2024-03-03', 3, 0, '강아지', 4);
+
+-- admin 계정 생성 SQL 예시
+INSERT INTO member (
+    me_id, me_pw, me_nickname, me_email, me_authority, me_cookie, me_limit, 
+    me_loginType, me_addressDetail, me_phone, me_wm_point, me_ga_point, 
+    me_mp_point, me_total_point, me_fakeReportNum, me_ms_status
+) 
+VALUES (
+    'admin123', -- me_id: 관리자 아이디
+    '$2a$10$zoIkkMbb/CH/Ey8bBC0QfuKEEha30LR.56.0/hr4/c/SjseCv3sPe', -- me_pw: 해시된 비밀번호를 사용해야 함
+    '관리자', -- me_nickname: 관리자 닉네임
+    'admin@example.com', -- me_email: 관리자 이메일
+    'ADMIN', -- me_authority: 관리자 권한
+    NULL, -- me_cookie: 로그인 쿠키
+    NULL, -- me_limit: 로그인 제한 시간
+    'local', -- me_loginType: 로그인 타입 (로컬 로그인)
+    '서울시 강남구', -- me_addressDetail: 관리자 주소
+    '01012345678', -- me_phone: 전화번호
+    0, -- me_wm_point: 초기 포인트 (웹 포인트)
+    0, -- me_ga_point: 초기 포인트 (게임 포인트)
+    0, -- me_mp_point: 초기 포인트 (마일리지 포인트)
+    0, -- me_total_point: 초기 총 포인트
+    0, -- me_fakeReportNum: 신고 횟수 (관리자이므로 0)
+    'active' -- me_ms_status: 관리자 상태 (active 상태)
+);
+
+('호날두', 39, 'M', '1985-02-05', 85, 0, '사람', 2),
+('달이', 3, 'W', '2021-05-18', 3, 0, '강아지', 1),
+('메시', 37, 'M', '1987-06-25', 67, 0, '사람', 1),
+('초코', 1, 'M', '2024-03-03', 3, 0, '강아지', 1);
+
+INSERT INTO petvely.reporttargettype (rtt_type)
+VALUES
+('message'),
+('comment'),
+('member'),
+('gatpost'),
+('marketpost'),
+('walkmatepost');
+
+# 네이버 신고타입 따왔음.
+INSERT INTO petvely.reporttype (rt_type)
+VALUES
+('스팸홍보/도배입니다.'),
+('음란물입니다.'),
+('불법정보를 포함하고 있습니다.'),
+('청소년에게 유해한 내용입니다.'),
+('욕설/생명경시/혐오/차별적 표현입니다.'),
+('개인정보가 노출되었습니다.'),
+('불쾌한 표현이 있습니다.');

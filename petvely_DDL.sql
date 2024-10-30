@@ -9,7 +9,7 @@ DROP TABLE IF EXISTS `Member`;
 CREATE TABLE `Member` (
 	`me_num`	int primary key auto_increment	NOT NULL,
 	`me_id`	varchar(13) unique	NOT NULL,
-	`me_pw`	varchar(20)	NULL,
+	`me_pw`	varchar(255)	NULL,
 	`me_nickname`	varchar(20) unique	NULL,
 	`me_email`	varchar(50) unique	NULL,
 	`me_authority`	varchar(5)	NULL,
@@ -162,6 +162,7 @@ CREATE TABLE `Post` (
 	`po_date`	datetime	NULL default current_timestamp,
 	`po_hidden`	varchar(1)	NULL,
 	`po_viewCount`	int	NULL,
+    `po_notRecommendCount` int NULL,
 	`po_recommendCount`	int	NULL,
 	`po_reportCount`	int	NULL,
 	`po_notice`	varchar(1)	NULL,
@@ -370,114 +371,6 @@ CREATE TABLE `community` (
         `co_name`        varchar(50) unique        NULL
 );
 
-
-ALTER TABLE `petvely`.`posthostselectedpets`
-ADD CONSTRAINT `po_num`
-  FOREIGN KEY (`phsp_po_num`)
-  REFERENCES `petvely`.`post` (`po_num`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-  
-ALTER TABLE `petvely`.`postuserselectedpets` 
-ADD CONSTRAINT `pusp_po_num`
-  FOREIGN KEY (`pusp_po_num`)
-  REFERENCES `petvely`.`post` (`po_num`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-  
-ALTER TABLE `Bookmark`
-ADD CONSTRAINT `fk_Bookmark_post`
-  FOREIGN KEY (`bm_po_num`)
-  REFERENCES `Post` (`po_num`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-
-ALTER TABLE `Comment`
-ADD CONSTRAINT `fk_Comment_post`
-  FOREIGN KEY (`cm_po_num`)
-  REFERENCES `Post` (`po_num`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-
-ALTER TABLE `File`
-ADD CONSTRAINT `fk_File_post`
-  FOREIGN KEY (`fi_po_num`)
-  REFERENCES `Post` (`po_num`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-
-ALTER TABLE `FacilityReview`
-ADD CONSTRAINT `fk_FacilityReview_post`
-  FOREIGN KEY (`fr_fs_num`)
-  REFERENCES `Post` (`po_num`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-
-ALTER TABLE `GATPost`
-ADD CONSTRAINT `fk_GATPost_post`
-  FOREIGN KEY (`po_num`)
-  REFERENCES `Post` (`po_num`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-
-ALTER TABLE `MarketPost`
-ADD CONSTRAINT `fk_MarketPost_post`
-  FOREIGN KEY (`po_num`)
-  REFERENCES `Post` (`po_num`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-
-ALTER TABLE `WalkMatePost`
-ADD CONSTRAINT `fk_WalkMatePost_post`
-  FOREIGN KEY (`po_num`)
-  REFERENCES `Post` (`po_num`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-
-ALTER TABLE `Recommend`
-ADD CONSTRAINT `fk_Recommend_post`
-  FOREIGN KEY (`re_po_num`)
-  REFERENCES `Post` (`po_num`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-
-ALTER TABLE `ContentsReview`
-ADD CONSTRAINT `fk_ContentsReview_post`
-  FOREIGN KEY (`cr_po_num`)
-  REFERENCES `Post` (`po_num`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-
-ALTER TABLE `Dibs`
-ADD CONSTRAINT `fk_Dibs_post`
-  FOREIGN KEY (`di_po_num`)
-  REFERENCES `Post` (`po_num`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-
-ALTER TABLE `Message`
-ADD COLUMN `mes_po_num` INT NOT NULL;
-
-ALTER TABLE `Message`
-ADD CONSTRAINT `fk_Message_post`
-  FOREIGN KEY (`mes_po_num`)
-  REFERENCES `Post` (`po_num`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-
-ALTER TABLE `WalkMateMember`
-ADD CONSTRAINT `fk_WalkMateMember_post`
-  FOREIGN KEY (`wmm_po_num`)
-  REFERENCES `Post` (`po_num`)
-  ON DELETE CASCADE
-  ON UPDATE CASCADE;
-
-ALTER TABLE `petvely`.`member` 
-CHANGE COLUMN `me_pw` `me_pw` VARCHAR(255) NOT NULL ,
-CHANGE COLUMN `me_nickname` `me_nickname` VARCHAR(20) NOT NULL ,
-CHANGE COLUMN `me_email` `me_email` VARCHAR(50) NOT NULL ,
-CHANGE COLUMN `me_phone` `me_phone` VARCHAR(12) NOT NULL ;
-
 ALTER TABLE `petvely`.`post` 
 ADD COLUMN `po_delete` VARCHAR(1) NULL DEFAULT 0 AFTER `po_me_num`;
 
@@ -488,4 +381,12 @@ ALTER TABLE `petvely`.`marketpost`
 ADD COLUMN `mp_imgUrl` VARCHAR(255) NULL DEFAULT NULL AFTER `mp_gt_type`;
 
 ALTER TABLE `petvely`.`member` 
-CHANGE COLUMN `me_authority` `me_authority` VARCHAR(5) NULL DEFAULT 'USER' ;
+CHANGE COLUMN `me_authority` `me_authority` VARCHAR(5) NULL DEFAULT 'USER';
+
+#ALTER TABLE `petvely`.`reporttargettype` 
+#CHANGE COLUMN `rtt_type` `rtt_type` VARCHAR(50),
+#ADD COLUMN `rtt_num` INT PRIMARY KEY AUTO_INCREMENT;
+
+# 신고시간 기준으로 rp_date 저장
+ALTER TABLE `Report`
+MODIFY `rp_date` DATETIME DEFAULT CURRENT_TIMESTAMP;

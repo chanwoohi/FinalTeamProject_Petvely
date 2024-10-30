@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import kr.kh.petvely.dao.AddressDAO;
 import kr.kh.petvely.model.vo.Emd_AreasVO;
-import kr.kh.petvely.model.vo.GiveAndTakePostVO;
 import kr.kh.petvely.model.vo.Sido_AreasVO;
 import kr.kh.petvely.model.vo.Sigg_AreasVO;
 import lombok.AllArgsConstructor;
