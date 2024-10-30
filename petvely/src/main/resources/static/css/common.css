@@ -1,5 +1,9 @@
 @charset "utf-8";
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/variable/pretendardvariable.css");
 
+*{
+	font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+}
 /* fluid 여백수정 */
 .container-fluid{
     padding-right: 0px;
@@ -56,7 +60,7 @@ body {
 	border: none;
 	color: #000;
 	padding: 10px 20px;
-	font-size: 16px;
+	font-size: 14px;
 	cursor: pointer;
 	transition: background-color 0.3s;
 	text-decoration: none;
@@ -105,9 +109,11 @@ body {
 
 .user_name, .pet_name {
 	font-size: 18px;
+	font-family: "Pretendard Variable",sans-serif;
 	font-weight: bold;
 	margin: 10px 0;
 	color: #666;
+    input:focus {outline: none;} /* outline 테두리 없애기 */
 }
 
 .btn_update, .pet_update {
@@ -128,3 +134,61 @@ body {
 	background-color: #ffc107;
 }
 
+.user_name input{
+	display: inline;
+	border: none;
+	background: none;
+	border-bottom: 1px solid #fcd11e;
+
+}
+ul {
+	list-style: none;
+	padding: 0;
+	display: block;
+}
+ 
+/* 펫등록 */
+.pet_petContents{
+	margin: 22px auto;
+	padding: 9px 26px 9px 9px;
+	max-width: 381px;
+	list-style: none;
+	background-color: #fff;
+	-webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, .15);
+	box-shadow: 0 2px 4px rgba(0, 0, 0, .15);
+	border-radius: 50px;
+}
+
+.pet_petContents .pet_Petslist .pet_mypets{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	grid-gap: 15px;
+	gap: 15px;
+}
+.pet_petContents .pet_Petslist .pet_mypets .pet_Petimg{
+	width: 100px;
+	height: 100px;
+	border: 1px solid #fcd11e;
+	border-radius: 50%;
+}
+.pet_petContents .pet_Petslist .pet_mypets .pet_Petname{
+	font-style: normal;
+	font-weight: 700;
+	text-transform: capitalize;
+	margin-bottom: 4px;
+	font-size: 22px;
+	line-height: 26px;
+	text-align: center;
+}
+.pet_PetAge{
+	font-style: normal;
+	text-transform: capitalize;
+	font-weight: 400;
+	font-size: 11px;
+	line-height: 13px;
+	color: #868688;
+}
+.pet_ct{
+	display: block;
+}    
