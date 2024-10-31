@@ -11,6 +11,7 @@
 		insert into walkmatepost(po_num, wm_date, wm_time)
 		values(#{po_num}, #{wm_date}, #{wm_time})
 	</insert>
+	<!-- 주소 추가해야됨 (emd_num과 연결된것이 없음)-->
 	<select id="selectWalkMatePost" resultType="WalkMatePostVO">
 		select * from walkmatepost
 		join post using(po_num)
