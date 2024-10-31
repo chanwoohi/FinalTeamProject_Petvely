@@ -45,7 +45,26 @@
 								<span th:text="${#authentication.principal.member.me_nickname}"></span>님
 								<br>ID:
 								<span th:text="${#authentication.principal.member.me_id}" style="font-size:13px;"></span> <br>
-								</p></div>
+								</p>
+								</div>
+								<div class="popup-item">
+								<a class="profile" th:href="@{/mypage/mypage}">마이페이지</a></div>
+								<div class="popup-item">평점</div>
+								<div class="popup-item">등록된 펫</div>
+								<form name="logoutForm" 
+									th:action="@{/member/logout}" sec:authorize="isAuthenticated()">
+									<a class="popup-item" onclick="javascript:logoutForm.submit();">로그아웃</a>
+								</form>
+							</div>
+						</li>
+						<li class="nav-profile" sec:authorize="hasAuthority('ADMIN')">
+							<img class="profile-icon" th:src="@{/image/profile.png}" alt="Profile" id="profileIcon">
+							<div class="profile-popup" id="profilePopup">
+							<div class="popup-item">
+								<p sec:authorize="isAuthenticated()">
+									<span th:text="관리자"></span>님
+								</p>
+								</div>
 								<div class="popup-item">
 								<a class="profile" th:href="@{/mypage/mypage}">마이페이지</a></div>
 								<div class="popup-item">평점</div>
