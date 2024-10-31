@@ -48,23 +48,8 @@ public class MarketController {
 	@GetMapping("/post/marketdetail/{po_num}")
 	public String marketPostDetail(	Model model,
 									@PathVariable int po_num,
-									@AuthenticationPrincipal CustomUser CustomUser){
-		if(CustomUser != null) {
-			MarketPostVO post = marketPostService.getMarketPost(po_num);
-			
-			List<FileVO> fileList = marketPostService.getFileList(po_num);
-			MemberVO user = CustomUser.getMember();
-			int me_num = user.getMe_num();
-			model.addAttribute("me_num",me_num);
-			model.addAttribute("user", user);
-			model.addAttribute("fileList",fileList);
-			model.addAttribute("post",post);
-			
-
-
-			
-	public String marketPostDetail(Model model, @PathVariable int po_num,
-								   @AuthenticationPrincipal CustomUser customUser){
+									@AuthenticationPrincipal CustomUser customUser){
+		
 		if(customUser != null) {
 			// 즐겨찾기 기능
 			MemberVO user = customUser.getMember();
@@ -79,14 +64,14 @@ public class MarketController {
 				model.addAttribute("bookmark", bookmark);
 			}
 			
-			// 찜 & 즐겨찾기 버튼에 써야해서(일관성)
-			model.addAttribute("po_num", po_num);
-		
-			PostVO post = marketPostService.getMarketPost(po_num);
+			MarketPostVO post = marketPostService.getMarketPost(po_num);
+			
 			List<FileVO> fileList = marketPostService.getFileList(po_num);
+			int me_num = user.getMe_num();
+			model.addAttribute("me_num",me_num);
+			model.addAttribute("user", user);
 			model.addAttribute("fileList",fileList);
 			model.addAttribute("post",post);
-			model.addAttribute("me_num", 1);
 		}
 		
 		return "post/marketdetail";

@@ -28,22 +28,4 @@ public class PostVO {
 	private String me_id; //아이디
     private int po_recommendCount; // 추천 수
     private int po_notRecommendCount; // 비추천 수
-	
-
-
-    public void setRecommendCount(int recommendCount) {
-        this.recommendCount = recommendCount;
-    }
-
-    public int getNotRecommendCount() {
-        return notRecommendCount;
-    }
-
-    public void setNotRecommendCount(int notRecommendCount) {
-        this.notRecommendCount = notRecommendCount;
-    }
-
-	
-	
-	
 }
