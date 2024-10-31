@@ -73,15 +73,15 @@ public class ReportController {
 			System.out.println(post.getPo_co_num());
 			if(post.getPo_co_num() == 10) {
 				rp_rtt_type = "walkmatepost";
-				reportService.insertReport(rp_me_num, rp_rtt_num, rp_rtt_type, rp_rtt_type, rp_cause);
+				reportService.insertReport(rp_me_num, rp_rtt_num, rp_rt_type, rp_rtt_type, rp_cause);
 				System.out.println(rp_rtt_type);
 			} else if (post.getPo_co_num() == 11) {
 				rp_rtt_type = "marketpost";
-				reportService.insertReport(rp_me_num, rp_rtt_num, rp_rtt_type, rp_rtt_type, rp_cause);
+				reportService.insertReport(rp_me_num, rp_rtt_num, rp_rt_type, rp_rtt_type, rp_cause);
 				System.out.println(rp_rtt_type);
 			} else if (post.getPo_co_num() == 12) {
 				rp_rtt_type = "gatpost";
-				reportService.insertReport(rp_me_num, rp_rtt_num, rp_rtt_type, rp_rtt_type, rp_cause);
+				reportService.insertReport(rp_me_num, rp_rtt_num, rp_rt_type, rp_rtt_type, rp_cause);
 				System.out.println(rp_rtt_type);
 			}
 			
