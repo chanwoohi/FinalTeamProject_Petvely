@@ -25,7 +25,7 @@ public interface MessageDAO {
 
 	MessageVO selectMessageDetail(int mes_num);
 
-	void deleteMessageExpiration();
+	int deleteMessage(int mes_num);
 
 
 

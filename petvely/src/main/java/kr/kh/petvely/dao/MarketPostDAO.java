@@ -30,7 +30,11 @@ public interface MarketPostDAO {
 
 	FileVO selectFile(int fi_num, MarketPostVO marketPost);
 
-	boolean deletFile(String fi_name);
+	boolean deleteFile(FileVO file);
+
+	FileVO selectFileByPo_num(int po_num);
+
+	
 
 
 

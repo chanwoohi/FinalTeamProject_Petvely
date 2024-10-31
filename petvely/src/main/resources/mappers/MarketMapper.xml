@@ -9,9 +9,11 @@
 		join 
 			post using(po_num) 
 		join 
-			member  
+			member
+		
 		where 
-			po_me_num = me_num;
+			po_me_num = me_num
+	
 	</select>
 	<select id="selectPost" resultType="MarketPostVO">
 		select 
@@ -92,13 +94,25 @@
 			mp_price = #{mp_price},
 			mp_gt_type = #{mp_gt_type},
 			mp_imgUrl = #{mp_imgUrl}
+		where 
+			po_num = #{po_num}
 		
 	</update>
 	
 	<select id="selectFile">
 		select * from file where fi_num = #{fi_num}
 	</select>
-	<delete id="deletFile">
+	<delete id="deleteFile">
 		delete from file where fi_num = #{fi_num}
 	</delete>
+	<select id="selectFileByPo_num">
+		select 
+			* 
+		from
+			file
+		where fi_po_num = #{po_num}
+		order by fi_po_num asc
+		limit 1
+			
+	</select>
 </mapper>

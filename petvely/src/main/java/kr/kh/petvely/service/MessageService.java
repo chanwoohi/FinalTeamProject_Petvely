@@ -63,9 +63,10 @@ public class MessageService {
 	}
 
 
-	@Scheduled(cron = "0 0 0 * * ?")
-	public void deleteMessageExpiration() {
-		messageDao.deleteMessageExpiration();
+	
+	public boolean deleteMessage(int mes_num) {
+		return messageDao.deleteMessage(mes_num) > 0;
+		
 	}
 
 

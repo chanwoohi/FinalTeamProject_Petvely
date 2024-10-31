@@ -72,7 +72,7 @@ public class MarketPostService {
 			String basePath = "/uploads";
 			String imgUrl = basePath + fi_name;
 			marketPost.setMp_imgUrl(imgUrl);
-			System.out.println("ImgURL " + imgUrl);
+			
 			
 			FileVO fileVo = new FileVO(fi_ori_name, fi_name, po_num);
 			
@@ -105,47 +105,68 @@ public class MarketPostService {
 		if(marketPost == null) {
 			return false;
 		}
+		
+		
+	
+		uploadFileList(fileList,marketPost.getPo_num(), marketPost);
+		
+		deleteFiles(nums, marketPost);
+		
+		FileVO file = marketPostDao.selectFileByPo_num(marketPost.getPo_num());
+		if(file != null) {
+			String basePath = "/uploads";
+			marketPost.setMp_imgUrl(basePath + file.getFi_name());
+		}
 		boolean res = marketPostDao.updateMarketPost(marketPost);
-		System.out.println("updateMarketPost : "+marketPost);
+		System.out.println("updateMarketPost : " + marketPost);
 		if(!res) {
 			return false;
 		}
-	
-		uploadFileList(fileList,marketPost.getPo_num(), marketPost);
+		
+		return true;
+	}
+	void deleteFiles(int [] nums, MarketPostVO marketPost) {
 		if(nums == null || nums.length == 0) {
-			return true;
+			
+			return;
 		}
 		for(int fi_num : nums) {
 			FileVO file = marketPostDao.selectFile(fi_num,marketPost);
-			deleteFile(file);
+			marketPostDao.deleteFile(file);
 		}
-		
-		
-		return true;
-}
-	
-
-	
-
-	private void deleteFile(FileVO file) {
-		if(file == null) {
-			return;
-		}
-		UploadFileUtils.delteFile(uploadPath, file.getFi_name());
-		marketPostDao.deletFile(file.getFi_name());
-		
 	}
 
-	private void uploadFileList(MultipartFile[] fileList, int po_num,MarketPostVO marketPost) {
-		if(fileList == null || fileList.length == 0) {
-			return;
-		}
-		for(MultipartFile file : fileList) {
-			uploadFile(file, po_num, marketPost);
-			
-			System.out.println("uploadFile : " + marketPost);
-		}
-		
+	
+
+	
+
+	private void uploadFileList(MultipartFile[] fileList, int po_num, MarketPostVO marketPost) {
+	    if (fileList != null) {
+	        for (MultipartFile file : fileList) {
+	            if (!file.isEmpty()) {
+	                
+	            	try {
+	        			String fi_ori_name = file.getOriginalFilename();
+	        			String fi_name = UploadFileUtils.uploadFile(uploadPath, fi_ori_name, file.getBytes());
+	        			String basePath = "/uploads";
+	        			String imgUrl = basePath + fi_name;
+	        			marketPost.setMp_imgUrl(imgUrl);
+	        			System.out.println("ImgURL " + imgUrl);
+	        			
+	        			FileVO fileVo = new FileVO(fi_ori_name, fi_name, po_num);
+	        			
+	        			marketPostDao.insertFile(fileVo);
+	        			System.out.println("파일VO " +  fileVo);
+	        			
+	        	
+	        	 System.out.println("현재 mp_imgUrl: " + marketPost.getMp_imgUrl());
+	        		}catch(Exception e){
+	        			e.printStackTrace();
+	        		}
+	                System.out.println("업로드된 파일: " + file.getOriginalFilename());
+	            }
+	        }
+	    }
 	}
 
 	

@@ -1,6 +1,9 @@
 package kr.kh.petvely.controller;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,8 +63,7 @@ public class MessageController {
     			message.setMes_me_senderNum(senderNum);
     			message.setMes_me_receiverNum(receiverNum);
     			message.setMes_content(content);
-    			message.setMessageTOA(LocalDateTime.now());
-    			message.setMessageExpiration(LocalDateTime.now().plusDays(1));
+    			message.setMes_date(new Date());
     			
     			boolean res = messageService.sendMessage(message);
     			model.addAttribute("senderNum",senderNum);
@@ -121,6 +123,7 @@ public class MessageController {
     		message.setMes_me_receiverNum(receiverNum);
     		message.setMes_me_senderNum(senderNum);
     		message.setMes_content(content);
+    		message.setMes_date(new Date());
     		boolean res = messageService.MarketMessageSend(message);
     		
     	}else {
@@ -138,10 +141,12 @@ public class MessageController {
     				MemberVO user = CustomUser.getMember();
     				MessageVO message = messageService.getMessageDetail(mes_num);
     				model.addAttribute("message",message);
-    				System.out.println(user);
-    				System.out.println("mes_num :"+mes_num);
-    				System.out.println(message);
     				
+    				LocalDateTime now = LocalDateTime.now();
+    				LocalDateTime messageDate = message.getMes_date().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+    				if(messageDate.plusDays(3).isBefore(now)) {
+    					messageService.deleteMessage(mes_num);
+    				}
     			}
     			
     		}catch(Exception e) {

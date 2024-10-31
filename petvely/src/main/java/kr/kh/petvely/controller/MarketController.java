@@ -110,8 +110,10 @@ public class MarketController {
 		MarketPostVO marketPost = marketPostService.getMarketPost(po_num);
 		model.addAttribute("marketPost",marketPost);
 		List<GoodsTypeVO> types = goodsService.getTypes();
+		List<FileVO> files = marketPostService.getFileList(po_num);
+		model.addAttribute("files",files);
 		model.addAttribute("types",types);
-
+		System.out.println("파일"+files);
 
 		return "post/marketupdate";
 		
