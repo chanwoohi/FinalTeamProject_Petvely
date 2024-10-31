@@ -10,92 +10,109 @@ layout:decorate="~{layout/layout.html}">
 </head>
 <body>
      <main layout:fragment="content">
-			<form method="post" th:action="@{/animal/signup}" enctype="multipart/form-data"></form>
-				<div class="main-container">
-					<div class="register_registerContainer">
-							<div class="register_registerContents">
-									<div class="registr_pet_profile">
-										<h1 class="register_pet_title">반려동물 등록</h1>
+		<form method="post" th:action="@{/animal/signup}" enctype="multipart/form-data">
+			<div class="main-container">
+				<div class="register_registerContainer">
+					<div class="register_registerContents">
+							<div class="registr_pet_profile">
+								<h1 class="register_pet_title">반려동물 등록</h1>
+							</div>
+							<div class="register_registerImg">
+									<img class="registerImg" src="/image/pet.PNG">
+							</div>
+						
+							<div class="register_inputWapper">
+								<span class="register_necessaryDot"></span>
+								<div class="register_inputWapperIn">
+									<div class="register_inputFileWrapper">
+										<label for="file" class="register_inputFileBtn">
+											<input type="file" class="register_input" id="file" name="file"/>
+											<img class="register_img"src="/image/ICON_Camera.png">
+											사진첨부
+										</label>
+										<span class="register_inputDesc">등록 사진은 1개만 첨부 가능합니다</span>
 									</div>
-									<div class="register_registerImg">
-											<img class="registerImg" src="/image/pet.PNG">
-									</div>
-								
-									<div class="register_inputWapper">
-										<span class="register_necessaryDot"></span>
-										<div class="register_inputWapperIn">
-											<div class="register_inputFileWrapper">
-												<label for="file" class="register_inputFileBtn">
-													<input type="file" class="register_input" id="file" name="file"/>
-													<img class="register_img"src="/image/ICON_Camera.png">
-													사진첨부
-												</label>
-												<span class="register_inputDesc">등록 사진은 1개만 첨부 가능합니다</span>
-											</div>
-										</div>
-									</div>
+								</div>
+							</div>
 
-									<div class="register_inputWapper">
-										<span class="register_necessaryDot">*</span>
-										<div class="register_inputWapperIn">
-												<div class="rgister_petName">
-													<input aria-invalid="fals" placeholder="이름"  class="css-pet1010 "type="text"  name="ani_name" value="">
-												</div>
+							<div class="register_inputWapper">
+								<span class="register_necessaryDot">*</span>
+								<div class="register_inputWapperIn">
+										<div class="rgister_petName">
+											<input aria-invalid="fals" placeholder="이름"  class="css-pet1010" type="text"  name="ani_name">
 										</div>
+								</div>
+							</div>
+							<div class="register_inputWapper">
+								<span class="register_necessaryDot">*</span>
+								<div class="register_inputWapperIn">
+									<div class="rgister_petBirth">
+										<input aria-invalid="fals" type="date" name="ani_birth" class="css-pet1010">
 									</div>
-									<div class="register_inputWapper">
-										<span class="register_necessaryDot">*</span>
-										<div class="register_inputWapperIn">
-											<div class="rgister_petBirth">
-												<input aria-invalid="fals" type="date" class="css-pet1010" value="">
-											</div>
+								</div>
+							</div>
+							<div class="register_inputWapper">
+								<span class="register_necessaryDot">*</span>
+								<div class="register_inputWapperIn">
+										<div class="rgister_petName">
+											<input aria-invalid="fals" placeholder="품종"  class="css-pet1010" type="text" name="ani_at_type">
 										</div>
-									</div>
-									<div class="register_inputWapper">
-										<span class="register_necessaryDot">*</span>
-										<div class="register_inputWapperIn">
-												<div class="rgister_petName">
-													<input aria-invalid="fals" placeholder="품종"  class="css-pet1010"type="text"  value="">
-												</div>
-										</div>
-									</div>
-		
+								</div>
+							</div>
 
-									<div class="register_genderWrapper">
-										<span class="register_necessaryDot">*</span>
-										<div class="register_genderTitle">
-											<div class="register_gender__rq">성별</div>
-											<div class="register_radioContainer">
-												<div class="register_radioWrap">
-													<input class="radio_myRadio" type="radio" id="male" name="gender" value="MALE"><label for="male">남아</label>
-												</div>
-												<div class="register_radioWrap">
-													<input class="radio_myRadio" type="radio" id="female" name="gender" value="MALE"><label for="FEMALE">여아</label>
-												</div>
-											</div>
+
+							<div class="register_genderWrapper">
+								<span class="register_necessaryDot">*</span>
+								<div class="register_genderTitle">
+									<div class="register_gender__rq">성별</div>
+									<div class="register_radioContainer">
+										<div class="register_radioWrap">
+											<input class="radio_myRadio" type="radio" id="male" name="ani_gender" value="M"><label for="male">남아</label>
+										</div>
+										<div class="register_radioWrap">
+											<input class="radio_myRadio" type="radio" id="female" name="ani_gender" value="W"><label for="FEMALE">여아</label>
 										</div>
 									</div>
-									<div class="register_checkboxwrap">
-										<input type="checkbox" value="false"></input>
-										<label class="register_checkLabel">중성화 여부</label>
-									</div>
-									<div class="register_inputWrapper">
-										<div class="register_inputWapperIn">
-											<span class="register_necessaryDot"></span>
-											<div class="MuiFormControl-root">
-												<input aria-invalid="false" id="outlined-number" placeholder="몸무게(kg)" type="number" min="0" inputmode="decimal" pattern="[0-9]*" class="MuiOutlinedInput" value="">
-											</div>
-										</div>
-									</div>
-								<div>
-								<button type="button" class="register_noregisterBtn" disabled="">등록</button>
-								<button type="submit" class="register_registerCancelBtn">취소</button>
 								</div>
 							</div>
 							
+							<div class="register_checkboxwrap">
+							    <!-- 체크박스: 체크되면 0을 전송 -->
+							    <input type="checkbox" id="ani_neutralization" name="ani_neutralization" value="0" onchange="checkboxChanged()">
+							    <label class="register_checkLabel" for="ani_neutralization">중성화 여부</label>
+							    
+							    <!-- 숨겨진 필드: 체크되지 않을 때 1을 전송 -->
+							    <input type="hidden" id="ani_neutralization_hidden" name="ani_neutralization" value="1">
+							</div>
+							
+							<div class="register_inputWrapper">
+								<div class="register_inputWapperIn">
+									<span class="register_necessaryDot"></span>
+									<div class="MuiFormControl-root">
+										<input aria-invalid="false" id="outlined-number" name="ani_weight" placeholder="몸무게(kg)" type="number" min="0" inputmode="decimal" pattern="[0-9]*" class="MuiOutlinedInput">
+									</div>
+								</div>
+							</div>
+						<div>
+						<button type="submit" class="register_noregisterBtn">등록</button>
+						<a th:href="@{/mypage/pet}" class="btn register_registerCancelBtn">취소</a>
 						</div>
 					</div>
-			</form>
+				</div>
+			</div>
+		</form>
+		<script type="text/javascript">
+			function checkboxChanged() {
+			    var checkbox = document.getElementById('ani_neutralization');
+			    var hiddenInput = document.getElementById('ani_neutralization_hidden');
+			    // 체크박스가 체크되면 hidden input을 비활성화
+			    if (checkbox.checked) {
+			        hiddenInput.disabled = true;
+			    } else {
+			        hiddenInput.disabled = false;
+			    }
+			}
+		</script>
     </main>
 </body>
 </html>
