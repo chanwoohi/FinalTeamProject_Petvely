@@ -21,6 +21,7 @@ import kr.kh.petvely.model.vo.MemberVO;
 import kr.kh.petvely.model.vo.Sido_AreasVO;
 import kr.kh.petvely.service.AddressService;
 import kr.kh.petvely.service.GATPostService;
+import kr.kh.petvely.service.PostService;
 import lombok.AllArgsConstructor;
 
 @Controller
@@ -30,6 +31,9 @@ public class GATPostController {
 	@Autowired
 	private GATPostService gatPostService;
 	private AddressService addressService;
+	
+	@Autowired
+	private PostService postService;
 	
 	@GetMapping("/gatpost/list")
 	public String GTAPostlist(Model model) {
@@ -45,6 +49,13 @@ public class GATPostController {
 		model.addAttribute("GATPost", GATPost);
 		MemberVO user = customUser.getMember();
 		model.addAttribute("user", user);
+		int bm_me_num = user.getMe_num();
+		// 즐겨찾기 기능 추가
+		Integer bookmark = postService.selectBookmark(bm_me_num, po_num);
+		if (bookmark != null) {
+			System.out.println("bookmark : " + bookmark);
+			model.addAttribute("bookmark", bookmark);
+		}
 		return "gatpost/detail";
 	}
 	
