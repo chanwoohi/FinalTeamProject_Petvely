@@ -12,10 +12,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import kr.kh.petvely.model.user.CustomUser;
 import kr.kh.petvely.model.vo.AnimalVO;
+import kr.kh.petvely.model.vo.GiveAndTakeStateVO;
+import kr.kh.petvely.model.vo.GiveAndTakeTypeVO;
 import kr.kh.petvely.model.vo.MemberVO;
+import kr.kh.petvely.model.vo.Sido_AreasVO;
 import kr.kh.petvely.model.vo.WalkMateMemberVO;
 import kr.kh.petvely.model.vo.WalkMatePostVO;
+import kr.kh.petvely.service.AddressService;
 import kr.kh.petvely.service.AnimalService;
+import kr.kh.petvely.service.GATPostService;
 import kr.kh.petvely.service.PostService;
 import kr.kh.petvely.service.WalkMatePostService;
 import kr.kh.petvely.service.WalkMateService;
@@ -36,6 +41,11 @@ public class WalkMatePostController {
 	@Autowired
 	private WalkMateService walkMateService;
 	
+	@Autowired
+	private AddressService addressService;
+	@Autowired
+	private GATPostService gatPostService;
+	
 	@GetMapping("/walkmatepost/list")
 	public String walkmatepostList(Model model) {
 		List<WalkMatePostVO> list = walkMatePostService.getWalkMatePostList();
@@ -53,9 +63,14 @@ public class WalkMatePostController {
 			
 			List<AnimalVO> petList = animalService.selectPetList(user.getMe_num());
 			System.out.println(petList);
-			
+			List<Sido_AreasVO> sidoList = addressService.getSidoList();
+			List<GiveAndTakeStateVO> gatstateList = gatPostService.gatStateList();
+			List<GiveAndTakeTypeVO> gatTypeList = gatPostService.gatTypeList();
 			model.addAttribute("petList", petList);
 			model.addAttribute("me_num", user.getMe_num());
+			model.addAttribute("sidoList", sidoList);
+			model.addAttribute("gatstateList", gatstateList);
+			model.addAttribute("gatTypeList", gatTypeList);
 		}
 		return "/walkmatepost/insert";
 	}
