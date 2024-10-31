@@ -36,7 +36,7 @@
 	<update id="updateGATPost1">
 		update Post 
 			set 
-				po_title = #{po_title}, po_content = #{po_content}, po_me_num= #{me_num}
+				po_title = #{po_title}, po_content = #{po_content}
     		where 
     			po_num = #{po_num}
 	</update>
@@ -61,10 +61,7 @@
     <select id="selectGATTypeList"  resultType="GiveAndTakeTypeVO">
     	select * from GATType
     </select>
-    <select id="selectCommentList"  resultType="commentVO">
-    	select * from comment 
-    	left join member on me_num = cm_me_num
-    	left join post on po_num = cm_po_num
-    	where cm_po_num = #{po_num}
-    </select>
+    <update id="updategat_gat">
+    	update GATPost set gat_gats_state = #{gat_gats_state} where po_num = #{po_num}
+    </update>
 </mapper>
