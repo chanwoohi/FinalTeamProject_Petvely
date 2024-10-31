@@ -13,5 +13,5 @@ public interface MypageDAO {
 	List<CommunityVO> selectCommunityList();
 
 	List<PostVO> selectPostList(int co_num, int me_num);
-	
+
 }

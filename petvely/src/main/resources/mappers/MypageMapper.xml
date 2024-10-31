@@ -8,7 +8,8 @@
     	where cm_me_num = #{me_num}
     </select>
     <select id="selectCommunityList" resultType="CommunityVO">
-		SELECT * from community
+		SELECT * from community order by co_num
+		
 	</select>
 	<select id="selectPostList" resultType="PostVO">
 		SELECT * from post 
