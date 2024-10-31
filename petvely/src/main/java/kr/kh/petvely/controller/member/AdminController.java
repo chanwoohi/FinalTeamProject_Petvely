@@ -27,7 +27,7 @@ public class AdminController {
 		model.addAttribute("rttList", rttList);
 		
 		// 신고 목록 가져오기 < url에 맞춰서
-		List<ReportVO> reportList = reportService.getReportList(rp_rtt_type);
+		List<ReportVO> reportList = reportService.getReportList();
 		
 		System.out.println(reportList);
 		

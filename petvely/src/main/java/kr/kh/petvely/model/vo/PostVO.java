@@ -29,8 +29,4 @@ public class PostVO {
     private int po_recommendCount; // 추천 수
     private int po_notRecommendCount; // 비추천 수
 	
-
-
-    
-	
 }

@@ -62,9 +62,6 @@ public class MarketController {
 				model.addAttribute("bookmark", bookmark);
 			}
 			
-			// 찜 & 즐겨찾기 버튼에 써야해서(일관성)
-			model.addAttribute("po_num", po_num);
-		
 			PostVO post = marketPostService.getMarketPost(po_num);
 			List<FileVO> fileList = marketPostService.getFileList(po_num);
 			model.addAttribute("fileList",fileList);
