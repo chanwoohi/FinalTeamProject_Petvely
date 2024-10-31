@@ -31,3 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
+petvely/src/main/resources/static/html/pet.html
+petvely/src/main/resources/static/html/mypage.html
