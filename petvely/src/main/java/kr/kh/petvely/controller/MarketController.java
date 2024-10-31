@@ -33,21 +33,23 @@ public class MarketController {
 	@Autowired
 	PostService postService;
 	
-	@GetMapping("/post/market")
-	public String postList(Model model) {
-
+	@GetMapping("/post/market/{co_num}")
+	public String postList(Model model,@PathVariable int co_num) {
+		
 		List<MarketPostVO> list = marketPostService.getMarketList();
-		List<FileVO> fileList = marketPostService.getThumNail();
+		
 		model.addAttribute("list",list);
-		model.addAttribute("fileList",fileList);
+		
 
 		return "post/market";
 
 	}
 	
 	@GetMapping("/post/marketdetail/{po_num}")
-	public String marketPostDetail(Model model, @PathVariable int po_num,
-								   @AuthenticationPrincipal CustomUser customUser){
+	public String marketPostDetail(	Model model,
+									@PathVariable int po_num,
+									@AuthenticationPrincipal CustomUser customUser){
+		
 		if(customUser != null) {
 			// 즐겨찾기 기능
 			MemberVO user = customUser.getMember();
@@ -62,11 +64,14 @@ public class MarketController {
 				model.addAttribute("bookmark", bookmark);
 			}
 			
-			PostVO post = marketPostService.getMarketPost(po_num);
+			MarketPostVO post = marketPostService.getMarketPost(po_num);
+			
 			List<FileVO> fileList = marketPostService.getFileList(po_num);
+			int me_num = user.getMe_num();
+			model.addAttribute("me_num",me_num);
+			model.addAttribute("user", user);
 			model.addAttribute("fileList",fileList);
 			model.addAttribute("post",post);
-			model.addAttribute("me_num", 1);
 		}
 		
 		return "post/marketdetail";
@@ -74,35 +79,75 @@ public class MarketController {
 	
 	@GetMapping("/post/marketinsert")
 	public String marketPostInsert(Model model) {
-		List<GoodsTypeVO> types = goodsService.getTypes();
-		model.addAttribute("types",types);
+		
+			
+			List<GoodsTypeVO> types = goodsService.getTypes();
+			model.addAttribute("types",types);
+		
 		return "post/marketinsert";
 	}
-	
-	@PostMapping("/post/marketinsert")
-	public String marketPostInsertPost(MarketPostVO marketPost, MultipartFile[] fileList) {
-		marketPost.setMp_gts_state("판매중");
-		
-		boolean res = marketPostService.addPost(marketPost,fileList);
-		if(res) {
-			return "redirect:/post/market";
+	@PostMapping("/post/marketinsert/{co_num}")
+	public String marketPostInsertPost(MarketPostVO marketPost, MultipartFile[] fileList,
+										@PathVariable int co_num,
+										@AuthenticationPrincipal CustomUser CustomUser
+										) {
+		if(CustomUser != null) {
+			MemberVO user = CustomUser.getMember();
+			int me_num = user.getMe_num();
+			marketPost.setPo_me_num(me_num);
+			marketPost.setMp_gts_state("판매중");	
+			boolean res = marketPostService.addPost(marketPost,fileList);
+			if(res) {
+				marketPost.getPo_co_num();
+//				System.out.println("me_num:"+me_num);
+//				System.out.println(marketPost);
+//				System.out.println("post:"+post);
+				return "redirect:/post/market/{co_num}";
+			}
 		}
-		return "redirect:/post/marketinsert";
+		return "redirect:/post/market{co_num}";
 		
 	}
 	
 	@PostMapping("/post/marketcomplete/{po_num}")
-	public String marketComplete(@PathVariable int po_num) {
-		boolean res = marketPostService.marketComplete(po_num);
+	public String marketComplete(@PathVariable int po_num,MarketPostVO marketPost) {
+		
+			boolean res = marketPostService.marketComplete(po_num);
 		
 		if(res) {
-			return "redirect:/post/market";
-		}else {
-			return "redirect:/post/marketdetail/" + po_num;
-		}
+				return "redirect:/post/market/" + marketPost.getPo_co_num();
+		
+			}
+		return "redirect:/post/marketdetail/" + po_num;
 	}
 
+	@GetMapping("/post/marketupdate/{po_num}")
+	public String marketUpdate(@PathVariable int po_num,Model model) {
+		MarketPostVO marketPost = marketPostService.getMarketPost(po_num);
+		model.addAttribute("marketPost",marketPost);
+		List<GoodsTypeVO> types = goodsService.getTypes();
+		List<FileVO> files = marketPostService.getFileList(po_num);
+		model.addAttribute("files",files);
+		model.addAttribute("types",types);
+		System.out.println("파일"+files);
 
+		return "post/marketupdate";
+		
+	}
+	@PostMapping("/post/marketupdate/{po_num}")
+	public String marketUpdatePost(@PathVariable int po_num,Model model, 
+									MarketPostVO marketPost, MultipartFile[] fileList,int[] nums) {
+		
+		marketPost.setPo_num(po_num);
+		marketPost.setPo_co_num(11);
+		boolean res = marketPostService.updateMarketPost(marketPost,fileList,nums);
+		
+		System.out.println("업데이트할때 : "+marketPost);
+		if(res) {
+			return "redirect:/post/market/" + marketPost.getPo_co_num();
+		}
+		return "redirect:/post/marketupdate/{po_num}";
+	}
 }
 
 

@@ -9,18 +9,14 @@
 </head>
 <body>
     <main layout:fragment="content">
-        <form th:action="@{/message/send}" method="post">
+        <form th:action="@{/message/marketmessagesend/{po_num}(po_num=${po_num})}" method="post">
             <input type="hidden" name="mes_num" th:value="${mes_num}"/>
-			
-            <div class="form-group">
-                <label for="receiverNum">받는 이:</label>
-                <input type="text" class="form-control" name="receiverNum" required placeholder="받는 사람의 ID">
-            </div>
+			<input type="hidden" name="receiverNum" th:value="${mes_me_receiverNum}"/>
+            <input type="hidden" name="senderNum" th:value="${mes_me_senderNum}"/>
 
             <div class="form-group">
                 <label for="mes_content">내용:</label>
-                <textarea class="form-control" name="mes_content" id="mes_content" required placeholder="500자 이내로 메시지를 입력하세요"
-                maxlength="500"></textarea>
+                <textarea class="form-control" name="content" id="mes_content" required placeholder="메시지를 입력하세요"></textarea>
             </div>
 
             <button class="btn btn-outline-dark" type="submit">보내기</button>
