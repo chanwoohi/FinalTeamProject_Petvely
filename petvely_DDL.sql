@@ -31,7 +31,7 @@ DROP TABLE IF EXISTS `Comment`;
 CREATE TABLE `Comment` (
 	`cm_num`	int primary key auto_increment	NOT NULL,
 	`cm_content`	varchar(200)	NULL,
-	`cm_date`	datetime	NULL,
+	`cm_date`	datetime	NULL default current_timestamp,
 	`cm_state`	int	NULL,
 	`cm_reportCount`	int	NULL,
 	`cm_me_num`	int	NOT NULL,

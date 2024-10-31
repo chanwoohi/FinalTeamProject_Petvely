@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.petvely.dao.member.MypageDAO">
+    <select id="selectCommentList" resultType="commentVO">
+    	select * from comment 
+    	left join member on me_num = cm_me_num
+    	left join post on po_num = cm_po_num
+    	where cm_me_num = #{me_num}
+    </select>
+    <select id="selectCommunityList" resultType="CommunityVO">
+		SELECT * from community
+	</select>
+	<select id="selectPostList" resultType="PostVO">
+		SELECT * from post 
+		WHERE po_co_num = #{co_num} and po_me_num=#{me_num}
+	</select>
+</mapper>

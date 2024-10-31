@@ -71,7 +71,6 @@ public class MemberController {
 	@GetMapping("login")
 	public String memberLogin() {
 		log.info(util.getCurrentMethodName());
-		
 		return viewRoute + "login";
 	}
 	

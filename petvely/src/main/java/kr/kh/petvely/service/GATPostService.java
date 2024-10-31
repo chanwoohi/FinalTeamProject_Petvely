@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.kh.petvely.dao.GATPostDAO;
-import kr.kh.petvely.model.vo.CommentVO;
 import kr.kh.petvely.model.vo.GiveAndTakePostVO;
 import kr.kh.petvely.model.vo.GiveAndTakeStateVO;
 import kr.kh.petvely.model.vo.GiveAndTakeTypeVO;
@@ -36,7 +35,6 @@ public class GATPostService {
 			return false;
 		}
 		try {
-			GATPost.setPo_co_num(0);
 			return gatpostDao.insertGATPost1(GATPost);
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -96,8 +94,8 @@ public class GATPostService {
 		return gatpostDao.selectGATTypeList();
 	}
 
-	public List<CommentVO> getCommentList(int po_num) {
-		return gatpostDao.selectCommentList(po_num);
+	public boolean updateat_gat(GiveAndTakePostVO gATPost) {
+		return gatpostDao.updategat_gat(gATPost);
 	}
 
 }

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html 
-xmlns:th="http://www.thymeleaf.org"
-xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-layout:decorate="~{layout/layout.html}">
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/layout.html}">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -24,6 +24,7 @@ layout:decorate="~{layout/layout.html}">
 				</thead>
 				<tbody>
 					<tr th:each="item : ${list}">
+						
 						<td th:text="${item.cm_num}"></td>
 						<td>
 							<a th:text="${item.cm_content}" th:href="@{/gatpost/detail/{po_num}(po_num=${item.po_num})}"></a>
@@ -34,7 +35,7 @@ layout:decorate="~{layout/layout.html}">
 						</td>
 					</tr>
 					<tr th:if="${list.size() == 0}">
-						<td colspan="6" class="text-center">등록된 게시글이 없습니다</td>
+						<td colspan="6" class="text-center">등록된 댓글이 없습니다</td>
 					</tr>
 				</tbody>
 			</table>
