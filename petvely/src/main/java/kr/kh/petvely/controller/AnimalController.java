@@ -3,6 +3,10 @@ package kr.kh.petvely.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +43,23 @@ public class AnimalController {
 	                               MultipartFile file) {
 	    // 넘어오는지 확인용
 	    System.out.println(animalVo);
+	    
+	    // 나이 계산하는 코드
+	    Date date = animalVo.getAni_birth();
+
+        // Date를 LocalDate로 변환
+        LocalDate birthDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        
+        // 현재 날짜 가져오기
+        LocalDate currentDate = LocalDate.now();
+        
+        // 두 날짜 사이의 연도 차이를 계산하여 나이 계산
+        long age = ChronoUnit.YEARS.between(birthDate, currentDate);
+        
+        System.out.println("나이: " + age);
+        
+        animalVo.setAni_age(age);
+	    
 	    
 	    if (customUser != null) {
 	        MemberVO user = customUser.getMember();
@@ -100,6 +121,23 @@ public class AnimalController {
 								   AnimalVO animal,
             					   MultipartFile file,
             					   @RequestParam String profileAction) {
+		
+	    // 나이 계산하는 코드
+	    Date date = animal.getAni_birth();
+
+        // Date를 LocalDate로 변환
+        LocalDate birthDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        
+        // 현재 날짜 가져오기
+        LocalDate currentDate = LocalDate.now();
+        
+        // 두 날짜 사이의 연도 차이를 계산하여 나이 계산
+        long age = ChronoUnit.YEARS.between(birthDate, currentDate);
+        
+        System.out.println("나이: " + age);
+        
+        animal.setAni_age(age);
+		
         // 새 프로필 사진 파일이 비어 있지 않은 경우에만 처리
         if (file != null && !file.isEmpty()) {
             try {

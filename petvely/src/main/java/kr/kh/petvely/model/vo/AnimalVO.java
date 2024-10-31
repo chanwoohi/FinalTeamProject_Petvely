@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class AnimalVO {
 	private int ani_num;
 	private String ani_name;
-	private int ani_age;
+	private long ani_age;
 	private String ani_gender;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
