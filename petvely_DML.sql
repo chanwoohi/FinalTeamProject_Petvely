@@ -8,8 +8,7 @@ VALUES('강아지', 1),
 ('고슴도치', 4),
 ('산책 메이트', 10),
 ('품앗이', 12),
-('중고거래', 11),
-('펫 정보', 13);
+('중고거래', 11);
 
 
 insert into petvely.regex(re_regex)
@@ -101,6 +100,7 @@ VALUES (
     0, -- me_fakeReportNum: 신고 횟수 (관리자이므로 0)
     'active' -- me_ms_status: 관리자 상태 (active 상태)
 );
+
 
 INSERT INTO petvely.reporttargettype (rtt_type)
 VALUES

@@ -390,3 +390,6 @@ CHANGE COLUMN `me_authority` `me_authority` VARCHAR(5) NULL DEFAULT 'USER';
 # 신고시간 기준으로 rp_date 저장
 ALTER TABLE `Report`
 MODIFY `rp_date` DATETIME DEFAULT CURRENT_TIMESTAMP;
+
+ALTER TABLE `petvely`.`animal`
+CHANGE COLUMN `ani_age` `ani_age` long;
