@@ -20,14 +20,14 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="item : ${list}">
+					<tr th:each="item : ${list}" th:if="${item != null}">
 						<td th:text="${item.po_num}"></td>
 						<td>
 							<a th:text="${item.po_title}"
 							th:href="@{/walkmatepost/detail/{po_num}(po_num=${item.po_num})}"></a> 
 						</td>
 						<td th:text="${item.me_id}"></td>
-						<td th:text="0">조회수 구현 하려고 하고 있음</td>
+						<td th:text="${item != null ? item.po_viewCount : '0'}"></td>
 					</tr>
 				</tbody>
 			</table>

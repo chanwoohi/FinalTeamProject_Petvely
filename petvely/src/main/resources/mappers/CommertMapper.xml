@@ -1,9 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.petvely.dao.CommentDAO">
-    <select id="selectCommentList"  resultType="commentVO">
+    <select id="selectCommentListin" resultType="commentVO">
     	select * from comment 
     	left join member on me_num = cm_me_num
     	left join post on po_num = cm_po_num
+    	where cm_po_num = #{po_num}
+    	order by cm_reply, cm_ord
     </select>
+    <insert id="insertComment">
+		insert into comment(cm_content, cm_me_num, cm_po_num, cm_reply, cm_ord, cm_layer) 
+		select 
+			#{cm_content}, 
+			#{me_num},
+			#{cm_po_num},
+			ifnull(max(cm_num), 0)+ 1 ,
+			#{cm_ord},
+			#{cm_layer}
+		from comment
+	</insert>
+	 <insert id="insertComment1">
+		insert into comment(cm_content, cm_me_num, cm_po_num, cm_reply, cm_ord, cm_layer) 
+		select 
+			#{cm_content}, 
+			#{me_num},
+			#{cm_po_num},
+			#{cm_reply},
+			ifnull(max(cm_ord), 0)+ 1 ,
+			#{cm_layer}
+		from comment 
+		where cm_reply = #{cm_reply}
+	</insert>
+	<insert id="insertComment2">
+		insert into comment(cm_content, cm_me_num, cm_po_num, cm_reply, cm_ord, cm_layer) 
+		select 
+			#{cm_content}, 
+			#{me_num},
+			#{cm_po_num},
+			#{cm_reply},
+			#{cm_ord},
+			#{cm_layer}
+	</insert>
+	<delete id="deleteComment">
+		delete from comment where cm_num = #{cm_num}
+	</delete>
+	<select id="selectComment" resultType="commentVO">
+		select * from comment where cm_num = #{cm_num}
+	</select>
+	<update id="updateComment">
+		update comment set cm_content = #{cm_content} where cm_num = #{cm_num}
+	</update>
 </mapper>

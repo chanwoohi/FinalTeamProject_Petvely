@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html 
 	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/layout.html}">
 <head>
 <meta charset="UTF-8">
@@ -149,60 +149,17 @@
 						</div>
 					</div>
 				</div>
-				<div class="modal" id="myModal3">
-					<div class="modal-dialog">
-						<div class="modal-content">
-						
-							<!-- Modal Header -->
-							<div class="modal-header">
-								<h4 class="modal-title">산책 메이트 펫 등록하기</h4>
-								<button type="button" class="close" data-dismiss="modal">&times;</button>
-							</div>
-							<!-- Modal body -->
-							<div>
-								<div class="modal-body">
-			                        <table class="table table-striped">
-			                            <thead>
-			                                <tr>
-			                                    <th>선택</th>
-			                                    <th>아이디</th>
-			                                    <th>이름</th>
-			                                    <th>나이</th>
-			                                    <th>성별</th>
-			                                    <th>중성화 여부</th>
-			                                </tr>
-			                            </thead>
-			                            <tbody>
-			                                <tr th:each="item : ${walkMateMember}">
-			                                    <td>
-			                                         <input type="checkbox" name="selectedMembers" th:value="${item.ani_num}" />
-			                                    </td>
-			                                    <td th:text="${item.me_id}"></td>
-			                                    <td th:text="${item.ani_name}"></td>
-			                                    <td th:text="${item.ani_age}"></td>
-			                                    <td th:text="${item.ani_gender}"></td>
-			                                    <td th:text="${item.ani_neutralization}"></td>
-			                                </tr>
-			                            </tbody>
-			                        </table>
-			                        
-			                        <!-- Modal footer with submit button -->
-			                        <div class="modal-footer">
-			                            <button id="approveButton" class="btn btn-outline-info">산책 메이트 수락하기</button>
-			                            <button type="button" class="btn btn-outline-danger" data-dismiss="modal">닫기</button>
-			                        </div>
-				                 </div>   
-							</div>
-						</div>
-					</div>
-				</div>
-				<a class="btn btn-outline-warning" th:href="@{/post/bookmark/{po_num}(po_num=*{po_num})}" >즐겨찾기⭐</a>
+					<a th:if="${bookmark}!=${po_num}" class="btn btn-outline-warning" th:href="@{/post/bookmark/insert/{po_num}(po_num=*{po_num})}" >즐겨찾기⭐</a>
+					<a th:if="${bookmark}==${po_num}" class="btn btn-warning" th:href="@{/post/bookmark/delete/{po_num}(po_num=*{po_num})}" >즐겨찾기⭐</a>
+				<button type="button" class="btn btn-outline-info"
+								    th:onclick="'window.open(\'/report/post/' + ${po_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'"
+								    >신고하기🚨</button>
 				<br>
 				<!-- 신청자 전용 -->
 				<a class="btn btn-outline-info" data-toggle="modal" data-target="#myModal">산책 메이트 신청하기</a>
 				<br>
 				<!-- 글 작성자 전용 -->
-				<a class="btn btn-outline-info" data-toggle="modal" data-target="#myModal3">산책 메이트 수락하기</a>
+				<a class="btn btn-outline-info" th:href="@{/walkmatepost/approve/{po_num}(po_num=*{po_num})}">산책 메이트 수락하기</a>
 				<!-- 로그인 기능 구현 완료되면 작성자만 보이게 수정할 것 -->
 				<a class="btn btn-outline-primary" th:href="@{/walkmatepost/update/{po_num}(po_num=*{po_num})}">수정</a>
 				<a class="btn btn-outline-warning" th:href="@{/walkmatepost/delete/{po_num}(po_num=*{po_num})}">삭제</a>

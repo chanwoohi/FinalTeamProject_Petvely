@@ -3,7 +3,7 @@
 <mapper namespace="kr.kh.petvely.dao.AnimalDAO">
 	<select id="selectPetList" resultType="AnimalVO">
 		select * from animal
-		where ani_me_num = #{ani_me_num}
+		where ani_me_num = #{me_num}
 	</select>
 	<select id="selectDetailPetList" resultType="AnimalVO">
 		select 
@@ -17,14 +17,42 @@
 	</select>
 	
 	<select id="selectChoicePetList" resultType="AnimalVO">
-		select 
-			* 
-		from 
-			animal
-		join 
-			postUserSelectedPets on ani_num = pusp_ani_num
-		where
-			pusp_po_num = #{po_num}
+	    SELECT * 
+	    FROM animal 
+	    WHERE ani_num IN (
+	        SELECT DISTINCT w.wmm_ani_num
+	        FROM walkmatemember w 
+	        WHERE w.wmm_po_num = #{po_num}
+	    )
 	</select>
-	
+	<insert id="insertMyPet">
+	    INSERT INTO animal (ani_name, ani_age, ani_gender, ani_birth, ani_weight, ani_img, ani_info, ani_neutralization, ani_at_type, ani_me_num)
+	    VALUES (#{ani.ani_name}, #{ani.ani_age}, #{ani.ani_gender},
+	    		#{ani.ani_birth}, #{ani.ani_weight}, #{ani.ani_img}, 
+	    		#{ani.ani_info}, #{ani.ani_neutralization}, #{ani.ani_at_type}, #{me_num})
+	</insert>
+	<delete id="deleteMyPet">
+		delete from animal
+		where ani_num = #{ani_num}
+	</delete>
+	<select id="selectMyPet" resultType="AnimalVO">
+		select *
+		from animal
+		where ani_num = #{ani_num}
+	</select>
+	<update id="updateMyPet">
+		update animal
+		set
+			ani_name = #{ani_name},
+			ani_age = #{ani_age},
+			ani_gender = #{ani_gender},
+			ani_birth = #{ani_birth},
+			ani_weight = #{ani_weight},
+			ani_img = #{ani_img},
+			ani_info = #{ani_info},
+			ani_neutralization = #{ani_neutralization},
+			ani_at_type = #{ani_at_type}
+			
+		where ani_num = #{ani_num}
+	</update>
 </mapper>

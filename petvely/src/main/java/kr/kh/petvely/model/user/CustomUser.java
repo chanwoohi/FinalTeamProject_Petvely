@@ -22,6 +22,17 @@ public class CustomUser extends User {
 		super(	vo.getMe_id(),
 				vo.getMe_pw(), 
 				Arrays.asList(new SimpleGrantedAuthority(vo.getMe_authority())));
+		System.out.println(vo.getMe_id());
 		this.member = vo;
 	}
+	
+	// me_id를 반환하는 메서드 추가
+	public String getMeId() {
+		return this.member.getMe_id();
+	}
+	// me_mum을 반환하는 메서드 추가
+	public int getMeNum() {
+		return this.member.getMe_num();
+	}
+
 }

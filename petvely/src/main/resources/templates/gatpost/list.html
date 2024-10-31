@@ -41,21 +41,6 @@ layout:decorate="~{layout/layout.html}">
 				</tbody>
 			</table>
 		</div>
-		<form>
-			<div class="input-group mb-3">
-				<select class="form-control" name="type">
-					<option>전체</option>
-					<option>제목</option>
-					<option>작성자</option>
-					<option>타입</option>
-					<option>상태</option>				
-				</select>
-				<input type="text" class="form-control" placeholder="검색어" name="search">
-				<div class="input-group-append">
-					<button type="submit" class="btn btn-outline-info col-12">검색</button>
-				</div>
-			</div>
-		</form>
 		<a class="btn btn-outline-dark" th:href="@{/gatpost/insert}">등록</a>
 	</main>
 </body>

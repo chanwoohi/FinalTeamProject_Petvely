@@ -16,16 +16,15 @@
 				<input type="text" class="form-control" name="po_title">
 			</div>
 			
-			<!-- 로그인 기능 미구현으로 작성자 직접 입력해야함... 추후 수정 -->
+			<!-- 로그인 PostVO에 me_id 넣기 -->
 			<div class="form-group">
-				<label>작성자 번호</label>
-				<input type="text" class="form-control" name="po_me_num">
+				<input type="hidden" th:value="${me_num}" class="form-control" name="po_me_num">
 			</div>
 			
 			<!-- 추후에 달력 api 추가 예정 -->
 			<div class="form-group">
 				<label>날짜</label>
-				<input type="text" class="form-control" name="wm_date">
+				<input type="date" class="form-control" name="wm_date">
 			</div>
 			<div class="form-group">
 				<label>시간</label>
@@ -137,9 +136,7 @@
 			
 			<!-- 나중에 펫 등록 안돼 있으면 등록 못하게 추가할 예정  -->
 			<button class="btn btn-outline-info col-12" id="submitBtn" >게시글 등록</button>
-			<div id="selectedPets">
-				
-			</div>
+			<input type="hidden" id="selectedPets" name="selectedPets" value="">
 		</form>
 		<a class="btn btn-outline-info" th:href="@{/walkmatepost/list}">목록으로</a>
 		
@@ -241,6 +238,19 @@
 
 		            tbody.appendChild(newRow);
 		        });
+		    });
+		    // 펫 등록을 안하면, 게시글 등록이 안되게 막는 jQuery
+		    document.querySelector('.btn-outline-info.col-12').addEventListener('click', function(event) {
+		        // 체크된 체크박스 확인
+		        const checkedBoxes = document.querySelectorAll('input[name="check"]:checked');
+
+		        // 체크된 체크박스가 없으면 경고창 표시하고 폼 제출 중단
+		        if (checkedBoxes.length === 0) {
+		            alert("펫 등록을 해야 게시글 등록이 가능합니다.");
+		            event.preventDefault(); // 폼 제출 중단
+		        } else {
+		            document.querySelector('form').submit(); // 체크된 경우 폼 제출
+		        }
 		    });
 		    
 		    document.querySelector('.btn-outline-info.col-12').addEventListener('click', function() {

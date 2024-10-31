@@ -1,15 +1,26 @@
 package kr.kh.petvely.controller.member;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import jakarta.servlet.http.HttpSession;
+import kr.kh.petvely.model.user.CustomUser;
+import kr.kh.petvely.model.vo.AnimalVO;
+import kr.kh.petvely.model.vo.BookMarkVO;
+import kr.kh.petvely.model.vo.CommunityVO;
 import kr.kh.petvely.model.vo.MemberVO;
+import kr.kh.petvely.service.AnimalService;
+import kr.kh.petvely.service.BookmarkService;
+import kr.kh.petvely.service.PostService;
 import kr.kh.petvely.service.member.MemberService;
 import kr.kh.petvely.utils.NoName;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +33,16 @@ public class MemberController {
 	private final NoName util = NoName.getInstance();
 	
 	@Autowired
+	private PostService postService;
+	
+	@Autowired
+	private AnimalService animalService;
+	
+	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private BookmarkService bookmarkService;
 	
 	@GetMapping("signup")
 	public String memberSignup(Model model) {
@@ -51,34 +71,39 @@ public class MemberController {
 	@GetMapping("login")
 	public String memberLogin() {
 		log.info(util.getCurrentMethodName());
-		
 		return viewRoute + "login";
 	}
 	
-	// 로그인 후 세션에 저장하는 코드가 없어서 내가 임시로 만듬
-	@PostMapping("login")
-	public String memberLogin_post(MemberVO memberVO, HttpSession session, Model model) {
-	    log.info(util.getCurrentMethodName() + " : " + memberVO);
-
-	    // 로그인 처리
-	    MemberVO user = memberService.login(memberVO);
-	    System.out.println("얘는 null임 ? : " + user);
-
-	    if (user != null) {
-	        // 로그인 성공 시 세션에 사용자 정보를 저장
-	        session.setAttribute("user", user);
-	        
-	        // 테스트 용
-	        System.out.println(user);
-	        
-	        // 세션에 저장된 사용자 정보 출력
-	        log.info("Logged in user: " + session.getAttribute("user"));
-	        return "redirect:/";
-	    } else {
-	        // 로그인 실패 시 처리
-	        System.out.println("로그인 실패");
-	        return "view/member/login";
-	    }
+	@GetMapping("mypage/{co_num}")
+	public String myPage(Model model,
+						 @AuthenticationPrincipal CustomUser customUser,
+						 CommunityVO communityVo,
+						 @PathVariable int co_num) {
+		if(customUser != null) {
+			// 커뮤니티 리스트 가져오기
+			List<CommunityVO> communityList = postService.selectCommunityList();
+			model.addAttribute("communityList", communityList);
+			if (communityList == null || communityList.isEmpty()) {
+			    System.out.println("커뮤니티 리스트가 비어 있습니다.");
+			}
+			model.addAttribute("co_num", co_num);
+			
+			MemberVO user = customUser.getMember();
+			List<AnimalVO> petList = animalService.selectPetList(user.getMe_num());
+			
+			model.addAttribute("petList", petList);
+			
+			int me_num = user.getMe_num();
+			
+		    List<BookMarkVO> bookMarkList = new ArrayList<>();
+		    
+		    bookMarkList = bookmarkService.selectBookmarks(me_num, co_num);
+	
+		    model.addAttribute("bookMarkList", bookMarkList);
+		
+		
+		}
+		return "/member/mypage";
 	}
 	
 	

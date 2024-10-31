@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout.html}">
+<head>
+    <link href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <main layout:fragment="content">
+    	<div class="report-modal">
+		    <h2 class="modal-title">신고하기</h2>
+		    <div>
+		    	<label>작성자</label>
+		    	<span th:text="${writer}"></span>
+		    	<br>
+		    	<label>내용</label>
+		    	<span th:text="${content}"></span>
+		    </div>
+		    <hr>
+		    <form th:action="@{/report/post/{po_num}(po_num=${po_num})}" method="post">
+		        <div class="form-group">
+		            <label>사유 선택</label>
+		            <select name="reason" class="form-control">
+		                <option value="스팸입니다/도배입니다.">스팸입니다/도배입니다.</option>
+		                <option value="음란물입니다.">음란물입니다.</option>
+		                <option value="불법정보를 포함하고 있습니다.">불법정보를 포함하고 있습니다.</option>
+		                <option value="청소년에게 유해한 내용입니다.">청소년에게 유해한 내용입니다.</option>
+		                <option value="욕설/생명경시/혐오/차별적 표현입니다.">욕설/생명경시/혐오/차별적 표현입니다.</option>
+		                <option value="개인정보가 노출되었습니다.">개인정보가 노출되었습니다.</option>
+		                <option value="불쾌한 표현이 있습니다.">불쾌한 표현이 있습니다.</option>
+		                <option value="기타">기타</option>
+		            </select>
+           			<div class="form-group">
+						<label>내용</label>
+						<textarea class="form-control" style="min-height: 200px; height: auto;" name="rp_cause">
+						</textarea>
+					</div>
+		        </div>
+		        <button type="submit" class="btn submit-btn">신고하기</button>
+		    </form>
+		</div>
+    </main>
+</body>
+</html>

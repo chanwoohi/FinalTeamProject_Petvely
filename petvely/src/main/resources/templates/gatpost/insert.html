@@ -9,21 +9,19 @@ layout:decorate="~{layout/layout.html}">
 </head>
 <body>
 	<main layout:fragment="content">
-		<form method="post" th:action="@{/gatpost/insert}">
+		<form class="form-group" method="post" th:action="@{/gatpost/insert}">
+			<input type="hidden" class="form-control" name="po_co_num" required="required" value="12">
+			<input type="hidden" class="form-control" name="po_me_num" th:value="${Userlist.me_num}">
 			<div class="form-group" id="GT">
 				<label>품앗이:</label>
 				<!-- 유효성 검사로 오류 표시로 바꿀것 -->
-				<input type="hidden" id="gat_gat" name="gat_gat" required="required">
+				<input type="text" id="gat_gat" name="gat_gat" required="required" style="display: none;">
 				<a id="give" class="btn btn-outline-info" onclick="">GIVE</a>
 				<a id="take" class="btn btn-outline-info" onclick="">TAKE</a>
 			</div>
 			<div class="form-group">
 				<label>제목:</label>
 				<input type="text" class="form-control" name="po_title" required="required">
-			</div>
-			<div class="form-group">
-				<label>작성자:</label>
-				<input type="text" class="form-control" name="po_me_num" required="required">
 			</div>
 			<div class="form-group">
 				<label>내용:</label>

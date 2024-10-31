@@ -19,15 +19,19 @@ import kr.kh.petvely.model.vo.MemberVO;
 import kr.kh.petvely.model.vo.PostVO;
 import kr.kh.petvely.service.GoodsService;
 import kr.kh.petvely.service.MarketPostService;
+import kr.kh.petvely.service.PostService;
 
 @Controller
 public class MarketController {
 
 	@Autowired
 	MarketPostService marketPostService;
+	
 	@Autowired
 	GoodsService goodsService;
-
+	
+	@Autowired
+	PostService postService;
 	
 	@GetMapping("/post/market/{co_num}")
 	public String postList(Model model,@PathVariable int co_num) {
@@ -39,7 +43,8 @@ public class MarketController {
 
 		return "post/market";
 
-}
+	}
+	
 	@GetMapping("/post/marketdetail/{po_num}")
 	public String marketPostDetail(	Model model,
 									@PathVariable int po_num,
@@ -58,10 +63,35 @@ public class MarketController {
 
 
 			
+	public String marketPostDetail(Model model, @PathVariable int po_num,
+								   @AuthenticationPrincipal CustomUser customUser){
+		if(customUser != null) {
+			// 즐겨찾기 기능
+			MemberVO user = customUser.getMember();
+			
+			int bm_me_num = user.getMe_num();
+			
+			System.out.println("gatpost가 받는 po_num : " + po_num);
+			Integer bookmark = postService.selectBookmark(bm_me_num, po_num);
+			
+			if (bookmark != null) {
+				System.out.println("bookmark : " + bookmark);
+				model.addAttribute("bookmark", bookmark);
+			}
+			
+			// 찜 & 즐겨찾기 버튼에 써야해서(일관성)
+			model.addAttribute("po_num", po_num);
+		
+			PostVO post = marketPostService.getMarketPost(po_num);
+			List<FileVO> fileList = marketPostService.getFileList(po_num);
+			model.addAttribute("fileList",fileList);
+			model.addAttribute("post",post);
+			model.addAttribute("me_num", 1);
 		}
 		
 		return "post/marketdetail";
-}
+	}
+	
 	@GetMapping("/post/marketinsert")
 	public String marketPostInsert(Model model) {
 		
@@ -93,6 +123,7 @@ public class MarketController {
 		return "redirect:/post/market{co_num}";
 		
 	}
+	
 	@PostMapping("/post/marketcomplete/{po_num}")
 	public String marketComplete(@PathVariable int po_num,MarketPostVO marketPost) {
 		

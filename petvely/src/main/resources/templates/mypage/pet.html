@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout/layout2.html}">
+<head>
+<link rel="stylesheet" type="text/css" href="/css/project.css">
+<link rel="stylesheet" type="text/css" href="/css/common.css"> 
+    <meta charset="UTF-8">
+    <link href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+    <main layout:fragment="content">
+			<div class="main-container">
+				<div class="contentheader">
+					<div class="user_community">
+						<a class="user_activity">프로필</a>
+						<a class="user_message">쪽지보내기</a>
+						<a class="user_report">신고하기</a>
+						<a class="user_rating">평점</a>
+					</div>
+				</div>
+				<div class="sub-container">
+			      <div class="tab-buttons">
+				    <a th:href="@{/mypage/mypage}" 
+				       th:classappend="${currentPage == 'user'} ? ' active' : ''">내 프로필</a>
+				    <a th:href="@{/mypage/pet}" 
+				       th:classappend="${currentPage == 'pet'} ? ' active' : ''">펫 프로필</a>
+				  </div>
+				  <div class="tab-content active">
+					<div class="pet_profile">
+							<h1 class="pet_title">나의 반려동물</h1>
+							<!--  <div class="pet_icon">반려동물</div>
+							<div class="pet_name">반려동물이름</div> -->
+							<div class="pet_petContents" th:each="item : ${petList}" th:if="${item != null}">
+								<ul>
+									<li class="pet_Petslist" >
+										<div class="pet_mypets">
+												<div>
+								                    <div th:if="${item.ani_img} != null">
+								                        <img class="pet_Petimg" th:src="@{${item.ani_img}}" alt="펫 이미지" />
+								                    </div>
+								                    <div th:if="${item.ani_img} == null">
+								                        <img class="pet_Petimg" th:src="@{/uploads/default-image.jpg}" alt="기본 이미지" />
+								              		</div>
+            									</div>
+												<div class="pet_ct">
+													<div class="pet_Petname" th:text="${item.ani_name}">펫 이름</div>
+													<div class="pet_PetAge" th:text="${item.ani_age} + '살'">펫나이</div>
+												</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+						<a class="pet_update" th:href="@{/animal/signup}">추가하기</a>
+					</div>
+				   </div>
+			  </div>
+		</div>
+    </main>
+</body>
+</html>

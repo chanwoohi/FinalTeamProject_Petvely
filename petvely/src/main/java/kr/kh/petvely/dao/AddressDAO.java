@@ -3,7 +3,6 @@ package kr.kh.petvely.dao;
 import java.util.List;
 
 import kr.kh.petvely.model.vo.Emd_AreasVO;
-import kr.kh.petvely.model.vo.GiveAndTakePostVO;
 import kr.kh.petvely.model.vo.Sido_AreasVO;
 import kr.kh.petvely.model.vo.Sigg_AreasVO;
 

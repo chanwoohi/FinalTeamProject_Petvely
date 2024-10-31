@@ -6,18 +6,27 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+	.comment-item.comment-layer-1{
+		padding-left: 40px; display: none;
+	}
+	.comment-item.comment-layer-2{
+		padding-left: 80px; display: none;
+	}
+	
+</style>
 </head>
 <body>
 	<main layout:fragment="content">
-		<div class="table table-striped" th:object="${GATPost}">
+		<div class="form-group" th:object="${GATPost}" style="padding-top: 20px">
 			<div class="form-group">
 				<div th:if="${GATPost.gat_gat.equals('o')}">
 					<input class="btn btn-outline-info text-center" type="text" readonly value="GIVE">
-					<input class="btn btn-outline-info text-center" type="text" readonly th:field="*{gat_gats_state}">
+					<input class="btn btn-outline-info text-center btn-state" type="text" readonly th:field="*{gat_gats_state}" th:value="*{gat_gats_state}">
 				</div>
 				<div th:if="${GATPost.gat_gat.equals('x')}">
 					<input class="btn btn-outline-info text-center" type="text" readonly value="TAKE">
-					<input class="btn btn-outline-info text-center" type="text" readonly th:field="*{gat_gats_state}">
+					<input class="btn btn-outline-info text-center btn-state" type="text" readonly th:field="*{gat_gats_state}" th:value="*{gat_gats_state}">
 				</div>
 			</div>
 			<div class="form-group">
@@ -59,122 +68,343 @@
 				<input type="text" class="form-control" readonly th:field="*{sigg_name}">
 				<input type="text" class="form-control" readonly th:field="*{emd_name}">
 			</div>
-<!-- 			<div class="mt-3">
-			</div>
+			<div>
+				<a th:if="${bookmark}!=${po_num}" class="btn btn-outline-warning" th:href="@{/post/bookmark/insert/{po_num}(po_num=*{po_num})}" >즐겨찾기⭐</a>
+				<a th:if="${bookmark}==${po_num}" class="btn btn-warning" th:href="@{/post/bookmark/delete/{po_num}(po_num=*{po_num})}" >즐겨찾기⭐</a>
+				<button type="button" class="btn btn-outline-info"
+				    th:onclick="'window.open(\'/report/post/' + ${po_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'"
+				    >신고하기🚨</button>
+		    </div>
 			<div class="form-group">
 				<button class="btn btn-outline-info" id="commentButton">댓글</button>
 			</div>
-			<div class="comment-container" id="commentList">
-				<ul class="comment-list">
-				</ul>
-				<ul class="comment-list1" id="commentList00">
-				</ul>
-				<div class="comment-pagination"></div>
-				<div class="comment-insert-box">
-					<textarea class="col-12 input-comment-insert"></textarea>
-					<button class="btn btn-outline-success btn-comment-insert">등록</button>
+			<div class="form-group commentList" id="commentList" style="display: none;">
+				<div id="comment">
+					
 				</div>
-			</div> -->
+				<div class="input-group mb-3">
+				    <textarea class="form-control" placeholder="댓글 입력" id="input-comment"></textarea>
+				    <div class="input-group-append">
+						<span class="input-group-text btn-insert" id="btn_insert0">등록</span>
+				    </div>
+				</div>
+			</div>
 			<div class="form-group">
 				<a class="btn btn-outline-info" th:href="@{/gatpost/list}">목록으로</a>
+				<th:if test="${post.po_me_id eq user.me_id }">
 				<a class="btn btn-outline-info" th:href="@{/gatpost/update/{po_num}(po_num=*{po_num})}">수정</a>
 				<a class="btn btn-outline-info" th:href="@{/gatpost/delete/{po_num}(po_num=*{po_num})}">삭제</a>
+				</th:if>
 			</div>
 		</div>
 		<script type="text/javascript">
+			
+			$ (document).ready ( function () { 
+				document.getElementById("commentButton").click();
+			}); 
+		
+			
+			let gat_gats_state = '[[${GATPost.gat_gats_state}]]';
 			let po_num = '[[${GATPost.po_num}]]';
-			$ (document).ready(function() {
+			let gatme_id= '[[${GATPost.me_id}]]';
+			let me_num = '[[${user.me_num}]]';
+			let me_id = '[[${user.me_id}]]';
+			$(".btn-state").click(function() {
+				if (me_id == gatme_id) {
+					var change_state ='';
+					if (gat_gats_state == "진행 중") {
+						change_state ='완료';
+					}
+					if (gat_gats_state == "완료") {
+						change_state ='진행 중';
+					}
+					var comment = {
+							gat_gats_state : change_state,
+							po_num : po_num,
+						}
+					$.ajax({
+						async : true,
+						url : '/gat_gat/update', 
+						type : 'post', 
+						data : JSON.stringify(comment),
+						contentType : "application/json; charset=utf-8",
+						success : function (data){
+						},
+						error : function(jqXHR, textStatus, errorThrown){
+						}
+					});
+				location.reload(true);
+				}
+				return;
+			})
+			
+			$("#commentButton").click(function() {
+				$(".commentList").toggle();
+			})
+			
+			function getCommentList() {
 				$.ajax({
 					async : true, 
-					url : '/comment/list',
+					url : '/comment/listin',
 					method : "post",
 					data : JSON.stringify(po_num), 
 					contentType : "application/json; charset=utf-8",
 					success : function (data){
-						console.log(data);
-						displayCommentList(data);
+						DisplayCommentList(data);
 					}, 
 					error : function(jqXHR, textStatus, errorThrown){
 					}
 				});
-			});
+			}
 			
-			function displayCommentList(data){
+			function DisplayCommentList(data){
+				str = '';
 				if(data == null || data.length == 0){
-					console.log(1);
-					$(".comment-list").html('<li class="comment-item">등록된 댓글이 없습니다.</li>');
+					$("#comment").html('<li class="comment-item">등록된 댓글이 없습니다.</li>');
 					return;
 				}
 				for(comment of data){
-					if (comment.cm_layer == 0) {
-						displayCommentList0(comment);
+					let reBtn = '';
+					let reInput = '';
+					let btns = '';
+					if(comment.me_num == me_num){
+						btns = `
+							<button class="btn btn-outline-info btn-update" data-num="${comment.cm_num}">수정</button>
+							<button class="btn btn-outline-dark btn-delete" data-num="${comment.cm_num}">삭제</button>
+						`
+					}
+					let commentLayer = '';
+					
+					if (comment.cm_layer == 0){
+						reBtn = `<button class="btn btn-outline-primary btn-comment btn-comment1" data-reply="${comment.cm_reply}" data-ord="${comment.cm_ord}" data-layer="${comment.cm_layer}">대댓글</button>`;
+						reInput =`
+							<div class="input-group mb-3 commnet-input commentListInput" style="padding-left:20px; display: none;">
+							    <textarea class="form-control input-comment1" id="input-comment1" placeholder="댓글 입력"></textarea>
+							    <div class="input-group-append">
+									<span class="input-group-text btn-insert1" id="btn_insert1" data-reply="${comment.cm_reply}"  data-ord="${comment.cm_ord}">등록</span>
+									</div>
+							</div>
+						`
 					}
 					if (comment.cm_layer == 1) {
-						displayCommentList1(comment);
+						commentLayer = 'comment-layer-1';
+						reBtn = `<button class="btn btn-outline-primary btn-comment btn-comment2" data-reply="${comment.cm_reply}"  data-ord="${comment.cm_ord}" data-layer="${comment.cm_layer}">대대댓글</button>`;
+						reInput =`
+							<div class="input-group commnet-input mb-3 commentListInput comment-layer-2" style="padding-left:20px; display: none;">
+							    <textarea class="form-control input-comment2" id="input-comment2" placeholder="댓글 입력" ></textarea>
+							    <div class="input-group-append">
+									<span class="input-group-text btn-insert2" id="btn-insert2" data-reply="${comment.cm_reply}"  data-ord="${comment.cm_ord}">등록</span>
+									</div>
+							</div>
+						`
 					}
+					if (comment.cm_layer == 2) {
+						commentLayer = 'comment-layer-2';
+						reBtn = '';
+					}
+					str += `
+						<div class="comment-item ${commentLayer} " id="commentList1" data-reply="${comment.cm_reply}" data-ord="${comment.cm_ord}" data-layer="${comment.cm_layer}">
+							<div>
+								<div style="float: left; line-height: 40px;">${comment.me_id}</div>
+								<div style="line-height: 40px;">(${comment.cm_date})</div>
+								<div class="float-right">
+									${btns}
+									${reBtn}
+								</div>
+							</div>
+							<div>
+								<div style="padding-left:20px; line-height: 40px;">${comment.cm_content}</div>
+							</div>
+							${reInput}
+						</div>
+					`;
+					$("#comment").html(str);
 				}
 			}
-			var btns = '';
-			var str = '';
-			var str1 = '';
-			var str2 = '';
-				btns = `
-				<div class="float-right">
-					<button class="btn btn-outline-info">수정</button>
-					<button class="btn btn-outline-dark">삭제</button>
-					<button class="btn btn-outline-primary" id="commentButton00">대댓글</button>
-				</div>
-				`
 			
-			function displayCommentList1(data){
-				console.log(1);
-				str2 += `
-					<div class="comment-item">
-						<div>
-							<div style="float: left; line-height: 40px;">${comment.me_id}</div>
-							<div style="line-height: 40px;">(${comment.cm_date})</div>
-							<div class="float-right">
-								${btns}
-							</div>
-						</div>
-						<div>
-							<div style="padding-left:20px; line-height: 40px;">${comment.cm_content}</div>
-							<div>${comment.cm_layer}</div>
-						</div>
-					</div>
-				`;
-			}
-				
-			function displayCommentList0(data){
-				console.log(10);
-				str1 += `
-					<div class="comment-item">
-						<div>
-							<div style="float: left; line-height: 40px;">${comment.me_id}</div>
-							<div style="line-height: 40px;">(${comment.cm_date})</div>
-							<div class="float-right">
-								${btns}
-							</div>
-						</div>
-						<div>
-							<div style="padding-left:20px; line-height: 40px;">${comment.cm_content}</div>
-							<div>${comment.cm_layer}</div>
-						</div>
-					</div>
-				`;
-				$(".comment-list").html(str1);
-			}
-				
-			
-			
-			$("#commentList").hide();
-			$("#commentButton").click(function() {
-				$("#commentList").toggle();
+			$("#btn_insert0").click(function name() {
+				var cm_content = $('#input-comment').val();
+				var cm_po_num = po_num;
+				var cm_ord = 0;
+				var cm_layer = 0;
+				var comment = {
+						cm_content : cm_content,
+						cm_po_num : cm_po_num,
+						cm_ord : cm_ord,
+						cm_layer : cm_layer
+					}
+				$.ajax({
+					async : true,
+					url : '/comment/insert', 
+					type : 'post', 
+					data : JSON.stringify(comment), 
+					contentType : "application/json; charset=utf-8",
+					success : function (data){
+						if(data){
+							$('#input-comment').val('');
+							location.reload(true);
+						}
+					}, 
+					error : function(jqXHR, textStatus, errorThrown){
+						console.log(jqXHR);
+					}
+				});
 			})
 			
-			$("#commentButton00").click(function() {
-				$("#commentList00").toggle();
+			$(document).on('click', ".btn-insert1",  function() {
+				var cm_content = $(this).parent().prev().val();
+				var cm_po_num = po_num;
+				var cm_reply = $(this).data('reply');
+				var cm_layer = 1;
+				var comment = {
+						cm_content : cm_content,
+						cm_po_num : cm_po_num,
+						cm_reply : cm_reply,
+						cm_layer : cm_layer
+					}
+				$.ajax({
+					async : true,
+					url : '/comment/insert1', 
+					type : 'post', 
+					data : JSON.stringify(comment), 
+					contentType : "application/json; charset=utf-8",
+					success : function (data){
+						if(data){
+							$('.input-comment1').val('');
+							location.reload(true);
+						}
+					}, 
+					error : function(jqXHR, textStatus, errorThrown){
+						console.log(jqXHR);
+					}
+				});
 			})
+			
+			$(document).on('click', ".btn-insert2",  function() {
+				var cm_content = $(this).parent().prev().val();
+				var cm_po_num = po_num;
+				var cm_reply = $(this).data('reply');
+				var cm_ord = $(this).data('ord');
+				var cm_layer = 2;
+				var comment = {
+						cm_content : cm_content,
+						cm_po_num : cm_po_num,
+						cm_reply : cm_reply,
+						cm_ord : cm_ord,
+						cm_layer : cm_layer
+					}
+				$.ajax({
+					async : true,
+					url : '/comment/insert2', 
+					type : 'post', 
+					data : JSON.stringify(comment), 
+					contentType : "application/json; charset=utf-8",
+					success : function (data){
+						if(data){
+							$('.input-comment2').val('');
+							location.reload(true);
+						}
+					}, 
+					error : function(jqXHR, textStatus, errorThrown){
+						console.log(jqXHR);
+					}
+				});
+			})
+			
+			
+			$(function(){
+			    getCommentList();
+			});
+			
+			$(".btn_insert").click(function() {
+			    getCommentList();
+			});
+			
+			
+			//댓글의 대댓글
+			$(document).on('click', ".btn-comment1",  function() {
+				//대댓에 layer값과 댓글 값을 지정
+				let reply = $(this).data('reply');
+				let ord = $(this).data('ord');
+				let layer = $(this).data('layer');
+				
+				$('.comment-item').each(function(){
+					let t_reply = $(this).data('reply');
+					let t_ord = $(this).data('ord');
+					let t_layer = $(this).data('layer');
+					let nextObj = null;
+					if(t_reply != reply){
+						return;
+					}
+					if(t_ord < ord){
+						return;
+					}
+					if(t_layer != layer+1){
+						return;
+					}
+					$(this).toggle();
+					if(t_reply == reply){
+						nextObj = $(this);
+					}
+					$('.comment-layer-2').hide();
+				})
+				$(this).parents('.comment-item').find('.commnet-input').toggle();
+			})
+			
+			//대댓글의 대대댓글
+			$(document).on('click', ".btn-comment2",  function() {
+				//대댓에 layer값과 댓글 값을 지정
+				let reply = $(this).data('reply');
+				let ord = $(this).data('ord');
+				let layer = $(this).data('layer');
+				let curObj = $(this).parents('.comment-item'); 
+				let nextObj = null;
+				$('.comment-item').each(function(){
+					let t_reply = $(this).data('reply');
+					let t_ord = $(this).data('ord');
+					let t_layer = $(this).data('layer');
+					if(t_reply == reply && t_layer == layer && ord < t_ord && nextObj == null){
+						nextObj = $(this);
+					}
+					if(t_reply > reply && nextObj == null){
+						nextObj = $(this);
+					}
+				})
+				curObj.nextUntil(nextObj).toggle();
+				$(this).parents('.comment-item').find('.commnet-input').toggle();
+			})
+			
+			$(document).on('click', ".btn-delete",  function() {
+				var cm_num = $(this).data('num');
+				var comment = {
+						cm_num : cm_num
+					}
+				$.ajax({
+					async : true,
+					url : '/comment/delete', 
+					type : 'post', 
+					data : JSON.stringify(comment), 
+					contentType : "application/json; charset=utf-8",
+					success : function (data){
+						if(data){
+							location.reload(true);
+						}
+					}, 
+					
+					error : function(jqXHR, textStatus, errorThrown){
+						console.log(jqXHR);
+					}
+				});
+			})
+			
+			let myWindow;
+			$(document).on('click', ".btn-update",  function() {
+				var cm_num = $(this).data('num');
+				let popOption = "width=300,height=300, top=300, left=1000";
+				let openUrl = '/comment/update?cm_num='+ cm_num;
+				myWindow = window.open(openUrl, 'pop', popOption);
+			})
+			
 		</script>
 	</main>
 </body>

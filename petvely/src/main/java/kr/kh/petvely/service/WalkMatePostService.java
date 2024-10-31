@@ -3,23 +3,28 @@ package kr.kh.petvely.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
 import kr.kh.petvely.dao.PostDAO;
 import kr.kh.petvely.dao.PostHostSelectedPetsDAO;
+import kr.kh.petvely.dao.WalkMateDAO;
 import kr.kh.petvely.dao.WalkMatePostDAO;
+import kr.kh.petvely.model.user.CustomUser;
+import kr.kh.petvely.model.vo.MemberVO;
 import kr.kh.petvely.model.vo.PostHostSelectedPetsVO;
 import kr.kh.petvely.model.vo.PostUserSelectedPetsVO;
 import kr.kh.petvely.model.vo.WalkMateMemberVO;
 import kr.kh.petvely.model.vo.WalkMatePostVO;
-import lombok.AllArgsConstructor;
 
 @Service
-@AllArgsConstructor
 public class WalkMatePostService {
 	
 	@Autowired
 	private PostDAO postDao;
+	
+	@Autowired
+	private WalkMateDAO walkMateDao;
 	
 	@Autowired
 	private WalkMatePostDAO walkMatePostDao;
@@ -32,7 +37,8 @@ public class WalkMatePostService {
 		return walkMatePostDao.selectWalkMatePostList();
 	}
 
-	public boolean insertWalkMatePost(WalkMatePostVO walkMatePost, int[] selectedHostAniNums) {
+	public boolean insertWalkMatePost(WalkMatePostVO walkMatePost, 
+										int[] selectedHostAniNums) {
 		
 		int po_num;
 		
@@ -41,13 +47,11 @@ public class WalkMatePostService {
 		}
 		 try {
 	        // 포스트를 데이터베이스에 저장
-			// po_co_num을 지금은 1로 다른 곳에서는 해당하는 co_num 골라가야함 방법을 찾아보자~
-			walkMatePost.setPo_co_num(1);
+			// po_co_num을 10으로 변경
+			walkMatePost.setPo_co_num(10);
 	        postDao.insertPost(walkMatePost);
 	        // po_num = post.getPo_num(); // DB에 저장 후 po_num을 가져옴
 
-	        // walkMatePost에 포스트 번호를 설정
-	        // walkMatePost.setPo_num(po_num);
 	        System.out.println(walkMatePost);
 
 	        // walkMatePost를 데이터베이스에 저장
@@ -63,7 +67,6 @@ public class WalkMatePostService {
 	            postHostSelectedPetsDao.insertPostHostSelectedPets(pet); // DB에 저장
 	            
         }
-
 	        	return true;
 
 		    } catch (Exception e) {
@@ -98,27 +101,35 @@ public class WalkMatePostService {
 		}
 	}
 
-	public boolean insertWalkMateMember(WalkMatePostVO walkMatePost, int[] selectedUserAniNums) {
+	public boolean insertWalkMateMember(WalkMatePostVO walkMatePost, 
+										int[] selectedUserAniNums,
+										@AuthenticationPrincipal CustomUser customUser) {
 		if(walkMatePost == null) {
 			return false;
 		}
 		try {
-			postHostSelectedPetsDao.deletePostUserSelectedPets(walkMatePost.getPo_num());
-			walkMatePostDao.deleteWalkMateMember(walkMatePost.getPo_num());
+			// 여기서 그... po_num and user.getMe_num을 where로 해서 delete 하면?
+			if(customUser != null) {
+				MemberVO user = customUser.getMember();
+				walkMateDao.deleteWalkMate(user.getMe_num(), walkMatePost.getPo_num());
+			
+			}
+			
 			for (int num : selectedUserAniNums) {
-	        	PostUserSelectedPetsVO pet = new PostUserSelectedPetsVO();
-	        	System.out.println("num : " + num);
-	        	pet.setPusp_ani_num(num);
-	            pet.setPusp_po_num(walkMatePost.getPo_num()); // pusp_po_num 설정
-	            // 나중에 로그인 된 me_num으로 수정할 것
-	            pet.setWmm_me_num(3);
-	            System.out.println("이거야 Inserting animal: " + pet.getPusp_ani_num() + " with po_num: " + walkMatePost.getPo_num() + " and me_num: " + pet.getWmm_me_num());
-	    		// 여기에서 deleteWalkmateMember(pet) 넣고 하려고 했다가 Mapper에 Distinct로 중복 제거하기로 함...
-	            
-	            
-	            walkMatePostDao.insertWalkMateMember(pet);
-	            
-	            postHostSelectedPetsDao.insertPostUserSelectedPets(pet); // DB에 저장
+				if( customUser != null ) {
+					MemberVO user = customUser.getMember();
+		        	PostUserSelectedPetsVO pet = new PostUserSelectedPetsVO();
+		        	System.out.println("num : " + num);
+		        	pet.setPusp_ani_num(num);
+		            pet.setPusp_po_num(walkMatePost.getPo_num()); // pusp_po_num 설정
+		            // 나중에 로그인 된 me_num으로 수정할 것
+		            pet.setWmm_me_num(user.getMe_num());
+		            System.out.println("이거야 Inserting animal: " + pet.getPusp_ani_num() + " with po_num: " + walkMatePost.getPo_num() + " and me_num: " + pet.getWmm_me_num());
+		    		// 여기에서 deleteWalkmateMember(pet) 넣고 하려고 했다가 Mapper에 Distinct로 중복 제거하기로 함...
+		            walkMatePostDao.insertWalkMateMember(pet);
+		            
+		            postHostSelectedPetsDao.insertPostUserSelectedPets(pet); // DB에 저장
+				}
 	        }
 			return true;
 		} catch (Exception e) {
@@ -128,6 +139,11 @@ public class WalkMatePostService {
 	}
 
 	public List<WalkMateMemberVO> selectWalkMateMember(int po_num) {
+		System.out.println("?");
 		return walkMatePostDao.selectWalkMateMember(po_num);
+	}
+
+	public boolean updateWalkmatePostState(int po_num) {
+		return walkMatePostDao.updateWalkMatePostState(po_num);
 	}
 }

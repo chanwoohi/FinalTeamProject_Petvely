@@ -9,11 +9,11 @@ layout:decorate="~{layout/layout.html}">
 </head>
 <body>
 	<main layout:fragment="content">
-		<form method="post" th:object="${GATPost}" th:action="@{/gatpost/update/{po_num}(po_num=*{po_num})}">
+		<form class="form-group" method="post" th:object="${GATPost}" th:action="@{/gatpost/update/{po_num}(po_num=*{po_num})}">
 			<input type="hidden"  th:field="*{po_num}"/>
 			<div class="form-group" id="GT">
 				<label>품앗이:</label>
-				<input type="hidden" id="gat_gat" name="gat_gat" required="required" th:field="*{gat_gat}">
+				<input type="text" id="gat_gat" name="gat_gat" required="required" th:field="*{gat_gat}" style="display: none;">
 				<a id="give" class="btn btn-outline-info" onclick="">GIVE</a>
 				<a id="take" class="btn btn-outline-info" onclick="">TAKE</a>
 			</div>
@@ -26,10 +26,6 @@ layout:decorate="~{layout/layout.html}">
 			<div class="form-group">
 				<label>제목:</label>
 				<input type="text" class="form-control" th:field="*{po_title}">
-			</div>
-			<div class="form-group">
-				<label>작성자:</label>
-				<input type="text" class="form-control" th:field="*{me_num}">
 			</div>
 			<div class="form-group">
 				<label>내용:</label>
@@ -60,7 +56,7 @@ layout:decorate="~{layout/layout.html}">
 				<select id="emd" name="emd_num">
 				</select>
 			</div>
-			<button class="btn btn-outline-info col-12">등록</button>
+			<button class="btn btn-outline-info col-12">수정</button>
 		</form>
 		<a class="btn btn-outline-info" th:href="@{/gatpost/list}">목록으로</a>
 		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>

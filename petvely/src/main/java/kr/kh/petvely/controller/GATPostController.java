@@ -3,6 +3,7 @@ package kr.kh.petvely.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,13 +12,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.kh.petvely.model.vo.CommentVO;
+import jakarta.servlet.http.HttpSession;
+import kr.kh.petvely.model.user.CustomUser;
 import kr.kh.petvely.model.vo.GiveAndTakePostVO;
 import kr.kh.petvely.model.vo.GiveAndTakeStateVO;
 import kr.kh.petvely.model.vo.GiveAndTakeTypeVO;
+import kr.kh.petvely.model.vo.MemberVO;
 import kr.kh.petvely.model.vo.Sido_AreasVO;
 import kr.kh.petvely.service.AddressService;
 import kr.kh.petvely.service.GATPostService;
+import kr.kh.petvely.service.PostService;
 import lombok.AllArgsConstructor;
 
 @Controller
@@ -28,6 +32,9 @@ public class GATPostController {
 	private GATPostService gatPostService;
 	private AddressService addressService;
 	
+	@Autowired
+	private PostService postService;
+	
 	@GetMapping("/gatpost/list")
 	public String GTAPostlist(Model model) {
 		List<GiveAndTakePostVO> list = gatPostService.getGATPostList();
@@ -36,16 +43,38 @@ public class GATPostController {
 	}
 	
 	@GetMapping("/gatpost/detail/{po_num}")
-	public String postDetail(Model model, @PathVariable int po_num) {
+	public String postDetail(Model model, @PathVariable int po_num, @AuthenticationPrincipal CustomUser customUser) {
+		
+		
 		gatPostService.updatePostView(po_num);
 		GiveAndTakePostVO GATPost = gatPostService.getGATPost(po_num);
-		System.out.println(GATPost);
 		model.addAttribute("GATPost", GATPost);
+		MemberVO user = customUser.getMember();
+		model.addAttribute("user", user);
+		
+		int bm_me_num = user.getMe_num();
+		
+		// 즐겨찾기 기능 추가
+		Integer bookmark = postService.selectBookmark(bm_me_num, po_num);
+		if (bookmark != null) {
+			System.out.println("bookmark : " + bookmark);
+			model.addAttribute("bookmark", bookmark);
+		}
+		
 		return "gatpost/detail";
 	}
 	
+	@PostMapping("/gat_gat/update")
+	@ResponseBody
+	public boolean postDetailPost(@RequestBody GiveAndTakePostVO GATPost) {
+		System.out.println(GATPost);
+		return gatPostService.updateat_gat(GATPost);
+	}
+	
 	@GetMapping("/gatpost/insert")
-	public String GATPostInsert(Model model) {
+	public String GATPostInsert(Model model,@AuthenticationPrincipal CustomUser customUser) {
+		MemberVO Userlist = customUser.getMember();
+		model.addAttribute("Userlist", Userlist);
 		List<Sido_AreasVO> sidoList = addressService.getSidoList();
 		model.addAttribute("sidoList", sidoList);
 		List<GiveAndTakeStateVO> gatstateList = gatPostService.gatStateList();
@@ -57,7 +86,7 @@ public class GATPostController {
 	
 	
 	@PostMapping("/gatpost/insert")
-	public String GTAPostInsertPost(GiveAndTakePostVO GATPost) {
+	public String GTAPostInsertPost(GiveAndTakePostVO GATPost, HttpSession session) {
 		boolean res = gatPostService.addGATPost1(GATPost);
 		boolean res2 = gatPostService.addGATPost2(GATPost);
 		if(res || res2) {
@@ -81,7 +110,7 @@ public class GATPostController {
 	}
 	
 	@PostMapping("/gatpost/update/{po_num}")
-	public String postUpdatePost(Model model, @PathVariable int po_num, GiveAndTakePostVO GATPost) {
+	public String postUpdatePost(@PathVariable int po_num, GiveAndTakePostVO GATPost) {
 		GATPost.setPo_num(po_num);
 		boolean res = gatPostService.updateGATPost1(GATPost);
 		boolean res2 = gatPostService.updateGATPost2(GATPost);
@@ -99,15 +128,6 @@ public class GATPostController {
 			return "redirect:/gatpost/list";
 		}
 		return "redirect:/gatpost/detail/" + po_num;
-	}
-	
-	@PostMapping("/comment/list")
-	@ResponseBody
-	public List<CommentVO> ComentListPost(Model model, @RequestBody int po_num) {
-		List<CommentVO> list = gatPostService.getCommentList(po_num);
-		model.addAttribute("list",list);
-		return list;
-		
 	}
 	
 }
