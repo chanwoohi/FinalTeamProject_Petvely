@@ -196,6 +196,7 @@ ul {
 .pet_title{
 	font-weight: 600;
 }
+
 /* 펫등록 페이지 */
 .register_pet_title, .register_registerImg{
 	text-align: center;
@@ -235,7 +236,7 @@ ul {
 .register_registerContents .register_inputWapper
 .register_inputFileWrapper .register_inputFileBtn{
 	position: relative;
-	padding: 6px 20px 6px 15px;
+	padding: 6px 70px 6px 14px;
 	background-color: #f6f6f9;
 	border-radius: 21px;
 	color: #868688;
@@ -251,7 +252,7 @@ ul {
 }
 .register_inputFileWrapper span{
 	position: absolute;
-    left: 100px;
+    left: 90px;
     top: 6px;
     color: #868688;
 }
@@ -321,7 +322,7 @@ input:focus {outline: none;} /* outline 테두리 없애기 */
 	padding-right: 14px;
 }
 .MuiFormControl-root{
-	width: 330px;
+	width: 301.78px;
 	white-space: nowrap;
 	outline: none;
 	padding: 21px 16px;
@@ -419,7 +420,7 @@ input[type=checkbox]:checked:before {
 	margin: 4px 0;
 	background-color: #fcd11e;
 }
-.register_registerContainer .register_registerCancelBtn{
+.register_registerContainer .register_registerCancelBtn {
 	width: 100%;
 	position: relative;
 	height: 44px;
@@ -430,4 +431,7 @@ input[type=checkbox]:checked:before {
 	margin: 4px 0;
 	background-color: #f6f6fa;
 	color: #868688;
+}
+.register_input{
+	display: none;
 }
