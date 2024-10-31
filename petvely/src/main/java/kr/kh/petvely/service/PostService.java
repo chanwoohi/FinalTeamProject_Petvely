@@ -125,4 +125,9 @@ public class PostService {
 		
 		return postDao.selectBookmark(bm_me_num, po_num);
 	}
+	public RecommendVO selectRecommendState(int me_num, int po_num) {
+		
+		return postDao.selectRecommendState(me_num, po_num);
+		
+	}
 }
