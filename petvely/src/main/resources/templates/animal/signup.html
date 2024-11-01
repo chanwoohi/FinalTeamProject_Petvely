@@ -2,7 +2,7 @@
 <html 
 xmlns:th="http://www.thymeleaf.org"
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-layout:decorate="~{layout/layout2.html}">
+layout:decorate="~{layout/layout.html}">
 <head>
 <link rel="stylesheet" type="text/css" href="/css/common.css"> 
 <meta charset="UTF-8">
@@ -18,7 +18,7 @@ layout:decorate="~{layout/layout2.html}">
 								<h1 class="register_pet_title">반려동물 등록</h1>
 							</div>
 							<div class="register_registerImg">
-									<img class="registerImg" src="/image/image_not_found_new.png">
+								<img class="registerImg" src="/image/image_not_found_new.png" id="preview">
 							</div>
 						
 							<div class="register_inputWapper">
@@ -26,7 +26,7 @@ layout:decorate="~{layout/layout2.html}">
 								<div class="register_inputWapperIn">
 									<div class="register_inputFileWrapper">
 										<label for="file" class="register_inputFileBtn">
-											<input type="file" class="register_input" id="file" name="file"/>
+											<input type="file" class="register_input" id="file" name="file" onchange="readURL(this);"/>
 											<img class="register_img"src="/image/ICON_Camera.png">
 											사진첨부
 										</label>
@@ -95,7 +95,7 @@ layout:decorate="~{layout/layout2.html}">
 							</div>
 						<div>
 						<button type="submit" class="register_noregisterBtn">등록</button>
-						<button type="button" class="btn register_registerCancelBtn" th:onclick="'window.location.href=\'/mypage/pet\''">취소</button>
+						<a th:href="@{/mypage/pet}" class="btn register_registerCancelBtn">취소</a>
 						</div>
 					</div>
 				</div>
@@ -111,6 +111,19 @@ layout:decorate="~{layout/layout2.html}">
 			    } else {
 			        hiddenInput.disabled = false;
 			    }
+			}
+			
+			function readURL(input) {
+				  if (input.files && input.files[0]) {
+				    var reader = new FileReader();
+				    reader.onload = function(e) {
+				      document.getElementById('preview').src = e.target.result;
+				    };
+				    reader.readAsDataURL(input.files[0]);
+				  } else {
+					// 파일 취소 했을 때 나오는 화면
+				    document.getElementById('preview').src = "/image/image_not_found_new.png";
+				  }
 			}
 		</script>
     </main>
