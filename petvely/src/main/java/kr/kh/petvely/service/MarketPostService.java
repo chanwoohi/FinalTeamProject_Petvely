@@ -12,6 +12,8 @@ import kr.kh.petvely.dao.MarketPostDAO;
 import kr.kh.petvely.model.vo.FileVO;
 import kr.kh.petvely.model.vo.MarketPostVO;
 import kr.kh.petvely.model.vo.PostVO;
+import kr.kh.petvely.pagination.PageMaker;
+import kr.kh.petvely.pagination.PostCriteria;
 import kr.kh.petvely.utils.UploadFileUtils;
 
 
@@ -25,9 +27,9 @@ public class MarketPostService {
 	@Value("${file.upload-dir}")
 	String uploadPath;
 
-	public List<MarketPostVO> getMarketList() {
+	public List<MarketPostVO> getMarketList(PostCriteria cri) {
 		
-		return marketPostDao.selectMarketList();
+		return marketPostDao.selectMarketList(cri);
 	}
 
 	public MarketPostVO getMarketPost(int po_num) {
@@ -168,6 +170,18 @@ public class MarketPostService {
 	        }
 	    }
 	}
+
+
+	public PageMaker getPageMaker(PostCriteria cri) {
+		if(cri==null) {
+			return null;
+		}
+		int count = marketPostDao.selectCountMarketPostList(cri);
+		return new PageMaker(9, cri, count);
+	}
+
+
+	
 
 	
 

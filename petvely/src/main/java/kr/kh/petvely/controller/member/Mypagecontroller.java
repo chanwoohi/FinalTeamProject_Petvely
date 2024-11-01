@@ -17,6 +17,7 @@ import kr.kh.petvely.model.vo.MarketPostVO;
 import kr.kh.petvely.model.vo.MemberVO;
 import kr.kh.petvely.model.vo.PostVO;
 import kr.kh.petvely.model.vo.WalkMatePostVO;
+import kr.kh.petvely.pagination.PostCriteria;
 import kr.kh.petvely.service.GATPostService;
 import kr.kh.petvely.service.MarketPostService;
 import kr.kh.petvely.service.WalkMatePostService;
@@ -53,13 +54,13 @@ public class Mypagecontroller{
 	}
 	
 	@GetMapping("/member/mypage/postList/{co_num}")
-	public String PostList(Model model, @AuthenticationPrincipal CustomUser customUser, @PathVariable int co_num) {
+	public String PostList(Model model, @AuthenticationPrincipal CustomUser customUser, @PathVariable int co_num,PostCriteria cri) {
 		MemberVO user = customUser.getMember();
 		int me_num = user.getMe_num();
 		List<CommunityVO> communities = mypageService.getCommunityList();
 		List<PostVO> list = mypageService.getPostList(co_num, me_num);
 		List<GiveAndTakePostVO> gatPostlist = gatPostService.getGATPostList();
-		List<MarketPostVO> maketList = marketPostService.getMarketList();
+		List<MarketPostVO> maketList = marketPostService.getMarketList(cri);
 		//List<FileVO> fileList = marketPostService.getThumNail();
 		List<WalkMatePostVO> walkList = walkMatePostService.getWalkMatePostList();
 		model.addAttribute("communities", communities);

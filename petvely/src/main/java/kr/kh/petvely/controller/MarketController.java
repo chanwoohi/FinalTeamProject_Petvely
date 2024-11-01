@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.kh.petvely.model.user.CustomUser;
 import kr.kh.petvely.model.vo.FileVO;
 import kr.kh.petvely.model.vo.GoodsTypeVO;
 import kr.kh.petvely.model.vo.MarketPostVO;
 import kr.kh.petvely.model.vo.MemberVO;
-import kr.kh.petvely.model.vo.PostVO;
+import kr.kh.petvely.pagination.PageMaker;
+import kr.kh.petvely.pagination.PostCriteria;
 import kr.kh.petvely.service.GoodsService;
 import kr.kh.petvely.service.MarketPostService;
 import kr.kh.petvely.service.PostService;
@@ -35,12 +35,20 @@ public class MarketController {
 	PostService postService;
 	
 	@GetMapping("/post/market/{co_num}")
-	public String postList(Model model,@PathVariable int co_num) {
+	public String postList(Model model,@PathVariable int co_num,PostCriteria cri) {
+		cri.setCo_num(co_num);
+		cri.setPerPageNum(9);
 		
-		List<MarketPostVO> list = marketPostService.getMarketList();
+		List<MarketPostVO> list = marketPostService.getMarketList(cri);
+		PageMaker pm = marketPostService.getPageMaker(cri);
 		
 		model.addAttribute("list",list);
+		model.addAttribute("pm",pm);
 		
+		System.out.println("cri"+cri);
+		System.out.println(co_num);
+		System.out.println("pm"+pm);
+		System.out.println("list"+list);
 
 		return "post/market";
 
@@ -103,17 +111,18 @@ public class MarketController {
 				return "redirect:/post/market/{co_num}";
 			}
 		}
-		return "redirect:/post/market{co_num}";
+		return "redirect:/post/market/{co_num}";
 		
 	}
 	
 	@PostMapping("/post/marketcomplete/{po_num}")
 	public String marketComplete(@PathVariable int po_num,MarketPostVO marketPost) {
-		
+			
+			
 			boolean res = marketPostService.marketComplete(po_num);
 		
 		if(res) {
-				return "redirect:/post/market/" + marketPost.getPo_co_num();
+				return "redirect:/post/market/11";
 		
 			}
 		return "redirect:/post/marketdetail/" + po_num;
