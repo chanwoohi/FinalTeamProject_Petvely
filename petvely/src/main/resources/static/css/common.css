@@ -551,3 +551,15 @@ button {
     grid-gap: 8px;
     gap: 8px;
 }
+.petEdit_registerDeleteBtn{
+	width: 100%;
+	position: relative;
+	height: 44px;
+	font-size: 13px;
+	font-weight: 700;
+	border-radius: 30px;
+	margin: 4px 0;
+	background-color: #fff;
+	color: red;
+	border: 1px solid red;
+}
