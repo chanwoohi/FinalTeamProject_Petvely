@@ -4,6 +4,7 @@
 *{
 	font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 }
+
 /* fluid 여백수정 */
 .container-fluid{
     padding-right: 0px;
@@ -119,7 +120,7 @@ body {
 	display: inline-block;
 	padding: 10px 20px;
 	font-size: 16px;
-	color: #fff;
+	color: #000;
 	background-color: #ffd966;
 	border: none;
 	border-radius: 25px;
@@ -129,7 +130,11 @@ body {
 	transition: background-color 0.3s;
 }
 
+
+
 .btn_update:hover, .pet_update:hover {
+	text-decoration-line: none;
+	color: #000;
 	background-color: #ffc107;
 }
 
