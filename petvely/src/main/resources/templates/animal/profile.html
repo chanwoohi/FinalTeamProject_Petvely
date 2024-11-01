@@ -27,8 +27,12 @@
                 <div class="petsDetail_petDetailList">
                     <div>품종 : <span th:text="*{ani_at_type}"></span></div>
                 </div>
-                <div class="petsDetail_petDetailList">
-                    <div>성별 : <span th:text="*{ani_gender}"></span></div>
+                <div ></div>
+                <div th:if="*{ani_gender == 'M'}" class="petsDetail_petDetailList">
+                    <div>성별 : <span>남아</span></div>
+                </div>
+                <div th:if="*{ani_gender == 'W'}" class="petsDetail_petDetailList">
+                    <div>성별 : <span>여아</span></div>
                 </div>
                 <div class="petsDetail_petDetailList">
                     <div>몸무게 : <span th:text="*{ani_weight} + '(kg)'"></span></div>
