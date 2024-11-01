@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout.html}">
+<head>
+    <link href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <main layout:fragment="content">
+    	<div>
+		    <h2 class="modal-title">신고 내역 조회</h2>
+		            <table id="dataTable" width="100%">
+            <thead>
+                <tr>
+                    <th>신고 번호</th>
+                    <th>신고자 아이디</th>
+                    <th>신고 사유</th>
+                    <th>신고 일시</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${list}">
+                	<td th:text="${item.rp_num}"></td>
+                	<td th:text="${item.me_id}"></td>
+                	<td th:text="${item.rp_rt_type}"></td>
+                	<td th:text="${#dates.format(item.rp_date, 'yyyy-MM-dd')}"></td>
+			        <td>
+			            <a class="btn btn-outline-info"
+						   th:onclick="'window.open(\'/report/postview/' + ${item.rp_num} + '\', \'newwindow\', \'width=600,height=400,left=200,top=200\'); return false;'"
+						   >신고 내용 보기</a>
+			        </td>
+                	<td>
+			            <div th:if="${item.rp_rtt_type == 'walkmatepost'}">
+			                <a class="btn btn-outline-warning"
+			                   th:href="@{/walkmatepost/detail/{po_num}(po_num=${item.rp_rtt_num})}">해당 게시글 보기</a>
+			            </div>
+			            <div th:if="${item.rp_rtt_type == 'gatpost'}">
+			                <a class="btn btn-outline-warning"
+			                   th:href="@{/gatpost/detail/{po_num}(po_num=${item.rp_rtt_num})}">해당 게시글 보기</a>
+			            </div>
+			            <div th:if="${item.rp_rtt_type == 'marketpost'}">
+			                <a class="btn btn-outline-warning"
+			                   th:href="@{/post/marketdetail/{po_num}(po_num=${item.rp_rtt_num})}">해당 게시글 보기</a>
+			            </div>
+		            </td>
+                </tr>
+            </tbody>
+        </table>
+		</div>
+    </main>
+</body>
+</html>

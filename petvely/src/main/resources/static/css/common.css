@@ -4,6 +4,7 @@
 *{
 	font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 }
+
 /* fluid 여백수정 */
 .container-fluid{
     padding-right: 0px;
@@ -113,14 +114,13 @@ body {
 	font-weight: bold;
 	margin: 10px 0;
 	color: #666;
-    input:focus {outline: none;} /* outline 테두리 없애기 */
 }
 
 .btn_update, .pet_update {
 	display: inline-block;
 	padding: 10px 20px;
 	font-size: 16px;
-	color: #fff;
+	color: #000;
 	background-color: #ffd966;
 	border: none;
 	border-radius: 25px;
@@ -130,7 +130,11 @@ body {
 	transition: background-color 0.3s;
 }
 
+
+
 .btn_update:hover, .pet_update:hover {
+	text-decoration-line: none;
+	color: #000;
 	background-color: #ffc107;
 }
 
@@ -144,6 +148,7 @@ body {
 ul {
 	list-style: none;
 	padding: 0;
+	margin: 0;
 	display: block;
 }
  
@@ -151,7 +156,7 @@ ul {
 .pet_petContents{
 	margin: 22px auto;
 	padding: 9px 26px 9px 9px;
-	max-width: 381px;
+	max-width: 350px;
 	list-style: none;
 	background-color: #fff;
 	-webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, .15);
@@ -187,8 +192,262 @@ ul {
 	font-weight: 400;
 	font-size: 11px;
 	line-height: 13px;
+	text-align: right;
 	color: #868688;
 }
 .pet_ct{
 	display: block;
 }    
+.pet_title{
+	font-weight: 600;
+}
+
+/* 펫등록 페이지 */
+.register_pet_title, .register_registerImg{
+	text-align: center;
+	width: 100%;
+}
+.register_registerImg{
+	margin-bottom: 20px;
+}
+.registerImg{
+	width: 100px;
+	height: 100px;
+	overflow-clip-margin: content-box;
+	overflow: clip;
+	border-radius: 50%;
+	box-sizing: inherit;
+}
+.register_registerContents{
+	min-width: 370px;
+	padding: 0 30px;
+}
+.register_registerContents{
+	width: 370px;
+	margin: 0 auto;
+	max-width: 1024px;
+}
+.register_inputWapper .register_inputWapperIn{
+	width: 360px;
+	white-space: nowrap;
+	outline: none;
+	padding: 14px 16px;
+	border-radius: 6px;
+	border: 1px solid #e4e4e6;
+	background-color: #fff;
+	font-size: 13px;
+	line-height: 20px;
+}
+.register_registerContents .register_inputWapper
+.register_inputFileWrapper .register_inputFileBtn{
+	position: relative;
+	padding: 6px 70px 6px 14px;
+	background-color: #f6f6f9;
+	border-radius: 21px;
+	color: #868688;
+	cursor: pointer;
+	font-size: 12px;
+	display: flex;
+	align-items: center;
+	width: 56px;
+}
+
+.register_inputFileWrapper{
+	position: relative;
+	top: 4px
+}
+.register_inputFileWrapper span{
+	position: absolute;
+    left: 90px;
+    top: 6px;
+    color: #868688;
+}
+.register_img{
+	margin-right: 5px;
+}
+.register_registerContents .register_inputWrapper {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin: 16px 0;
+	font-size: 13px;
+}
+.register_inputWapper{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin: 16px 0;
+	font-size: 13px;
+}
+input{
+	border: none;
+	padding-block: 1px;
+}
+
+input:focus {outline: none;} /* outline 테두리 없애기 */
+
+.register_registerContents .register_necessaryDot {
+	width: 10px;
+	font-size: 13px;
+	color: #f24147;
+}
+.css-pet1010 {
+	font: inherit;
+	letter-spacing: inherit;
+	color: #868688;
+	border: 0px;
+	box-sizing: content-box;
+	background: none;
+	height: 1.4375em;
+	margin: 0px;
+	-webkit-tap-highlight-color: transparent;
+	display: block;
+	width: 99%;
+	animation-name: mui-auto-fill-cancel;
+	animation-duration: 10ms;
+	padding: 9.5px 5px;
+}
+.MuiOutlinedInput-root{
+	padding: 9px;
+}
+.css-pet1011 {
+	font-family: Roboto, Helvetica, Arial, sans-serif;
+	font-weight: 400;
+	font-size: 0.785714rem;
+	line-height: 1.4375em;
+	letter-spacing: 0.00938em;
+	color: rgba(231, 16, 16, 0.87);
+	box-sizing: border-box;
+	cursor: text;
+	display: inline-flex;
+	-webkit-box-align: center;
+	align-items: center;
+	width: 100%;
+	position: relative;
+	border-radius: 4px;
+	padding-right: 14px;
+}
+.MuiFormControl-root{
+	width: 301.78px;
+	white-space: nowrap;
+	outline: none;
+	padding: 21px 16px;
+	border-radius: 6px;
+	border: 1px solid #e4e4e6;
+	background-color: #fff;
+	font-size: 13px;
+	line-height: 20px;
+}
+.MuiOutlinedInput{
+	width: 100%;
+}
+.register_registerContents .register_genderWrapper{
+	display: flex;
+}
+
+.register_radioContainer 
+.register_radioWrap {
+	display: flex;
+	align-items: center;
+	grid-gap: 4px;
+	gap: 4px;
+	width: 50%;
+	font-size: 13px;
+}
+
+/* 라디오 버튼 컨테이너 */
+.register_radioContainer {
+	display: flex;
+	gap: 100px;
+	margin: 15px;
+}
+
+/* 라디오 버튼 스타일 */
+.radio_myRadio {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	width: .8rem;
+	height: .8rem;
+	border-radius: 100%;
+	margin-right: .4rem;
+	margin-top: 0;
+	background-color: #fff;
+	border: 3px solid #e4e4e6;
+	color : #868688
+}
+.register_radioWrap {
+	display: flex;
+	align-items: center;
+}
+.register_checkboxwrap{
+	position: relative;
+}
+.radio_myRadio:checked {
+	background-color: #fff;
+	border: 4px solid #fcd11e;
+}
+input[type=checkbox]:before {
+	content: "";
+	display: block;
+	position: absolute;
+	width: 15px;
+	height: 15px;
+	top: 4px;
+	left: 0;
+	background-color: #fff;
+	border: 1px solid #e4e4e6;
+}
+input[type=checkbox]:checked:before {
+	content: "";
+	display: block;
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	top: 4px;
+	left: 0;
+	background-color: #fcd11e;
+	border: 1px solid #fcd11e;
+}
+.register_genderTitle{
+	font-size: 14px;
+}
+.register_checkLabel{
+	font-size: 14px;
+}
+.register_registerContainer .register_noregisterBtn {
+	width: 100%;
+	position: relative;
+	height: 44px;
+	font-size: 13px;
+	font-weight: 700;
+	border-radius: 30px;
+	border: none;
+	margin: 4px 0;
+	background-color: #fcd11e;
+}
+.register_registerContainer .register_registerCancelBtn {
+	width: 100%;
+	position: relative;
+	height: 44px;
+	font-size: 13px;
+	font-weight: 700;
+	border-radius: 30px;
+	border: none;
+	margin: 4px 0;
+	background-color: #f6f6fa;
+	color: #868688;
+}
+.register_registerCancelBtn {
+	margin: 30px;
+}
+.register_input{
+	display: none;
+}
+.register_registerContainer {
+    padding-top: 80px;
+    padding-bottom: 260px;
+    width: 100%;
+    min-height: calc(100vh - 52px);
+    background-color: #fffdf4;
+}

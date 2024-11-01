@@ -16,4 +16,9 @@ public class ReportVO {
 	private String rp_rt_type;
 	private String rp_rtt_type;
 	private int rp_rtt_num;
+	
+	private String me_id;
+	
+	private String po_me_id;
+	private String po_title;
 }
