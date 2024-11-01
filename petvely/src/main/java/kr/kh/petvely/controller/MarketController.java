@@ -58,8 +58,10 @@ public class MarketController {
 	public String marketPostDetail(	Model model,
 									@PathVariable int po_num,
 									@AuthenticationPrincipal CustomUser customUser){
+		MarketPostVO post = marketPostService.getMarketPost(po_num);
 		
-		if(customUser != null) {
+		List<FileVO> fileList = marketPostService.getFileList(po_num);
+		if(customUser != null) {	
 			// 즐겨찾기 기능
 			MemberVO user = customUser.getMember();
 			
@@ -73,15 +75,14 @@ public class MarketController {
 				model.addAttribute("bookmark", bookmark);
 			}
 			
-			MarketPostVO post = marketPostService.getMarketPost(po_num);
 			
-			List<FileVO> fileList = marketPostService.getFileList(po_num);
 			int me_num = user.getMe_num();
 			model.addAttribute("me_num",me_num);
 			model.addAttribute("user", user);
-			model.addAttribute("fileList",fileList);
-			model.addAttribute("post",post);
+		
 		}
+		model.addAttribute("fileList",fileList);
+		model.addAttribute("post",post);
 		
 		return "post/marketdetail";
 	}

@@ -101,9 +101,9 @@
                 <input type="text" readonly th:value="*{mp_gts_state}">
                 <label>게시글 내용:</label>
                 <input type="text" readonly th:value="*{mp_content}">
-                <div class="price">가격: <span th:text="${post.mp_price}"></span>원</div>
                 <label>타입:</label>
                 <input type="text" readonly th:value="${post.mp_gt_type}">
+                <div class="price">가격: <span th:text="${post.mp_price}"></span>원</div>
             </div>
             <div class="actions">
                 <div>
@@ -115,16 +115,28 @@
                         신고하기🚨
                     </button>
                 </div>
-                <div>
+                 <div th:if="${user != null}">
+                    	<a class="btn btn-dark" th:href="@{/message/marketmessagesend/{po_num}(po_num=${po_num})}">쪽지 보내기</a>
+                    </div>
+                    <div th:if="${user == null}">
+                    	 <button class="btn btn-dark" onclick="loginAlert()">쪽지 보내기</button>
+                    </div>
+                <div th:if="${me_num == post.po_me_num}" style="display:flex; margin-right: 10px;">
                     <form method="post" th:action="@{/post/marketcomplete/{po_num}(po_num=${post.po_num})}">
                         <button type="submit" class="btn btn-dark">거래완료</button>
                     </form>
-                    <a class="btn btn-dark" th:href="@{/message/marketmessagesend/{po_num}(po_num=${po_num})}">쪽지 보내기</a>
-                    <a class="btn btn-dark" th:href="@{/post/marketupdate/{po_num}(po_num=*{po_num})}">수정</a>
+                   
+                    <div th:if="${">
+ 	                   <a class="btn btn-dark" th:href="@{/post/marketupdate/{po_num}(po_num=*{po_num})}">수정</a>
+                    </div>
                 </div>
             </div>
         </div>
-        
+        <script>
+        	function loginAlert(){
+        		alert("로그인이 필요합니다.");
+        	}
+        </script>
     </main>
 </body>
 </html>
