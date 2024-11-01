@@ -1,71 +1,47 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout/layout2.html}"><head>
+<link rel="stylesheet" type="text/css" href="/css/common.css"> 
 <meta charset="UTF-8">
-<title>펫 프로필!</title>
-<style>
-    .profile-container {
-        display: grid;
-        grid-template-columns: 1fr 2fr;
-        gap: 20px;
-        padding: 20px;
-    }
-    .form-group {
-        margin-bottom: 10px;
-    }
-    .image-container img {
-        width: 100%;
-        height: auto;
-    }
-    .form-control[readonly] {
-        background-color: #f3f3f3;
-        color: #666;
-    }
-</style>
+<title>펫 프로필</title>
+
 </head>
 <body>
     <main layout:fragment="content">
         <form method="post" th:object="${myPet}" th:action="@{/animal/update/{ani_num}(ani_num=*{ani_num})}" enctype="multipart/form-data">
-            <div class="profile-container">
-                <div class="image-container">
-                    <div th:if="*{ani_img} != null">
-                        <img th:src="@{*{ani_img}}" alt="펫 이미지" />
-                    </div>
-                    <div th:if="*{ani_img} == null">
-                        <img th:src="@{/uploads/default-image.jpg}" alt="기본 이미지" />
-                    </div>
-                </div>
-                <div>
-                    <div class="form-group">
-                        <label>이름</label>
-                        <input type="text" th:field="*{ani_name}" class="form-control" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label>성별</label>
-                        <input type="text" th:field="*{ani_gender}" class="form-control" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label>소개</label>
-                        <textarea id="content" th:field="*{ani_info}" class="form-control" readonly style="min-height: 400px; height: auto;"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>생일</label>
-                        <input type="date" th:field="*{ani_birth}" class="form-control" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label>무게</label>
-                        <input type="text" th:field="*{ani_weight}" class="form-control" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label>중성화 여부</label>
-                        <input type="number" th:field="*{ani_neutralization}" class="form-control" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label>종</label>
-                        <input type="text" th:field="*{ani_at_type}" class="form-control" readonly>
+        
+            <div class="petsDetail_petDetailALLContainer">
+                <div class="petsDetail_petDetailContents">
+                    <div class="petsDetail_petDetail">
+                        <div class="petsDetail_petImgWrapper">
+                          <img th:src="${myPet.ani_img != null ? myPet.ani_img : '/image/default_image.jpg'}" alt="펫 이미지" />
+                         </div>
+                        <h2 th:text="*{ani_name}">펫 이름</h2>
                     </div>
                 </div>
-            </div>
+                <div class="petsDetail_petDetailList">
+                  <div>생일 : <span th:text="*{#dates.format(ani_birth, 'yyyy-MM-dd')} + ' (' + *{ani_age} + '살)'"></span></div>
+                </div>
+                <div class="petsDetail_petDetailList">
+                    <div>품종 : <span th:text="*{ani_at_type}"></span></div>
+                </div>
+                <div ></div>
+                <div th:if="*{ani_gender == 'M'}" class="petsDetail_petDetailList">
+                    <div>성별 : <span>남아</span></div>
+                </div>
+                <div th:if="*{ani_gender == 'W'}" class="petsDetail_petDetailList">
+                    <div>성별 : <span>여아</span></div>
+                </div>
+                <div class="petsDetail_petDetailList">
+                    <div>몸무게 : <span th:text="*{ani_weight} + '(kg)'"></span></div>
+                </div>
+                <div class="petsDetail_btnWrapper">
+	                <button type="button" class="petsDetail_detailBtn_1010" onclick="window.location.href='/mypage/pet'">목록으로</button>
+	                <button type="button" class="petsDetail_detailBtn_1011" onclick="window.location.href='/mypage/pet'">수정하기</button>
+                </div>
+           </div>
         </form>
     </main>
 </body>
