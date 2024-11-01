@@ -31,9 +31,28 @@
 					</tr>
 				</tbody>
 			</table>
-			<a class="btn btn-outline-info"
-				th:href="@{/walkmatepost/insert}">글쓰기</a>	
+			<div sec:authorize="isAuthenticated()">
+				<a class="btn btn-outline-info"
+					th:href="@{/walkmatepost/insert}">글쓰기</a>	
+			</div>
+			<div sec:authorize="isAnonymous()">
+				<button class="btn btn-outline-info anonymous-action">글쓰기</button>	
+			</div>
 		</div>
+		<script type="text/javascript">
+		    document.addEventListener('DOMContentLoaded', function() {
+		        const anonymousButtons = document.querySelectorAll('.anonymous-action');
+	
+		        anonymousButtons.forEach(button => {
+		            button.addEventListener('click', function() {
+		                if (confirm('로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?')) {
+		                    window.location.href = '/member/login'; // 로그인 페이지로 이동
+		                }
+		                // 아니오를 선택할 경우 페이지에 머무름
+		            });
+		        });
+		    });
+		</script>
 	</main>
 </body>
 </html>
