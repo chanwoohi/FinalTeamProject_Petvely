@@ -249,6 +249,7 @@ ul {
 
 .register_inputFileWrapper{
 	position: relative;
+	top: 4px
 }
 .register_inputFileWrapper span{
 	position: absolute;
