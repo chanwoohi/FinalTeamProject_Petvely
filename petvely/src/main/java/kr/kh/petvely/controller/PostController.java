@@ -133,7 +133,6 @@ public class PostController {
 			RecommendVO rec = postService.selectRecommendState(user.getMe_num(), po_num);
 			
 			model.addAttribute("rec", rec);
-			// 여기부터 하면 됨 그... 알지?
 			
 		    postService.updateView(po_num); // 조회수 증가
 		    PostVO post = postService.getPost(po_num);
