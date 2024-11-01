@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout/layout2.html}"><head>
 <link rel="stylesheet" type="text/css" href="/css/common.css"> 
 <meta charset="UTF-8">
 <title>펫 프로필</title>
@@ -9,37 +11,37 @@
 <body>
     <main layout:fragment="content">
         <form method="post" th:object="${myPet}" th:action="@{/animal/update/{ani_num}(ani_num=*{ani_num})}" enctype="multipart/form-data">
+        
             <div class="petsDetail_petDetailALLContainer">
                 <div class="petsDetail_petDetailContents">
                     <div class="petsDetail_petDetail">
                         <div class="petsDetail_petImgWrapper">
                           <img th:src="${myPet.ani_img != null ? myPet.ani_img : '/image/default_image.jpg'}" alt="펫 이미지" />
                          </div>
-                    </div>
                         <h2 th:text="*{ani_name}">펫 이름</h2>
                     </div>
-                    <div class="petsDetail_petDetailList">
-                        <div th:text="*{#dates.format(ani_birth, 'yyyy-MM-dd')} + ' (' + *{ani_age} + '살)'"></div>
-                    </div>
-                    <div class="petsDetail_petDetailList">
-                     품종
-                    </div>
-                    <div class="petsDetail_petDetailList">
-                    성별
-                    </div>
-                    <div class="petsDetail_petDetailList">
-                    몸무게
-                    </div>
-                    <div class="petsDetail_btnWrapper">
-                        <button class="petsDetail_detailBtn_1010">
-                         목록으로
-                        </button>
-                        <button class="petsDetail_detailBtn_1011">
-                         수정하기
-                        </button>
-                    </div>
                 </div>
-            </div>
+                <div class="petsDetail_petDetailList">
+                  <div>생일 : <span th:text="*{#dates.format(ani_birth, 'yyyy-MM-dd')} + ' (' + *{ani_age} + '살)'"></span></div>
+                </div>
+                <div class="petsDetail_petDetailList">
+                    <div>품종 : <span th:text="*{ani_at_type}"></span></div>
+                </div>
+                <div class="petsDetail_petDetailList">
+                    <div>성별 : <span th:text="*{ani_gender}"></span></div>
+                </div>
+                <div class="petsDetail_petDetailList">
+                    <div>몸무게 : <span th:text="*{ani_weight} + '(kg)'"></span></div>
+                </div>
+                <div class="petsDetail_btnWrapper">
+	                <button class="petsDetail_detailBtn_1010">
+	                 목록으로
+	                </button>
+	                <button class="petsDetail_detailBtn_1011">
+	                 수정하기
+	                </button>
+                </div>
+           </div>
         </form>
     </main>
 </body>

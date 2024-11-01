@@ -454,13 +454,14 @@ input[type=checkbox]:checked:before {
 }
 
 /* 펫디테일 */
-.petsDetail_petDetailContents{
-	width: 460px;
+.petsDetail_petDetailALLContainer{
+	width: 370px;
 	margin: 0 auto;
 	max-width: 1024px;
+	margin-top: 150px;
+	min-height: calc(100vh - 52px);
+
 }
-
-
 .petsDetail_petDetailContents
 .petsDetail_petDetailList{
 	line-height: 1.5;
@@ -473,6 +474,11 @@ input[type=checkbox]:checked:before {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+}
+.petsDetail_petDetail h2{
+	font-size: 28px;
+	padding: 15px;
+	font-weight: 600;
 }
 .petsDetail_petDetailContents
 .petsDetail_petDetail
@@ -508,7 +514,7 @@ button {
 	gap: 8px;
 }
 
-.petsDetail_petDetailContents
+
 .petsDetail_btnWrapper
 .petsDetail_detailBtn_1010{
 	padding: 13.5px 27px;
@@ -536,7 +542,7 @@ button {
 	-webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, .15);
 	box-shadow: 0 3px 6px rgba(0, 0, 0, .15);
 }
-.petsDetail_petDetailContents .petsDetail_btnWrapper{
+.petsDetail_btnWrapper{
     margin-top: 24px;
     display: flex;
     flex-direction: row;
