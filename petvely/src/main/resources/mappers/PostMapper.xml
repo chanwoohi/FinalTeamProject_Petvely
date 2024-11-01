@@ -110,5 +110,8 @@
 		where bm_po_num = #{po_num} and bm_me_num = #{bm_me_num}
 		limit 1
 	</select>
-	
+	<select id="selectRecommendState" resultType="RecommendVO">
+		select * from recommend
+		where re_me_num = #{me_num} AND re_po_num = #{po_num}
+	</select>
 </mapper>
