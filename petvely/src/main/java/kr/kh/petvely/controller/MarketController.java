@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.kh.petvely.model.user.CustomUser;
 import kr.kh.petvely.model.vo.FileVO;
@@ -89,19 +90,16 @@ public class MarketController {
 	@PostMapping("/post/marketinsert/{co_num}")
 	public String marketPostInsertPost(MarketPostVO marketPost, MultipartFile[] fileList,
 										@PathVariable int co_num,
-										@AuthenticationPrincipal CustomUser CustomUser
+										@AuthenticationPrincipal CustomUser customUser
 										) {
-		if(CustomUser != null) {
-			MemberVO user = CustomUser.getMember();
+		if(customUser != null) {
+			MemberVO user = customUser.getMember();
 			int me_num = user.getMe_num();
 			marketPost.setPo_me_num(me_num);
 			marketPost.setMp_gts_state("판매중");	
 			boolean res = marketPostService.addPost(marketPost,fileList);
 			if(res) {
 				marketPost.getPo_co_num();
-//				System.out.println("me_num:"+me_num);
-//				System.out.println(marketPost);
-//				System.out.println("post:"+post);
 				return "redirect:/post/market/{co_num}";
 			}
 		}

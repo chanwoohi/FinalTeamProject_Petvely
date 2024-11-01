@@ -32,15 +32,23 @@ public class MessageController {
 
     
     @GetMapping("/message/messagebox")
-    public String selectMessage(Model model,@AuthenticationPrincipal CustomUser CustomUser ) {
-    	    if (CustomUser != null) {
-    	        MemberVO user = CustomUser.getMember();
+    public String selectMessage(Model model,@AuthenticationPrincipal CustomUser customUser ) {
+    	    if (customUser != null) {
+    	        MemberVO user = customUser.getMember();
     	        int me_num = user.getMe_num();
     	       
     	        List<MessageVO> messages = messageService.getMessageList(me_num);
-    	        System.out.println(messages);
-    	        System.out.println(me_num);
+    	       
     	        model.addAttribute("messages", messages);
+    	        LocalDateTime now = LocalDateTime.now();
+    	        for(MessageVO message : messages) {
+    	        	LocalDateTime messageDate = message.getMes_date().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+    	        	if(messageDate.plusDays(1).isBefore(now)) {
+    	        		messageService.deleteMessage(message.getMes_num());
+    	        	}
+    	        	
+    	        }
+    	        
     	    } else {
 
     	        return "redirect:/login"; 
@@ -134,19 +142,15 @@ public class MessageController {
         return "redirect:/post/market"; 
     }
     @GetMapping("/message/messagedetail/{mes_num}")
-    public String messageDetail(Model model,@AuthenticationPrincipal CustomUser CustomUser,
+    public String messageDetail(Model model,@AuthenticationPrincipal CustomUser customUser,
     							@PathVariable int mes_num) {
     		try {
-    			if (CustomUser != null) {
-    				MemberVO user = CustomUser.getMember();
+    			if (customUser != null) {
+    				MemberVO user = customUser.getMember();
     				MessageVO message = messageService.getMessageDetail(mes_num);
     				model.addAttribute("message",message);
     				
-    				LocalDateTime now = LocalDateTime.now();
-    				LocalDateTime messageDate = message.getMes_date().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-    				if(messageDate.plusDays(3).isBefore(now)) {
-    					messageService.deleteMessage(mes_num);
-    				}
+    				
     			}
     			
     		}catch(Exception e) {
