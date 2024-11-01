@@ -95,6 +95,7 @@ layout:decorate="~{layout/layout2.html}">
 							<button type="button" class="btn register_registerCancelBtn" onclick="window.location.href='/mypage/pet'">취소</button>
 							<!---<a class="petEdit_registerDeleteBtn" th:href="@{/animal/delete/{ani_num}(ani_num=*{ani_num})}">지워</a>-->
 						</div>
+           				<input type="hidden" name="profileAction" id="profileAction" value="default" />
 					</div>
 				</div>
 			</div>
@@ -128,6 +129,7 @@ layout:decorate="~{layout/layout2.html}">
 			}
 
 			function confirmSubmission(event) {
+				alert("1");
 		        const fileInput = document.querySelector('input[type="file"]');
 		        const actionInput = document.getElementById('profileAction');
 		        if (!fileInput.files.length) {
