@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.kh.petvely.model.user.CustomUser;
 import kr.kh.petvely.model.vo.AnimalVO;
@@ -38,21 +39,25 @@ public class WalkMatePostController {
 	
 	@GetMapping("/walkmatepost/list")
 	public String walkmatepostList(Model model) {
-		List<WalkMatePostVO> list = walkMatePostService.getWalkMatePostList();
-		model.addAttribute("list", list);
+	    if (model.containsAttribute("msg")) {
+	        model.addAttribute("msg", model.getAttribute("msg"));
+	    }
+	    List<WalkMatePostVO> list = walkMatePostService.getWalkMatePostList();
+	    model.addAttribute("list", list);
 		return "/walkmatepost/list";
 	}
 	
 	@GetMapping("/walkmatepost/insert")
 	public String walkmatepostInsert(Model model, AnimalVO animal
 			,@AuthenticationPrincipal CustomUser customUser) {
-		
+		 System.out.println("등록 폼 페이지 모델 데이터: " + model.asMap());
 		if(customUser != null) {
 			MemberVO user = customUser.getMember();
 			System.out.println(user.getMe_id() + user.getMe_num());
 			
 			List<AnimalVO> petList = animalService.selectPetList(user.getMe_num());
 			System.out.println(petList);
+			System.out.println("모델에 어떤 데이터가 잇어?" + model.asMap()); // 이렇게 하면 모델에 어떤 데이터가 있는지 확인할 수 있어
 			
 			model.addAttribute("petList", petList);
 			model.addAttribute("me_num", user.getMe_num());
@@ -61,14 +66,17 @@ public class WalkMatePostController {
 	}
 	
 	@PostMapping("/walkmatepost/insert")
-	public String walkmatepostInsertPost(WalkMatePostVO walkMatePost,
+	public String walkmatepostInsertPost(Model model, RedirectAttributes redirectAttrs,
+										WalkMatePostVO walkMatePost,
 			                            int [] selectedHostAniNums){
 		
-		if(walkMatePostService.insertWalkMatePost(walkMatePost, selectedHostAniNums)) {
-			return "redirect:/walkmatepost/list";
-		}
-		return "redirect:/walkmatepost/insert";
-
+	    if (walkMatePostService.insertWalkMatePost(walkMatePost, selectedHostAniNums)) {
+	        redirectAttrs.addFlashAttribute("msg", "게시글 등록에 성공하셨습니다.");
+	        return "redirect:/walkmatepost/list";
+	    } else {
+	        redirectAttrs.addFlashAttribute("msg", "게시글 등록에 실패하셨습니다.");
+	        return "redirect:/walkmatepost/insert";
+	    }
 	}
 	
 	@GetMapping("/walkmatepost/detail/{po_num}")
