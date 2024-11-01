@@ -131,8 +131,10 @@ public class PostController {
 			MemberVO user = customUser.getMember();
 			
 			RecommendVO rec = postService.selectRecommendState(user.getMe_num(), po_num);
-			
-			model.addAttribute("rec", rec);
+			if( rec != null ) {
+				System.out.println("추천 무엇? : " + rec.getRe_state());
+				model.addAttribute("rec", rec);
+			}
 			
 		    postService.updateView(po_num); // 조회수 증가
 		    PostVO post = postService.getPost(po_num);

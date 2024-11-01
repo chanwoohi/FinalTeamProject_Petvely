@@ -35,18 +35,43 @@
 							     	</div>
 			                    </div>
 					     </div>
-				     	 <a href="#" data-state="1"
-					       class="btn-up btn btn" 
-					       th:classappend="${rec.re_state != 1} ? '-outline-danger' : '-danger'">
-					        👍추천
-					    </a>
-					    &nbsp;
-					    <a href="#" data-state="-1"
-					       class="btn-down btn btn" 
-					       th:classappend="${rec.re_state != -1} ? '-outline-danger' : '-danger'">
-					        👎비추천
-					    </a>
-					    
+					     <div th:if="${rec != null}">
+						     <div th:if="${rec.re_state} == 1">
+						     	 <a href="#" data-state="1"
+							       class="btn-up btn btn-danger">
+							        👍추천
+							    </a>
+						    </div>
+	   					    <div th:if="${rec.re_state} != 1">
+						     	 <a href="#" data-state="1"
+							       class="btn-up btn btn-outline-danger">
+							        👍추천
+							    </a>
+						    </div>
+						    &nbsp;
+						    <div th:if="${rec.re_state} == -1">
+							    <a href="#" data-state="-1"
+							       class="btn-down btn btn-danger">
+							        👎비추천
+							    </a>
+						    </div>
+						    <div th:if="${rec.re_state} != -1">
+							    <a href="#" data-state="-1"
+							       class="btn-down btn btn-outline-danger">
+							        👎비추천
+							    </a>
+						    </div>
+					    </div>
+					    <div th:if="${rec == null}">
+					    	<a href="#" data-state="1"
+						       class="btn-up btn btn-outline-danger">
+						        👍추천
+						    </a>
+					    	<a href="#" data-state="-1"
+						       class="btn-down btn btn-outline-danger">
+						        👎비추천
+						    </a>
+					    </div>
 					</div>
 					<div class="main-contents">
 							<div th:utext="*{po_content}"></div>
