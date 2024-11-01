@@ -3,77 +3,128 @@
     xmlns:th="http://www.thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
     layout:decorate="~{layout/layout.html}">
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .product-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 600px;
+            margin: auto;
+        }
+        .product-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .product-details {
+            margin-bottom: 15px;
+        }
+        .product-details label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .product-details input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #e9ecef;
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 10px;
+            cursor: not-allowed;
+        }
+        .btn {
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-right: 10px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .btn-outline-warning {
+            border: 2px solid #ffc107;
+            color: #ffc107;
+            background-color: #fff;
+        }
+        .btn-outline-warning:hover {
+            background-color: #ffc107;
+            color: #fff;
+        }
+        .btn-warning {
+            background-color: #ffc107;
+            color: #fff;
+        }
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+        .btn-outline-info {
+            border: 2px solid #17a2b8;
+            color: #17a2b8;
+            background-color: #fff;
+        }
+        .btn-outline-info:hover {
+            background-color: #17a2b8;
+            color: #fff;
+        }
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .price {
+            font-size: 20px;
+            color: #007bff;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+    </style>
+</head>
 <body>
-        
     <main layout:fragment="content">
-        <div th:object="${post}">
-            <div class="form-group">
-                <label>제목:</label>
-                <input type="text" class="form-control" readonly
-                    th:value="*{po_title}">
-            </div>
-            <div class="form-group">
+        <div class="product-card">
+            <img th:src="${fileList != null && !fileList.isEmpty() ? fileList[0].fi_name : '/image/default.jpg'}" alt="Product Image"/>
+            <div class="product-details" th:object="${post}">
                 <label>작성자:</label>
-                <input type="text" class="form-control" readonly
-                    th:value="*{me_id}">
-            </div>
-            <div class="form-group">
+                <input type="text" readonly th:value="*{me_id}">
                 <label>작성일:</label>
-                <input type="text" class="form-control" readonly
-                    th:value="*{#dates.format(po_date, 'yyyy-MM-dd HH:mm:ss')}">
-            </div>
-            <div class="form-group">
+                <input type="text" readonly th:value="*{#dates.format(po_date, 'yyyy-MM-dd HH:mm:ss')}">
                 <label>판매 상태:</label>
-                <input type="text" class="form-control" readonly
-                    th:value="*{mp_gts_state}">
-            </div>
-            <div class="form-group">
-                <label>상품명:</label>
-                <input type="text" class="form-control" readonly
-                    th:value="*{mp_name}">
-            </div>
-            <div class="form-group">
-			    <label>첨부 이미지:</label>
-			    <div th:if="${fileList != null && !fileList.isEmpty()}">
-			        <div th:each="image : ${fileList}">			    
-		            	<img th:src="${image.fi_name}" alt="Image" style="max-width: 100%; height: auto;" />
-			        </div>
-			    </div>
-			   	 <div th:unless="${fileList != null && !fileList.isEmpty()}">
-			        <p>등록된 이미지가 없습니다.</p>
-			    </div>
-        	</div>
-            <div class="form-group">
+                <input type="text" readonly th:value="*{mp_gts_state}">
                 <label>게시글 내용:</label>
-                <input type="text" class="form-control" readonly
-                    th:value="*{mp_content}">
-            </div>
-            <div class="form-group">
-                <label>가격:</label>
-                <input type="text" class="form-control" readonly
-                    th:value="*{mp_price}">
-            </div>
-            <div class="form-group">
+                <input type="text" readonly th:value="*{mp_content}">
+                <div class="price">가격: <span th:text="${post.mp_price}"></span>원</div>
                 <label>타입:</label>
-                <input type="text" class="form-control" readonly 
-                    th:value="${post.mp_gt_type}">
+                <input type="text" readonly th:value="${post.mp_gt_type}">
+            </div>
+            <div class="actions">
+                <div>
+                
+                    <a th:if="${bookmark}!=${po_num}" class="btn btn-outline-warning" th:href="@{/post/bookmark/insert/{po_num}(po_num=*{po_num})}">즐겨찾기⭐</a>
+                    <a th:if="${bookmark}==${po_num}" class="btn btn-warning" th:href="@{/post/bookmark/delete/{po_num}(po_num=*{po_num})}">즐겨찾기⭐</a>
+                    <button type="button" class="btn btn-outline-info"
+                        th:onclick="'window.open(\'/report/post/' + ${po_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'">
+                        신고하기🚨
+                    </button>
+                </div>
+                <div>
+                    <form method="post" th:action="@{/post/marketcomplete/{po_num}(po_num=${post.po_num})}">
+                        <button type="submit" class="btn btn-dark">거래완료</button>
+                    </form>
+                    <a class="btn btn-dark" th:href="@{/message/marketmessagesend/{po_num}(po_num=${po_num})}">쪽지 보내기</a>
+                    <a class="btn btn-dark" th:href="@{/post/marketupdate/{po_num}(po_num=*{po_num})}">수정</a>
+                </div>
             </div>
         </div>
-		<div>
-			<a th:if="${bookmark}!=${po_num}" class="btn btn-outline-warning" th:href="@{/post/bookmark/insert/{po_num}(po_num=*{po_num})}" >즐겨찾기⭐</a>
-			<a th:if="${bookmark}==${po_num}" class="btn btn-warning" th:href="@{/post/bookmark/delete/{po_num}(po_num=*{po_num})}" >즐겨찾기⭐</a>
-			<button type="button" class="btn btn-outline-info"
-			    th:onclick="'window.open(\'/report/post/' + ${po_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'"
-			    >신고하기🚨</button>
-	    </div>		
-        <div th:if="${me_num == post.po_me_num}" style="display:flex; margin-right: 10px;">
-            <form method="post" th:action="@{/post/marketcomplete/{po_num}(po_num=${post.po_num})}">
-                <button type="submit" class="btn btn-outline-dark">거래완료</button>
-            </form>
-             <a class="btn btn-outline-dark" th:href="@{/post/marketupdate/{po_num}(po_num=*{po_num})}">수정</a>
-        </div>
-        <span th:text="${post.po_me_num}"></span>
+        
     </main>
-
 </body>
 </html>

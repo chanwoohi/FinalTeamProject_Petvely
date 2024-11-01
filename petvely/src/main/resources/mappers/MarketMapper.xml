@@ -10,10 +10,22 @@
 			post using(po_num) 
 		join 
 			member
-		
 		where 
 			po_me_num = me_num
-	
+		<choose>
+			<when test="type == 'mp_name'">
+			and mp_name like concat('%', #{search} ,'%')
+			</when>
+			
+			<otherwise>
+			and (mp_name like concat('%', #{search} ,'%'))
+			</otherwise>
+		</choose>
+		order by
+			po_num desc
+		limit 
+			#{pageStart}, #{perPageNum}
+
 	</select>
 	<select id="selectPost" resultType="MarketPostVO">
 		select 
@@ -115,4 +127,27 @@
 		limit 1
 			
 	</select>
+	 
+
+	 
+	<select id="selectCountMarketPostList" resultType="int">
+		select 
+			count(*)
+		from
+			post
+		join
+			marketpost using(po_num)
+		where  po_co_num = #{co_num}
+		<choose>
+			<when test="type == 'mp_name'">
+			and mp_name like concat('%', #{search} ,'%')
+			</when>
+			
+			<otherwise>
+			and (mp_name like concat('%', #{search} ,'%'))
+			</otherwise>
+		</choose>
+	</select>
+	
+
 </mapper>

@@ -6,10 +6,11 @@ import kr.kh.petvely.model.vo.FileVO;
 import kr.kh.petvely.model.vo.GoodsTypeVO;
 import kr.kh.petvely.model.vo.MarketPostVO;
 import kr.kh.petvely.model.vo.PostVO;
+import kr.kh.petvely.pagination.PostCriteria;
 
 public interface MarketPostDAO {
 
-	List<MarketPostVO> selectMarketList();
+	List<MarketPostVO> selectMarketList(PostCriteria cri);
 
 	MarketPostVO selectPost(int po_num);
 
@@ -32,6 +33,9 @@ public interface MarketPostDAO {
 	boolean deleteFile(FileVO file);
 
 	FileVO selectFileByPo_num(int po_num);
+
+	int selectCountMarketPostList(PostCriteria cri);
+
 
 	
 
