@@ -388,7 +388,7 @@ input[type=checkbox]:before {
 	position: absolute;
 	width: 15px;
 	height: 15px;
-	top: 2px;
+	top: 4px;
 	left: 0;
 	background-color: #fff;
 	border: 1px solid #e4e4e6;
@@ -399,7 +399,7 @@ input[type=checkbox]:checked:before {
 	position: absolute;
 	width: 16px;
 	height: 16px;
-	top: 2px;
+	top: 4px;
 	left: 0;
 	background-color: #fcd11e;
 	border: 1px solid #fcd11e;
@@ -433,6 +433,16 @@ input[type=checkbox]:checked:before {
 	background-color: #f6f6fa;
 	color: #868688;
 }
+.register_registerCancelBtn {
+	margin: 30px;
+}
 .register_input{
 	display: none;
+}
+.register_registerContainer {
+    padding-top: 80px;
+    padding-bottom: 260px;
+    width: 100%;
+    min-height: calc(100vh - 52px);
+    background-color: #fffdf4;
 }
