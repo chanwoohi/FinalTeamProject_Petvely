@@ -205,6 +205,7 @@ ul {
 /* 펫등록 페이지 */
 .register_pet_title, .register_registerImg{
 	text-align: center;
+	padding: 16px;
 	width: 100%;
 }
 .register_registerImg{
@@ -450,4 +451,97 @@ input[type=checkbox]:checked:before {
     width: 100%;
     min-height: calc(100vh - 52px);
     background-color: #fffdf4;
+}
+
+/* 펫디테일 */
+.petsDetail_petDetailContents{
+	width: 460px;
+	margin: 0 auto;
+	max-width: 1024px;
+}
+
+
+.petsDetail_petDetailContents
+.petsDetail_petDetailList{
+	line-height: 1.5;
+}
+
+.petsDetail_petDetailContents
+.petsDetail_petDetail{
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.petsDetail_petDetailContents
+.petsDetail_petDetail
+.petsDetail_petImgWrapper img{
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.petsDetail_petDetailContents
+.petsDetail_petDetail
+.petsDetail_petImgWrapper{
+	width: 100px;
+	height: 100px;
+	border: 1px solid #fcd11e;
+	border-radius: 50%;
+}
+button {
+	color: #000;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}
+.petsDetail_petDetailContents
+.petsDetail_btnWrapper{
+	margin-top: 24px;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: flex-start;
+	grid-gap: 8px;
+	gap: 8px;
+}
+
+.petsDetail_petDetailContents
+.petsDetail_btnWrapper
+.petsDetail_detailBtn_1010{
+	padding: 13.5px 27px;
+	width: 50%;
+	font-weight: 700;
+	font-size: 16.5px;
+	line-height: 20px;
+	border-radius: 50px;
+	border: none;
+	background-color: #f6f6f9;
+	-webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, .15);
+	box-shadow: 0 3px 6px rgba(0, 0, 0, .15);
+}
+
+.petsDetail_btnWrapper
+.petsDetail_detailBtn_1011{
+	padding: 13.5px 27px;
+	width: 50%;
+	font-weight: 700;
+	font-size: 16.5px;
+	line-height: 20px;
+	border-radius: 50px;
+	border: none;
+	background-color: #fcd11e;
+	-webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, .15);
+	box-shadow: 0 3px 6px rgba(0, 0, 0, .15);
+}
+.petsDetail_petDetailContents .petsDetail_btnWrapper{
+    margin-top: 24px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    grid-gap: 8px;
+    gap: 8px;
 }
