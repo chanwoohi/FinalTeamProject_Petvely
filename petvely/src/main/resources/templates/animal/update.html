@@ -18,7 +18,8 @@ layout:decorate="~{layout/layout2.html}">
 								<h1 class="register_pet_title">반려동물 수정</h1>
 							</div>
 							<div class="register_registerImg">
-								<img class="registerImg" src="/image/image_not_found_new.png" id="preview">
+								<img class="registerImg" id="preview"
+									th:src="${myPet.ani_img != null ? myPet.ani_img : '/image/image_not_found_new.png'}">
 							</div>
 							<div class="register_inputWapper">
 								<span class="register_necessaryDot"></span>
@@ -129,7 +130,6 @@ layout:decorate="~{layout/layout2.html}">
 			}
 
 			function confirmSubmission(event) {
-				alert("1");
 		        const fileInput = document.querySelector('input[type="file"]');
 		        const actionInput = document.getElementById('profileAction');
 		        if (!fileInput.files.length) {
