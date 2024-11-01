@@ -123,23 +123,11 @@ public class PostController {
 	}
 	
 	@GetMapping("/post/detail/{po_num}") // 게시글 상세 조회
-	public String postDetail(Model model, @PathVariable int po_num,
-							 @AuthenticationPrincipal CustomUser customUser) {
-		
-		if(customUser != null) {
-			// 추천 눌려있게 하는 기능
-			MemberVO user = customUser.getMember();
-			
-			RecommendVO rec = postService.selectRecommendState(user.getMe_num(), po_num);
-			if( rec != null ) {
-				System.out.println("추천 무엇? : " + rec.getRe_state());
-				model.addAttribute("rec", rec);
-			}
-			
-		    postService.updateView(po_num); // 조회수 증가
-		    PostVO post = postService.getPost(po_num);
-		    model.addAttribute("post", post);
-		}
+	public String postDetail(Model model, @PathVariable int po_num) {
+
+	    postService.updateView(po_num); // 조회수 증가
+	    PostVO post = postService.getPost(po_num);
+	    model.addAttribute("post", post);
 
 	    return "post/detail"; // 뷰 템플릿 반환
 	}
