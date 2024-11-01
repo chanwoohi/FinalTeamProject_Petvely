@@ -34,12 +34,8 @@
                     <div>몸무게 : <span th:text="*{ani_weight} + '(kg)'"></span></div>
                 </div>
                 <div class="petsDetail_btnWrapper">
-	                <button class="petsDetail_detailBtn_1010">
-	                 목록으로
-	                </button>
-	                <button class="petsDetail_detailBtn_1011">
-	                 수정하기
-	                </button>
+	                <button type="button" class="petsDetail_detailBtn_1010" onclick="window.location.href='/mypage/pet'">목록으로</button>
+	                <button type="button" class="petsDetail_detailBtn_1011" onclick="window.location.href='/mypage/pet'">수정하기</button>
                 </div>
            </div>
         </form>
