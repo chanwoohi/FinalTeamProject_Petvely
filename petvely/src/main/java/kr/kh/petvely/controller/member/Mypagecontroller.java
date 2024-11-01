@@ -60,13 +60,13 @@ public class Mypagecontroller{
 		List<PostVO> list = mypageService.getPostList(co_num, me_num);
 		List<GiveAndTakePostVO> gatPostlist = gatPostService.getGATPostList();
 		List<MarketPostVO> maketList = marketPostService.getMarketList();
-		List<FileVO> fileList = marketPostService.getThumNail();
+		//List<FileVO> fileList = marketPostService.getThumNail();
 		List<WalkMatePostVO> walkList = walkMatePostService.getWalkMatePostList();
 		model.addAttribute("communities", communities);
 		model.addAttribute("list", list);
 		model.addAttribute("gatPostlist", gatPostlist);
 		model.addAttribute("maketList",maketList);
-		model.addAttribute("fileList",fileList);
+		//model.addAttribute("fileList",fileList);
 		model.addAttribute("walkList", walkList);
 		return "member/mypage/postList";
 	}

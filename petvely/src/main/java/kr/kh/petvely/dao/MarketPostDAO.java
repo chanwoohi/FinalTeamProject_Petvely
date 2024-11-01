@@ -11,11 +11,11 @@ public interface MarketPostDAO {
 
 	List<MarketPostVO> selectMarketList();
 
-	PostVO selectPost(int po_num);
+	MarketPostVO selectPost(int po_num);
 
 	boolean insertMarketPost(MarketPostVO marketPost);
 
-	boolean insertPost(MarketPostVO marketPost);
+	boolean insertPost(PostVO post);
 
 	List<GoodsTypeVO> selectTypes();
 
@@ -25,7 +25,21 @@ public interface MarketPostDAO {
 
 	List<FileVO> selectFileList(int po_num);
 
-	List<FileVO> selectImage();
+	boolean updateMarketPost(MarketPostVO marketPost);
+
+	FileVO selectFile(int fi_num, MarketPostVO marketPost);
+
+	boolean deleteFile(FileVO file);
+
+	FileVO selectFileByPo_num(int po_num);
+
+	
+
+
+
+	
+
+
 
 
 

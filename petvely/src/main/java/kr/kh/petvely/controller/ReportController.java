@@ -1,5 +1,7 @@
 package kr.kh.petvely.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kr.kh.petvely.model.user.CustomUser;
 import kr.kh.petvely.model.vo.MemberVO;
 import kr.kh.petvely.model.vo.PostVO;
+import kr.kh.petvely.model.vo.ReportVO;
 import kr.kh.petvely.service.PostService;
 import kr.kh.petvely.service.ReportService;
 import kr.kh.petvely.service.member.MemberService;
@@ -73,20 +76,43 @@ public class ReportController {
 			System.out.println(post.getPo_co_num());
 			if(post.getPo_co_num() == 10) {
 				rp_rtt_type = "walkmatepost";
-				reportService.insertReport(rp_me_num, rp_rtt_num, rp_rtt_type, rp_rtt_type, rp_cause);
+				reportService.insertReport(rp_me_num, rp_rtt_num, rp_rt_type, rp_rtt_type, rp_cause);
 				System.out.println(rp_rtt_type);
 			} else if (post.getPo_co_num() == 11) {
 				rp_rtt_type = "marketpost";
-				reportService.insertReport(rp_me_num, rp_rtt_num, rp_rtt_type, rp_rtt_type, rp_cause);
+				reportService.insertReport(rp_me_num, rp_rtt_num, rp_rt_type, rp_rtt_type, rp_cause);
 				System.out.println(rp_rtt_type);
 			} else if (post.getPo_co_num() == 12) {
 				rp_rtt_type = "gatpost";
-				reportService.insertReport(rp_me_num, rp_rtt_num, rp_rtt_type, rp_rtt_type, rp_cause);
+				reportService.insertReport(rp_me_num, rp_rtt_num, rp_rt_type, rp_rtt_type, rp_cause);
 				System.out.println(rp_rtt_type);
 			}
-			
 			
 		}
 		return "/close/close";
 	}
+	
+	@GetMapping("/report/list")
+	public String reportList(Model model) {
+		
+		List<ReportVO> list = reportService.getReportList();
+		
+		model.addAttribute("list", list);
+		
+		return "/report/list";
+	}
+	
+	@GetMapping("/report/postview/{rp_num}")
+	public String reportView(Model model,
+							@PathVariable int rp_num) {
+		
+		ReportVO report = reportService.getReport(rp_num);
+		
+		System.out.println(report);
+		
+		model.addAttribute("report", report);
+		
+		return "/report/postview";
+	}
+	
 }

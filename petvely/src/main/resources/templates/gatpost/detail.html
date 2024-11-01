@@ -68,9 +68,13 @@
 				<input type="text" class="form-control" readonly th:field="*{sigg_name}">
 				<input type="text" class="form-control" readonly th:field="*{emd_name}">
 			</div>
-			<a th:if="${bookmark}!=${po_num}" class="btn btn-outline-warning" th:href="@{/post/bookmark/insert/{po_num}(po_num=*{po_num})}" >즐겨찾기⭐</a>
-			<a th:if="${bookmark}==${po_num}" class="btn btn-warning" th:href="@{/post/bookmark/delete/{po_num}(po_num=*{po_num})}" >즐겨찾기⭐</a>
-
+			<div>
+				<a th:if="${bookmark}!=${po_num}" class="btn btn-outline-warning" th:href="@{/post/bookmark/insert/{po_num}(po_num=*{po_num})}" >즐겨찾기⭐</a>
+				<a th:if="${bookmark}==${po_num}" class="btn btn-warning" th:href="@{/post/bookmark/delete/{po_num}(po_num=*{po_num})}" >즐겨찾기⭐</a>
+				<button type="button" class="btn btn-outline-info"
+				    th:onclick="'window.open(\'/report/post/' + ${po_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'"
+				    >신고하기🚨</button>
+		    </div>
 			<div class="form-group">
 				<button class="btn btn-outline-info" id="commentButton">댓글</button>
 			</div>

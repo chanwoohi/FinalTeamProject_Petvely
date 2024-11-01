@@ -95,11 +95,6 @@ public class WalkMatePostController {
 			List<AnimalVO> petList = animalService.selectPetList(user.getMe_num());
 			System.out.println(petList);
 			model.addAttribute("petList", petList);
-		}
-		
-		if(customUser != null) {
-			// 로그인 도입 후 변경 완료!
-			MemberVO user = customUser.getMember();
 			
 			int bm_me_num = user.getMe_num();
 			

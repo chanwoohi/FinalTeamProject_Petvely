@@ -35,8 +35,8 @@
             <div class="form-group">
 			    <label>첨부 이미지:</label>
 			    <div th:if="${fileList != null && !fileList.isEmpty()}">
-			        <div th:each="image : ${fileList}">
-			            <img th:src="${image.fi_name}" alt="Image" style="max-width: 100%; height: auto;" />
+			        <div th:each="image : ${fileList}">			    
+		            	<img th:src="${image.fi_name}" alt="Image" style="max-width: 100%; height: auto;" />
 			        </div>
 			    </div>
 			   	 <div th:unless="${fileList != null && !fileList.isEmpty()}">
@@ -59,15 +59,20 @@
                     th:value="${post.mp_gt_type}">
             </div>
         </div>
-        <div>
-	   		<a th:if="${bookmark}!=${po_num}" class="btn btn-outline-warning" th:href="@{/post/bookmark/insert/{po_num}(po_num=*{po_num})}" >찜⭐</a>
-			<a th:if="${bookmark}==${po_num}" class="btn btn-warning" th:href="@{/post/bookmark/delete/{po_num}(po_num=*{po_num})}" >찜⭐</a>
-		</div>			
-        <div th:if="${me_num == post.po_me_num}">
+		<div>
+			<a th:if="${bookmark}!=${po_num}" class="btn btn-outline-warning" th:href="@{/post/bookmark/insert/{po_num}(po_num=*{po_num})}" >즐겨찾기⭐</a>
+			<a th:if="${bookmark}==${po_num}" class="btn btn-warning" th:href="@{/post/bookmark/delete/{po_num}(po_num=*{po_num})}" >즐겨찾기⭐</a>
+			<button type="button" class="btn btn-outline-info"
+			    th:onclick="'window.open(\'/report/post/' + ${po_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'"
+			    >신고하기🚨</button>
+	    </div>		
+        <div th:if="${me_num == post.po_me_num}" style="display:flex; margin-right: 10px;">
             <form method="post" th:action="@{/post/marketcomplete/{po_num}(po_num=${post.po_num})}">
                 <button type="submit" class="btn btn-outline-dark">거래완료</button>
             </form>
+             <a class="btn btn-outline-dark" th:href="@{/post/marketupdate/{po_num}(po_num=*{po_num})}">수정</a>
         </div>
+        <span th:text="${post.po_me_num}"></span>
     </main>
 
 </body>

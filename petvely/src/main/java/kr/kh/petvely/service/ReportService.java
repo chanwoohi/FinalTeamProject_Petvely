@@ -16,18 +16,21 @@ public class ReportService {
 	@Autowired
 	private ReportDAO reportDao;
 	
-	public void insertReport(int rp_rtt_num, int rp_me_num, String rp_rt_type, String rp_rtt_type, String rp_cause) {
+	public void insertReport(int rp_me_num, int rp_rtt_num, String rp_rt_type, String rp_rtt_type, String rp_cause) {
 		
-		reportDao.insertReport(rp_rtt_num, rp_me_num, rp_rt_type, rp_rtt_type, rp_cause);
+		reportDao.insertReport(rp_me_num, rp_rtt_num, rp_rt_type, rp_rtt_type, rp_cause);
 		
 	}
 
-	public List<ReportVO> getReportList(String rp_rtt_type) {
-		return reportDao.selectReportList(rp_rtt_type);
+	public List<ReportVO> getReportList() {
+		return reportDao.selectReportList();
 	}
 
 	public List<ReportTargetTypeVO> getRTTList() {
 		return reportDao.selectRTTList();
 	}
 
+	public ReportVO getReport(int rp_num) {
+		return reportDao.selectReport(rp_num);
+	}
 }
