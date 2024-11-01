@@ -87,11 +87,11 @@ public class AnimalController {
 	        // MyPet 등록
 	        if (animalService.insertMyPet(animalVo, user.getMe_num())) {
 	            System.out.println("마이펫 등록 성공 !");
-	            return "redirect:/member/mypage/13";
+	            return "redirect:/mypage/pet";
 	        }
 	    }
 	    System.out.println("마이펫 등록 실패 !");
-	    return "redirect:/member/mypage/13";
+	    return "redirect:/mypage/pet";
 	}
 
 	
