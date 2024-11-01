@@ -11,12 +11,11 @@
 <body>
     <main layout:fragment="content">
         <form method="post" th:object="${myPet}" th:action="@{/animal/update/{ani_num}(ani_num=*{ani_num})}" enctype="multipart/form-data">
-        
             <div class="petsDetail_petDetailALLContainer">
                 <div class="petsDetail_petDetailContents">
                     <div class="petsDetail_petDetail">
                         <div class="petsDetail_petImgWrapper">
-                          <img th:src="${myPet.ani_img != null ? myPet.ani_img : '/image/default_image.jpg'}" alt="펫 이미지" />
+                          <img th:src="${myPet.ani_img != null ? myPet.ani_img : '/image/image_not_found_new.png'}" alt="펫 이미지" />
                          </div>
                         <h2 th:text="*{ani_name}">펫 이름</h2>
                     </div>
@@ -39,10 +38,15 @@
                 </div>
                 <div class="petsDetail_btnWrapper">
 	                <button type="button" class="petsDetail_detailBtn_1010" onclick="window.location.href='/mypage/pet'">목록으로</button>
-	                <button type="button" class="petsDetail_detailBtn_1011" onclick="window.location.href='/mypage/pet'">수정하기</button>
+	                <button type="button" class="petsDetail_detailBtn_1011" th:attr="onclick=|move('/animal/update/${ani_num}')|">수정하기</button>
                 </div>
            </div>
         </form>
+        <script type="text/javascript">
+        	function move(str){
+        		location.href = str;
+        	}
+        </script>
     </main>
 </body>
 </html>

@@ -102,7 +102,7 @@ public class AnimalController {
 			System.out.println("펫 삭제 성공!");
 		}
 		System.out.println("펫 삭제 실패!");
-		return "redirect:/member/mypage/13";
+		return "redirect:/mypage/pet";
 	}
 	
 	@GetMapping("/animal/update/{ani_num}")
