@@ -31,7 +31,7 @@
 			                        </div>
 			                       <div class="article_info">
 									    <span class="date" th:text="${post.po_date != null ? #dates.format(post.po_date, 'yyyy-MM-dd') : '날짜 없음'}"></span>
-									    &nbsp;조회 <span class="count" th:text="*{po_viewCount}"></span>
+									    조회 <span class="count" th:text="*{po_viewCount}"></span>
 							     	</div>
 			                    </div>
 					     </div>
@@ -65,18 +65,18 @@
 				           th:text="${file.fi_ori_name}">
 				        </a>
 				    </div> -->
-				</div>
-				</div>
+				
 				<!-- <a class="btn btn-outline-info" th:href="@{/post/list/{po_num}(po_num=*{po_num})}">목록으로</a> -->
-				<div class="qaDetailContainer">
-					<div class="qaDetailinfo">
-						<a class="qaDetail_qaDetailInfoBtn" th:href="@{/post/update/{po_num}(po_num=*{po_num})}">수정</a>
-					</div>
-					<div class="qaDetailDelete">
-						<a class="qaDetail_qaDetailDeleteBtn" th:href="@{/post/delete/{po_num}(po_num=*{po_num})}">삭제</a>
+					<div class="qaDetailContainer">
+						<div class="qaDetailinfo">
+							<a class="qaDetail_qaDetailInfoBtn" th:href="@{/post/update/{po_num}(po_num=*{po_num})}">수정</a>
+						</div>
+						<div class="qaDetailDelete">
+							<a class="qaDetail_qaDetailDeleteBtn" th:href="@{/post/delete/{po_num}(po_num=${po_num})}">삭제</a>
+						</div>
 					</div>
 				</div>
-
+			</div>
 	<script th:inline="javascript">
 	// 팝업 토글 함수
     function togglePopup() {
