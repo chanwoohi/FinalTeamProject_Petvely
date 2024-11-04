@@ -9,7 +9,7 @@
 </head>
 <body>
 	<main layout:fragment="content">
-		<form method="post" th:action="@{/walkmatepost/insert}">
+		<form method="post" th:action="@{/walkmatepost/insert}" id="walkmatePostForm">
 
 			<div class="form-group">
 				<label>제목</label>
@@ -135,8 +135,7 @@
 			</div>
 			<div th:text="${message}"></div>
 			
-			<!-- 나중에 펫 등록 안돼 있으면 등록 못하게 추가할 예정  -->
-			<button class="btn btn-outline-info col-12" id="submitBtn" >게시글 등록</button>
+			<button class="btn btn-outline-info col-12" id="submitBtn" type="button" >게시글 등록</button>
 			<input type="hidden" id="selectedPets" name="selectedPets" value="">
 		</form>
 		<a class="btn btn-outline-info" th:href="@{/walkmatepost/list}">목록으로</a>
@@ -241,7 +240,7 @@
 		        });
 		    });
 		    // 펫 등록을 안하면, 게시글 등록이 안되게 막는 jQuery
-		    document.querySelector('.btn-outline-info.col-12').addEventListener('click', function(event) {
+		    /* document.querySelector('.btn1-outline-info.col-12').addEventListener('click', function(event) {
 		        // 체크된 체크박스 확인
 		        const checkedBoxes = document.querySelectorAll('input[name="check"]:checked');
 
@@ -250,13 +249,39 @@
 		            alert("펫 등록을 해야 게시글 등록이 가능합니다.");
 		            event.preventDefault(); // 폼 제출 중단
 		        } else {
-		            document.querySelector('form').submit(); // 체크된 경우 폼 제출
+		            //document.querySelector('form').submit(); // 체크된 경우 폼 제출
 		        }
-		    });
+		    }); */
 		    
-		    document.querySelector('.btn-outline-info.col-12').addEventListener('click', function() {
+		    /* document.querySelector('.btn-outline-info.col-12').addEventListener('click', function() {
 		        document.querySelector('form').submit();  // 폼 제출 : 기본 폼 제출 방지 때문에 직접 밑에 적어주기~
+		    }); */
+		    
+		    document.getElementById('submitBtn').addEventListener('click', function(e) {
+		    	const checkedBoxes = document.querySelectorAll('input[name="check"]:checked');
+		    	event.preventDefault(); // 폼 제출 중단
+		        // 체크된 체크박스가 없으면 경고창 표시하고 폼 제출 중단
+		        if (checkedBoxes.length === 0) {
+		            alert("펫 등록을 해야 게시글 등록이 가능합니다.");
+		            return ;
+		        } 
+		        var formData = new FormData(walkmatePostForm);
+		        console.log(1)
+		        fetch('/walkmatepost/insert', {
+		            method: 'POST',
+		            body: formData
+		        })
+		        .then(response => response.json())  // 응답을 JSON으로 변환
+		        .then(data => {
+		        	console.log(data)
+		            alert(data.message);  // 성공 또는 실패 메시지를 알림으로 표시
+		            if (data.success) {
+		                window.location.href = '/walkmatepost/list';  // 성공 시 리스트 페이지로 리디렉션
+		            }
+		        })
+		        .catch(error => console.error('Error:', error));
 		    });
+
 		</script>
 		
 	</main>

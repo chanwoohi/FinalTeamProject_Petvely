@@ -1,6 +1,8 @@
 package kr.kh.petvely.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -9,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.kh.petvely.model.user.CustomUser;
@@ -57,7 +60,6 @@ public class WalkMatePostController {
 			
 			List<AnimalVO> petList = animalService.selectPetList(user.getMe_num());
 			System.out.println(petList);
-			System.out.println("모델에 어떤 데이터가 잇어?" + model.asMap()); // 이렇게 하면 모델에 어떤 데이터가 있는지 확인할 수 있어
 			
 			model.addAttribute("petList", petList);
 			model.addAttribute("me_num", user.getMe_num());
@@ -66,17 +68,17 @@ public class WalkMatePostController {
 	}
 	
 	@PostMapping("/walkmatepost/insert")
-	public String walkmatepostInsertPost(Model model, RedirectAttributes redirectAttrs,
-										WalkMatePostVO walkMatePost,
-			                            int [] selectedHostAniNums){
-		
+	@ResponseBody
+	public Map<String, Object> walkmatepostInsertPost(WalkMatePostVO walkMatePost, int[] selectedHostAniNums) {
+	    Map<String, Object> response = new HashMap<>();
 	    if (walkMatePostService.insertWalkMatePost(walkMatePost, selectedHostAniNums)) {
-	        redirectAttrs.addFlashAttribute("msg", "게시글 등록에 성공하셨습니다.");
-	        return "redirect:/walkmatepost/list";
+	        response.put("success", true);
+	        response.put("message", "게시글 등록에 성공하셨습니다.");
 	    } else {
-	        redirectAttrs.addFlashAttribute("msg", "게시글 등록에 실패하셨습니다.");
-	        return "redirect:/walkmatepost/insert";
+	        response.put("success", false);
+	        response.put("message", "게시글 등록에 실패하셨습니다.");
 	    }
+	    return response;
 	}
 	
 	@GetMapping("/walkmatepost/detail/{po_num}")
