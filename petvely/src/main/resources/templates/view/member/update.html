@@ -5,7 +5,7 @@
 	layout:decorate="~{layout/layout2.html}">
 	
 <head layout:fragment="head">
-	<head th:replace="~{ui/member/signup.html :: head}"></head>
+	<head th:replace="~{ui/member/update.html :: head}"></head>
 	
 	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.min.js"></script>
@@ -139,8 +139,13 @@
 	 		
 	 		$("#me_nickname").blur(function() { 
 				var value = $(this).val();
+				var result;
+
+	  			console.log("[[${#authentication.principal}]]")
+				if ("[[${#authentication.principal.member.me_nickname}]]" != value) {
+					result = checkRedundancy("nickname", value);
+				}
 				
-				var result = checkRedundancy("nickname", value);
 				changeMessage("nickname", result);
 	 		});
 	 		
@@ -177,7 +182,7 @@
 						value : value					
 					},
 					success : function (resultValue){
-						isSuccess = resultValue ? 0 : 1;
+						isSuccess = resultValue;
 					}, 
 					error : function(jqXHR, textStatus, errorThrown){
 						console.log("error");
@@ -190,12 +195,14 @@
 			// 지웟다 생성하는게 아닌 display 변경하는 방식으로 변경하고 싶음. 언젠가
 			function changeMessage(type, result){
 				$('#' + msgBaseId + type).remove();
-	
-				if(result == 1){
+
+				// 사용 가능한 *** 입니다. 메세지는 정보가 너무 과다한 것 같아 제외
+/* 				if(result == 0){
 					$('#me_' + type).after(supplies[type].isOkMsg);
-				}else if(result == 0){
+				} */
+				if(result == 1){
 					$('#me_' + type).after(supplies[type].isNotOkMsg);
-				}			
+				}
 			}
 			
 			$(document).keypress(function (e) {

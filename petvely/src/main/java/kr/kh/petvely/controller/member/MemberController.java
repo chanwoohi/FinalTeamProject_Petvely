@@ -57,7 +57,10 @@ public class MemberController {
 	@PostMapping("check/value")
 	public boolean memberCheckValue_Post(String type, String value) {
 		log.info(util.getCurrentMethodName() + " : " + type + " : " + value);
-		boolean result = memberService.checkRedundancy(type, value);
+		
+		boolean result = false;
+		
+		result = memberService.checkRedundancy(type, value);
 		log.info("" + result);
 		
 		return result;
