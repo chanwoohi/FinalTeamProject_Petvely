@@ -277,12 +277,48 @@
 .thumbButtonContainer02:hover{
     background-color: #e8e8e8;
 }
-
-
-.thumbButtonContainer02:active {
-    background-color: #ff6666;
+.qaDetailContainer{
+    padding: 10px;
 }
-
+.qaDetail_qaDetailInfoBtn{
+    display: flex;
+	align-items: center;
+	justify-content: center;
+    width: 81px;
+    height: 26px;
+    font-size: 12px;
+    border-radius: 21px;
+    border: none;
+    color: #fff;
+    width: 60px;
+    background-color: #f6f6f9;
+    color: #868688;
+    float: left;
+}
+.qaDetail_qaDetailDeleteBtn{
+    display: flex;
+	align-items: center;
+	justify-content: center;
+    width: 81px;
+    height: 26px;
+    font-size: 12px;
+    border-radius: 21px;
+    border: none;
+    color: #fff;
+    width: 60px;
+    background-color: #f6f6f9;
+    color: #868688;
+}
+.qaDetail_qaDetailDeleteBtn:hover{
+    text-decoration: none;
+    color: #868688;
+    background-color: #dbdbdb;
+}
+.qaDetail_qaDetailInfoBtn:hover{
+    text-decoration: none;
+    color: #868688;
+    background-color: #dbdbdb;
+}
 /* 파일 링크 스타일 */
 .file{
 	margin:20px;
