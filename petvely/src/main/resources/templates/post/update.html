@@ -10,7 +10,7 @@
 </head>
 <body>
 	<main layout:fragment="content">
-		<form method="post" th:object="${post}" th:action="@{/post/update/{po_co_num}(po_num=*{po_num})}">
+		<form method="post" th:object="${post}" th:action="@{/post/update/{po_num}(po_num=*{po_num})}">
 		<input type="hidden" th:field="*{po_num}"/>
 		  <!-- 카테고리 선택 -->
 		  <div class="post_Container">

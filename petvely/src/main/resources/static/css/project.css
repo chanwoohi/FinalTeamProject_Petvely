@@ -110,7 +110,6 @@
 .article_header {
 	position: relative;
     margin-bottom: 20px;
-    padding-bottom: 20px;
     border-bottom: 1px solid #eee;
 }
 .ArticleTitle .title_area .title_text {
@@ -139,11 +138,6 @@
 }
 .profile-sectio{
 	padding-top: 5px;
-}
-/* 닉네임과 날짜/조회수 영역 *
-.user-details {
-    display: flex;
-    flex-direction: column;
 }
 
 /* 닉네임 스타일 */
@@ -240,16 +234,52 @@
 }
 
 /* 추천/비추천 버튼 스타일 */
-.btn-up, .btn-down {
-    background-color: #ffcccc;
-    color: #333;
+.thumbButtonContainerWrap{
+    display: flex;
+    position: relative;
+}
+.thumbButtonContainer01{
+    position: absolute;
+    top:280px;
+    left:455px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    grid-gap: 3px;
+    gap: 3px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 1px solid #d4d2d9;
+}
+.thumbButtonContainer02{
+    position: absolute;
+    top:280px;
+    left:520px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    grid-gap: 3px;
+    gap: 3px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 1px solid #d4d2d9;
 }
 
-.btn-up:hover, .btn-down:hover {
-    background-color: #ff9999;
+.thumbButtonContainer01:hover{
+    background-color: #e8e8e8;
+}
+.thumbButtonContainer02:hover{
+    background-color: #e8e8e8;
 }
 
-.btn-up:active, .btn-down:active {
+
+.thumbButtonContainer02:active {
     background-color: #ff6666;
 }
 
