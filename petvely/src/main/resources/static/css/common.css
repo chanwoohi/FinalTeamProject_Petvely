@@ -547,6 +547,9 @@ button {
 	-webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, .15);
 	box-shadow: 0 3px 6px rgba(0, 0, 0, .15);
 }
+.petsDetail_detailBtn_1010:hover{
+	background-color: #E4E4E6;
+}
 
 .petsDetail_btnWrapper
 .petsDetail_detailBtn_1011{
@@ -560,6 +563,9 @@ button {
 	background-color: #fcd11e;
 	-webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, .15);
 	box-shadow: 0 3px 6px rgba(0, 0, 0, .15);
+}
+.petsDetail_detailBtn_1011:hover{
+	background-color: #ffEBB9;
 }
 .petsDetail_btnWrapper{
     margin-top: 24px;
@@ -581,4 +587,8 @@ button {
 	background-color: #fff;
 	color: red;
 	border: 1px solid red;
+}
+.petEdit_registerDeleteBtn:hover{
+	background-color: red;
+	color: #fff;
 }
