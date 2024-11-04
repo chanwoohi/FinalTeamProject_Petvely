@@ -174,8 +174,8 @@
 					</div>
 				</div>
 				<div sec:authorize="isAuthenticated()">
-					<a th:if="${bookmark}!=${po_num}" class="btn btn-outline-warning" th:href="@{/post/bookmark/insert/{po_num}(po_num=*{po_num})}" >즐겨찾기⭐</a>
-					<a th:if="${bookmark}==${po_num}" class="btn btn-warning" th:href="@{/post/bookmark/delete/{po_num}(po_num=*{po_num})}" >즐겨찾기⭐</a>
+					<a th:if="${bookmark}!=${po_num}" href="#" class="btn btn-outline-warning bookmark-btn" th:attr="data-url=@{/post/bookmark/insert/{po_num}(po_num=${po_num})}">즐겨찾기⭐</a>
+					<a th:if="${bookmark}==${po_num}" href="#" class="btn btn-warning bookmark-btn" th:attr="data-url=@{/post/bookmark/delete/{po_num}(po_num=${po_num})}">즐겨찾기 취소⭐</a>
 					<button type="button" class="btn btn-outline-info"
 								    th:onclick="'window.open(\'/report/post/' + ${po_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'"
 								    >신고하기🚨</button>
@@ -210,7 +210,6 @@
 	    $('#myModal2').on('show.bs.modal', function () {
 	        $('#myModal').modal('hide');
 	    });
-		
 		
 	    // 페이지 로드가 완료된 후에 스크립트를 실행하도록 설정
 	    document.addEventListener('DOMContentLoaded', function() {
@@ -292,8 +291,32 @@
 	        });
 	    });
 	    
-	</script>
+	    document.querySelectorAll('.bookmark-btn').forEach(button => {
+	        button.addEventListener('click', function(e) {
+	            e.preventDefault(); // 기본 동작 방지
+	            const url = this.getAttribute('data-url'); // data-url 속성에서 URL 가져오기
 
+	            fetch(url, {
+	                method: 'POST', // 즐겨찾기 추가/삭제는 POST 요청
+	                headers: {
+	                    'Content-Type': 'application/json',
+	                    'Accept': 'application/json'
+	                }
+	            })
+	            .then(response => response.json())
+	            .then(data => {
+	                alert(data.message); // 성공 또는 실패 메시지
+	                window.location.reload(); // 사용자가 확인 버튼을 누르면 페이지를 새로고침
+	            })
+	            .catch(error => {
+	                console.error('Error:', error);
+	                alert('오류가 발생했습니다.');
+	                window.location.reload(); // 오류 발생시에도 새로고침
+	            });
+	        });
+	    });
+	    
+	</script>
 	</main>
 </body>
 </html>
