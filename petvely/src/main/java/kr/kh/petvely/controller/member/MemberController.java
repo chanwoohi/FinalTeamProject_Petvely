@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import jakarta.servlet.http.HttpServletRequest;
+import kr.kh.petvely.model.dto.MessageDTO;
 import kr.kh.petvely.model.user.CustomUser;
 import kr.kh.petvely.model.vo.AnimalVO;
 import kr.kh.petvely.model.vo.BookMarkVO;
@@ -106,22 +109,20 @@ public class MemberController {
 		return "/member/mypage";
 	}
 	
-	
+	@PostMapping("failed")
+	public String memberFailed_post(Model model, HttpServletRequest request) {
+		log.info(util.getCurrentMethodName());
 
-	
-	
-	/*
-	 * @PostMapping("login") public String memberLogin_post(Model model,
-	 * MemberVO memberVO, HttpSession session) {
-	 * log.info(util.getCurrentMethodName() + " : " + memberVO); MemberVO user =
-	 * memberService.login(memberVO);
-	 * 
-	 * model.addAttribute("user", user); log.info("memberLogin_pos123123t : " +
-	 * user); return "redirect:/"; }
-	 * 
-	 * @GetMapping("logout") public String memberLogout() {
-	 * log.info(util.getCurrentMethodName());
-	 * 
-	 * return viewRoute + "logout"; }
-	 */
+		Exception error =  (Exception)request.getAttribute("error");
+		log.info("{}", error.getMessage());
+		
+    	if(error instanceof AuthenticationServiceException) {
+    		model.addAttribute("message", new MessageDTO("/", "정지되었거나 존재하지 않는 계정입니다."));
+    	}
+    	else {
+    		model.addAttribute("message", new MessageDTO("/", "로그인에 실패했습니다.\\n아이디 또는 비밀번호를 확인해주세요."));
+    	}
+    	
+		return "view/main/message";
+	}
 }

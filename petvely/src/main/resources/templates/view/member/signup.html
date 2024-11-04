@@ -11,15 +11,19 @@
 	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.min.js"></script>
 </head>
 <body>
-	<main layout:fragment="content">
+	<div layout:fragment="content">
 		<form id="form" method="post" th:action="@{/member/signup}">
-    		<div th:replace="~{ui/member/signup.html :: body}"></div>
-    		
+	   		<div th:replace="~{ui/member/signup.html :: main}"></div>
+	   		
 			<button class="btn btn-outline-info col-12">회원 가입</button>
-			<button id="cheatBtn" class="btn btn-outline-info col-12"
-				type="button">치트키</button>
-    	</form>    
-		
+			<button id="cheatBtn" class="btn btn-outline-info"
+				type="button">치트키1</button>
+			<button id="cheatBtn2" class="btn btn-outline-info"
+				type="button">치트키2</button>
+			<button id="cheatBtn3" class="btn btn-outline-info"
+				type="button">치트키admin</button>
+	   	</form>
+	
 		<script type="text/javascript">
 		$(document).ready(function() {
 			const msgBaseId = "check-"
@@ -33,7 +37,7 @@
 						regex : /^[a-zA-Z0-9!@#$]{3,15}$/,
 					},
 					nickname : {
-						regex : /^\w{3,13}$/,
+						regex : /^[\w가-힣]{3,13}$/,
 						isOkMsg : printOkMsg("nickname", "닉네임"),
 						isNotOkMsg : printNotOkMsg("nickname", "닉네임")
 					},
@@ -41,6 +45,11 @@
 						regex : /^01(\d{1})[-. )]*(\d{4})[-. ]*(\d{4})$/,
 						isOkMsg : printOkMsg("phone", "휴대전화번호"),
 						isNotOkMsg : printNotOkMsg("phone", "휴대전화번호")
+					},
+					email : {
+						regex : /([\w\.]+)@([\w\.]+)\.*(\w+)/,
+						isOkMsg : printOkMsg("email", "이메일"),
+						isNotOkMsg : printNotOkMsg("email", "이메일")
 					}
 			};
 			
@@ -76,7 +85,7 @@
 					},
 					me_email : {
 						required : true,
-						email : true
+						regex : supplies.email.regex
 					}
 				},
 				messages : {
@@ -93,15 +102,15 @@
 					},
 					me_nickname : {
 						required : '필수 항목입니다.',
-						regex : '닉네임은 영어, 숫자만 가능하며, 3~13자이어야 합니다.'
+						regex : '닉네임은 한글, 영어, 숫자만 가능하며, 3~13자이어야 합니다.'
 					},
 					me_phone : {
 						required : '필수 항목입니다.',
-						regex : '000-0000-0000 의 형태만 가늫합니다.'
+						regex : '010-0000-0000 의 형태만 가늫합니다.'
 					},
 					me_email : {
 						required : '필수 항목입니다.',
-						email : '이메일 형식이 아닙니다'
+						regex : '이메일 형식이 아닙니다'
 					}
 				},
 				submitHandler : function(){
@@ -131,7 +140,9 @@
 	 		$("#me_nickname").blur(function() { 
 				var value = $(this).val();
 				
+				console.log(value);
 				var result = checkRedundancy("nickname", value);
+				console.log(result);
 				changeMessage("nickname", result);
 	 		});
 	 		
@@ -140,6 +151,13 @@
 				
 				var result = checkRedundancy("phone", value);
 				changeMessage("phone", result);
+	 		});
+	 		
+	 		$("#me_email").blur(function() { 
+				var value = $(this).val();
+				
+				var result = checkRedundancy("email", value);
+				changeMessage("email", result);
 	 		});
 	 		
 			function checkRedundancy(type, value){
@@ -194,8 +212,26 @@
 				$("#me_phone").val('010-0000-0000');
 				$("#me_email").val('qwe@123');
 			})
+			
+			$("#cheatBtn2").click(function() {
+				$("#me_id").val('qwe124');
+				$("#me_pw").val('123123');
+				$("#me_pw2").val('123123');
+				$("#me_nickname").val('한글사랑');
+				$("#me_phone").val('010-0000-0004');
+				$("#me_email").val('qwe@124');
+			})
+			
+			$("#cheatBtn3").click(function() {
+				$("#me_id").val('admin123');
+				$("#me_pw").val('123123');
+				$("#me_pw2").val('123123');
+				$("#me_nickname").val('admin123');
+				$("#me_phone").val('019-0000-0000');
+				$("#me_email").val('admin@123');
+			})
 		});
 		</script>
-	</main>
+	</div>
 </body>
 </html>

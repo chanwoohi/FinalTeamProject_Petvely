@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import kr.kh.petvely.component.CustomLoginFailureHandler;
 import kr.kh.petvely.model.user.UserRole;
 import kr.kh.petvely.service.member.MemberDetailService;
 
@@ -18,6 +19,9 @@ public class SecurityConfig{
 
 	@Autowired
 	private MemberDetailService memberDetailService;
+	
+	@Autowired
+    private CustomLoginFailureHandler customLoginFailureHandler;
 	
 	@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -41,11 +45,13 @@ public class SecurityConfig{
 	                .anyRequest().permitAll()  // 그 외 요청은 인증 필요
             )
             .formLogin((form) -> form
-                .loginPage("/member/login")  // 커스텀 로그인 페이지 설정하는 경우, 
-            							//아이디창의 name을 username, 비번창의 name을 password로
-                .permitAll()           // 로그인 페이지는 접근 허용
-                .loginProcessingUrl("/member/login")//
-                .defaultSuccessUrl("/")
+                    .loginPage("/member/login")
+                    .defaultSuccessUrl("/")
+                    .loginProcessingUrl("/member/login")
+                    //.successHandler(customLoginSuccessHandler)
+                    .failureForwardUrl("/member/failed")
+                    .failureHandler(customLoginFailureHandler)
+                    .permitAll()
             )
             .rememberMe((rm)-> rm
             		.userDetailsService(memberDetailService)
