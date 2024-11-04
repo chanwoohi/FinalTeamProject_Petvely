@@ -5,6 +5,27 @@
 	font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 }
 
+/* POST */
+.question_questionContainer_ .question_questionContent .question_questionCategory{
+	font-weight: 600;
+	font-size: 16px;
+	line-height: 19px;
+}
+.question_nosubmitBtn{
+	width: 240px;
+	height: 40px;
+	background-color: #e4e4e6;
+	color: #000;
+	border-radius: 21px;
+	border: none;
+	margin: 60px auto 100px;
+	display: block;
+	cursor: pointer;
+	font-weight: 600;
+}
+.question_nosubmitBtn:hover{
+background-color: #f0f0f0;
+}
 /* fluid 여백수정 */
 .container-fluid{
     padding-right: 0px;
@@ -185,6 +206,14 @@ ul {
 	font-size: 22px;
 	line-height: 26px;
 	text-align: center;
+	color: #000;
+}
+.pet_petContents:hover {
+	/* transform: scale(1.05); 살짝 확대되는 효과 */
+	background-color: #f0f0f0; /* 배경색 변경 */
+}
+.pet_Petslist a {
+  text-decoration: none;
 }
 .pet_PetAge{
 	font-style: normal;
@@ -344,7 +373,12 @@ input:focus {outline: none;} /* outline 테두리 없애기 */
 .register_registerContents .register_genderWrapper{
 	display: flex;
 }
-
+.register_inputWapperIn:hover{
+	border: solid 1px #fcd11e;
+}
+.MuiFormControl-root:hover{
+	border: solid 1px #fcd11e;
+}
 .register_radioContainer 
 .register_radioWrap {
 	display: flex;
@@ -426,6 +460,10 @@ input[type=checkbox]:checked:before {
 	margin: 4px 0;
 	background-color: #fcd11e;
 }
+.register_noregisterBtn:hover{
+	background-color: #ffEBB9;
+}
+
 .register_registerContainer .register_registerCancelBtn {
 	width: 100%;
 	position: relative;
@@ -437,6 +475,9 @@ input[type=checkbox]:checked:before {
 	margin: 4px 0;
 	background-color: #f6f6fa;
 	color: #868688;
+}
+.register_registerCancelBtn:hover{
+	background-color: #E4E4E6;
 }
 .register_registerCancelBtn {
 	margin: 30px;
@@ -527,6 +568,9 @@ button {
 	-webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, .15);
 	box-shadow: 0 3px 6px rgba(0, 0, 0, .15);
 }
+.petsDetail_detailBtn_1010:hover{
+	background-color: #E4E4E6;
+}
 
 .petsDetail_btnWrapper
 .petsDetail_detailBtn_1011{
@@ -540,6 +584,9 @@ button {
 	background-color: #fcd11e;
 	-webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, .15);
 	box-shadow: 0 3px 6px rgba(0, 0, 0, .15);
+}
+.petsDetail_detailBtn_1011:hover{
+	background-color: #ffEBB9;
 }
 .petsDetail_btnWrapper{
     margin-top: 24px;
@@ -561,4 +608,8 @@ button {
 	background-color: #fff;
 	color: red;
 	border: 1px solid red;
+}
+.petEdit_registerDeleteBtn:hover{
+	background-color: red;
+	color: #fff;
 }

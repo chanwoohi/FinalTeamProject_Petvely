@@ -18,7 +18,8 @@ layout:decorate="~{layout/layout2.html}">
 								<h1 class="register_pet_title">반려동물 수정</h1>
 							</div>
 							<div class="register_registerImg">
-								<img class="registerImg" src="/image/image_not_found_new.png" id="preview">
+								<img class="registerImg" id="preview"
+									th:src="${myPet.ani_img != null ? myPet.ani_img : '/image/image_not_found_new.png'}">
 							</div>
 							<div class="register_inputWapper">
 								<span class="register_necessaryDot"></span>
@@ -95,6 +96,7 @@ layout:decorate="~{layout/layout2.html}">
 							<button type="button" class="btn register_registerCancelBtn" onclick="window.location.href='/mypage/pet'">취소</button>
 							<!---<a class="petEdit_registerDeleteBtn" th:href="@{/animal/delete/{ani_num}(ani_num=*{ani_num})}">지워</a>-->
 						</div>
+           				<input type="hidden" name="profileAction" id="profileAction" value="default" />
 					</div>
 				</div>
 			</div>

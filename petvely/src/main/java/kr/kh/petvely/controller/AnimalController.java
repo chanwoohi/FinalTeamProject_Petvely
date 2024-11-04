@@ -121,6 +121,7 @@ public class AnimalController {
 								   AnimalVO animal,
             					   MultipartFile file,
             					   @RequestParam String profileAction) {
+		System.out.println("12");
 		
 	    // 나이 계산하는 코드
 	    Date date = animal.getAni_birth();
@@ -170,11 +171,12 @@ public class AnimalController {
         }
         animal.setAni_num(ani_num);
         if(animalService.updateMyPet(animal)) {
+        	System.out.println("ani"+animal);
         	System.out.println("마이펫 정보 수정 성공!");
         }else {
         	System.out.println("마이펫 정보 수정 실패!");
         }
-		return "redirect:/member/mypage/13";
+		return "redirect:/mypage/pet";
 	}
 	
 	@GetMapping("/animal/profile/{ani_num}")
