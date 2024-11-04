@@ -6,14 +6,13 @@
 <head>
 <link rel="stylesheet" type="text/css" href="/css/common.css"> 
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>글 쓰기</title>
 </head>
 <body>
 	<main layout:fragment="content">
-		  <form method="post" th:action="@{/post/insert}" enctype="multipart/form-data">
+		<form method="post" th:action="@{/post/insert}" enctype="multipart/form-data">
 		  <!-- 카테고리 선택 -->
 		  <div class="post_Container">
-		 
 	          <span class="post_Category">카테고리</span>
 	          	<span class="post_Mark">*</span>
 	          	 <div class="post_PostCategory">
@@ -33,7 +32,6 @@
 				</div>
 			    <!-- 작성자 ID를 숨겨진 필드로 전달 -->
 	    		<input type="hidden" name="po_me_num" th:value="${me_num}">
-	    		
 				<div class="post_Category">
 					<label>내용</label> <span class="post_Mark">*</span>
 					<textarea placeholder="5자 이상의 글 내용을 입력해주세요" class="postText" name="po_content"></textarea>
@@ -48,7 +46,7 @@
 					<a class="post_inventoryBtn"th:href="@{/post/list/{co_num}(co_num=${co_num})}">목록으로</a>
 				</div>
 			</div>
-			</form>
+		</form>
 	</main>
 </body>
 </html>
