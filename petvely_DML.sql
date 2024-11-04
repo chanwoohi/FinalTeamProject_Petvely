@@ -102,6 +102,7 @@ VALUES (
     'active' -- me_ms_status: 관리자 상태 (active 상태)
 );
 
+
 INSERT INTO petvely.reporttargettype (rtt_type)
 VALUES
 ('message'),
