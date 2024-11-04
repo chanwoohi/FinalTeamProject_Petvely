@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">	
+	<link rel="stylesheet" type="text/css" href="/css/common.css"> 
+	
+	<style type="text/css">
+	.error{
+		color : red;
+	}
+	</style>
+</head>
+<body>
+	<div th:fragment="main">
+		<div th:object="${memberVo}">
+			<div class="register_inputWapper">
+				<span class="register_necessaryDot">*</span>
+				<div class="register_inputWapperIn">
+					<div class="rgister_petName">
+						<input placeholder="아이디" class="css-pet1010" type="text" 
+							th:field="*{me_id}" readonly>
+					</div>
+				</div>
+			</div>
+			<div class="register_inputWapper">
+				<span class="register_necessaryDot">*</span>
+				<div class="register_inputWapperIn">
+					<div class="rgister_petName">
+						<input placeholder="비밀번호" class="css-pet1010" type="text" 
+							id= "me_pw" name="me_pw">
+					</div>
+				</div>
+			</div>
+			<div class="register_inputWapper">
+				<span class="register_necessaryDot">*</span>
+				<div class="register_inputWapperIn">
+					<div class="rgister_petName">
+						<input placeholder="비밀번호 확인" class="css-pet1010" type="text" 
+							id= "me_pw2" name="me_pw2">
+					</div>
+				</div>
+			</div>
+			<div class="register_inputWapper">
+				<span class="register_necessaryDot">*</span>
+				<div class="register_inputWapperIn">
+					<div class="rgister_petName">
+						<input placeholder="닉네임" class="css-pet1010" type="text" 
+							th:field="*{me_nickname}">
+					</div>
+				</div>
+			</div>
+			<div class="register_inputWapper">
+				<span class="register_necessaryDot">*</span>
+				<div class="register_inputWapperIn">
+					<div class="rgister_petName">
+						<input placeholder="휴대전화번호" class="css-pet1010" type="text" 
+							th:field="*{me_phone}">
+					</div>
+				</div>
+			</div>
+			<div class="register_inputWapper">
+				<span class="register_necessaryDot">*</span>
+				<div class="register_inputWapperIn">
+					<div class="rgister_petName">
+						<input placeholder="이메일" class="css-pet1010" type="text" 
+							th:field="*{me_email}">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

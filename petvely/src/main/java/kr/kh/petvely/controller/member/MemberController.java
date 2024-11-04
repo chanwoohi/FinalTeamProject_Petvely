@@ -59,6 +59,7 @@ public class MemberController {
 		log.info(util.getCurrentMethodName() + " : " + type + " : " + value);
 		boolean result = memberService.checkRedundancy(type, value);
 		log.info("" + result);
+		
 		return result;
 	}
 	
@@ -124,5 +125,13 @@ public class MemberController {
     	}
     	
 		return "view/main/message";
+	}
+
+	@GetMapping("update")
+	public String memberUpdate(Model model, @AuthenticationPrincipal CustomUser customUser) {
+		log.info(util.getCurrentMethodName() + " : " + customUser.getMember());
+		
+	    model.addAttribute("memberVo", customUser.getMember());
+		return viewRoute + "update";
 	}
 }

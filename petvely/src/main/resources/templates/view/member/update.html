@@ -17,9 +17,9 @@
 			<div class="register_registerContainer">
 				<div class="register_registerContents">
 					<form id="form" method="post" th:action="@{/member/signup}">
-				   		<div th:replace="~{ui/member/signup.html :: main}"></div>
+				   		<div th:replace="~{ui/member/update.html :: main}"></div>
 				   		
-						<button class="register_noregisterBtn">회원 가입</button>
+						<button class="register_noregisterBtn">수정</button>
 						<button id="cheatBtn" class="btn btn-outline-info"
 							type="button">치트키1</button>
 						<button id="cheatBtn2" class="btn btn-outline-info"
@@ -137,19 +137,10 @@
 				return this.optional(element) || re.test(value);
 			}, "정규표현식을 확인하세요.");
 	 		
-	 		$("#me_id").blur(function() { 
-				var value = $(this).val();
-				
-	  			var result = checkRedundancy("id", value);
-				changeMessage("id", result);
-	 		});
-	 		
 	 		$("#me_nickname").blur(function() { 
 				var value = $(this).val();
 				
-				console.log(value);
 				var result = checkRedundancy("nickname", value);
-				console.log(result);
 				changeMessage("nickname", result);
 	 		});
 	 		

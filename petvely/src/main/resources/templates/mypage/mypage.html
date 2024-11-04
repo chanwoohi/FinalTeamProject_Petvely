@@ -39,12 +39,17 @@
 								th:value="${#authentication.principal.member.me_nickname}"></input>
 						</div>
 						<div class="btn_update">
-							<span>회원정보 수정</span>
+							<span onclick="onclick_memberUpdateBtn();">회원정보 수정</span>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		<script type="text/javascript">
+			function onclick_memberUpdateBtn() {
+				location.href = "/member/update";
+			}
+		</script>
 	</main>
 </body>
 </html>
