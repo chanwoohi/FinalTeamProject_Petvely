@@ -5,6 +5,27 @@
 	font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 }
 
+/* POST */
+.question_questionContainer_ .question_questionContent .question_questionCategory{
+	font-weight: 600;
+	font-size: 16px;
+	line-height: 19px;
+}
+.question_nosubmitBtn{
+	width: 240px;
+	height: 40px;
+	background-color: #e4e4e6;
+	color: #000;
+	border-radius: 21px;
+	border: none;
+	margin: 60px auto 100px;
+	display: block;
+	cursor: pointer;
+	font-weight: 600;
+}
+.question_nosubmitBtn:hover{
+background-color: #f0f0f0;
+}
 /* fluid 여백수정 */
 .container-fluid{
     padding-right: 0px;

@@ -4,6 +4,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
 	layout:decorate="~{layout/layout.html}">
 <head>
+<link rel="stylesheet" type="text/css" href="/css/common.css"> 
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -11,44 +12,43 @@
 	<main layout:fragment="content">
 		<!-- <form method="post" th:action="@{/post/insert/{co_num}(co_num=${co_num})}"> GET 요청처럼 동작할 수 있음 -->
 		  <form method="post" th:action="@{/post/insert}" enctype="multipart/form-data">
-			 <!-- 카테고리 선택 -->
-          <div class="form-group">
-                <br/>
-                <label for="category">카테고리</label>
-                <select id="category" name="po_co_num" required>
-                    <option value="">게시판을 선택하세요</option>
-                    <!-- 카테고리 목록을 동적으로 생성 -->
-                    <option th:each="item : ${communities}" 
-                            th:value="${item.co_num}" 
-                            th:text="${item.co_name}" 
-                            th:selected="${co_num == item.co_num}">
-                    </option>
-                </select>
-            </div>
-			<div class="form-group">
-				<label>제목</label>
-				<input type="text" class="form-control" name="po_title">
+		  <!-- 카테고리 선택 -->
+		  <div class="question_questionContainer">
+	          <span class="question_questionCategory">카테고리</span>
+	          	<span class="question_questionMark">*</span>
+	                <select id="category" name="po_co_num" required>
+	                    <option value="">게시판을 선택하세요</option>
+	                    <!-- 카테고리 목록을 동적으로 생성 -->
+	                    <option th:each="item : ${communities}" 
+	                            th:value="${item.co_num}" 
+	                            th:text="${item.co_name}" 
+	                            th:selected="${co_num == item.co_num}">
+	                    </option>
+	                </select>
+				<div class="form-group">
+					<label>제목</label>
+					<input type="text" class="form-control" name="po_title">
+				</div>
+			    <!-- 작성자 ID를 숨겨진 필드로 전달 -->
+	    		<input type="hidden" name="po_me_num" th:value="${me_num}">
+	    		
+				<div class="form-group">
+					<label>내용</label>
+					<textarea class="form-control" style="min-height: 400px; height: auto;" name="po_content">
+					</textarea>
+				</div>
+				<div class="from-group">
+					<label>첨부파일</label>
+					<input type="file" class="form-control" name="fileList">
+					<br/>
+				</div>
+				<button class="question_nosubmitBtn">글 등록</button>
+				<button type="button" class="petEdit_registerDeleteBtn" th:attr="onclick=|move('post/list/{co_num}(co_num=${co_num}')|">목록으로</button>
+				<input type="hidden" name="po_co_num" value="${co_num}">
 			</div>
-		    <!-- 작성자 ID를 숨겨진 필드로 전달 -->
-    		<input type="hidden" name="po_me_num" th:value="${me_num}">
-    		
-			<div class="form-group">
-				<label>내용</label>
-				<textarea class="form-control" style="min-height: 400px; height: auto;" name="po_content">
-				</textarea>
-			</div>
-			<div class="from-group">
-				<label>첨부파일</label>
-				<input type="file" class="form-control" name="fileList">
-				<br/>
-			</div>
-			<button class="btn btn-outline-info col-12">게시글 등록</button>
-			<input type="hidden" name="po_co_num" value="${co_num}">
-		</form>
-		<a class="btn btn-outline-info" style="margin-top:10px;"th:href="@{/post/list/{co_num}(co_num=${co_num})}">목록으로</a>
+			<a class="btn btn-outline-info" style="margin-top:10px;"th:href="@{/post/list/{co_num}(co_num=${co_num})}">목록으로</a>
+			</form>
 	</main>
-	<script>
 
-    </script>
 </body>
 </html>
