@@ -55,11 +55,11 @@ select{
 	border-radius: 5px;
 	padding: 0 24px 0 12px;	
 }
-.post_Btn{
+.post_Btn {
 	display: flex;
-	align-items: center;
-	margin-left: 300px;
-	margin-bottom: 50px;
+	align-items: center;      /* 수직 가운데 정렬 */
+	justify-content: center;   /* 가로 방향 가운데 정렬 */
+	margin: 0 0 40px 0;
 }
 .post_submitBtn{
 	width: 240px;

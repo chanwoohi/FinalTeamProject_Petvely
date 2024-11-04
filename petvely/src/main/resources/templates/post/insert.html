@@ -36,17 +36,23 @@
 					<label>내용</label> <span class="post_Mark">*</span>
 					<textarea placeholder="5자 이상의 글 내용을 입력해주세요" class="postText" name="po_content"></textarea>
 				</div>
-				<!-- <div class="from-group">
-					<label>첨부파일</label>
-					<input type="file" class="form-control" name="fileList">
-					<br/>
-				</div> -->
 				<div class="post_Btn">
 					<button class="post_submitBtn">글 등록</button>
 					<a class="post_inventoryBtn"th:href="@{/post/list/{co_num}(co_num=${co_num})}">목록으로</a>
 				</div>
 			</div>
 		</form>
+		<script type="text/javascript">
+	    // 내용 미입력시 알럿
+	    function validateForm() {
+	        const content = document.getElementById("po_content").value.trim();
+	        if (!content) {
+	            alert("내용을 입력해주세요.");
+	            return false;
+	        }
+	        return true;
+	    }
+	    </script>
 	</main>
 </body>
 </html>

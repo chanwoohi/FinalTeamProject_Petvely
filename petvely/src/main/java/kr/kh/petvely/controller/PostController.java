@@ -87,7 +87,9 @@ public class PostController {
 	}
 	
 	@GetMapping("/post/insert/{co_num}")
-	public String postInsert(Model model, @PathVariable int co_num, @AuthenticationPrincipal CustomUser customUser) {
+	public String postInsert(Model model, 
+							 @PathVariable int co_num, 
+							 @AuthenticationPrincipal CustomUser customUser) {
 	    int meNum = customUser.getMeNum(); // 로그인된 사용자의 meNum 가져오기
 
 	    // 모델에 사용자 정보 추가 (필요하면 me_id도 추가 가능)
@@ -230,21 +232,17 @@ public class PostController {
 	        model.addAttribute("error", "로그인이 필요합니다.");
 	        return "redirect:/member/login";  // 비회원일 경우 로그인 페이지로 리디렉션
 	    }
-
 	    // 게시글 정보 가져오기
 	    PostVO post = postService.getPost(po_num);
 	    if (post == null) {
 	        model.addAttribute("error", "존재하지 않는 게시글입니다.");
 	        return "redirect:/post/list";  // 게시글이 없는 경우 목록으로 리디렉션
 	    }
-
 	    // 로그인된 사용자 정보
 	    int me_num = customUser.getMember().getMe_num();  // 로그인된 사용자 번호 가져오기
 	    String me_authority = customUser.getMember().getMe_authority(); // 로그인된 사용자 권한
 	    int co_num = post.getPo_co_num(); // 커뮤니티 번호 가져오기
-
 	    boolean res;
-
 
 	    // 일반 사용자는 본인이 작성한 글만 삭제 가능
 	    if (post.getPo_me_num() == me_num || "ADMIN".equals(me_authority)) {
