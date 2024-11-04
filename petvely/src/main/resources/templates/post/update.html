@@ -4,7 +4,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
 	layout:decorate="~{layout/layout.html}">
 <head>
-<link rel="stylesheet" type="text/css" href="/css/project.css">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
 <meta charset="UTF-8">
 <title>update</title>
 </head>
@@ -13,10 +13,10 @@
 		<form method="post" th:object="${post}" th:action="@{/post/update/{po_num}(po_num=*{po_num})}">
 		<input type="hidden" th:field="*{po_num}"/>
 		  <!-- 카테고리 선택 -->
-		  <div class="header">
-	          <div class="update_header">
-		          	<div class="text_category">
-					    <select id="category" name="po_co_num" required>
+		  <div class="post_Container">
+		    <span class="post_Category">카테고리</span>
+		          	<div class="post_PostCategory">
+					      <select class="categoryFiled" id="category" name="po_co_num" required>
 						    <option value="">게시판을 선택하세요</option>
 						    <!-- 카테고리 목록을 동적으로 생성 -->
 						    <option th:each="item : ${communities}" 
@@ -26,21 +26,20 @@
 						    </option>
 						</select>
 					</div>
-					<div class="title_text">
-					<textarea class="title_text_input" style="height: 48px;" th:field="*{po_title}">
-					</textarea>
+					<div class="post_Category">
+						<label>제목</label>
+						<input type="text" class="postInput" name="po_title"  th:field="*{po_title}">
 					</div>
-				</div>
+					<div class="post_Category">
+						<label>내용</label>
+						<textarea class="postText" th:field="*{po_content}"></textarea>
+					</div>
+					<div class="post_Btn">
+						<button class="post_submitBtn">글 수정</button>
+						<a class="post_inventoryBtn" th:href="@{/post/list/{po_co_num}(po_co_num=${post.po_co_num})}">목록으로</a>
+					</div>
 			</div>
-			<div class="content">
-				<textarea class="update_content" style="min-height: 400px; height: auto;" th:field="*{po_content}">
-				</textarea>
-			</div>
-			<button class="btn btn-outline-info col-12">게시글 수정</button>
 		</form>
-		<div class="btn_box">
-			<a class="btn btn-outline-info" th:href="@{/post/list}">목록으로</a>
-		</div>
 	</main>
 
 </body>
