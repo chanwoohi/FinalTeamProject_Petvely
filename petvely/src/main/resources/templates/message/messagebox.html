@@ -3,6 +3,35 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
 	layout:decorate="~{layout/layout.html}">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .message-container {
+            margin: 20px auto;
+            padding: 15px;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 250px;
+        }
+        .message-item {
+            padding: 10px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .message-item:last-child {
+            border-bottom: none;
+        }
+        .send-button {
+            margin-top: 20px;
+            display: inline-block;
+        }
+        .message-date, .message-sender {
+            font-size: 0.9em;
+            color: gray;
+        }
+    </style>
+</head>
 <body>
     <header th:fragment="header">
         <nav class="navbar navbar-expand-md bg-dark navbar-dark">
@@ -10,15 +39,22 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
         </nav>
     </header>
-    <main layout:fragment="content">
-        <div class="text" 
-   th:each="item : ${messages}" 
-   th:text="${item.mes_content}" ></div>
-   <a th:href="@{/message/send/0}">쪽지 보내기</a>
+    <main layout:fragment="content" class="container">
+        <h2 class="mt-4">쪽지함</h2>
+        <div class="message-container">
+            <div class="message-item" th:each="item : ${messages}">
+                <a th:href="@{/message/messagedetail/{mes_num}(mes_num=${item.mes_num})}">
+                    <span th:text="${#strings.length(item.mes_content) > 10 ? 
+                    #strings.substring(item.mes_content, 0, 10) + '.......' : item.mes_content}"></span>
+                </a>
+                <div class="message-sender" th:text="'보낸 사람: ' + ${item.mes_me_senderId}">보낸 사람</div>
+                <div class="message-date" th:text="${item.mes_date}">보낸 날짜</div>
+            
+            </div>
+        </div>
+        <a class="btn btn-primary send-button" th:href="@{/message/send}">쪽지 보내기</a>
     </main>
-    
 </body>
 </html>

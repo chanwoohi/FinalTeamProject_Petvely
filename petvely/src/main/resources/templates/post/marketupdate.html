@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html 
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+    layout:decorate="~{layout/layout.html}">
+<body>
+        
+    <main layout:fragment="content">
+        <form method="post" th:object="${marketPost}" th:action="@{/post/marketupdate/{po_num}(po_num=${marketPost.po_num})}" enctype="multipart/form-data">
+            <input type="hidden" th:field="*{po_num}"/>
+            <div class="form-group">
+                <label>게시글 제목:</label>
+                <input type="text" class="form-control" th:field="*{po_title}" />
+            </div>
+            <div class="form-group">
+                <label>게시글 내용:</label>
+                <textarea class="form-control" style="min-height: 400px; height: auto;" th:field="*{po_content}"></textarea>
+            </div>
+            <div class="form-group">
+                <label>타입:</label>
+                <select class="form-control" th:field="*{mp_gt_type}">
+                    <option value="">선택하세요</option>
+                    <option th:each="type : ${types}" 
+                            th:value="${type.gt_type}" 
+                            th:text="${type.gt_type}"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>가격:</label>
+                <input type="text" class="form-control" th:field="*{mp_price}" />
+            </div>
+            <div class="form-group">
+                <div th:each="file : ${files}">
+                    <div>
+                        <img th:src="@{${file.fi_name}}" style="max-width: 100%; height: auto;" />
+                        <label>
+                            <input type="checkbox" name="nums" th:value="${file.fi_num}" /> 삭제
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>새 파일 첨부:</label>
+                <input type="file" class="form-control" name="fileList" multiple />
+            </div>
+            <button class="btn btn-outline-info col-12" type="submit">수정</button>
+        </form>
+    </main>
+</body>
+</html>

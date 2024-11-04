@@ -5,54 +5,54 @@
 	layout:decorate="~{layout/layout.html}">
 <head>
 <meta charset="UTF-8">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <title>Insert title here</title>
 </head>
 <body>
 	<main layout:fragment="content">
-		<h2>즐겨찾기 목록</h2>
+		<h2>즐겨찾기 / 찜</h2>
 		<div class="mt-3">
 			<a 	class="btn mr-3 mb-3"
 				th:each="item : ${communityList}" 
-				th:text="${item.co_name}"
-				th:href="@{/member/mypage/{co_num}(co_num=${item.co_num})}"></a>
+				th:href="@{/member/mypage/{co_num}(co_num=${item.co_num})}">
+				<span th:switch="${item.co_num}">
+					<span th:case="11">찜</span>
+					<span th:case="*" th:text="${item.co_name}"></span>
+				</span>
+			</a>
 		</div>
-		<!-- 펫 정보 클릭시에만 보이게!  -->
-		<div th:if="${co_num}==13">
+		<div th:if="${co_num}!=13">
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th>펫 이름</th>
-						<th>종류</th>
-						<th>나이</th>
-						<th>성별</th>
-						<th></th>
+						<th>번호</th>
+						<th>제목</th>
+						<th>작성자</th>
+						<th>조회수</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="item : ${petList}" th:if="${item != null}">
+					<tr th:each="item : ${bookMarkList}" th:if="${item != null}">
+						<td th:text="${item.po_num}"></td>
 						<td>
-						    <button type="button" class="btn btn-link"
-								    th:onclick="'window.open(\'/animal/profile/' + ${item.ani_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'"
-								    th:text="${item.ani_name}"></button>
+							<div th:switch="${item != null ? item.po_co_num : -1}">
+								<a 	th:case="10" 
+									th:text="${item.po_title}" 
+									th:href="@{/walkmatepost/detail/{po_num}(po_num=${item.po_num})}"></a>
+								<a 	th:case="12" 
+									th:text="${item.po_title}" 
+									th:href="@{/gatpost/detail/{po_num}(po_num=${item.po_num})}"></a>
+								<a 	th:case="11" 
+									th:text="${item.po_title}" 
+									th:href="@{/post/marketdetail/{po_num}(po_num=${item.po_num})}"></a>
+								<span th:case="*">해당하는 포스트가 없습니다.</span>
+							</div>	
 						</td>
-						<td th:text="${item.ani_at_type}"></td>
-						<td th:text="${item.ani_age}"></td>
-						<td th:text="${item.ani_gender}"></td>
-						<td>
-							<a class="btn btn-outline-warning" 
-								th:href="@{/animal/update/{ani_num}(ani_num=${item.ani_num})}">수정</a>
-							<a class="btn btn-outline-danger" 
-								th:href="@{/animal/delete/{ani_num}(ani_num=${item.ani_num})}" 
-								onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
-						</td>
+						<td th:text="${item.me_id}"></td>
+						<td th:text="${item.po_viewCount != null ? item.po_viewCount : '0'}"></td>
 					</tr>
 				</tbody>
 			</table>
-			<a class="btn btn-outline-info" th:href="@{/animal/signup}">펫 등록하기</a>
-		</div>
-		<div th:if="${co_num}!=13">
-			<h1>다른 애들 클릭하면 보이는 문구</h1>
-			<h3>아직 구상중...</h3>
 		</div>
 	</main>
 </body>

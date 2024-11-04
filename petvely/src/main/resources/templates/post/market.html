@@ -4,14 +4,67 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
     layout:decorate="~{layout/layout.html}">
 <head>
-  <style>        
-        .blur{
-            filter: blur(1px);
-            pointer-events: none; 
-            opacity: 0.5;
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
         }
-        
-        .overlay{
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            padding: 20px;
+        }
+        .search-container {
+            display: flex;
+            justify-content: flex-end;
+            width: 100%;
+            margin-bottom: 20px; /* 카드와의 간격 조정 */
+        }
+        .card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 10px;
+            width: 300px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden; 
+            transition: transform 0.2s; /* 부드러운 변화를 위해 트랜지션 추가 */
+        }
+        .card:hover {
+            transform: scale(1.05); /* 마우스 오버 시 카드 확대 */
+        }
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid #ddd;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+        .card-body {
+            padding: 15px;
+        }
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .card-text {
+            margin-bottom: 10px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+        .price {
+            font-size: 16px;
+            color: #007bff;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .overlay {
             position: absolute; 
             top: 0;
             left: 0;
@@ -22,58 +75,113 @@
             align-items: center;
             color: #ff0000; 
             font-size: 24px; 
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 5px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            margin-top: 10px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .no-items {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            width: 100%;
+        }
+        .tooltip {
+            display: none;
+            position: absolute;
+            background-color: #333;
+            color: #fff;
+            padding: 5px;
+            border-radius: 5px;
+            z-index: 10;
+            white-space: nowrap;
+            top: -40px; 
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .card:hover .tooltip {
+            display: block; /* 카드에 마우스를 올리면 툴팁 표시 */
+        }
+        .search-form {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* 검색창과 버튼 간격 */
+        }
+        .search-form input {
+            width: 200px; /* 고정 너비 */
+        }
+        .search-form button {
+            width: auto; /* 버튼 너비를 자동으로 설정 */
+            padding: 10px 30px; /* 버튼 패딩 조정 */
         }
     </style>
 </head>
 <body>
-		
     <main layout:fragment="content">
-
-   		<table class="table table-striped">
-	    	<thead>
-				<tr>
-					<th>번호</th>
-					<th>제목</th>
-					<th>썸네일</th>
-					<th>판매내용</th>
-					<th>금액</th>
-					<th>아이디</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="item : ${list}" th:classappend="${item.mp_gts_state == '판매완료'} ? 'blur'">
-					<td th:text="${item.po_num}"></td>
-					
-					<td>
-						<a th:if="${item.mp_gts_state != '판매완료'}"
-							th:href="@{/post/marketdetail/{po_num}(po_num=${item.po_num})}" 
-							th:text="${item.po_title}"></a>
-						<span th:if="${item.mp_gts_state == '판매완료'}" th:text="${item.po_title}"></span>
-						<div>
-							<div class="overlay" th:if="${item.mp_gts_state == '판매완료'}">판매 완료</div>
-						</div>
-					</td>
-					 <td>
-					    <img class="thumbnail" 
-					         th:src="${item.mp_imgUrl != null && !item.mp_imgUrl.isEmpty() ? item.mp_imgUrl : '/image/image.jpg'}" 
-					         alt="Thumbnail" style="width: 100px; height: auto; margin-right: 5px;"/>
-					</td>
-					
-					<td th:text="${item.po_content}"></td>
-					<td th:text="${item.mp_price}"></td>
-					<td th:text="${item.me_id}"></td>
-				</tr>				
-			
-				<tr th:if="${list.size() == 0}">
-					<td colspan="4" class="text-center">등록된 게시글이 없습니다.</td>
-				</tr>
-			</tbody>
-    	</table>
-			
-		<a th:href="@{/post/marketinsert}" class="btn btn-outline-dark col-12">게시글 등록</a>
-
+        <div class="search-container">
+            <form th:action="@{/post/market/{co_num}(co_num=${co_num})}" class="search-form">
+                <select name="type" class="form-control">
+                    <option value="mp_name">상품명</option>
+                </select>
+                <input type="text" class="form-control" placeholder="검색어" name="search">
+                <button type="submit" class="btn btn-primary">검색</button>
+            </form>
+        </div>
+        <div class="container">
+            <div th:each="item : ${list}" class="card" th:classappend="${item.mp_gts_state == '판매완료'} ? 'blur'">
+                <img th:src="${item.mp_imgUrl != null && !item.mp_imgUrl.isEmpty() ? item.mp_imgUrl : '/image/image.jpg'}" alt="Thumbnail"/>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a th:if="${item.mp_gts_state != '판매완료'}"
+                           th:href="@{/post/marketdetail/{po_num}(po_num=${item.po_num})}" 
+                           th:text="${item.po_title}"></a>
+                        <span th:if="${item.mp_gts_state == '판매완료'}" th:text="${item.po_title}"></span>
+                    </h5>
+                    <p class="card-text" th:text="${item.po_content}"></p>
+                    <div class="price">가격: <span th:text="${item.mp_price}"></span></div>
+                    <div th:if="${item.mp_gts_state == '판매완료'}" class="overlay">판매 완료</div>
+                    <a th:href="@{/message/marketmessagesend/{po_num}(po_num=${item.po_num})}" class="btn">쪽지 보내기</a>
+                    <div class="tooltip" th:text="'상세 정보: ' + ${item.po_content}">상세 정보</div>
+                </div>
+            </div>
+            
+            <div th:if="${list.size() == 0}" class="no-items">등록된 게시글이 없습니다.</div>
+        </div>
+        <div th:if="${pm.cri.co_num !=0}">
+            <ul class="pagination pagination-sm justify-content-center" 
+                th:object="${pm}" 
+                th:if="${pm.endPage != 0}">
+                <li class="page-item" th:if="*{prev}">
+                    <a class="page-link" 
+                       th:href="@{/post/market/{co_num}(page=*{startPage-1}, co_num=*{cri.co_num})}">이전</a>
+                </li>
+                <li class="page-item" 
+                    th:each="i : *{#numbers.sequence(startPage, endPage)}"
+                    th:classappend="*{cri.page} == ${i} ? 'active' : ''">
+                    <a class="page-link" 
+                       th:href="@{/post/market/{co_num}(page=${i}, co_num=*{cri.co_num})}"
+                       th:text="${i}"></a>
+                </li>
+                <li class="page-item" th:if="*{next}">
+                    <a class="page-link" 
+                       th:href="@{/post/market/{co_num}(page=*{endPage+1}, co_num=*{cri.co_num})}">다음</a>
+                </li>
+            </ul>
+        </div>
+        <a th:href="@{/post/marketinsert}" class="btn">게시글 등록</a>
     </main>
-	
-  
 </body>
 </html>

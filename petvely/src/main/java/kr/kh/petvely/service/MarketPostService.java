@@ -12,6 +12,8 @@ import kr.kh.petvely.dao.MarketPostDAO;
 import kr.kh.petvely.model.vo.FileVO;
 import kr.kh.petvely.model.vo.MarketPostVO;
 import kr.kh.petvely.model.vo.PostVO;
+import kr.kh.petvely.pagination.PageMaker;
+import kr.kh.petvely.pagination.PostCriteria;
 import kr.kh.petvely.utils.UploadFileUtils;
 
 
@@ -25,12 +27,12 @@ public class MarketPostService {
 	@Value("${file.upload-dir}")
 	String uploadPath;
 
-	public List<MarketPostVO> getMarketList() {
+	public List<MarketPostVO> getMarketList(PostCriteria cri) {
 		
-		return marketPostDao.selectMarketList();
+		return marketPostDao.selectMarketList(cri);
 	}
 
-	public PostVO getMarketPost(int po_num) {
+	public MarketPostVO getMarketPost(int po_num) {
 		return marketPostDao.selectPost(po_num);
 	}
 
@@ -39,7 +41,7 @@ public class MarketPostService {
 		if(marketPost == null) {
 			return res;
 		}try {
-			marketPost.setPo_me_num(1);
+			marketPost.setPo_co_num(11);
 			res = marketPostDao.insertPost(marketPost);
 			if(res) {
 				
@@ -62,7 +64,6 @@ public class MarketPostService {
 		}
 		return res;
 	}
-
 	private void uploadFile(MultipartFile file, int po_num, MarketPostVO marketPost) {
 		if(file == null || file.getOriginalFilename().length() == 0) {
 			return;
@@ -74,8 +75,11 @@ public class MarketPostService {
 			String imgUrl = basePath + fi_name;
 			marketPost.setMp_imgUrl(imgUrl);
 			
+			
 			FileVO fileVo = new FileVO(fi_ori_name, fi_name, po_num);
+			
 			marketPostDao.insertFile(fileVo);
+			System.out.println("파일VO " +  fileVo);
 
 		}catch(Exception e){
 			e.printStackTrace();
@@ -86,6 +90,7 @@ public class MarketPostService {
 		
 	    try {
 	        marketPostDao.updateTradeState(po_num, "판매완료");
+	        
 	        return true;
 	    } catch (Exception e) {
 	        e.printStackTrace();
@@ -98,43 +103,85 @@ public class MarketPostService {
 		return marketPostDao.selectFileList(po_num);
 	}
 
+	public boolean updateMarketPost(MarketPostVO marketPost, MultipartFile[] fileList, int[] nums) {
+		if(marketPost == null) {
+			return false;
+		}
+		
+		
+	
+		uploadFileList(fileList,marketPost.getPo_num(), marketPost);
+		
+		deleteFiles(nums, marketPost);
+		
+		FileVO file = marketPostDao.selectFileByPo_num(marketPost.getPo_num());
+		if(file != null) {
+			String basePath = "/uploads";
+			marketPost.setMp_imgUrl(basePath + file.getFi_name());
+		}
+		boolean res = marketPostDao.updateMarketPost(marketPost);
+		System.out.println("updateMarketPost : " + marketPost);
+		if(!res) {
+			return false;
+		}
+		
+		return true;
+	}
+	void deleteFiles(int [] nums, MarketPostVO marketPost) {
+		if(nums == null || nums.length == 0) {
+			
+			return;
+		}
+		for(int fi_num : nums) {
+			FileVO file = marketPostDao.selectFile(fi_num,marketPost);
+			marketPostDao.deleteFile(file);
+		}
+	}
 
-	public List<FileVO> getThumNail() {
-	    List<FileVO> fileList = marketPostDao.selectImage();
-	    String defaultImage = "/image/image.jpg";
-	    String basePath = "/uploads";
-	    
-	    
-	    List<MarketPostVO> list = getMarketList();
-	    System.out.println(list);
-	    List<FileVO> ThumImg = new ArrayList<>();
-	    
-	    for (MarketPostVO post : list) {
-	    	boolean img = false;
-	        for (FileVO file : fileList) {
-	            if (file.getFi_po_num() == post.getPo_num()) {
-	                String imgUrl = basePath + file.getFi_name();	      
-	                post.setMp_imgUrl(imgUrl);
-	                ThumImg.add(file);
-	                img = true;
-	                break;
+	
+
+	
+
+	private void uploadFileList(MultipartFile[] fileList, int po_num, MarketPostVO marketPost) {
+	    if (fileList != null) {
+	        for (MultipartFile file : fileList) {
+	            if (!file.isEmpty()) {
+	                
+	            	try {
+	        			String fi_ori_name = file.getOriginalFilename();
+	        			String fi_name = UploadFileUtils.uploadFile(uploadPath, fi_ori_name, file.getBytes());
+	        			String basePath = "/uploads";
+	        			String imgUrl = basePath + fi_name;
+	        			marketPost.setMp_imgUrl(imgUrl);
+	        			System.out.println("ImgURL " + imgUrl);
+	        			
+	        			FileVO fileVo = new FileVO(fi_ori_name, fi_name, po_num);
+	        			
+	        			marketPostDao.insertFile(fileVo);
+	        			System.out.println("파일VO " +  fileVo);
+	        			
+	        	
+	        	 System.out.println("현재 mp_imgUrl: " + marketPost.getMp_imgUrl());
+	        		}catch(Exception e){
+	        			e.printStackTrace();
+	        		}
+	                System.out.println("업로드된 파일: " + file.getOriginalFilename());
 	            }
 	        }
-	        if (!img) {
-
-	            FileVO defaultFile = new FileVO();
-	            defaultFile.setImgUrl(defaultImage);
-	            defaultFile.setFi_po_num(post.getPo_num());
-	            ThumImg.add(defaultFile);
-	        }
 	    }
-
-	    return ThumImg;
 	}
-	
+
+
+	public PageMaker getPageMaker(PostCriteria cri) {
+		if(cri==null) {
+			return null;
+		}
+		int count = marketPostDao.selectCountMarketPostList(cri);
+		return new PageMaker(9, cri, count);
+	}
+
 
 	
-
 
 	
 

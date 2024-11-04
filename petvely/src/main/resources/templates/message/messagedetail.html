@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/layout.html}">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+      <style>
+        .message-container {
+            margin: 20px auto;
+            padding: 15px;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+        }
+        .message-content {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        .message-footer {
+            font-size: 0.9em;
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+    <header th:fragment="header">
+        <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+            <a class="navbar-brand" href="#">Home</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </nav>
+    </header>
+    <main layout:fragment="content" class="container">
+        <h2 class="mt-4">쪽지 상세</h2>
+        <div class="message-container">
+            <div class="message-content" th:text="${message.mes_content}">쪽지 내용</div>
+            <div class="message-footer">
+                <span th:text="'보낸 사람: ' + ${message.mes_me_senderId}"></span>
+                <span th:text="'보낸 날짜: ' + ${message.mes_date}"></span>
+            </div>
+            
+        </div>
+        <a class="btn btn-primary" th:href="@{/message/send}">쪽지 보내기</a>
+        <a class="btn btn-secondary" th:href="@{/message/messagebox}">목록으로 돌아가기</a>
+    </main>
+    
+</body>
+</html>

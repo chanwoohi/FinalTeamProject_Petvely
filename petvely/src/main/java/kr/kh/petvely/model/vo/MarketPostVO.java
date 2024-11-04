@@ -13,4 +13,7 @@ public class MarketPostVO extends PostVO{
 	private int mp_price;
 	private String mp_gt_type;
 	private String mp_imgUrl;
+	public MarketPostVO(String imgUrl) {
+		this.mp_imgUrl = imgUrl;
+	}
 }

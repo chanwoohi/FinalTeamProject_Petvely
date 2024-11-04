@@ -2,8 +2,6 @@ package kr.kh.petvely.service;
 
 import java.util.List;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +9,6 @@ import kr.kh.petvely.dao.PostDAO;
 import kr.kh.petvely.model.vo.CommunityVO;
 import kr.kh.petvely.model.vo.PostVO;
 import kr.kh.petvely.model.vo.RecommendVO;
-import lombok.AllArgsConstructor;
 
 @Service
 public class PostService {
@@ -64,48 +61,10 @@ public class PostService {
 		postDao.updateView(po_num);
 		
 	}
-	// 게시글 논리적 삭제 (po_delete 값을 1로 업데이트)
-	public boolean deletePost(int po_num) {
-		// 실제 삭제가 아니라 po_delete를 1로 변경하여 논리적 삭제 처리
-		return postDao.logicalDeletePost(po_num);  // PostDAO의 논리적 삭제 메서드 호출
-	}
 	public List<CommunityVO> getCommunityList() {
 		return postDao.selectCommunityList();
 	}
-	// me_id와 함께 게시글 목록을 조회하는 메서드
-	public List<PostVO> getPostpostListWithMemberId() {
-		return postDao.selectPostWithMemberId();
-	}
-    // 추천/비추천 처리 메서드
-	public int insertRecommend(RecommendVO recommend) {
-	    if (recommend == null) {
-	        throw new RuntimeException();
-	    }
 
-	    // 기존 추천 정보 확인
-	    RecommendVO dbRecommend = postDao.selectRecommend(recommend);
-
-	    // 기존 추천 정보가 없으면 새로 추가
-	    if (dbRecommend == null) {
-	        postDao.insertRecommend(recommend);
-	        postDao.updateRecommendCount(recommend.getRe_po_num());  // 게시글 추천수 업데이트
-	        return recommend.getRe_state();  // 추천/비추천 상태 반환
-	    }
-
-	    // 기존 추천 정보가 있으면 삭제
-	    postDao.deleteRecommend(dbRecommend.getRe_num());
-
-	    // 기존 상태와 동일하면 추천 취소
-	    if (dbRecommend.getRe_state() == recommend.getRe_state()) {
-	        postDao.updateRecommendCount(recommend.getRe_po_num());  // 게시글 추천수  업데이트
-	        return 0;  // 취소 상태 반환
-	    }
-
-	    // 기존 상태와 다르면 상태 변경
-	    postDao.insertRecommend(recommend);
-	    postDao.updateRecommendCount(recommend.getRe_po_num());  // 게시글 추천수 업데이트
-	    return recommend.getRe_state();  // 새로운 추천/비추천 상태 반환
-	}
 	// 커뮤니티 번호에 맞는 게시글 목록을 가져오는 메서드
 	public List<PostVO> getAllPosts(int co_num) {
         return postDao.selectPostList(co_num);
@@ -115,6 +74,50 @@ public class PostService {
 	public int getPostCount(int co_num) {
         return postDao.selectCountPostList(co_num);
     }
+	
+
+	// 추천/비추천 처리 메서드
+	public int insertRecommend(RecommendVO recommend) {
+	    if (recommend == null) {
+	        throw new RuntimeException("추천 정보가 null입니다.");
+	    }
+	
+	    // 기존에 추천 여부 확인
+	    RecommendVO dbRecommend = postDao.selectRecommend(recommend);
+	
+	    int po_num = recommend.getRe_po_num();  // 게시글 번호 가져오기
+	
+	    // 없으면 추가 후 추천 상태를 반환
+	    if (dbRecommend == null) {
+	        postDao.insertRecommend(recommend);  // 추천 추가
+	    } else {
+	        // 기존 상태와 새 상태가 같으면 추천을 취소
+	        if (dbRecommend.getRe_state() == recommend.getRe_state()) {
+	            postDao.deleteRecommend(dbRecommend.getRe_num());  // 추천 삭제
+	            postDao.updateRecommendCount(po_num);  // 추천/비추천 수 갱신
+	            return 0;  // 취소 상태 반환
+	        }
+	
+	        // 기존 상태와 새 상태가 다르면 업데이트
+	        postDao.deleteRecommend(dbRecommend.getRe_num());  // 기존 추천 삭제
+	        postDao.insertRecommend(recommend);  // 새로운 추천 추가
+	 }
+
+	// 추천/비추천 수 업데이트
+    postDao.updateRecommendCount(po_num);
+
+    // 추천 상태 반환 (1: 추천, -1: 비추천)
+    return recommend.getRe_state();
+	}
+
+	// 게시글 논리적 삭제 (po_delete 값을 1로 업데이트)
+	public boolean logicalDeletePost(int po_num) {
+	    return postDao.logicalDeletePost(po_num);  // 논리적 삭제
+	}
+	// 게시글 물리적 삭제
+	public boolean physicalDeletePost(int po_num) {
+	    return postDao.deletePost(po_num);  // 실제 삭제
+	}
 	public boolean deleteBookmark(int po_num, int bm_me_num) {
 		return postDao.deleteBookmark(po_num, bm_me_num);
 	}
@@ -122,6 +125,9 @@ public class PostService {
 		
 		return postDao.selectBookmark(bm_me_num, po_num);
 	}
-
-
+	public RecommendVO selectRecommendState(int me_num, int po_num) {
+		
+		return postDao.selectRecommendState(me_num, po_num);
+		
+	}
 }

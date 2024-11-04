@@ -95,11 +95,6 @@ public class WalkMatePostController {
 			List<AnimalVO> petList = animalService.selectPetList(user.getMe_num());
 			System.out.println(petList);
 			model.addAttribute("petList", petList);
-		}
-		
-		if(customUser != null) {
-			// 로그인 도입 후 변경 완료!
-			MemberVO user = customUser.getMember();
 			
 			int bm_me_num = user.getMe_num();
 			
@@ -182,7 +177,7 @@ public class WalkMatePostController {
 		 * 작동하면 다른 게시판에서 쓸 수 있으니까 postService로 보냄	
 		*/ 
 		
-		if(postService.deletePost(po_num)) {
+		if(postService.physicalDeletePost(po_num)) {
 			return "redirect:/walkmatepost/list";
 		}
 		return "redirect:/walkmatepost/detail/"+po_num;

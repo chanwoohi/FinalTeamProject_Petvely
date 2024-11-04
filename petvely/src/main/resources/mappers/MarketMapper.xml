@@ -2,49 +2,152 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.petvely.dao.MarketPostDAO">
 	<select id="selectMarketList" resultType="MarketPostVO">
-		select * from marketpost 
-			join post using(po_num) 
-			join member  where po_me_num = me_num;
+		select 
+			* 
+		from 
+			marketpost 
+		join 
+			post using(po_num) 
+		join 
+			member
+		where 
+			po_me_num = me_num
+		<choose>
+			<when test="type == 'mp_name'">
+			and mp_name like concat('%', #{search} ,'%')
+			</when>
+			
+			<otherwise>
+			and (mp_name like concat('%', #{search} ,'%'))
+			</otherwise>
+		</choose>
+		order by
+			po_num desc
+		limit 
+			#{pageStart}, #{perPageNum}
+
 	</select>
-	<select id="selectPost"  resultType="MarketPostVO">
-		  select * from marketpost 
-			join post using(po_num) 
-			join member on po_me_num = me_num
-			where po_num = #{po_num}	
+	<select id="selectPost" resultType="MarketPostVO">
+		select 
+			* 
+		from 
+			marketpost 
+		join 
+			post using(po_num) 
+		join 
+			member on po_me_num = me_num
+		where 
+			po_num = #{po_num}	
 	</select>
-	
-	<insert id="insertPost" keyProperty="po_num" useGeneratedKeys="true">
-   	 	insert into post (po_title, po_content, po_me_num, po_co_num)
-        	values(#{po_title}, #{po_content}, #{po_me_num}, #{po_co_num})
-	</insert>	
 	
 	<insert id="insertMarketPost">
-		insert into marketpost (po_num, mp_gt_type,mp_gts_state,mp_name,mp_content,mp_price,mp_imgUrl)
+		insert 
+			into 
+		marketpost (po_num, mp_gt_type,mp_gts_state,mp_name,mp_content,mp_price,mp_imgUrl)
 			values(#{po_num}, #{mp_gt_type},#{mp_gts_state}, #{mp_name}, #{mp_content}, #{mp_price},#{mp_imgUrl})
 	</insert>
 	
+	<insert id="insertPost" keyProperty="po_num" useGeneratedKeys="true">
+   	 	insert 
+   	 		into 
+   	 	post (po_title, po_content, po_me_num, po_co_num)
+        	values(#{po_title}, #{po_content}, #{po_me_num}, #{po_co_num})
+	</insert>	
+	
+	
+	
 	<insert id="insertFile">
-		insert into file (fi_ori_name, fi_name,fi_po_num, fi_date) 
+		insert 
+			into 
+		file (fi_ori_name, fi_name,fi_po_num, fi_date) 
 			values(#{fi_ori_name},#{fi_name},#{fi_po_num}, now())
 	</insert>
 	
 	<select id="selectTypes" resultType="GoodsTypeVO">
-		select * from goodstype;
+		select 
+			* 
+		from 
+			goodstype;
 	</select>
 	
 	<update id="updateTradeState">
-		update marketpost
-   		set mp_gts_state = #{state}
-    	where po_num = #{po_num}
+		update 
+			marketpost
+   		set 
+   			mp_gts_state = #{state}
+    	where 
+    		po_num = #{po_num}
+    	
 	</update>
 	
 	<select id="selectFileList" resultType="FileVO">
-		select * from file where fi_po_num = #{fi_po_num}
+		select 
+			* 
+		from 
+			file 
+		join
+			post
+		where 
+			fi_po_num = #{po_num}
+		and 
+			fi_po_num = po_num 
+		order by
+			fi_num asc
+	</select>
+
+	<update id="updateMarketPost">
+		update 
+			marketpost 
+	 	join 
+			post using(po_num)
+		set
+			po_title = #{po_title},
+			po_content = #{po_content},
+			mp_price = #{mp_price},
+			mp_gt_type = #{mp_gt_type},
+			mp_imgUrl = #{mp_imgUrl}
+		where 
+			po_num = #{po_num}
+		
+	</update>
+	
+	<select id="selectFile">
+		select * from file where fi_num = #{fi_num}
+	</select>
+	<delete id="deleteFile">
+		delete from file where fi_num = #{fi_num}
+	</delete>
+	<select id="selectFileByPo_num">
+		select 
+			* 
+		from
+			file
+		where fi_po_num = #{po_num}
+		order by fi_po_num asc
+		limit 1
+			
+	</select>
+	 
+
+	 
+	<select id="selectCountMarketPostList" resultType="int">
+		select 
+			count(*)
+		from
+			post
+		join
+			marketpost using(po_num)
+		where  po_co_num = #{co_num}
+		<choose>
+			<when test="type == 'mp_name'">
+			and mp_name like concat('%', #{search} ,'%')
+			</when>
+			
+			<otherwise>
+			and (mp_name like concat('%', #{search} ,'%'))
+			</otherwise>
+		</choose>
 	</select>
 	
-	<select id="selectImage" resultType="FileVO">
-		select * from file join marketpost where fi_po_num = po_num
-	</select>
-  
-	
+
 </mapper>

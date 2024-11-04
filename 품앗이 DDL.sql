@@ -3,7 +3,8 @@ select * from gatpost
 	left join sigg_areas on emd_sigg_num = sigg_num
 	left join sido_areas on sigg_sido_num = sido_num
 	left join post using (po_num)
-    left join member on po_me_num = me_num;
+    left join member on po_me_num = me_num
+    left join community on co_num = po_co_num;
 
 select * from gatpost
 	 left join goodstradestate on gat_gats_state = gats_state;
@@ -12,19 +13,23 @@ select * from post left join member on po_me_num = me_num;
 select * from comment
 	left join member on me_num = cm_me_num;
 
+select * from COMMUNITY;
+INSERT INTO COMMUNITY(CO_NAME) VALUES('산책메이트'), ('품앗이'), ('중고거래');
+
 select * from comment;
 insert into comment
 	(cm_num, cm_content, cm_date, cm_state, cm_reportCount, cm_me_num, cm_po_num, cm_reply, cm_ord, cm_layer)
 values
 	('1', '테스트1', '2024-10-16', '1', '1', '1', '1', '1', '0', '0'),
-    ('2', '테스트2', '2024-10-16', '1', '1', '2', '1', '2', '0', '0'), 
-    ('3', '테스트3', '2024-10-16', '1', '1', '2', '1', '2', '1', '1'),
-    ('4', '테스트4', '2024-10-16', '1', '1', '1', '1', '2', '2', '1'),
-    ('5', '테스트5', '2024-10-16', '1', '1', '1', '2', '3', '0', '0'), 
-    ('6', '테스트6', '2024-10-16', '1', '1', '2', '2', '4', '0', '0'),
-    ('7', '테스트7', '2024-10-16', '1', '1', '2', '2', '4', '1', '1'), 
-    ('8', '테스트8', '2024-10-16', '1', '1', '1', '2', '4', '2', '1');
-    
+    ('2', '테스트2', '2024-10-16', '1', '1', '1', '1', '2', '0', '0'), 
+    ('3', '테스트2-1', '2024-10-16', '1', '1', '1', '1', '2', '1', '1'),
+    ('4', '테스트2-2', '2024-10-16', '1', '1', '1', '1', '2', '2', '1'),
+    ('5', '테스트3', '2024-10-16', '1', '1', '1', '2', '5', '0', '0'), 
+    ('6', '테스트4', '2024-10-16', '1', '1', '1', '2', '6', '0', '0'),
+    ('7', '테스트4-1', '2024-10-16', '1', '1', '1', '2', '6', '1', '1'), 
+    ('8', '테스트4-2', '2024-10-16', '1', '1', '1', '2', '6', '2', '1'),
+	('9', '테스트2-1-1', '2024-10-18', '1', '1', '1', '1', '2', '1', '2'),
+    ('10', '테스트2-2-1', '2024-10-18', '1', '1', '1', '1', '2', '2', '2');
 
 select * from gatpost;
 INSERT INTO gatpost
@@ -37,10 +42,10 @@ VALUES
     ('5', '예시6', '2024-10-01', '2024-10-01', 'x', '완료', '17');
 
 select * from post;
-INSERT INTO post(po_num, po_title, po_content, po_me_num) 
+INSERT INTO post(po_num, po_title, po_content, po_me_num, po_co_num) 
 	VALUES 
-		('1', 'test1', 'w', '1'), ('2', 'test2', 'w', '1'), ('3', 'test2', 'w', '1'),
-        ('4', '테스트1', 'w', '1'), ('5', '테스트16', 'w', '1');
+		('1', 'test1', 'w', '1', '6'), ('2', 'test2', 'w', '1', '6'), ('3', 'test2', 'w', '1', '6'),
+        ('4', '테스트1', 'w', '1', '6'), ('5', '테스트16', 'w', '1', '6');
 
 select * from gattype;
 INSERT INTO gattype(gatt_type) values ('예시1'), ('예시2'),('예시3'), ('예시4'),('예시5'), ('예시6');
@@ -53,9 +58,8 @@ select * from member;
 INSERT INTO member (me_id, me_pw, me_nickname, me_email, me_authority, me_phone, me_ms_status)
 	VALUES 
 		('user01', 'password123', 'nickname01', 'user01@example.com', 'user', '01095784512', 'active'),
-		('user02', 'password456', 'nickname02', 'user02@example.com', 'user', '01085989958', 'active');
-INSERT INTO Member (me_id, me_pw, me_nickname, me_email, me_authority, me_phone, me_ms_status)
-VALUES ('admin', 'admin123', 'admin', 'admin@example.com', 'admin', '01012345678', 'active');
+		('user02', 'password456', 'nickname02', 'user02@example.com', 'user', '01085989958', 'active'),
+        ('admin', 'admin123', 'admin', 'admin@example.com', 'admin', '01012345678', 'active');
     
 select * from gatpost
 	join post using (po_num);
