@@ -69,8 +69,12 @@
 				</div>
 				<!-- <a class="btn btn-outline-info" th:href="@{/post/list/{po_num}(po_num=*{po_num})}">목록으로</a> -->
 				<div class="qaDetailContainer">
-					<a class="qaDetail_qaDetailInfoBtn" th:href="@{/post/update/{po_num}(po_num=*{po_num})}">수정</a>
-					<a class="qaDetail_qaDetailDeleteBtn" th:href="@{/post/delete/{po_num}(po_num=*{po_num})}">삭제</a>
+					<div class="qaDetailinfo">
+						<a class="qaDetail_qaDetailInfoBtn" th:href="@{/post/update/{po_num}(po_num=*{po_num})}">수정</a>
+					</div>
+					<div class="qaDetailDelete">
+						<a class="qaDetail_qaDetailDeleteBtn" th:href="@{/post/delete/{po_num}(po_num=*{po_num})}">삭제</a>
+					</div>
 				</div>
 
 	<script th:inline="javascript">

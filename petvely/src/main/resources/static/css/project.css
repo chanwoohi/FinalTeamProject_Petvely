@@ -277,9 +277,7 @@
 .thumbButtonContainer02:hover{
     background-color: #e8e8e8;
 }
-.qaDetailContainer{
-    padding: 10px;
-}
+
 .qaDetail_qaDetailInfoBtn{
     display: flex;
 	align-items: center;
@@ -318,6 +316,14 @@
     text-decoration: none;
     color: #868688;
     background-color: #dbdbdb;
+}
+.qaDetailContainer {
+    position: relative;
+    padding: 10px 0 50px 10px;
+}
+.qaDetailDelete{
+    position: absolute;
+    left: 80px;
 }
 /* 파일 링크 스타일 */
 .file{
