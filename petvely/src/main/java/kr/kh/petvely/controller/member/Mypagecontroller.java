@@ -44,32 +44,5 @@ public class Mypagecontroller{
 		return "member/mypage";
 	}
 	
-	@GetMapping("/member/mypage/commentList")
-	public String CommentList(Model model, @AuthenticationPrincipal CustomUser customUser) {
-		MemberVO user = customUser.getMember();
-		int me_num = user.getMe_num();
-		List<CommentVO> list = mypageService.getCommentList(me_num);
-		model.addAttribute("list", list);
-		return "member/mypage/commentList";
-	}
-	
-	@GetMapping("/member/mypage/postList/{co_num}")
-	public String PostList(Model model, @AuthenticationPrincipal CustomUser customUser, @PathVariable int co_num,PostCriteria cri) {
-		MemberVO user = customUser.getMember();
-		int me_num = user.getMe_num();
-		List<CommunityVO> communities = mypageService.getCommunityList();
-		List<PostVO> list = mypageService.getPostList(co_num, me_num);
-		List<GiveAndTakePostVO> gatPostlist = gatPostService.getGATPostList();
-		List<MarketPostVO> maketList = marketPostService.getMarketList(cri);
-		//List<FileVO> fileList = marketPostService.getThumNail();
-		List<WalkMatePostVO> walkList = walkMatePostService.getWalkMatePostList();
-		model.addAttribute("communities", communities);
-		model.addAttribute("list", list);
-		model.addAttribute("gatPostlist", gatPostlist);
-		model.addAttribute("maketList",maketList);
-		//model.addAttribute("fileList",fileList);
-		model.addAttribute("walkList", walkList);
-		return "member/mypage/postList";
-	}
 	
 }
