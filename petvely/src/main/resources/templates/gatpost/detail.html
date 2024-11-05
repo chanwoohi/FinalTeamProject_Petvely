@@ -94,8 +94,13 @@
 			</div>
 		</div>
 		<script type="text/javascript">
+		
+			let user = '[[${user}]]'
 			
 			$ (document).ready ( function () { 
+				if (user == null) {
+					return;
+				}
 				document.getElementById("commentButton").click();
 			}); 
 		
@@ -135,6 +140,9 @@
 			})
 			
 			$("#commentButton").click(function() {
+				if (user == null) {
+					return;
+				}
 				$(".commentList").toggle();
 			})
 			

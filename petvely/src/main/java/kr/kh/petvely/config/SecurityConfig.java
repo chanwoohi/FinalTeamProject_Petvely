@@ -31,9 +31,9 @@ public class SecurityConfig{
         http.csrf(csrf ->csrf.disable())
         	//URL에 접근 권한을 설정. MemberInterceptor, AdminInterceptor를 합친거라고 생각하면 됨
             .authorizeHttpRequests((requests) -> requests
-                    .requestMatchers("/post/insert/*", "/post/update/*", "/post/delete/*")
+                    .requestMatchers("/post/insert/*", "/post/update/*",  "/post/detail/*","/post/delete/*")
                     .hasAnyAuthority(UserRole.USER.name(), UserRole.ADMIN.name())
-	                .requestMatchers("/walkmatepost/insert/*", "/walkmatepost/update/*", "/walkmatepost/delete/*")
+	                .requestMatchers("/walkmatepost/insert/*", "/walkmatepost/update/*","/walkmatepost/detail/*", "/walkmatepost/delete/*")
 	                .hasAnyAuthority(UserRole.USER.name(), UserRole.ADMIN.name())
 	                .requestMatchers("/gatpost/update/*", "/gatpost/delete/*", "/gatpost/detail/*", "/member/mypage")
 	                .hasAnyAuthority(UserRole.USER.name(), UserRole.ADMIN.name())
