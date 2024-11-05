@@ -207,7 +207,6 @@
 				<button type="button" class="btn btn-outline-info"
 								    th:onclick="'window.open(\'/report/post/' + ${po_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'"
 								    >신고하기🚨</button>
-				</div>
 				<div sec:authorize="isAnonymous()">
 					<button type="button" class="anonymous-action">즐겨찾기⭐</button>
 					<button type="button" class="anonymous-action">신고하기🚨</button>
