@@ -41,6 +41,8 @@ public class SecurityConfig{
 	                .hasAnyAuthority(UserRole.USER.name(), UserRole.ADMIN.name())
 	                .requestMatchers("/gatpost/update/*", "/gatpost/delete/*", "/member/mypage")
 	                .hasAnyAuthority(UserRole.USER.name(), UserRole.ADMIN.name())
+	                .requestMatchers("/member/login/button")
+	                .hasAnyAuthority(UserRole.USER.name(), UserRole.ADMIN.name())
 	                .requestMatchers("/admin/**").hasAnyAuthority(UserRole.ADMIN.name())
 	                .anyRequest().permitAll()  // 그 외 요청은 인증 필요
             )

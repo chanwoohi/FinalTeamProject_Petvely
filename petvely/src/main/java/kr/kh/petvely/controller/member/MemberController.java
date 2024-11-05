@@ -101,6 +101,13 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
+	@GetMapping("login/button")
+	public String memberLoginButton() {
+		log.info(util.getCurrentMethodName());
+
+		return "redirect:/";
+	}
+	
 	@GetMapping("login")
 	public String memberLogin() {
 		log.info(util.getCurrentMethodName());
