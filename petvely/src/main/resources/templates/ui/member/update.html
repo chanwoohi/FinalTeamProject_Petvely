@@ -5,8 +5,12 @@
 	<link rel="stylesheet" type="text/css" href="/css/common.css"> 
 	
 	<style type="text/css">
-	.error{
+	label.error{
 		color : red;
+	}
+	.register_inputWapperIn.readonly {
+		/* background-color: #dcdcdc !important; */
+		background-color: ivory !important;
 	}
 	</style>
 </head>
@@ -14,8 +18,8 @@
 	<div th:fragment="main">
 		<div th:object="${memberVo}">
 			<div class="register_inputWapper">
-				<span class="register_necessaryDot">*</span>
-				<div class="register_inputWapperIn">
+				<span class="register_necessaryDot"> </span>
+				<div class="register_inputWapperIn readonly">
 					<div class="rgister_petName">
 						<input placeholder="아이디" class="css-pet1010" type="text" 
 							th:field="*{me_id}" readonly>
@@ -67,6 +71,7 @@
 					</div>
 				</div>
 			</div>
+			<input th:field="*{me_num}" hidden="hidden">
 		</div>
 	</div>
 </body>

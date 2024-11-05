@@ -7,25 +7,18 @@
 <head layout:fragment="head">
 	<head th:replace="~{ui/member/update.html :: head}"></head>
 	
-	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.min.js"></script>
-	
+	<head th:replace="~{view/member/validation.html :: head-f}"></head>
+	<script th:replace="~{view/member/validation.html :: script-f}"></script>
 </head>
 <body>
 	<div layout:fragment="content">
 		<div class="main-container">
 			<div class="register_registerContainer">
 				<div class="register_registerContents">
-					<form id="form" method="post" th:action="@{/member/signup}">
+					<form id="form" method="post" th:action="@{/member/update}">
 				   		<div th:replace="~{ui/member/update.html :: main}"></div>
 				   		
 						<button class="register_noregisterBtn">수정</button>
-						<button id="cheatBtn" class="btn btn-outline-info"
-							type="button">치트키1</button>
-						<button id="cheatBtn2" class="btn btn-outline-info"
-							type="button">치트키2</button>
-						<button id="cheatBtn3" class="btn btn-outline-info"
-							type="button">치트키admin</button>
 				   	</form>
 			   	</div>
 		   	</div>
@@ -33,208 +26,7 @@
 	
 		<script type="text/javascript">
 		$(document).ready(function() {
-			const msgBaseId = "check-"
-			const supplies = {
-					id : {
-						regex : /^\w{3,13}$/,
-						isOkMsg : printOkMsg("id", "아이디"),
-						isNotOkMsg : printNotOkMsg("id", "아이디")
-					},
-					pw : {
-						regex : /^[a-zA-Z0-9!@#$]{3,15}$/,
-					},
-					nickname : {
-						regex : /^[\w가-힣]{3,13}$/,
-						isOkMsg : printOkMsg("nickname", "닉네임"),
-						isNotOkMsg : printNotOkMsg("nickname", "닉네임")
-					},
-					phone : {
-						regex : /^01(\d{1})[-. )]*(\d{4})[-. ]*(\d{4})$/,
-						isOkMsg : printOkMsg("phone", "휴대전화번호"),
-						isNotOkMsg : printNotOkMsg("phone", "휴대전화번호")
-					},
-					email : {
-						regex : /([\w\.]+)@([\w\.]+)\.*(\w+)/,
-						isOkMsg : printOkMsg("email", "이메일"),
-						isNotOkMsg : printNotOkMsg("email", "이메일")
-					}
-			};
-			
-			function printOkMsg(type, title) {
-				return `<label id="${msgBaseId}${type}" class="error">사용 가능한 ${title}입니다.</label>`;
-			}
-			
-			function printNotOkMsg(type, title) {
-				return `<label id="${msgBaseId}${type}" class="error">이미 사용중인 ${title}입니다.</label>`;
-			}
-			
-			$('#form').validate({
-				onkeyup : false,
-				rules : {
-					me_id : {
-						required : true,
-						regex : supplies.id.regex
-					},
-					me_pw : {
-						required : true,
-						regex : supplies.pw.regex
-					},
-					me_pw2 : {
-						equalTo : me_pw
-					},
-					me_nickname : {
-						required : true,
-						regex : supplies.nickname.regex
-					},
-					me_phone : {
-						required : true,
-						regex : supplies.phone.regex
-					},
-					me_email : {
-						required : true,
-						regex : supplies.email.regex
-					}
-				},
-				messages : {
-					me_id : {
-						required : '필수 항목입니다.',
-						regex : '아이디는 영어, 숫자만 가능하며, 3~13자이어야 합니다.'
-					},
-					me_pw : {
-						required : '필수 항목입니다.',
-						regex : '아이디는 영어, 숫자, 특수문자(!@#$)만 가능하며, 3~15자이어야 합니다.'
-					},
-					me_pw2 : {
-						equalTo : '비번과 일치하지 않습니다.'
-					},
-					me_nickname : {
-						required : '필수 항목입니다.',
-						regex : '닉네임은 한글, 영어, 숫자만 가능하며, 3~13자이어야 합니다.'
-					},
-					me_phone : {
-						required : '필수 항목입니다.',
-						regex : '010-0000-0000 의 형태만 가늫합니다.'
-					},
-					me_email : {
-						required : '필수 항목입니다.',
-						regex : '이메일 형식이 아닙니다'
-					}
-				},
-				submitHandler : function(){
-	/* 				var id = $("#id").val();
-					var res = checkId(id);
-					if(res == 0){
-						displayCheckId(res);
-						alert('이미 사용 중인 아이디입니다.');
-						return false;
-					} */
-					alert("가입 성공")
-					return true;
-				}
-			});	
-	 		$.validator.addMethod('regex', function(value, element, regex){
-				var re = new RegExp(regex);
-				return this.optional(element) || re.test(value);
-			}, "정규표현식을 확인하세요.");
-	 		
-	 		$("#me_nickname").blur(function() { 
-				var value = $(this).val();
-				var result;
-
-	  			console.log("[[${#authentication.principal}]]")
-				if ("[[${#authentication.principal.member.me_nickname}]]" != value) {
-					result = checkRedundancy("nickname", value);
-				}
-				
-				changeMessage("nickname", result);
-	 		});
-	 		
-	 		$("#me_phone").blur(function() { 
-				var value = $(this).val();
-				
-				var result = checkRedundancy("phone", value);
-				changeMessage("phone", result);
-	 		});
-	 		
-	 		$("#me_email").blur(function() { 
-				var value = $(this).val();
-				
-				var result = checkRedundancy("email", value);
-				changeMessage("email", result);
-	 		});
-	 		
-			function checkRedundancy(type, value){
-				if (supplies[type].regex.test(value) == false) {
-					return -1;
-				}
-				
-				return postData(type, value);
-			}
-			
-			function postData(type, value) {
-				var isSuccess = 0;
-				$.ajax({
-					async : false,
-					url : '/member/check/value', 
-					type : 'post', 
-					data : {
-						type : type,
-						value : value					
-					},
-					success : function (resultValue){
-						isSuccess = resultValue;
-					}, 
-					error : function(jqXHR, textStatus, errorThrown){
-						console.log("error");
-					}
-				});
-				
-				return isSuccess;
-			}
-	
-			// 지웟다 생성하는게 아닌 display 변경하는 방식으로 변경하고 싶음. 언젠가
-			function changeMessage(type, result){
-				$('#' + msgBaseId + type).remove();
-
-				// 사용 가능한 *** 입니다. 메세지는 정보가 너무 과다한 것 같아 제외
-/* 				if(result == 0){
-					$('#me_' + type).after(supplies[type].isOkMsg);
-				} */
-				if(result == 1){
-					$('#me_' + type).after(supplies[type].isNotOkMsg);
-				}
-			}
-			
-			$(document).keypress(function (e) {
-			    if (e.keyCode == 13 && !$(e.target).is('textarea')) e.preventDefault();
-			});
-			
-			$("#cheatBtn").click(function() {
-				$("#me_id").val('qwe123');
-				$("#me_pw").val('123123');
-				$("#me_pw2").val('123123');
-				$("#me_nickname").val('user123');
-				$("#me_phone").val('010-0000-0000');
-				$("#me_email").val('qwe@123');
-			})
-			
-			$("#cheatBtn2").click(function() {
-				$("#me_id").val('qwe124');
-				$("#me_pw").val('123123');
-				$("#me_pw2").val('123123');
-				$("#me_nickname").val('한글사랑');
-				$("#me_phone").val('010-0000-0004');
-				$("#me_email").val('qwe@124');
-			})
-			
-			$("#cheatBtn3").click(function() {
-				$("#me_id").val('admin123');
-				$("#me_pw").val('123123');
-				$("#me_pw2").val('123123');
-				$("#me_nickname").val('admin123');
-				$("#me_phone").val('019-0000-0000');
-				$("#me_email").val('admin@123');
-			})
+			initValidation("수정");
 		});
 		</script>
 	</div>

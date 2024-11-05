@@ -55,15 +55,41 @@ public class MemberController {
 	
 	@ResponseBody
 	@PostMapping("check/value")
-	public boolean memberCheckValue_Post(String type, String value) {
+	public boolean memberCheckValue_Post(String type, String value
+			, @AuthenticationPrincipal CustomUser customUser) {
 		log.info(util.getCurrentMethodName() + " : " + type + " : " + value);
+		//System.out.println(customUser);
+		boolean result = true;
 		
-		boolean result = false;
+		if (customUser != null) {
+			switch(type) {
+				case "id":
+					if (customUser.getMember().getMe_id().equals(value)) {
+						result = false;
+					}
+					break;
+				case "nickname":
+					if (customUser.getMember().getMe_nickname().equals(value)) {
+						result = false;
+					}
+					break;
+				case "phone":
+					if (customUser.getMember().getMe_phone().equals(value)) {
+						result = false;
+					}
+					break;
+				case "email":
+					if (customUser.getMember().getMe_email().equals(value)) {
+						result = false;
+					}
+					break;
+			}
+		}
 		
-		result = memberService.checkRedundancy(type, value);
+		result &= memberService.checkRedundancy(type, value);
 		log.info("" + result);
 		
-		return result;
+		return !result;
 	}
 	
 	@PostMapping("signup")
@@ -134,7 +160,27 @@ public class MemberController {
 	public String memberUpdate(Model model, @AuthenticationPrincipal CustomUser customUser) {
 		log.info(util.getCurrentMethodName() + " : " + customUser.getMember());
 		
-	    model.addAttribute("memberVo", customUser.getMember());
+		MemberVO memberVo = customUser.getMember();
+		memberVo.setMe_phone(changePhoneFormat(memberVo.getMe_phone()));
+		
+	    model.addAttribute("memberVo", memberVo);
 		return viewRoute + "update";
+	}
+	
+	private String changePhoneFormat(String phoneNum) {		
+		String regEx = "(01\\d{1})[-. )]*(\\d{4})[-. ]*(\\d{4})$";
+		return phoneNum.replaceAll(regEx, "$1-$2-$3");
+	}
+
+	@PostMapping("update")
+	public String memberUpdate_post(MemberVO memberVo
+			, Model model, @AuthenticationPrincipal CustomUser customUser) {
+		log.info(util.getCurrentMethodName() + " : " + memberVo);
+		
+		memberService.updateMember(memberVo);
+		
+		customUser.setMember(memberVo);
+		
+		return "redirect:/";
 	}
 }
