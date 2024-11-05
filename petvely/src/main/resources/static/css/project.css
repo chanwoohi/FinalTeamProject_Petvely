@@ -170,7 +170,7 @@ table.dataTable {
     color: #333 !important;
 }
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover{
-    background: #ffd966 !important;
+    background: #333 !important;
 }
 
 /* 이전과 다음 버튼 기본 스타일 (원하지 않는 스타일 제거) */
