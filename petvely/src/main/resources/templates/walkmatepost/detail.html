@@ -22,7 +22,6 @@
 					<input type="text" class="form-control" th:field="*{me_id}" readonly>
 				</div>
 				
-				<!-- 추후에 달력 api 추가 예정 -->
 				<div class="form-group">
 					<label>날짜</label>
 					<input type="date" class="form-control" th:field="*{wm_date}" readonly>
@@ -145,7 +144,7 @@
 												</td>
 											</tr>
 											
-											<tr  th:if="${petList != null}" th:each="item : ${petList}">
+											<tr th:if="${petList != null}" th:each="item : ${petList}">
 												<td>
 													<input type="checkbox" name="check" value="선택" th:value="${item.ani_num}"/>
 												</td>
