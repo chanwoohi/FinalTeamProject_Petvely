@@ -33,10 +33,24 @@
 				<label>제목:</label>
 				<input type="text" class="form-control" readonly th:field="*{po_title}">
 			</div>
-			<div class="form-group">
-				<label>작성자:</label>
-				<input type="text" class="form-control"  readonly th:field="*{me_id}">
-			</div>
+			<div class="WriterInfo">
+								<div class="profile-sectio">
+								<img class="user-profile-icon" th:src="@{/image/user_profile.png}" alt="UserProfile">
+								</div>
+								<!-- 닉네임 클릭 시 팝업 -->
+			                    <div class="nickname-container" style="position: relative;">
+			                        <div th:text="*{me_id}" class="nickname" onclick="togglePopup()">닉네임</div>
+			                        <div class="nickname-popup" id="nicknamePopup">
+			                            <div class="popup-item">프로필 보기</div>
+			                            <div class="popup-item">쪽지 보내기</div>
+			                            <div class="popup-item">신고 하기</div>
+			                        </div>
+			                       <div class="article_info">
+									    <span class="date" th:text="*{po_date != null ? #dates.format(po_date, 'yyyy-MM-dd') : '날짜 없음'}"></span>
+									    조회 <span class="count" th:text="*{po_viewCount}"></span>
+							     	</div>
+			                    </div>
+					     </div>
 			<div class="form-group">
 				<label>내용:</label>
 				<div class="form-control" style="min-height: 400px; height: auto;"
@@ -46,11 +60,6 @@
 			<div class="form-group">
 				<label>타입:</label>
 				<input type="text" class="form-control" readonly th:field="*{gat_gatt_type}">
-			</div>
-			<div class="form-group">
-				<label>등록시간:</label>
-				<input type="datetime" class="form-control" readonly name="po_date"
-					th:value="*{#dates.format(po_date, 'yyyy-MM-dd hh:mm:ss')}">
 			</div>
 			<div class="form-group">
 				<label>시작기간:</label>
@@ -412,6 +421,26 @@
 				let openUrl = '/comment/update?cm_num='+ cm_num;
 				myWindow = window.open(openUrl, 'pop', popOption);
 			})
+			
+			// 팝업 토글 함수
+		    function togglePopup() {
+		        const popup = document.getElementById('nicknamePopup');
+		        if (popup.style.display === 'none' || popup.style.display === '') {
+		            popup.style.display = 'block';  // 팝업을 보여줌
+		        } else {
+		            popup.style.display = 'none';  // 팝업을 숨김
+		        }
+		    }
+			
+			// 페이지 외부를 클릭하면 팝업을 닫음
+		    window.onclick = function(event) {
+		        const popup = document.getElementById('nicknamePopup');
+		        if (!event.target.matches('.nickname')) {
+		            if (popup.style.display === 'block') {
+		                popup.style.display = 'none';
+		            }
+		        }
+		    }
 			
 		</script>
 	</main>
