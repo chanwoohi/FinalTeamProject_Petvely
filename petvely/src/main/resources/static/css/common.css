@@ -10,6 +10,7 @@ select{
 	-moz-appearance: none; /* 사파리, 크롬 하위버전용 */
 	background: url('/image/category_icon.svg') calc(100% - 5px) center no-repeat;
 }
+
 /* POST */
 .post_Container{
 	margin-top: 40px;
