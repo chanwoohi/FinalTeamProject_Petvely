@@ -396,3 +396,7 @@ CHANGE COLUMN `ani_age` `ani_age` long;
 
 ALTER TABLE `petvely`.`member`
 ADD COLUMN `me_kakaoId` VARCHAR(20) NULL AFTER `me_loginType`;
+
+ALTER TABLE `walkmatepost` 
+ADD COLUMN `latitude` FLOAT NULL,
+ADD COLUMN `longitude` FLOAT NULL;

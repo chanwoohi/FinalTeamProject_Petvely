@@ -71,6 +71,7 @@ public class WalkMatePostController {
 	@ResponseBody
 	public Map<String, Object> walkmatepostInsertPost(WalkMatePostVO walkMatePost, int[] selectedHostAniNums) {
 	    Map<String, Object> response = new HashMap<>();
+	    System.out.println(walkMatePost.getLatitude());
 	    if (walkMatePostService.insertWalkMatePost(walkMatePost, selectedHostAniNums)) {
 	        response.put("success", true);
 	        response.put("message", "게시글 등록에 성공하셨습니다.");

@@ -8,8 +8,8 @@
 		order by po_num desc
 	</select>
 	<insert id="insertWalkMatePost">
-		insert into walkmatepost(po_num, wm_date, wm_time)
-		values(#{po_num}, #{wm_date}, #{wm_time})
+		insert into walkmatepost(po_num, wm_date, wm_time, longitude, latitude)
+		values(#{po_num}, #{wm_date}, #{wm_time}, #{longitude}, #{latitude})
 	</insert>
 	<select id="selectWalkMatePost" resultType="WalkMatePostVO">
 		select * from walkmatepost

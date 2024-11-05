@@ -14,18 +14,18 @@
 			<div class="form-group">
 				<label>제목</label>
 				<input type="text" class="form-control" name="po_title">
+				<input type="hidden" id="latitude" name="latitude">
+				<input type="hidden" id="longitude" name="longitude">
 			</div>
 			
 			<!-- 로그인 PostVO에 me_id 넣기 -->
 			<div class="form-group">
 				<input type="hidden" th:value="${me_num}" class="form-control" name="po_me_num">
 			</div>
-			<ul>   
-	    		<li class = "hide">
-	        		<label>약속 장소</label>
-	        		<input type = "text" id ="keyword" class = "input-textbox" placeholder = "장소를 검색해주세요.">
-	    		</li>
-			</ul>
+    		<div class = "from-group">
+        		<label>약속 장소</label>
+        		<input type = "text" id ="keyword" class = "input-textbox" placeholder = "장소를 검색해주세요.">
+    		</div>
 			<ul id = "placesList"></ul>
 			<!-- 추후에 달력 api 추가 예정 -->
 			<div class="form-group">
@@ -153,77 +153,69 @@
 		});
 
 		var ps = new kakao.maps.services.Places(); 
-
 		var listEl = document.getElementById('placesList');
 
 		function searchPlaces() {
-
 		    var keyword = document.getElementById('keyword').value;
-
 		    if (!keyword.replace(/^\s+|\s+$/g, '')) {
 		        removeAllChildNods(listEl);
 		        return false;
 		    }
-
-		    ps.keywordSearch( keyword, placesSearchCB); 
+		    ps.keywordSearch(keyword, placesSearchCB); 
 		}
 
 		function placesSearchCB(data, status, pagination) {
-
 		    if (status === kakao.maps.services.Status.OK) {
-
 		        displayPlaces(data);
-
 		    } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-		    	removeAllChildNods(listEl);
+		        removeAllChildNods(listEl);
 		        alert('검색 결과가 존재하지 않습니다.');
 		        return;
-
 		    } else if (status === kakao.maps.services.Status.ERROR) {
-				
 		        alert('검색 결과 중 오류가 발생했습니다.');
 		        return;
-
 		    }
 		}
 
 		function displayPlaces(places) {
-
 		    var fragment = document.createDocumentFragment(); 
-		    
 		    removeAllChildNods(listEl);
 		    
-		    for ( var i=0; i<places.length; i++ ) {
-
+		    for (var i = 0; i < places.length; i++) {
 		        var itemEl = getListItem(i, places[i]);
 				
-		        (function(name){
-		        	itemEl.onclick = function(){
-		            	var key = document.getElementById('keyword');
-		            	
-		            	key.value = name;
-		            	
-		            	removeAllChildNods(listEl);       		
-		        	}
-		        })(places[i].place_name);
-		        
-		       	fragment.appendChild(itemEl);
-		    }
+		        // 클릭 이벤트 추가
+		        (function(place) {
+		            itemEl.onclick = function() {
+		                var key = document.getElementById('keyword');
+		                var latInput = document.getElementById('latitude');
+		                var lngInput = document.getElementById('longitude');
 
+		                // 장소 이름과 경위도 값을 input에 설정
+		                key.value = place.place_name;
+		                latInput.value = place.y; // 위도
+		                lngInput.value = place.x; // 경도
+		                
+		                // 리스트 초기화
+		                removeAllChildNods(listEl);       		
+		            };
+		        })(places[i]);
+		        
+		        fragment.appendChild(itemEl);
+		    }
 		    listEl.appendChild(fragment);
 		}
 
-		function getListItem(index, places) {
-
+		function getListItem(index, place) {
 		    var el = document.createElement('li'),
-		    itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
-		                '<div class="info">' +
-		                '   <span class = "info-title"><b>' + places.place_name + '</b></span>';
-
-		    if (places.road_address_name) {
-		        itemStr += '    <br><span class = "info-address"><small>' + places.road_address_name + '</small></span>'
+		        itemStr = '<span class="markerbg marker_' + (index + 1) + '"></span>' +
+		                  '<div class="info">' +
+		                  '   <span class="info-title"><b>' + place.place_name + '</b></span>';
+		    
+		    if (place.road_address_name) {
+		        itemStr += '<br><span class="info-address"><small>' + place.road_address_name + '</small></span>';
 		    } else {
-		        itemStr += '    <br><span class = "info-address"><small>' +  places.address_name  + '</small></span>'; 
+		        itemStr += '<br><span class="info-address"><small>' + place.address_name + '</small></span>'; 
 		    }        
 
 		    el.innerHTML = itemStr;
@@ -234,7 +226,7 @@
 
 		function removeAllChildNods(el) {   
 		    while (el.hasChildNodes()) {
-		        el.removeChild (el.lastChild);
+		        el.removeChild(el.lastChild);
 		    }
 		}
 		</script>
