@@ -188,12 +188,12 @@
 						</div>
 					</div>
 				</div>
+				
 				<div class="form-group">
-					<button class="btn btn-outline-info" id="commentButton">댓글</button>
+					<button class="btn btn-outline-info" id="commentButton" type="button">댓글</button>
 				</div>
 				<div class="form-group commentList" id="commentList" style="display: none;">
 					<div id="comment">
-						
 					</div>
 					<div class="input-group mb-3">
 					    <textarea class="form-control" placeholder="댓글 입력" id="input-comment"></textarea>
@@ -202,6 +202,7 @@
 					    </div>
 					</div>
 				</div>
+				
 				<a th:if="${bookmark}!=${po_num}" class="btn btn-outline-warning" th:href="@{/post/bookmark/insert/{po_num}(po_num=*{po_num})}" >즐겨찾기⭐</a>
 				<a th:if="${bookmark}==${po_num}" class="btn btn-warning" th:href="@{/post/bookmark/delete/{po_num}(po_num=*{po_num})}" >즐겨찾기⭐</a>
 				<button type="button" class="btn btn-outline-info"
@@ -313,8 +314,7 @@
 			if (user == null) {
 				return;
 			}
-			// Cannot read the array length because "selectedUserAniNums" is null 오류 때문에 무한 새로고침으로 인해 주석처리
-			//document.getElementById("commentButton").click();
+			document.getElementById("commentButton").click();
 		}); 
 		
 		$("#commentButton").click(function() {
@@ -358,7 +358,7 @@
 				let commentLayer = '';
 				
 				if (comment.cm_layer == 0){
-					reBtn = `<button class="btn btn-outline-primary btn-comment btn-comment1" data-reply="${comment.cm_reply}" data-ord="${comment.cm_ord}" data-layer="${comment.cm_layer}">대댓글</button>`;
+					reBtn = `<button class="btn btn-outline-primary btn-comment btn-comment1" data-reply="${comment.cm_reply}" data-ord="${comment.cm_ord}" data-layer="${comment.cm_layer}" type="button">대댓글</button>`;
 					reInput =`
 						<div class="input-group mb-3 commnet-input commentListInput" style="padding-left:20px; display: none;">
 						    <textarea class="form-control input-comment1" id="input-comment1" placeholder="댓글 입력"></textarea>
@@ -370,7 +370,7 @@
 				}
 				if (comment.cm_layer == 1) {
 					commentLayer = 'comment-layer-1';
-					reBtn = `<button class="btn btn-outline-primary btn-comment btn-comment2" data-reply="${comment.cm_reply}"  data-ord="${comment.cm_ord}" data-layer="${comment.cm_layer}">대대댓글</button>`;
+					reBtn = `<button class="btn btn-outline-primary btn-comment btn-comment2" data-reply="${comment.cm_reply}"  data-ord="${comment.cm_ord}" data-layer="${comment.cm_layer}" type="button">대대댓글</button>`;
 					reInput =`
 						<div class="input-group commnet-input mb-3 commentListInput comment-layer-2" style="padding-left:20px; display: none;">
 						    <textarea class="form-control input-comment2" id="input-comment2" placeholder="댓글 입력" ></textarea>
