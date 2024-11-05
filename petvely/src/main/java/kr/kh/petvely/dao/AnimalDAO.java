@@ -22,4 +22,6 @@ public interface AnimalDAO {
 
 	boolean updateMyPet(AnimalVO animal);
 
+	List<AnimalVO> selectOtherPet(int me_num);
+
 }

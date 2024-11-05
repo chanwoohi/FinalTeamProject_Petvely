@@ -94,5 +94,7 @@ public class MemberService {
 		
 		return memberDao.selectMeId(po_me_num);
 	}
+
+	
 }
 	
