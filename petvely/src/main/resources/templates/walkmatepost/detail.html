@@ -204,6 +204,29 @@
 				<div id="selectedPets"></div> <!-- selectedPets를 출력할 요소 추가 -->
 			</div>
 		</form>
+		<!-- 이미지 지도를 표시할 div 입니다 -->
+		<div id="staticMap" style="width:600px;height:350px;"></div>
+<!-- appkey 가져오기 -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e141a54b3e32d6131dd17f72265325ab"></script>
+<!-- services와 clusterer, drawing 라이브러리 불러오기 -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services,clusterer,drawing"></script>
+	<script>
+	// 이미지 지도에 표시할 마커입니다
+	var marker = {
+	    position: new kakao.maps.LatLng(33.450701, 126.570667), 
+	    text: '약속 장소!' // text 옵션을 설정하면 마커 위에 텍스트를 함께 표시할 수 있습니다
+	};
+	
+	var staticMapContainer  = document.getElementById('staticMap'), // 이미지 지도를 표시할 div
+	    staticMapOption = { 
+	        center: new kakao.maps.LatLng(33.450701, 126.570667), // 이미지 지도의 중심좌표
+	        level: 3, // 이미지 지도의 확대 레벨
+	        marker: marker // 이미지 지도에 표시할 마커
+	};
+	
+	// 이미지 지도를 생성합니다
+	var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
+	</script>
 	<script>
 		// myModal2를 열 때 myModal을 닫는 함수
 	    $('#myModal2').on('show.bs.modal', function () {

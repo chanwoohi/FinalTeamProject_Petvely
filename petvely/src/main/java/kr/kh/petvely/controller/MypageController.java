@@ -23,6 +23,7 @@ public class MypageController {
 	
 	@GetMapping("/mypage/mypage")
 	public String showProfilePage(Model model) {
+		
 		model.addAttribute("currentPage", "user");
 		return "/mypage/mypage";
 	}
