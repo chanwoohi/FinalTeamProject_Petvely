@@ -12,7 +12,7 @@
 </head>
 <body>
     <main layout:fragment="content">
-    	<div class="lostContainer">
+    	<div class="CommunityContainer">  	<div class="qaList_qaListContainer"></div>
 	        <div class="categoryGroup">
 			    <a class="btnCategory" 
 			       th:each="item, iter : ${communities}" 
@@ -27,6 +27,7 @@
 	        <table id="dataTable">
 	            <thead>
 	                <tr>
+	                	<th>이미지</th>
 	                    <th>번호</th>
 	                    <th>제목</th>
 	                    <th>작성자</th>
@@ -38,6 +39,7 @@
 	            <tbody>
 	                <!-- 데이터가 있을 경우 렌더링 -->
 	                <tr th:each="post : ${list}">
+	                	<td><img class="pet_Petimg" th:src="@{/image/image_not_found_new.png}" alt="기본 이미지" style="width:100px;"/></td>
 	                    <td th:text="${post.po_num}"></td> <!-- 번호 -->
 						<td>
 							<!-- 사용자 확인 -->
@@ -65,6 +67,7 @@
 		</div>
         <script type="text/javascript">
             $(document).ready(function() {
+            	
                 $('#dataTable').DataTable({
                     "language": {
                         "search": "검색: ",
@@ -81,9 +84,14 @@
                     },
                     "info": false, // 테이블 정보 표시를 제거
                     "lengthMenu": false,
-                    "dom": 't<"bottom"p>' // 'lengthMenu' 부분을 제거하고 테이블과 페이징만 표시
+                    "lengthChange" : false,
+                    //"dom": '<"top"f>t<"bottom"p>' // 'lengthMenu' 부분을 제거하고 테이블과 페이징만 표시
                 });
-                
+                // 검색 텍스트만 숨기기
+                $('.dataTables_filter label').contents().filter(function() {
+                    return this.nodeType === 3; // 텍스트 노드만 선택
+                }).remove();
+   
                 // URL에서 co_num 값을 추출하는 함수
                 function getCategoryFromUrl() {
                     const url = window.location.pathname;
@@ -108,7 +116,6 @@
 		        alert('[[${errorMessage}]]');
 		    }
             
-
         </script>
     </main>
 </body>
