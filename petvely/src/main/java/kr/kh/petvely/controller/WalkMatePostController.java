@@ -100,7 +100,7 @@ public class WalkMatePostController {
 		if(customUser != null) {
 			// 로그인 기능 구현 완료 하면 me_num 서버에서 로그인 되어있는 아이디 가져오면 됨
 			MemberVO user = customUser.getMember();
-			
+			model.addAttribute("user", user);
 			animal.setAni_me_num(user.getMe_num());
 
 			List<AnimalVO> petList = animalService.selectPetList(user.getMe_num());
