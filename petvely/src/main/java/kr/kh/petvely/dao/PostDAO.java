@@ -56,4 +56,6 @@ public interface PostDAO {
 	boolean deleteBookmark(@Param("po_num")int po_num, @Param("bm_me_num")int bm_me_num);
 
 	Integer selectBookmark(@Param("bm_me_num")int bm_me_num, @Param("po_num")int po_num);
+
+	RecommendVO selectRecommendState(@Param("me_num")int me_num, @Param("po_num")int po_num);
 }

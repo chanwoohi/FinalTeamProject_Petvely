@@ -26,11 +26,6 @@ public class PostVO {
 	private int po_delete; // 삭제처리
 
 	private String me_id; //아이디
-    private int po_recommendCount; // 추천 수
-    private int po_notRecommendCount; // 비추천 수
-	
-
-
-    
-	
+  private int po_recommendCount; // 추천 수
+  private int po_notRecommendCount; // 비추천 수
 }

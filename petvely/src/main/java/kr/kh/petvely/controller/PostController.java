@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -29,44 +30,40 @@ public class PostController {
 	@Autowired
 	private PostService postService;
 	
-	@GetMapping("/post/bookmark/insert/{po_num}")
-	private String postBookmarkInsert(Model model,
-								@PathVariable int po_num,
-								@AuthenticationPrincipal CustomUser customUser) {
-		int bm_me_num;
-		
-		if(customUser != null) {
-			
-			MemberVO user = customUser.getMember();
-			
-			System.out.println(user.getMe_id());
-			// 로그인 도입 후 변경 완료!
-			bm_me_num = user.getMe_num();
-			
-			if(postService.insertBookmark(po_num, bm_me_num)) {
-				System.out.println("즐겨찾기 등록 성공!");
-			} else {
-				System.out.println("즐겨찾기 등록 실패!");
-			}
-		}
-		
-		return "/home";
+	@PostMapping("/post/bookmark/insert/{po_num}")
+	public ResponseEntity<?> postBookmarkInsert(@PathVariable int po_num, @AuthenticationPrincipal CustomUser customUser) {
+	    if (customUser == null) {
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+	    }
+	    System.out.println(po_num);
+	    MemberVO user = customUser.getMember();
+	    int bm_me_num = user.getMe_num();
+
+	    boolean inserted = postService.insertBookmark(po_num, bm_me_num);
+	    if (inserted) {
+	        return ResponseEntity.ok(Map.of("success", true, "message", "즐겨찾기 등록 성공!"));
+	    } else {
+	        return ResponseEntity.badRequest().body(Map.of("success", false, "message", "즐겨찾기 등록 실패!"));
+	    }
 	}
 
-	@GetMapping("/post/bookmark/delete/{po_num}")
-	private String postBookmarkDelete(@PathVariable int po_num,
-									@AuthenticationPrincipal CustomUser customUser) {
-		MemberVO user = customUser.getMember();
-		// 로그인 도입 후 변경 완료!
-		int bm_me_num = user.getMe_num();
-		
-		if(postService.deleteBookmark(po_num, bm_me_num)) {
-			System.out.println("즐겨찾기 취소 성공!");
-		} else {
-			System.out.println("즐겨찾기 취소 성공!");
-		}
-		return "/home";
-	}
+
+    @PostMapping("/post/bookmark/delete/{po_num}")
+    public ResponseEntity<?> postBookmarkDelete(@PathVariable int po_num, @AuthenticationPrincipal CustomUser customUser) {
+        if (customUser == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+        }
+        System.out.println(po_num);
+        MemberVO user = customUser.getMember();
+        int bm_me_num = user.getMe_num();
+
+        boolean deleted = postService.deleteBookmark(po_num, bm_me_num);
+        if (deleted) {
+            return ResponseEntity.ok(Map.of("success", true, "message", "즐겨찾기 취소 성공!"));
+        } else {
+            return ResponseEntity.badRequest().body(Map.of("success", false, "message", "즐겨찾기 취소 실패!"));
+        }
+    }
 	
 	@GetMapping("/post/list/{co_num}")
 	public String postList(Model model, @PathVariable int co_num) {
@@ -249,7 +246,7 @@ public class PostController {
 
 
 	    // 일반 사용자는 본인이 작성한 글만 삭제 가능
-	    if (post.getPo_me_num() == me_num && "ADMIN".equals(me_authority)) {
+	    if (post.getPo_me_num() == me_num || "ADMIN".equals(me_authority)) {
 	        res = postService.physicalDeletePost(po_num);  // 물리적 삭제
 	    } 
 	    // 관리자 권한이 있는 경우 논리적 삭제 처리
@@ -271,6 +268,4 @@ public class PostController {
 	        return "redirect:/post/detail/" + po_num;
 	    }
 	}
-
-
 }

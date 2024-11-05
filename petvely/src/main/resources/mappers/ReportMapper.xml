@@ -7,10 +7,15 @@
 	</insert>
 	<select id="selectReportList" resultType="ReportVO">
 		select * from report
-		where
-			rp_rtt_type = #{rp_rtt_type}
+		join member on rp_me_num = me_num
 	</select>
 	<select id="selectRTTList" resultType="ReportTargetTypeVO">
 		select * from reporttargettype
+	</select>
+	<select id="selectReport" resultType="ReportVO">
+		select * from report
+		join post on rp_rtt_num = po_num
+		join member on po_me_num = me_num
+		where rp_num = #{rp_num}
 	</select>
 </mapper>

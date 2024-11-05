@@ -2,59 +2,134 @@
 <html 
 xmlns:th="http://www.thymeleaf.org"
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-layout:decorate="~{layout/layout.html}">
+layout:decorate="~{layout/layout2.html}">
 <head>
+<link rel="stylesheet" type="text/css" href="/css/common.css"> 
 <meta charset="UTF-8">
 <title>마이 펫 수정</title>
 </head>
 <body>
-    <main layout:fragment="content">
-       <form method="post" th:object="${myPet}" 
-            th:action="@{/animal/update/{ani_num}(ani_num=*{ani_num})}" enctype="multipart/form-data">
-           <div class="form-group">
-               <label>이름</label>
-               <input type="text" th:field="*{ani_name}" class="form-control">
-           </div>
-           <div class="form-group">
-               <label>성별</label>
-               <select th:field="*{ani_gender}" class="form-control">
-                   <option value="W">암컷</option>
-                   <option value="M">수컷</option>
-               </select>
-           </div>
-           <div class="form-group">
-               <label>소개</label>
-               <textarea id="content" th:field="*{ani_info}" class="form-control" style="min-height: 400px; height: auto;"></textarea>
-           </div>
-           <div class="form-group">
-               <label>생일</label>
-               <input type="date" th:field="*{ani_birth}" class="form-control">
-           </div>
-           <div class="form-group">
-               <label>무게</label>
-               <input type="text" th:field="*{ani_weight}" class="form-control" >
-           </div>
-           <div class="form-group">
-               <label>중성화 여부</label>
-               <select th:field="*{ani_neutralization}" class="form-control">
-                   <option value="0">O</option>
-                   <option value="1">X</option>
-               </select>
-           </div>
-           <div class="form-group">
-               <label>종</label>
-               <input type="text" th:field="*{ani_at_type}" class="form-control">
-           </div>
-           <div class="form-group">
-               <label>프로필 사진 첨부</label>
-               <input type="file" class="form-control" name="file"/>
-           </div>
-           <input type="hidden" th:field="*{ani_num}"/>
-           <input type="hidden" name="profileAction" id="profileAction" value="default" />
-           <button class="btn btn-outline-info col-12" type="submit" onclick="confirmSubmission(event)">마이펫 수정</button>
-        </form>
+     <main layout:fragment="content">
+		<form method="post"  th:object="${myPet}"  th:action="@{/animal/update/{ani_num}(ani_num=*{ani_num})}" enctype="multipart/form-data">
+			<div class="main-container">
+				<div class="register_registerContainer">
+					<div class="register_registerContents">
+							<div class="registr_pet_profile">
+								<h1 class="register_pet_title">반려동물 수정</h1>
+							</div>
+							<div class="register_registerImg">
+								<img class="registerImg" id="preview"
+									th:src="${myPet.ani_img != null ? myPet.ani_img : '/image/image_not_found_new.png'}">
+							</div>
+							<div class="register_inputWapper">
+								<span class="register_necessaryDot"></span>
+								<div class="register_inputWapperIn">
+									<div class="register_inputFileWrapper">
+										<label for="file" class="register_inputFileBtn">
+											<input type="file" class="register_input" id="file" name="file" onchange="readURL(this);"/>
+											<img class="register_img"src="/image/ICON_Camera.png">
+											사진첨부
+										</label>
+										<span class="register_inputDesc">등록 사진은 1개만 첨부 가능합니다</span>
+									</div>
+								</div>
+							</div>
+							<div class="register_inputWapper">
+								<span class="register_necessaryDot">*</span>
+								<div class="register_inputWapperIn">
+									<div class="rgister_petName">
+										<input aria-invalid="fals" th:field="*{ani_name}"  class="css-pet1010" type="text"  name="ani_name">
+									</div>
+								</div>
+							</div>
+							<div class="register_inputWapper">
+								<span class="register_necessaryDot">*</span>
+								<div class="register_inputWapperIn">
+									<div class="rgister_petBirth">
+										<input aria-invalid="fals" type="date" th:field="*{ani_birth}" name="ani_birth" class="css-pet1010">
+									</div>
+								</div>
+							</div>
+							<div class="register_inputWapper">
+								<span class="register_necessaryDot">*</span>
+								<div class="register_inputWapperIn">
+										<div class="rgister_petName">
+											<input aria-invalid="fals" th:field="*{ani_at_type}"  class="css-pet1010" type="text" name="ani_at_type">
+										</div>
+								</div>
+							</div>
+							<div class="register_genderWrapper">
+								<span class="register_necessaryDot">*</span>
+								<div class="register_genderTitle">
+									<div class="register_gender__rq">성별</div>
+									<div class="register_radioContainer">
+										<div class="register_radioWrap">
+											<input class="radio_myRadio" th:field="*{ani_gender}" type="radio" id="male" name="ani_gender" value="M"><label for="male">남아</label>
+										</div>
+										<div class="register_radioWrap">
+											<input class="radio_myRadio" th:field="*{ani_gender}" type="radio" id="female" name="ani_gender" value="W"><label for="FEMALE">여아</label>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="register_checkboxwrap">
+							    <!-- 체크박스: 체크되면 0을 전송 -->
+							    <input type="checkbox" id="ani_neutralization" name="ani_neutralization" value="0" onchange="checkboxChanged()" th:field="*{ani_neutralization}" th:checked="${myPet.ani_neutralization == 0}">
+							    <label class="register_checkLabel" for="ani_neutralization">중성화 여부</label>
+							    
+							    <!-- 숨겨진 필드: 체크되지 않을 때 1을 전송 -->
+							    <input type="hidden" id="ani_neutralization_hidden" name="ani_neutralization" value="1">
+							</div>
+							
+							<div class="register_inputWrapper">
+								<div class="register_inputWapperIn">
+									<span class="register_necessaryDot"></span>
+									<div class="MuiFormControl-root">
+										<input aria-invalid="false" id="outlined-number" name="ani_weight" th:field="*{ani_weight}" type="number" min="0" inputmode="decimal" pattern="[0-9]*" class="MuiOutlinedInput">
+									</div>
+								</div>
+							</div>
+						<div>
+							<button type="submit" class="register_noregisterBtn" onclick="confirmSubmission(event)">등록</button>
+							<button type="button" class="petEdit_registerDeleteBtn" th:attr="onclick=|move('/animal/delete/${ani_num}')|">삭제</button>
+							<button type="button" class="register_registerCancelBtn" onclick="window.location.href='/mypage/pet'">취소</button>
+							<!---<a class="petEdit_registerDeleteBtn" th:href="@{/animal/delete/{ani_num}(ani_num=*{ani_num})}">지워</a>-->
+						</div>
+           				<input type="hidden" name="profileAction" id="profileAction" value="default" />
+					</div>
+				</div>
+			</div>
+		</form>
 		<script type="text/javascript">
-		    function confirmSubmission(event) {
+		   	function move(str){
+		   		location.href = str;
+		   	}
+		   	
+			function checkboxChanged() {
+			    var checkbox = document.getElementById('ani_neutralization');
+			    var hiddenInput = document.getElementById('ani_neutralization_hidden');
+			    // 체크박스가 체크되면 hidden input을 비활성화
+			    if (checkbox.checked) {
+			        hiddenInput.disabled = true;
+			    } else {
+			        hiddenInput.disabled = false;
+			    }
+			}		
+			function readURL(input) {
+				  if (input.files && input.files[0]) {
+				    var reader = new FileReader();
+				    reader.onload = function(e) {
+				      document.getElementById('preview').src = e.target.result;
+				    };
+				    reader.readAsDataURL(input.files[0]);
+				  } else {
+					// 파일 취소 했을 때 나오는 화면
+				    document.getElementById('preview').src = "/image/image_not_found_new.png";
+				  }
+			}
+
+			function confirmSubmission(event) {
 		        const fileInput = document.querySelector('input[type="file"]');
 		        const actionInput = document.getElementById('profileAction');
 		        if (!fileInput.files.length) {
