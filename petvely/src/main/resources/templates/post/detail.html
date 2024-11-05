@@ -31,27 +31,32 @@
 			                        </div>
 			                       <div class="article_info">
 									    <span class="date" th:text="${post.po_date != null ? #dates.format(post.po_date, 'yyyy-MM-dd') : '날짜 없음'}"></span>
-									    &nbsp;조회 <span class="count" th:text="*{po_viewCount}"></span>
+									    조회 <span class="count" th:text="*{po_viewCount}"></span>
 							     	</div>
 			                    </div>
 					     </div>
-				     	 <a href="#" data-state="1"
-					       class="btn-up btn btn" 
-					       th:classappend="${re_state != 1} ? '-outline-danger' : '-danger'">
-					        👍추천
-					    </a>
-					    &nbsp;
-					    <a href="#" data-state="-1"
-					       class="btn-down btn btn" 
-					       th:classappend="${re_state != -1} ? '-outline-danger' : '-danger'">
-					        👎비추천
-					    </a>
-					    
 					</div>
 					<div class="main-contents">
-							<div th:utext="*{po_content}"></div>
+						<div th:utext="*{po_content}"></div>
+						<div class="thumbButtonContainerWrap">
+							<div class="thumbButtonContainer01">
+								
+								<a href="#" data-state="1"
+								   class="btn-up btn btn"
+							       th:classappend="${re_state != 1} ? '-outline-danger' : '-danger'">
+							    <span class="thumbButton">👍</span>
+							    </a>
+							 </div>
+							 <div class="thumbButtonContainer02">
+							    <a href="#" data-state="-1"
+							       class="btn-down btn btn" 
+							       th:classappend="${re_state != -1} ? '-outline-danger' : '-danger'">
+							    <span class="thumbButton">👎</span>
+							    </a>
+						     </div>
+					    </div>
 					</div>
-				<div class="file">
+				<!--<div class="file">
 				     <label>첨부파일 :</label>
 				    <div th:each="file : ${list}">
 				        <a th:href="@{'/download/' + ${file.fi_name}}" 
@@ -59,14 +64,19 @@
 				           th:download="${file.fi_ori_name}" 
 				           th:text="${file.fi_ori_name}">
 				        </a>
-				    </div>
+				    </div> -->
+				
+				<!-- <a class="btn btn-outline-info" th:href="@{/post/list/{po_num}(po_num=*{po_num})}">목록으로</a> -->
+					<div class="qaDetailContainer">
+						<div class="qaDetailinfo">
+							<a class="qaDetail_qaDetailInfoBtn" th:href="@{/post/update/{po_num}(po_num=*{po_num})}">수정</a>
+						</div>
+						<div class="qaDetailDelete">
+							<a class="qaDetail_qaDetailDeleteBtn" th:href="@{/post/delete/{po_num}(po_num=${po_num})}">삭제</a>
+						</div>
+					</div>
 				</div>
-				</div>
-				<a class="btn btn-outline-info" th:href="@{/post/list/{po_num}(po_num=*{po_num})}">목록으로</a>
-				<a class="btn btn-outline-info" th:href="@{/post/update/{po_num}(po_num=*{po_num})}">수정</a>
-				<a class="btn btn-outline-info" th:href="@{/post/delete/{po_num}(po_num=*{po_num})}">삭제</a>
 			</div>
-
 	<script th:inline="javascript">
 	// 팝업 토글 함수
     function togglePopup() {
@@ -108,7 +118,6 @@
                 state: state,
                 num: num
             },
-            
             success: function(data) {
             	
                 let res = data.result;
@@ -125,8 +134,8 @@
 
                 // 업데이트된 추천/비추천 수 반영
                 let post = data.post;
-                $('.btn-up span').text(post.po_recommendCount);
-                $('.btn-down span').text(post.po_notRecommendCount);
+                $('.thumbButtonContainer01 span').text(post.po_recommendCount);
+                $('.thumbButtonContainer02 span').text(post.po_notRecommendCount);
             },
             error: function(xhr) {
                 if (xhr.status === 400) {  // 400 에러 처리
@@ -139,17 +148,17 @@
             }
         });
     });
-
-    // 추천/비추천 버튼의 상태에 따라 스타일 변경
     function checkRecommendBtns(state) {
-        $('.btn-up, .btn-down').removeClass('btn-danger');
-        $('.btn-up, .btn-down').addClass('btn-outline-danger');
+        // 모든 추천/비추천 버튼을 기본 스타일로 초기화
+        $('.thumbButtonContainer01, .thumbButtonContainer02').removeClass('btn btn-light');
+        $('.thumbButtonContainer01, .thumbButtonContainer02').addClass('btn btn-outline-light');
+
+        // 추천(1) 또는 비추천(2)에 따라 스타일 변경
         if (state != 0) {
-            $(state == 1 ? '.btn-up' : '.btn-down').removeClass('btn-outline-danger');
-            $(state == 1 ? '.btn-up' : '.btn-down').addClass('btn-danger');
+            $(state == 1 ? '.thumbButtonContainer01' : '.thumbButtonContainer02').removeClass('btn-outline-light');
+            $(state == 1 ? '.thumbButtonContainer01' : '.thumbButtonContainer02').addClass('btn-light');
         }
     }
-
     // 로그인 확인 함수
     function checkLogin(){
     	 // 로그인된 사용자 ID를 Thymeleaf를 통해 가져옴

@@ -4,25 +4,100 @@
 *{
 	font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 }
-
+select{
+	appearance: none;
+	-webkit-appearance: none; /* 사파리, 크롬 하위버전용 */
+	-moz-appearance: none; /* 사파리, 크롬 하위버전용 */
+	background: url('/image/category_icon.svg') calc(100% - 5px) center no-repeat;
+}
 /* POST */
-.question_questionContainer_ .question_questionContent .question_questionCategory{
+.post_Container{
+	margin-top: 40px;
+}
+.post_Category {
 	font-weight: 600;
 	font-size: 16px;
 	line-height: 19px;
+	margin-block: 30px;
 }
-.question_nosubmitBtn{
+.post_Mark{
+	color: red;
+	font-weight: 300;
+}
+.post_PostCategory{
+	margin-block: 11px;
+}
+.postInput{
+	margin: 10px 0;
+	padding: 0 10px;
+	width: 100%;
+	height: 55px;
+	border: 1px solid #e4e4e6;
+	border-radius: 10px;
+	font-size: 15px;
+}
+.postText{
+	margin-bottom: 10px;
+	padding: 20px 10px;
+	font-family: inherit;
+	width: 100%;
+	height: 500px;
+	resize: none;
+	border: 1px solid #e4e4e6;
+	border-radius: 10px;
+	font-size: 15px;
+}
+.categoryFiled{
+	width: 25%;
+	display: block;
+	height: 40px;
+	border: 1px solid #e4e4e6;
+	border-radius: 5px;
+	padding: 0 24px 0 12px;	
+}
+.post_Btn{
+	display: flex;
+	align-items: center;
+	margin-left: 300px;
+	margin-bottom: 50px;
+}
+.post_submitBtn{
+	width: 240px;
+	height: 40px;
+	background-color: #fcd11e;
+	color: #000;
+	border-radius: 21px;
+	border: none;
+	margin: 10px;
+	display: block;
+	cursor: pointer;
+	font-weight: 600;
+}
+.post_submitBtn:hover{
+	background-color: #ffc107;
+}
+.post_inventoryBtn {
 	width: 240px;
 	height: 40px;
 	background-color: #e4e4e6;
 	color: #000;
 	border-radius: 21px;
 	border: none;
-	margin: 60px auto 100px;
-	display: block;
+	margin: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	cursor: pointer;
-	font-weight: 600;
+	font-weight: 600; /* 글씨 두께 조정 */
+	font-size: 16px; /* 글씨 크기 조정 */
 }
+
+.post_inventoryBtn:hover{
+	background-color: #f6f6fa;
+	text-decoration: none;
+	color: #000;
+}
+
 .question_nosubmitBtn:hover{
 background-color: #f0f0f0;
 }
