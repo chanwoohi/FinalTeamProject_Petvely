@@ -25,11 +25,11 @@
 				<!-- 추후에 달력 api 추가 예정 -->
 				<div class="form-group">
 					<label>날짜</label>
-					<input type="text" class="form-control" th:field="*{wm_date}" readonly>
+					<input type="date" class="form-control" th:field="*{wm_date}" readonly>
 				</div>
 				<div class="form-group">
 					<label>시간</label>
-					<input type="text" class="form-control" th:field="*{wm_time}" readonly>
+					<input type="time" class="form-control" th:field="*{wm_time}" readonly>
 				</div>
 				<div class="form-group">
 					<label>내용</label>
@@ -79,7 +79,7 @@
 							<tr th:each="item : ${choicePetList}">
 								<td>
 									<button th:text="${item.ani_name}"
-									   th:onclick="'window.open(\'/animal/profile/' + ${item.ani_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'" >
+									   		th:onclick="'window.open(\'/animal/profile/' + ${item.ani_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'" >
 							    	</button>
 								</td>
 								<td th:text="${item.ani_age}"></td>
@@ -151,7 +151,7 @@
 												</td>
 												<td>
 													<button th:text="${item.ani_name}"
-									  					 th:onclick="'window.open(\'/animal/profile/' + ${item.ani_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'" >
+									  					 	th:onclick="'window.open(\'/animal/profile/' + ${item.ani_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'" >
 								   					</button>
 												</td>
 												<td th:text="${item.ani_age}"></td>

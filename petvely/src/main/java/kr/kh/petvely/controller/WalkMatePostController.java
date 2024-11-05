@@ -209,11 +209,11 @@ public class WalkMatePostController {
 	@PostMapping("/walkmatepost/approve/{po_num}")
 	public String walkmatepostApprove(@PathVariable int po_num,
 									  int [] selectedAniNums) {
-		
+		System.out.println("들어가긴하니??");
 		walkMateService.updateWalkMateMember(selectedAniNums, po_num);
 		
-		walkMatePostService.updateWalkmatePostState(po_num);
-		
+		boolean check = walkMatePostService.updateWalkmatePostState(po_num);
+		if(check) System.out.println("상태 변경 성공");
 		return "/walkmatepost/list";
 	}
 }
