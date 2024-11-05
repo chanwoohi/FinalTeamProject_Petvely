@@ -43,8 +43,6 @@ public class WalkMatePostController {
 	
 	@Autowired
 	private AddressService addressService;
-	@Autowired
-	private GATPostService gatPostService;
 	
 	@GetMapping("/walkmatepost/list")
 	public String walkmatepostList(Model model) {
@@ -64,13 +62,9 @@ public class WalkMatePostController {
 			List<AnimalVO> petList = animalService.selectPetList(user.getMe_num());
 			System.out.println(petList);
 			List<Sido_AreasVO> sidoList = addressService.getSidoList();
-			List<GiveAndTakeStateVO> gatstateList = gatPostService.gatStateList();
-			List<GiveAndTakeTypeVO> gatTypeList = gatPostService.gatTypeList();
 			model.addAttribute("petList", petList);
 			model.addAttribute("me_num", user.getMe_num());
 			model.addAttribute("sidoList", sidoList);
-			model.addAttribute("gatstateList", gatstateList);
-			model.addAttribute("gatTypeList", gatTypeList);
 		}
 		return "/walkmatepost/insert";
 	}
@@ -165,7 +159,10 @@ public class WalkMatePostController {
 		if(customUser!=null) {
 			MemberVO user = customUser.getMember();
 			List<AnimalVO> petList = animalService.selectPetList(user.getMe_num());
+			List<Sido_AreasVO> sidoList = addressService.getSidoList();
 			model.addAttribute("petList", petList);
+			model.addAttribute("sidoList", sidoList);
+			System.out.println("sidoList : " + sidoList);
 		}
 		List<WalkMateMemberVO> walkMateMemberList = walkMatePostService.selectWalkMateMember(po_num);
 		model.addAttribute("walkMateMemberList", walkMateMemberList);
