@@ -8,7 +8,7 @@
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 
 }
-/*nav*/
+/* nav */
 }
 .logo_icon {
     cursor: pointer;
@@ -49,7 +49,7 @@
     font-weight: 700;
 }
 
-/*nav profile*/		
+/* nav profile */		
 .nav-profile{
 	position: relative;
 }
@@ -90,6 +90,187 @@
 .popup-item:last-child {
     border-bottom: none;
     cursor: pointer;
+}
+/* 게시판 테이블 */
+
+table { 
+    border-spacing: 1; 
+    border-collapse: collapse; 
+    background:white;
+    border-radius:6px;
+    overflow:hidden;
+    border : none;
+    width:100%;
+    margin:0 auto;
+    position:relative;
+  }
+  
+  thead tr { 
+      height:60px;
+      background:#ffeb99;
+      font-size:16px;
+  } 
+   
+/* DataTables의 thead에 있는 th와 td의 border를 제거 */
+table.dataTable > thead > tr > th, 
+table.dataTable > thead > tr > td {
+    border: none !important;
+}
+
+/* DataTables 정렬 아이콘 완전히 제거 */
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_desc:before,
+table.dataTable thead .sorting_desc:after {
+    content: none !important; /* content를 none으로 설정 */
+    display: none !important; /* !important를 추가하여 우선순위 높임 */
+}
+
+.table.dataTable tbody th, table.dataTable tbody td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #e2e2e2;
+}
+/* DataTables 테이블 헤더 텍스트 강제 가운데 정렬 */
+table.dataTable thead th {
+    text-align: center !important; 
+}
+table.dataTable th, table.dataTable td {
+    box-sizing: content-box;
+    text-align: center !important; 
+}
+/* DataTables 테이블 헤더 텍스트 가운데 정렬 */
+table.dataTable thead th {
+    text-align: center; 
+}
+textarea {
+    resize: none; /* 크기 조절 아이콘 제거 */
+}
+
+/* 전체 테이블에 대한 border 제거 */
+table.dataTable {
+    border: none !important; /* 테이블 외곽선 제거 */
+}
+
+/* 숫자 버튼에만 스타일 적용 */
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:not(.previous):not(.next) {
+    background-color: #ffd966 !important;
+    border: 1px solid #fff !important;
+    border-radius: 50% !important;
+    color: #333 !important;
+}
+
+/* 숫자 버튼에 마우스를 올렸을 때 색상 변경 */
+.dataTables_wrapper .dataTables_paginate .paginate_button:not(.previous):not(.next):hover {
+    background-color: #ffd966 !important;
+    border-radius: 50% !important;
+}
+
+/* 이전과 다음 버튼 기본 스타일 (원하지 않는 스타일 제거) */
+.dataTables_wrapper .dataTables_paginate .paginate_button.previous,
+.dataTables_wrapper .dataTables_paginate .paginate_button.next {
+    background-color: transparent !important;
+    border: none !important;
+    color: inherit;
+    margin: 20px;
+}
+.insertBtnContainer{
+    position: relative;
+}
+.insertbtn{
+    position: relative;
+    top: -60px;
+    display: inline-block;
+	padding: 10px 30px;
+	font-size: 16px;
+	color: #000;
+	background-color: #ffd966;
+	border: none;
+	border-radius: 25px;
+	cursor: pointer;
+	margin-top: 10px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	transition: background-color 0.3s;
+}
+.insertbtn:hover {
+	text-decoration-line: none;
+	color: #000;
+	background-color: #ffc107;
+}
+
+/* 게시판리스트 */
+
+/* 검색창 전체를 감싸는 컨테이너 스타일 */
+.dataTables_filter {
+    text-align: left; /* 정렬 변경 */
+    margin-bottom: 20px;
+}
+
+.dataTables_wrapper{
+    position: relative;
+}
+.dataTables_filter input[type="search"] {
+    position: absolute;
+    right: 4px;
+    top: -33px;
+}
+
+/* 검색 입력 필드 스타일 */
+.dataTables_wrapper .dataTables_filter input[type="search"] {
+    width: 40%;
+    border: 2px solid #fcd11e;
+    border-radius: 24px;
+    padding: 0 45px;
+    height: 48px;
+    line-height: 48px;
+    font-size: 16px;
+    letter-spacing: 0;
+    text-align: left;
+ 	background-image: url('/image/search_icon.svg');
+    background-repeat: no-repeat;
+    background-size: 24px;
+    background-position: 12px 50%;
+}
+
+.CommunityContainer{
+    max-width: 1024px;
+    margin: 40px auto;
+    padding: 0 50px;
+}
+.categoryGroup {
+	display: flex;
+	gap: 10px; /* 버튼 사이 간격 */
+}
+.categoryTitle{
+    margin: 34px 0px -13px;
+}
+
+.btnCategory{
+	display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    width: 80px;
+    height: 30px;
+    line-height: 30px;
+    background-color: #f5f5f5;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    margin: 0; /* 마진 추가 */
+}
+.btnCategory:hover{
+    text-decoration: none;
+    color: #333;
+    background-color: #f5f5f5;
+}
+.btnCategory.btnCategoryActive{
+    text-decoration: none;
+    color: #333;
+    background-color: #ffd966;
 }
 
 /* 게시글 상세 */

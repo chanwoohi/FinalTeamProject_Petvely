@@ -10,6 +10,7 @@ select{
 	-moz-appearance: none; /* 사파리, 크롬 하위버전용 */
 	background: url('/image/category_icon.svg') calc(100% - 5px) center no-repeat;
 }
+
 /* POST */
 .post_Container{
 	margin-top: 40px;
@@ -55,11 +56,15 @@ select{
 	border-radius: 5px;
 	padding: 0 24px 0 12px;	
 }
-.post_Btn{
+.post_Btn {
 	display: flex;
-	align-items: center;
-	margin-left: 300px;
-	margin-bottom: 50px;
+	align-items: center;      /* 수직 가운데 정렬 */
+	justify-content: center;   /* 가로 방향 가운데 정렬 */
+	margin: 0 0 40px 0;
+}
+.post_submitBtn:disabled {
+    cursor: not-allowed;
+    opacity: 0.6; /* 비활성화 시 버튼을 흐리게 */
 }
 .post_submitBtn{
 	width: 240px;

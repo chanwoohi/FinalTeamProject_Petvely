@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<body >
+[[${message.msg}]]
+	<script type="text/javascript">
+		var msg = "[[${message.msg}]]";
+		var href = "[[${message.url}]]";
+		if(msg != ''){
+			alert(msg);
+		}
+		location.href = href;
+	</script>
+</body>
+</html>

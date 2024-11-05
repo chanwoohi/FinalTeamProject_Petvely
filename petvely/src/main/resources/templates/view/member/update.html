@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout2.html}">
+	
+<head layout:fragment="head">
+	<head th:replace="~{ui/member/update.html :: head}"></head>
+	
+	<head th:replace="~{view/member/validation.html :: head-f}"></head>
+	<script th:replace="~{view/member/validation.html :: script-f}"></script>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="main-container">
+			<div class="register_registerContainer">
+				<div class="register_registerContents">
+					<form id="form" method="post" th:action="@{/member/update}">
+				   		<div th:replace="~{ui/member/update.html :: main}"></div>
+				   		
+						<button class="register_noregisterBtn">수정</button>
+				   	</form>
+			   	</div>
+		   	</div>
+	   	</div>
+	
+		<script type="text/javascript">
+		$(document).ready(function() {
+			initValidation("수정");
+		});
+		</script>
+	</div>
+</body>
+</html>

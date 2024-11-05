@@ -20,7 +20,9 @@ public class PostService {
 		 // DAO를 통해 특정 커뮤니티 번호(co_num)에 해당하는 게시글을 가져옴
 	}
 	public boolean addPost(PostVO post) {
-		if(post == null) {
+		if(post == null ||
+		post.getPo_title().length() == 0 ||
+		post.getPo_content().length() == 0) {
 			return false;
 		}
 		try {
@@ -129,5 +131,8 @@ public class PostService {
 		
 		return postDao.selectRecommendState(me_num, po_num);
 		
+	}
+	public void insertPost(String po_title, String po_content, int co_num) {
+		  postDao.insertPost(po_title, po_content, co_num);
 	}
 }
