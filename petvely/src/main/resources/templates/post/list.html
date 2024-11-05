@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" 
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      layout:decorate="~{layout/layout.html}">
+      layout:decorate="~{layout/layout2.html}">
       
 <head>
     <meta charset="UTF-8">
@@ -12,59 +12,57 @@
 </head>
 <body>
     <main layout:fragment="content">
-        <div class="categoryGroup">
-		    <a class="btnCategory" 
-		       th:each="item : ${communities}" 
-		       th:text="${item.co_name}" 
-		       th:href="@{/post/list/{co_num}(co_num=${item.co_num})}"
-		       th:attr="data-co-num=${item.co_num}">
-		       강아지
-		    </a>
+    	<div class="lostContainer">
+	        <div class="categoryGroup">
+			    <a class="btnCategory" 
+			       th:each="item, iter : ${communities}" 
+			       th:if="${iter.index < 4}"
+			       th:text="${item.co_name}" 
+			       th:href="@{/post/list/{co_num}(co_num=${item.co_num})}"
+			       th:attr="data-co-num=${item.co_num}">
+			       강아지
+			    </a>
+			</div>
+       		<h1 class="categoryTitle">커뮤니티</h1>
+	        <table id="dataTable">
+	            <thead>
+	                <tr>
+	                    <th>번호</th>
+	                    <th>제목</th>
+	                    <th>작성자</th>
+	                    <th>작성일</th>
+	                    <th>추천수</th>
+	                    <th>조회수</th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	                <!-- 데이터가 있을 경우 렌더링 -->
+	                <tr th:each="post : ${list}">
+	                    <td th:text="${post.po_num}"></td> <!-- 번호 -->
+						<td>
+							<!-- 사용자 확인 -->
+							<a th:if="${post.po_delete == 1}" sec:authorize="!hasAuthority('ADMIN')"> 
+							    <span class="text">관리자에 의해 삭제된 글입니다.</span>
+							</a>
+							
+							<!-- 관리자 확인 -->
+							<div th:if="${post.po_delete == 1}" sec:authorize="hasAuthority('ADMIN')">
+								<span class="text">[삭제글]</span>
+								<a th:text="${post.po_title}" th:href="@{/post/detail/{po_num}(po_num=${post.po_num})}"></a> 
+							</div>
+							
+						    <!-- 글이 삭제되지 않았을 때만 제목을 표시 -->
+						    <a th:if="${post.po_delete == 0}" th:text="${post.po_title}" th:href="@{/post/detail/{po_num}(po_num=${post.po_num})}"></a>
+						</td>
+	                    <td th:text="${post.me_id}"></td>
+	                    <td th:text="${#dates.format(post.po_date, 'yyyy-MM-dd')}"></td> <!-- 작성일 -->
+	                    <td th:text="${post.po_recommendCount} + ' / ' + ${post.po_notRecommendCount}"></td> <!-- 추천수 / 비추천수 -->
+	                    <td th:text="${post.po_viewCount}"></td> <!-- 조회수 -->
+	                </tr>
+	            </tbody>
+	        </table>
+	        <a class="btn btn btn-outline-dark" th:href="@{/post/insert/{co_num}(co_num=${co_num})}">글쓰기</a>
 		</div>
-		        
-
-        <h1>커뮤니티</h1>
-
-        <table id="dataTable">
-            <thead>
-                <tr>
-                    <th>번호</th>
-                    <th>제목</th>
-                    <th>작성자</th>
-                    <th>작성일</th>
-                    <th>추천수</th>
-                    <th>조회수</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- 데이터가 있을 경우 렌더링 -->
-                <tr th:each="post : ${list}">
-                    <td th:text="${post.po_num}"></td> <!-- 번호 -->
-					<td>
-						<!-- 사용자 확인 -->
-						<a th:if="${post.po_delete == 1}" sec:authorize="!hasAuthority('ADMIN')"> 
-						    <span class="text">관리자에 의해 삭제된 글입니다.</span>
-						</a>
-						
-						<!-- 관리자 확인 -->
-						<div th:if="${post.po_delete == 1}" sec:authorize="hasAuthority('ADMIN')">
-							<span class="text">[삭제글]</span>
-							<a th:text="${post.po_title}" th:href="@{/post/detail/{po_num}(po_num=${post.po_num})}"></a> 
-						</div>
-						
-					    <!-- 글이 삭제되지 않았을 때만 제목을 표시 -->
-					    <a th:if="${post.po_delete == 0}" th:text="${post.po_title}" th:href="@{/post/detail/{po_num}(po_num=${post.po_num})}"></a>
-					</td>
-                    <td th:text="${post.me_id}"></td>
-                    <td th:text="${#dates.format(post.po_date, 'yyyy-MM-dd')}"></td> <!-- 작성일 -->
-                    <td th:text="${post.po_recommendCount} + ' / ' + ${post.po_notRecommendCount}"></td> <!-- 추천수 / 비추천수 -->
-                    <td th:text="${post.po_viewCount}"></td> <!-- 조회수 -->
-                </tr>
-            </tbody>
-        </table>
-
-        <a class="btn btn btn-outline-dark" th:href="@{/post/insert/{co_num}(co_num=${co_num})}">글쓰기</a>
-
         <script type="text/javascript">
             $(document).ready(function() {
                 $('#dataTable').DataTable({
@@ -81,7 +79,7 @@
                             "previous": "이전"
                         }
                     },
-                    "info": false  // 테이블 정보 표시를 제거
+                    "info": false, // 테이블 정보 표시를 제거
                 });
                 
                 // URL에서 co_num 값을 추출하는 함수
