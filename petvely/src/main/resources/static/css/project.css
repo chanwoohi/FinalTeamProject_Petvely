@@ -142,6 +142,10 @@ button.swiper-button-next {
     width: 35px;
     height: 35px; 
 }
+button.swiper-button-prev:hover svg path,
+button.swiper-button-next:hover svg path {
+    fill: #dbdbdb; /* SVG 아이콘 색상 */
+}
 
 img{
     width: 100%;
