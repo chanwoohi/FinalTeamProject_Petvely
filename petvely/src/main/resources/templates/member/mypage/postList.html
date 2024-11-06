@@ -294,29 +294,52 @@
         </div>
         
         <script type="text/javascript">
-            document.addEventListener("DOMContentLoaded", function() {
-                const url = window.location.pathname;
-                const tables = {
-                    '/member/mypage/postList/10': '.walkmatePost',
-                    '/member/mypage/postList/11': '.maketPost',
-                    '/member/mypage/postList/12': '.gatPost',
-                    '/member/mypage/postList/13': null
-                };
-                
-                if (url !== '/member/mypage/postList/0') {
-                    document.getElementById('postList').style.display = 'block';
-                }
-                
-                document.querySelectorAll("#postList table").forEach(table => {
-                    table.style.display = "none";
-                });
-                
-                if (tables[url]) {
-                    document.querySelector(tables[url]).style.display = 'table';
-                } else {
-                    document.querySelector('.post').style.display = 'table';
-                }
+        	
+        document.addEventListener("DOMContentLoaded", function() {
+            const url = window.location.pathname;
+            const tables = {
+                '/member/mypage/postList/10': '.walkmatePost',
+                '/member/mypage/postList/11': '.maketPost',
+                '/member/mypage/postList/12': '.gatPost',
+                '/member/mypage/postList/13': null
+            };
+            
+            if (url !== '/member/mypage/postList/0') {
+                document.getElementById('postList').style.display = 'block';
+            }
+            
+            document.querySelectorAll("#postList table").forEach(table => {
+                table.style.display = "none";
             });
+            
+            if (tables[url]) {
+                document.querySelector(tables[url]).style.display = 'table';
+            } else {
+                document.querySelector('.post').style.display = 'table';
+            }
+            
+            // URL에서 co_num 값을 추출하는 함수
+            function getCategoryFromUrl() {
+                const url = window.location.pathname;
+                const match = url.match(/\/member\/mypage\/postList\/(\d+)/); // URL 경로에서 숫자를 추출
+                return match ? match[1] : null; // 값이 있으면 첫 번째 그룹 반환
+            }
+
+        	 // URL 경로에서 co_num 값을 가져오기
+            const selectedCategory = getCategoryFromUrl();
+
+            if (selectedCategory) {
+                $(".btnCategory").each(function() {
+                    const categoryNum = $(this).data("co-num");
+                    if (categoryNum == selectedCategory) {
+                        $(this).addClass("btnCategoryActive");
+			            console.log(categoryNum)
+                    }
+                });
+            }
+            console.log(getCategoryFromUrl)
+            console.log(selectedCategory)
+        });
             
         </script>
     </main>
