@@ -126,9 +126,11 @@ public class PostController {
 
 	    postService.updateView(po_num); // 조회수 증가
 	    PostVO post = postService.getPost(po_num);
-	    MemberVO user = customUser.getMember();
 	    model.addAttribute("post", post);
-	    model.addAttribute("user", user);
+	    if (customUser != null) {
+			MemberVO user = customUser.getMember();
+			model.addAttribute("user", user);
+		}
 
 	    return "post/detail"; // 뷰 템플릿 반환
 	}
