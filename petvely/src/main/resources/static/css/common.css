@@ -693,3 +693,53 @@ button {
 	background-color: red;
 	color: #fff;
 }
+/*품앗이*/
+.btn-gatpost-insert{
+	width: 240px;
+	height: 40px;
+	background-color: #fcd11e;
+	color: #000;
+	border-radius: 21px;
+	border: none;
+	margin: 10px;
+	display: block;
+	cursor: pointer;
+	font-weight: 600;
+}
+
+.gatpost_inventoryBtn {
+	width: 240px;
+	height: 40px;
+	background-color: #e4e4e6;
+	color: #000;
+	border-radius: 21px;
+	border: none;
+	margin: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	font-weight: 600; /* 글씨 두께 조정 */
+	font-size: 16px; /* 글씨 크기 조정 */
+}
+.gatpost_Btn {
+	display: flex;
+	align-items: center;      /* 수직 가운데 정렬 */
+	justify-content: center;   /* 가로 방향 가운데 정렬 */
+	margin: 0 0 40px 0;
+}
+.gatpost_Category {
+	font-weight: 600;
+	font-size: 16px;
+	line-height: 19px;
+	margin-block: 30px;
+}
+.gatpost_PostCategory{
+	margin-block: 11px;
+}
+.gatpost_sidoList{
+	display: flex;
+	align-items: center;      /* 수직 가운데 정렬 */
+	justify-content: left;   /* 가로 방향 가운데 정렬 */
+	margin-block: 11px;
+}
