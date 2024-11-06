@@ -51,9 +51,11 @@ public class GATPostController {
 		model.addAttribute("GATPost", GATPost);
 		MemberVO user = customUser.getMember();
 		model.addAttribute("user", user);
+
 		
 		int bm_me_num = user.getMe_num();
 		
+
 		// 즐겨찾기 기능 추가
 		Integer bookmark = postService.selectBookmark(bm_me_num, po_num);
 		if (bookmark != null) {

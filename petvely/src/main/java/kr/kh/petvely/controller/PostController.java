@@ -122,11 +122,13 @@ public class PostController {
 	}
 	
 	@GetMapping("/post/detail/{po_num}") // 게시글 상세 조회
-	public String postDetail(Model model, @PathVariable int po_num) {
+	public String postDetail(Model model, @PathVariable int po_num, @AuthenticationPrincipal CustomUser customUser) {
 
 	    postService.updateView(po_num); // 조회수 증가
 	    PostVO post = postService.getPost(po_num);
+	    MemberVO user = customUser.getMember();
 	    model.addAttribute("post", post);
+	    model.addAttribute("user", user);
 
 	    return "post/detail"; // 뷰 템플릿 반환
 	}

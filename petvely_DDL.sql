@@ -393,3 +393,6 @@ MODIFY `rp_date` DATETIME DEFAULT CURRENT_TIMESTAMP;
 
 ALTER TABLE `petvely`.`animal`
 CHANGE COLUMN `ani_age` `ani_age` long;
+
+ALTER TABLE `petvely`.`walkmatepost` 
+ADD COLUMN `wm_emd_num` INT NOT NULL AFTER `wm_wms_state`;
