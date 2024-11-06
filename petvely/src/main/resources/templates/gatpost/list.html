@@ -15,7 +15,7 @@
 	<main layout:fragment="content">
 	<div class="CommunityContainer"> 
 			<h1 class="categoryTitle">품앗이</h1>
-			<table class="table table-striped">
+			<table id="dataTable">
 				<thead>
 					<tr>
 						<th>번호</th>
@@ -37,14 +37,39 @@
 						<td th:text="${item.gat_gats_state}"></td>
 						<td th:text="${item.po_viewCount}"></td>
 					</tr>
-					<tr th:if="${list.size() == 0}">
-						<td colspan="6" class="text-center">등록된 게시글이 없습니다</td>
-					</tr>
+				
 				</tbody>
 			</table>
 		</div>
 		<a class="btn btn-outline-dark" th:href="@{/gatpost/insert}">등록</a>
-	</div>
+		<script type="text/javascript">
+            $(document).ready(function() {
+            	
+                $('#dataTable').DataTable({
+                    "language": {
+                        "search": "검색: ",
+                        "lengthMenu": "_MENU_ 개씩 보기",
+                        "zeroRecords": "등록된 글이 없습니다.",  // 빈 데이터 메시지
+                        "infoEmpty": "데이터가 없습니다.",
+                        "infoFiltered": "(전체 _MAX_개의 데이터에서 필터링됨)",
+                        "paginate": {
+                            "first": "처음",
+                            "last": "마지막",
+                            "next": "다음",
+                            "previous": "이전"
+                        }
+                    },
+                    "info": false, // 테이블 정보 표시를 제거
+                    "lengthMenu": false,
+                    "lengthChange" : false,
+                    "dom": '<"top"f>t<"bottom"p>' // 'lengthMenu' 부분을 제거하고 테이블과 페이징만 표시
+                });
+                // 검색 텍스트만 숨기기
+                $('.dataTables_filter label').contents().filter(function() {
+                    return this.nodeType === 3; // 텍스트 노드만 선택
+                }).remove();
+            });
+        </script>
 	</main>
 </body>
 </html>
