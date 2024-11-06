@@ -6,38 +6,61 @@
     layout:decorate="~{layout/layout2.html}">
 <head>
     <meta charset="UTF-8">
-    <title>Insert Title Here</title>
+    <title>펫블리</title>
 </head>
 <body >
 	<main layout:fragment="content">
-	     <div id="bannerWrap">
-            <div id="frame">
-                <ul id="imgBanner">
-                    <li>
-                        <a href="#"><img src="/image/pet_banner_01.jpg" alt="기본 이미지"></a>
-                    </li>
-                    <li>
-                        <a href="#"><img src="/image/pet_banner_02.jpg" alt="기본 이미지"></a>
-                    </li>
-                    <li>
-                        <a href="#"><img src="/image/pet_banner_03.jpg" alt="기본 이미지"></a>
-                    </li>
-                </ul>
-            </div>
-            <p>
-                <button class="swiper-button-prev">
-                    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M0,22L22,0l2.1,2.1L4.2,22l19.9,19.9L22,44L0,22L0,22L0,22z' fill='#fff'/></svg>
-                </button>
-                <button class="swiper-button-next">
-                    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M27,22L27,22L5,44l-2.1-2.1L22.8,22L2.9,2.1L5,0L27,22L27,22z' fill='#fff'/></svg>
-                </button>
-            </p>
-            <div class="content">
-            	<ul>
-            		<li><a href="#"><img class="css-1100" src="/image/content_01.jpg" alt="기본 이미지"></a></li>
-            	</ul>
-            </div>
-        </div>
+		     <div id="bannerWrap">
+	            <div id="frame">
+	                <ul id="imgBanner">
+	                    <li>
+	                        <a href="#"><img src="/image/pet_banner_01.jpg" alt="기본 이미지"></a>
+	                    </li>
+	                    <li>
+	                        <a href="#"><img src="/image/pet_banner_02.jpg" alt="기본 이미지"></a>
+	                    </li>
+	                    <li>
+	                        <a href="#"><img src="/image/pet_banner_03.jpg" alt="기본 이미지"></a>
+	                    </li>
+	                </ul>
+	            </div>
+	          </div>
+	            <p>
+	                <button class="swiper-button-prev">
+	                    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M0,22L22,0l2.1,2.1L4.2,22l19.9,19.9L22,44L0,22L0,22L0,22z' fill='#fff'/></svg>
+	                </button>
+	                <button class="swiper-button-next">
+	                    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M27,22L27,22L5,44l-2.1-2.1L22.8,22L2.9,2.1L5,0L27,22L27,22z' fill='#fff'/></svg>
+	                </button>
+	            </p>
+				 <div class="main_content">
+				 	<div class="sectionContent">
+					    <div class="mainContent_A section">
+					        <a th:href="@{/gatpost/list}"><img class="content-image" src="/image/content_01.jpg" alt="기본 이미지"></a>
+					        <div class="content-text">
+					            <h1 class="content-title">모두와 품앗이하기</h1>
+					            <p class="content-description">
+					                슈퍼포우는 최상의 재료만을 사용하고 완벽한 영양 밸런스를 유지할 수 있도록 아이들의 먹거리를 준비합니다. 
+					                보다 건강하고 풍미가 가득한 식단을 우리 모두의 반려동물들이 즐길 수 있게 되길 바랍니다.
+					            </p>
+					        </div>
+					    </div>
+					
+					    <div class="mainContent_B section reverse">
+					    	
+					        <div class="content-text">
+					            <h1 class="content-title">집사들의 거래</h1>
+					            <p class="content-description">
+					                믿을만한 집사들간의 중고 거래
+					                동네 주민과 가깝고 따뜻한 거래를 지금 경험해 보세요
+					                믿을만한 집사들간의 중고 거래
+					                동네 주민과 가깝고 따뜻한 거래를 지금 경험해 보세요
+					            </p>
+					        </div>
+					        <a th:href="@{/post/market/11}"><img class="content-image" src="/image/content_02.jpg" alt="기본 이미지"></a>
+					    </div>
+					 </div>
+				</div>
 
         <!-- jQuery 코드 -->
       <script>

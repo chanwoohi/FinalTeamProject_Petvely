@@ -8,7 +8,7 @@
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 
 }
-/* nav */
+/* MAIN NAV */
 }
 .logo_icon {
     cursor: pointer;
@@ -49,7 +49,7 @@
     font-weight: 700;
 }
 
-/* nav profile */		
+/* NAV profile */		
 .nav-profile{
 	position: relative;
 }
@@ -118,7 +118,7 @@
 
 button.swiper-button-prev, button.swiper-button-next {
     position: absolute;
-    top: 50%;
+    top: 35%;
     transform: translateY(-50%);
     background: none;
     border: none;
@@ -150,6 +150,55 @@ button.swiper-button-next:hover svg path {
 img{
     width: 100%;
 }
+/* MAIN CONTENT */
+
+.main_content {
+    width: 1024px;
+    margin: 0 auto;
+
+}
+.sectionContent{
+    padding: 40px 16px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.section {
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    gap: 10px;
+}
+
+.section.reverse {
+    flex-direction: row-reverse; /* 텍스트 이미지 순서 */
+}
+
+.content-image {
+    width: 70%;
+    max-width: 100%;
+    object-fit: cover; /* 이미지가 영역에 맞도록 조정 */
+}
+
+.content-text {
+    width: 60%; /* 텍스트 영역의 너비를 넓힘 */
+    /* white-space: nowrap; 텍스트를 한 줄로 표시 */
+
+}
+
+.content-title {
+    font-size: 2em;
+    font-weight: bold;
+    margin: 0;
+}
+
+.content-description {
+    margin-top: 10px;
+    font-size: 1em;
+    color: #333;
+}
+
+
 /* 게시판 테이블 */
 
 table { 
@@ -301,7 +350,7 @@ table.dataTable {
 .CommunityContainer{
     max-width: 1024px;
     margin: 40px auto;
-    padding: 0 50px;
+    /* padding: 0 50px; */
 }
 .categoryGroup {
 	display: flex;
