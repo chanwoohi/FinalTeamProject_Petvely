@@ -14,4 +14,22 @@
 		SELECT * from post 
 		WHERE po_co_num = #{co_num} and po_me_num=#{me_num}
 	</select>
+	<select id="selectWalkMatePostList" resultType="WalkMatePostVO">
+		select * from walkmatepost
+		join post using(po_num)
+		join member on po_me_num = me_num
+		order by po_num desc
+	</select>
+	<select id="selectGATPostList" resultType="GiveAndTakePostVO">
+		select * from GATPost
+			left join post using (po_num)
+			left join member on po_me_num = me_num
+		order by po_num desc
+	</select>
+	<select id="selectMarketList" resultType="MarketPostVO">
+		select * from marketpost 
+			join post using(po_num) 
+			join member
+			where po_me_num = me_num
+	</select>
 </mapper>

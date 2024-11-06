@@ -79,10 +79,10 @@ public class MypageController {
 		int me_num = user.getMe_num();
 		List<CommunityVO> communities = mypageService.getCommunityList();
 		List<PostVO> list = mypageService.getPostList(co_num, me_num);
-		List<GiveAndTakePostVO> gatPostlist = gatPostService.getGATPostList();
-		List<MarketPostVO> maketList = marketPostService.getMarketList(cri);
+		List<GiveAndTakePostVO> gatPostlist = mypageService.getGATPostList(me_num);
+		List<MarketPostVO> maketList = mypageService.getMarketList(cri, me_num);
 		PageMaker pm = marketPostService.getPageMaker(cri);
-		List<WalkMatePostVO> walkList = walkMatePostService.getWalkMatePostList();
+		List<WalkMatePostVO> walkList = mypageService.getWalkMatePostList(me_num);
 		model.addAttribute("communities", communities);
 		model.addAttribute("list", list);
 		model.addAttribute("gatPostlist", gatPostlist);
@@ -91,5 +91,6 @@ public class MypageController {
 		model.addAttribute("walkList", walkList);
 		return "member/mypage/postList";
 	}
+	
 	
 }

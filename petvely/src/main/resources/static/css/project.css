@@ -91,6 +91,65 @@
     border-bottom: none;
     cursor: pointer;
 }
+
+/* 메인 배너 이미지 */
+
+#bannerWrap {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+#frame {
+    width: 100%;
+    overflow: hidden;
+}
+
+#imgBanner {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+#imgBanner li {
+    list-style: none;
+    flex-shrink: 0;
+    width: 100%;
+}
+
+button.swiper-button-prev, button.swiper-button-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+}
+
+button.swiper-button-prev {
+    left: 50px;
+}
+
+button.swiper-button-next {
+    right: 50px;
+}
+
+.swiper-button-prev {
+    width: 35px;
+    height: 35px;
+}
+.swiper-button-next{
+    width: 35px;
+    height: 35px; 
+}
+button.swiper-button-prev:hover svg path,
+button.swiper-button-next:hover svg path {
+    fill: #dbdbdb; /* SVG 아이콘 색상 */
+}
+
+img{
+    width: 100%;
+}
 /* 게시판 테이블 */
 
 table { 
@@ -163,8 +222,14 @@ table.dataTable {
 
 /* 숫자 버튼에 마우스를 올렸을 때 색상 변경 */
 .dataTables_wrapper .dataTables_paginate .paginate_button:not(.previous):not(.next):hover {
-    background-color: #ffd966 !important;
     border-radius: 50% !important;
+    background: #ffd966 !important;
+    border-radius: 50% !important;
+    border: 1px solid #fff;
+    color: #333 !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover{
+    background: #333 !important;
 }
 
 /* 이전과 다음 버튼 기본 스타일 (원하지 않는 스타일 제거) */
