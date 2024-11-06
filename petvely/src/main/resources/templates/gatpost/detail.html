@@ -91,29 +91,29 @@
 				<div id="comment">
 					
 				</div>
-				<div class="input-group mb-3">
-				    <textarea class="form-control" placeholder="댓글 입력" id="input-comment"></textarea>
-				    <div class="input-group-append">
-						<span class="input-group-text btn-insert" id="btn_insert0">등록</span>
-				    </div>
-				</div>
+				<th:block th:if ="${user != null}">
+					<div class="input-group mb-3">
+					    <textarea class="form-control" placeholder="댓글 입력" id="input-comment"></textarea>
+					    <div class="input-group-append">
+							<span class="input-group-text btn-insert" id="btn_insert0">등록</span>
+					    </div>
+					</div>
+				</th:block>
 			</div>
 			<div class="form-group">
 				<a class="btn btn-outline-info" th:href="@{/gatpost/list}">목록으로</a>
-				<th:if test="${post.po_me_id eq user.me_id }">
-				<a class="btn btn-outline-info" th:href="@{/gatpost/update/{po_num}(po_num=*{po_num})}">수정</a>
-				<a class="btn btn-outline-info" th:href="@{/gatpost/delete/{po_num}(po_num=*{po_num})}">삭제</a>
+				<th:if test="${user != null && post.po_me_id eq user.me_id }">
+					<a class="btn btn-outline-info" th:href="@{/gatpost/update/{po_num}(po_num=*{po_num})}">수정</a>
+					<a class="btn btn-outline-info" th:href="@{/gatpost/delete/{po_num}(po_num=*{po_num})}">삭제</a>
 				</th:if>
 			</div>
 		</div>
 		<script type="text/javascript">
 		
-			let user = '[[${user}]]'
+			let me_num = '[[${user != null ? user.me_num : 0}]]';
+			let me_id = '[[${user != null ? user.me_id : ""}]]';
 			
 			$ (document).ready ( function () { 
-				if (user == null) {
-					return;
-				}
 				document.getElementById("commentButton").click();
 			}); 
 		
@@ -121,8 +121,6 @@
 			let gat_gats_state = '[[${GATPost.gat_gats_state}]]';
 			let po_num = '[[${GATPost.po_num}]]';
 			let gatme_id= '[[${GATPost.me_id}]]';
-			let me_num = '[[${user.me_num}]]';
-			let me_id = '[[${user.me_id}]]';
 			$(".btn-state").click(function() {
 				if (me_id == gatme_id) {
 					var change_state ='';
@@ -153,9 +151,6 @@
 			})
 			
 			$("#commentButton").click(function() {
-				if (user == null) {
-					return;
-				}
 				$(".commentList").toggle();
 			})
 			
@@ -194,26 +189,30 @@
 					
 					if (comment.cm_layer == 0){
 						reBtn = `<button class="btn btn-outline-primary btn-comment btn-comment1" data-reply="${comment.cm_reply}" data-ord="${comment.cm_ord}" data-layer="${comment.cm_layer}">대댓글</button>`;
-						reInput =`
-							<div class="input-group mb-3 commnet-input commentListInput" style="padding-left:20px; display: none;">
-							    <textarea class="form-control input-comment1" id="input-comment1" placeholder="댓글 입력"></textarea>
-							    <div class="input-group-append">
-									<span class="input-group-text btn-insert1" id="btn_insert1" data-reply="${comment.cm_reply}"  data-ord="${comment.cm_ord}">등록</span>
-									</div>
-							</div>
-						`
+						if (me_num != 0) {
+							reInput =`
+								<div class="input-group mb-3 commnet-input commentListInput" style="padding-left:20px; display: none;">
+								    <textarea class="form-control input-comment1" id="input-comment1" placeholder="댓글 입력"></textarea>
+								    <div class="input-group-append">
+										<span class="input-group-text btn-insert1" id="btn_insert1" data-reply="${comment.cm_reply}"  data-ord="${comment.cm_ord}">등록</span>
+										</div>
+								</div>
+							`
+						}
 					}
 					if (comment.cm_layer == 1) {
 						commentLayer = 'comment-layer-1';
 						reBtn = `<button class="btn btn-outline-primary btn-comment btn-comment2" data-reply="${comment.cm_reply}"  data-ord="${comment.cm_ord}" data-layer="${comment.cm_layer}">대대댓글</button>`;
-						reInput =`
-							<div class="input-group commnet-input mb-3 commentListInput comment-layer-2" style="padding-left:20px; display: none;">
-							    <textarea class="form-control input-comment2" id="input-comment2" placeholder="댓글 입력" ></textarea>
-							    <div class="input-group-append">
-									<span class="input-group-text btn-insert2" id="btn-insert2" data-reply="${comment.cm_reply}"  data-ord="${comment.cm_ord}">등록</span>
-									</div>
-							</div>
-						`
+						if (me_num != 0) {
+							reInput =`
+								<div class="input-group commnet-input mb-3 commentListInput comment-layer-2" style="padding-left:20px; display: none;">
+								    <textarea class="form-control input-comment2" id="input-comment2" placeholder="댓글 입력" ></textarea>
+								    <div class="input-group-append">
+										<span class="input-group-text btn-insert2" id="btn-insert2" data-reply="${comment.cm_reply}"  data-ord="${comment.cm_ord}">등록</span>
+										</div>
+								</div>
+							`
+						}
 					}
 					if (comment.cm_layer == 2) {
 						commentLayer = 'comment-layer-2';
@@ -226,7 +225,7 @@
 								<div style="line-height: 40px;">(${comment.cm_date})</div>
 								<div class="float-right">
 									${btns}
-									${reBtn}
+										${reBtn}
 								</div>
 							</div>
 							<div>

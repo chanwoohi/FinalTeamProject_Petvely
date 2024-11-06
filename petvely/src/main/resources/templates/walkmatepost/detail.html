@@ -195,12 +195,14 @@
 				<div class="form-group commentList" id="commentList" style="display: none;">
 					<div id="comment">
 					</div>
+					<th:block th:if ="${user != null}">
 					<div class="input-group mb-3">
 					    <textarea class="form-control" placeholder="댓글 입력" id="input-comment"></textarea>
 					    <div class="input-group-append">
 							<span class="input-group-text btn-insert" id="btn_insert0">등록</span>
 					    </div>
 					</div>
+				</th:block>
 				</div>
 				
 				<a th:if="${bookmark}!=${po_num}" class="btn btn-outline-warning" th:href="@{/post/bookmark/insert/{po_num}(po_num=*{po_num})}" >즐겨찾기⭐</a>
@@ -306,21 +308,14 @@
 	        }
 	    });
 	    
-	    let user = '[[${user}]]';
-    	let me_num = '[[${user.me_num}]]';
+	    let me_num = '[[${user != null ? user.me_num : 0}]]';
     	let po_num = '[[${walkMatePost.po_num}]]';
 		
 		$ (document).ready ( function () { 
-			if (user == null) {
-				return;
-			}
 			document.getElementById("commentButton").click();
 		}); 
 		
 		$("#commentButton").click(function() {
-			if (user == null) {
-				return;
-			}
 			$(".commentList").toggle();
 		})
 		
@@ -358,27 +353,31 @@
 				let commentLayer = '';
 				
 				if (comment.cm_layer == 0){
-					reBtn = `<button class="btn btn-outline-primary btn-comment btn-comment1" data-reply="${comment.cm_reply}" data-ord="${comment.cm_ord}" data-layer="${comment.cm_layer}" type="button">대댓글</button>`;
-					reInput =`
-						<div class="input-group mb-3 commnet-input commentListInput" style="padding-left:20px; display: none;">
-						    <textarea class="form-control input-comment1" id="input-comment1" placeholder="댓글 입력"></textarea>
-						    <div class="input-group-append">
-								<span class="input-group-text btn-insert1" id="btn_insert1" data-reply="${comment.cm_reply}"  data-ord="${comment.cm_ord}">등록</span>
-								</div>
-						</div>
-					`
+					reBtn = `<button class="btn btn-outline-primary btn-comment btn-comment1" data-reply="${comment.cm_reply}" data-ord="${comment.cm_ord}" data-layer="${comment.cm_layer}">대댓글</button>`;
+					if (me_num != 0) {
+						reInput =`
+							<div class="input-group mb-3 commnet-input commentListInput" style="padding-left:20px; display: none;">
+							    <textarea class="form-control input-comment1" id="input-comment1" placeholder="댓글 입력"></textarea>
+							    <div class="input-group-append">
+									<span class="input-group-text btn-insert1" id="btn_insert1" data-reply="${comment.cm_reply}"  data-ord="${comment.cm_ord}">등록</span>
+									</div>
+							</div>
+						`
+					}
 				}
 				if (comment.cm_layer == 1) {
 					commentLayer = 'comment-layer-1';
-					reBtn = `<button class="btn btn-outline-primary btn-comment btn-comment2" data-reply="${comment.cm_reply}"  data-ord="${comment.cm_ord}" data-layer="${comment.cm_layer}" type="button">대대댓글</button>`;
-					reInput =`
-						<div class="input-group commnet-input mb-3 commentListInput comment-layer-2" style="padding-left:20px; display: none;">
-						    <textarea class="form-control input-comment2" id="input-comment2" placeholder="댓글 입력" ></textarea>
-						    <div class="input-group-append">
-								<span class="input-group-text btn-insert2" id="btn-insert2" data-reply="${comment.cm_reply}"  data-ord="${comment.cm_ord}">등록</span>
-								</div>
-						</div>
-					`
+					reBtn = `<button class="btn btn-outline-primary btn-comment btn-comment2" data-reply="${comment.cm_reply}"  data-ord="${comment.cm_ord}" data-layer="${comment.cm_layer}">대대댓글</button>`;
+					if (me_num != 0) {
+						reInput =`
+							<div class="input-group commnet-input mb-3 commentListInput comment-layer-2" style="padding-left:20px; display: none;">
+							    <textarea class="form-control input-comment2" id="input-comment2" placeholder="댓글 입력" ></textarea>
+							    <div class="input-group-append">
+									<span class="input-group-text btn-insert2" id="btn-insert2" data-reply="${comment.cm_reply}"  data-ord="${comment.cm_ord}">등록</span>
+									</div>
+							</div>
+						`
+					}
 				}
 				if (comment.cm_layer == 2) {
 					commentLayer = 'comment-layer-2';
