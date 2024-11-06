@@ -43,7 +43,9 @@ public class MypageController {
 	public String showProfilePage(Model model, @AuthenticationPrincipal CustomUser customUser) {
 		if(customUser != null) {
 			MemberVO user = customUser.getMember();
-			AnimalVO animalVo = animalService.selectPetList(user.getMe_num()).getFirst();
+			List<AnimalVO> animalVoList = animalService.selectPetList(user.getMe_num());
+			
+			AnimalVO animalVo = animalVoList.size() == 0 ? null : animalVoList.getFirst();
 			model.addAttribute("animalVo", animalVo);
 		}
 		

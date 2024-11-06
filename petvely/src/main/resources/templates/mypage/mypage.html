@@ -36,7 +36,7 @@
 				<div class="tab-content active">
 					<div class="user_profile">
 						<div class="user_icon">
-							<img th:src="${animalVo.ani_img == null ? '@{/image/image_not_found_new.png}' : animalVo.ani_img}"/>
+							<img th:src="${animalVo == null || animalVo.ani_img == null ? '/image/image_not_found_new.png' : animalVo.ani_img}"/>
 						</div>
 						<div class="user_name">
 							<span>닉네임</span> 
