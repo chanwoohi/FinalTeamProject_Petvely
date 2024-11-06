@@ -96,25 +96,24 @@
 
 #bannerWrap {
     position: relative;
-    width: 1800px;
+    width: 100%;
     overflow: hidden;
 }
 
 #frame {
-    width: 1800px;
+    width: 100%;
     overflow: hidden;
 }
 
 #imgBanner {
     display: flex;
     transition: transform 0.5s ease;
-    width: calc(1800px * 2); /* 슬라이드 개수에 맞게 수정 */
 }
 
 #imgBanner li {
     list-style: none;
-    width: 1800px;
     flex-shrink: 0;
+    width: 100%;
 }
 
 button.swiper-button-prev, button.swiper-button-next {
@@ -124,19 +123,20 @@ button.swiper-button-prev, button.swiper-button-next {
     background: none;
     border: none;
     cursor: pointer;
+    padding: 10px;
 }
 
 button.swiper-button-prev {
-    left: 10px;
+    left: 50px;
 }
 
 button.swiper-button-next {
-    right: 10px;
+    right: 50px;
 }
 
 .swiper-button-prev {
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
 }
 .swiper-button-next{
     width: 35px;
