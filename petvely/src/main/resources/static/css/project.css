@@ -199,7 +199,7 @@ img{
 }
 
 
-/* 게시판 테이블 */
+/* POST 게시판 테이블 */
 
 table { 
     border-spacing: 1; 
@@ -711,6 +711,32 @@ table.dataTable {
 .btn_box{
 	padding-top:10px;
 }
+
+/* 산책 게시판 테이블 */
+.insertWalkBtnContainer{
+    position: relative;
+}
+.insertWalktbtn{
+    position: relative;
+    top: -10px;
+    display: inline-block;
+	padding: 10px 30px;
+	font-size: 16px;
+	color: #000;
+	background-color: #ffd966;
+	border: none;
+	border-radius: 25px;
+	cursor: pointer;
+	margin-top: 10px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	transition: background-color 0.3s;
+}
+.insertWalkbtn:hover {
+	text-decoration-line: none;
+	color: #000;
+	background-color: #ffc107;
+}
+
 /* 푸터 */
 .petfooter{
     padding: 20px;
@@ -719,3 +745,4 @@ table.dataTable {
     background-color: #fdfdfd;
     border-top: 1px solid #ddd;
 }
+
