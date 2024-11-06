@@ -40,10 +40,17 @@ public class MypageController {
 	private WalkMatePostService walkMatePostService;
 	
 	@GetMapping("/mypage/mypage")
-	public String showProfilePage(Model model) {
+	public String showProfilePage(Model model, @AuthenticationPrincipal CustomUser customUser) {
+		if(customUser != null) {
+			MemberVO user = customUser.getMember();
+			AnimalVO animalVo = animalService.selectPetList(user.getMe_num()).getFirst();
+			model.addAttribute("animalVo", animalVo);
+		}
+		
 		model.addAttribute("currentPage", "user");
 		return "/mypage/mypage";
 	}
+	
 	@GetMapping("/mypage/pet")
 	public String showgetProfilePage(Model model, @AuthenticationPrincipal CustomUser customUser) {
 		model.addAttribute("currentPage", "pet");
