@@ -13,7 +13,6 @@ import kr.kh.petvely.model.user.CustomUser;
 import kr.kh.petvely.model.vo.AnimalVO;
 import kr.kh.petvely.model.vo.CommentVO;
 import kr.kh.petvely.model.vo.CommunityVO;
-import kr.kh.petvely.model.vo.FileVO;
 import kr.kh.petvely.model.vo.GiveAndTakePostVO;
 import kr.kh.petvely.model.vo.MarketPostVO;
 import kr.kh.petvely.model.vo.MemberVO;
