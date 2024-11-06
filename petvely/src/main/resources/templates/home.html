@@ -10,14 +10,29 @@
 </head>
 <body >
 	<main layout:fragment="content">
-		<p>펫블리</p>
-		<p sec:authorize="isAuthenticated()">
-		<span th:text="${#authentication.principal.member.me_id}"></span>님 반갑습니다.<br>
-		</p>
-		<ul class="imgBanner">
-			<li><img class="css-1106" th:src="@{/image/image_not_found_new.png}" alt="기본 이미지"></li>
-		
-		</ul>
+		<div id="bannerWrap" style="width: 1800px; overflow: hidden; position: relative;">
+		    <div id="frame">
+		        <ul id="imgBanner">
+		            <li>
+		                <a href="#"><img class="css-1100" src="/image/pet_banner_01.png" alt="기본 이미지"></a>
+		            </li>
+		            <li>
+		                <a href="#"><img class="css-1100" src="/image/pet_banner_02.png" alt="기본 이미지"></a>
+		            </li>
+		        </ul>
+		    </div>
+		    <p>
+		        <button class="swiper-button-prev">
+		           <img class="css-1100" src="/image/swiper-button-prev.svg" alt="기본 이미지">
+		        </button>
+		        <button class="swiper-button-next">
+		        	<img class="css-1100" src="/image/swiper-button-next.svg" alt="기본 이미지">
+		        </button>
+		    </p>
+		</div>
+		<script>
+
+		</script>
 	</main>
 </body>
 </html>

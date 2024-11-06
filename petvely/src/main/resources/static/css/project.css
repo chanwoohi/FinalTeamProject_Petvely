@@ -91,6 +91,61 @@
     border-bottom: none;
     cursor: pointer;
 }
+
+/* 메인 배너 이미지 */
+
+#bannerWrap {
+    position: relative;
+    width: 1800px;
+    overflow: hidden;
+}
+
+#frame {
+    width: 1800px;
+    overflow: hidden;
+}
+
+#imgBanner {
+    display: flex;
+    transition: transform 0.5s ease;
+    width: calc(1800px * 2); /* 슬라이드 개수에 맞게 수정 */
+}
+
+#imgBanner li {
+    list-style: none;
+    width: 1800px;
+    flex-shrink: 0;
+}
+
+button.swiper-button-prev, button.swiper-button-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+button.swiper-button-prev {
+    left: 10px;
+}
+
+button.swiper-button-next {
+    right: 10px;
+}
+
+.swiper-button-prev {
+    width: 30px;
+    height: 30px;
+}
+.swiper-button-next{
+    width: 35px;
+    height: 35px; 
+}
+
+img{
+    width: 100%;
+}
 /* 게시판 테이블 */
 
 table { 
