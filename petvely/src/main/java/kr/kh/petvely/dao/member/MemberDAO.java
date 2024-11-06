@@ -12,4 +12,6 @@ public interface MemberDAO {
 
 	MemberVO selectMeId(int po_me_num);
 
+	boolean updateMember(MemberVO memberVo);
+
 }

@@ -3,32 +3,46 @@ package kr.kh.petvely.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.petvely.dao.PostDAO;
 import kr.kh.petvely.model.vo.CommunityVO;
+import kr.kh.petvely.model.vo.FileVO;
 import kr.kh.petvely.model.vo.PostVO;
 import kr.kh.petvely.model.vo.RecommendVO;
+import kr.kh.petvely.utils.UploadFileUtils;
 
 @Service
 public class PostService {
 	@Autowired
 	private PostDAO postDao;
 	
+	@Value("${file.upload-dir}")
+	private String uploadPath;	
+	
 	public List<PostVO> getPostList(int co_num){
 		return postDao.selectPostList(co_num);
 		 // DAO를 통해 특정 커뮤니티 번호(co_num)에 해당하는 게시글을 가져옴
 	}
-	public boolean addPost(PostVO post) {
-		if(post == null) {
+	public boolean addPost(PostVO post, MultipartFile[] fileList) {
+		if(post == null ||
+		post.getPo_title().length() == 0 ||
+		post.getPo_content().length() == 0) {
 			return false;
 		}
+		
+		boolean result = false;
 		try {
-			return postDao.insertPost(post);
+			result = postDao.insertPost(post);
+			uploadFileList(fileList, post.getPo_num());
 		}catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
+		
+		return result;
 	}
 	public PostVO getPost(int po_num) {
 		return postDao.selectPost(po_num);
@@ -45,16 +59,28 @@ public class PostService {
 	}
 	
 	
-	public boolean updatePost(PostVO post) {
+	public boolean updatePost(PostVO post, MultipartFile[] fileList, int[] fileNumList) {
 		if(post == null) {
 			return false;
 		}
+		
+		boolean result = false;
+		
 		try {
-			return postDao.updatePost(post);
+			result = postDao.updatePost(post);
 		}catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
+		
+		if (result == false)
+			return false;
+
+		result = uploadFileList(fileList, post.getPo_num());
+		
+		result = deleteFileList(fileNumList);
+		
+		return result;
 	}
 	//조회수 증가
 	public void updateView(int po_num) {
@@ -129,5 +155,70 @@ public class PostService {
 		
 		return postDao.selectRecommendState(me_num, po_num);
 		
+	}
+	public void insertPost(String po_title, String po_content, int co_num) {
+		  postDao.insertPost(po_title, po_content, co_num);
+	}
+
+	private boolean uploadFileList(MultipartFile [] fileList, int po_num) {
+		if(fileList == null || fileList.length == 0) {
+			return false;
+		}
+		try {
+			for(MultipartFile file : fileList) {
+				uploadFile(file, po_num);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			postDao.deletePost(po_num);
+			return false;
+		}
+		return true;
+	}
+
+	private void uploadFile(MultipartFile file, int po_num) {
+		if(file == null || file.getOriginalFilename().length() == 0) {
+			return;
+		}
+		
+		try {
+			System.out.println("" + uploadPath);
+			String fi_ori_name = file.getOriginalFilename();
+			String fi_name = UploadFileUtils.uploadFile(uploadPath, fi_ori_name, file.getBytes());
+			
+			FileVO fileVo = new FileVO(fi_ori_name, "/uploads" + fi_name, po_num);
+			
+			postDao.insertFile(fileVo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public List<FileVO> getFileList(int po_num) {
+		return postDao.selectFileList(po_num);
+	}
+	
+	private boolean deleteFileList(int[] fileNumList) {
+		if(fileNumList == null || fileNumList.length == 0) {
+			return false;
+		}
+		try {
+			for(int fi_num : fileNumList) {
+				FileVO file = postDao.selectFile(fi_num);
+				deleteFile(file);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	private void deleteFile(FileVO file) {
+		if(file == null) {
+			return;
+		}
+		UploadFileUtils.delteFile(uploadPath, file.getFi_name());
+		postDao.deleteFile(file.getFi_num());
 	}
 }

@@ -58,4 +58,14 @@ public interface PostDAO {
 	Integer selectBookmark(@Param("bm_me_num")int bm_me_num, @Param("po_num")int po_num);
 
 	RecommendVO selectRecommendState(@Param("me_num")int me_num, @Param("po_num")int po_num);
+
+	void insertPost(@Param("po_title") String po_title, 
+		            @Param("po_content") String po_content, 
+		            @Param("co_num") int co_num);
+
+	List<FileVO> selectFileList(int po_num);
+
+	FileVO selectFile(int fi_num);
+
+	void deleteFile(int fi_num);
 }

@@ -14,6 +14,9 @@
 			<when test="type == 'phone'">
 				where me_phone = #{value}
 			</when>
+			<when test="type == 'email'">
+				where me_email = #{value}
+			</when>
 		</choose>
 	</select>
 	
@@ -33,12 +36,14 @@
 		insert into member(me_id, me_pw, me_nickname, me_email, me_phone, me_ms_status)
 		values
 		(#{me_id}, #{me_pw}, #{me_nickname}, #{me_email}, #{me_phone}, #{me_ms_status})
-		
-<!-- 		select #{me_id}, #{me_pw}, #{me_nickname}, #{me_email}, #{me_phone}, #{me_ms_status}
-		where exists(
-			select ms_status
-			from memberstatus
-			where ms_status = #{me_ms_status}
-		) -->
 	</insert>
+	
+	<update id="updateMember">
+	    update member
+	    set me_pw = #{me_pw},
+	    	me_nickname = #{me_nickname},
+	    	me_email = #{me_email},
+	    	me_phone = #{me_phone}
+	    where me_num = #{me_num}
+	</update>
 </mapper>

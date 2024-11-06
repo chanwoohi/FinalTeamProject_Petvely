@@ -1,182 +1,501 @@
 
 <!DOCTYPE html>
-<html 
-	xmlns:th="http://www.thymeleaf.org"
+<html xmlns:th="http://www.thymeleaf.org" 
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout/layout.html}">
+	layout:decorate="~{layout/layout.html}"
+>
 <head>
 <link rel="stylesheet" type="text/css" href="/css/project.css">
 <meta charset="UTF-8">
 <title>detail</title>
+<style type="text/css">
+.comment-item.comment-layer-1 {
+	padding-left: 40px;
+	display: none;
+}
+
+.comment-item.comment-layer-2 {
+	padding-left: 80px;
+	display: none;
+}
+.insertbtn {
+	top: 0px;
+}
+.file-upload {
+	display: flex;
+	justify-content: space-between;
+}
+.file-upload>a {
+    display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+	width: 30%;
+}
+</style>
 </head>
 <body>
 	<main layout:fragment="content">
 		<div class="contents">
 			<div th:if="${post != null}" th:object="${post}">
-					<div class="article_header">
-						<div class="title_area">
-							<h3 class="title_text" th:text ="*{po_title}"></h3>
-						</div>
-							<div class="WriterInfo">
-								<div class="profile-sectio">
-								<img class="user-profile-icon" th:src="@{/image/user_profile.png}" alt="UserProfile">
-								</div>
-								<!-- 닉네임 클릭 시 팝업 -->
-			                    <div class="nickname-container" style="position: relative;">
-			                        <div th:text="${post.me_id}" class="nickname" onclick="togglePopup()">닉네임</div>
-			                        <div class="nickname-popup" id="nicknamePopup">
-			                            <div class="popup-item">프로필 보기</div>
-			                            <div class="popup-item">쪽지 보내기</div>
-			                            <div class="popup-item">신고 하기</div>
-			                        </div>
-			                       <div class="article_info">
-									    <span class="date" th:text="${post.po_date != null ? #dates.format(post.po_date, 'yyyy-MM-dd') : '날짜 없음'}"></span>
-									    조회 <span class="count" th:text="*{po_viewCount}"></span>
-							     	</div>
-			                    </div>
-					     </div>
+				<div class="article_header">
+					<div class="title_area">
+						<h3 class="title_text" th:text="*{po_title}"></h3>
 					</div>
-					<div class="main-contents">
-						<div th:utext="*{po_content}"></div>
-						<div class="thumbButtonContainerWrap">
-							<div class="thumbButtonContainer01">
-								
-								<a href="#" data-state="1"
-								   class="btn-up btn btn"
-							       th:classappend="${re_state != 1} ? '-outline-danger' : '-danger'">
-							    <span class="thumbButton">👍</span>
-							    </a>
-							 </div>
-							 <div class="thumbButtonContainer02">
-							    <a href="#" data-state="-1"
-							       class="btn-down btn btn" 
-							       th:classappend="${re_state != -1} ? '-outline-danger' : '-danger'">
-							    <span class="thumbButton">👎</span>
-							    </a>
-						     </div>
-					    </div>
-					</div>
-				<!--<div class="file">
-				     <label>첨부파일 :</label>
-				    <div th:each="file : ${list}">
-				        <a th:href="@{'/download/' + ${file.fi_name}}" 
-				           class="form-control" 
-				           th:download="${file.fi_ori_name}" 
-				           th:text="${file.fi_ori_name}">
-				        </a>
-				    </div> -->
-				
-				<!-- <a class="btn btn-outline-info" th:href="@{/post/list/{po_num}(po_num=*{po_num})}">목록으로</a> -->
-					<div class="qaDetailContainer">
-						<div class="qaDetailinfo">
-							<a class="qaDetail_qaDetailInfoBtn" th:href="@{/post/update/{po_num}(po_num=*{po_num})}">수정</a>
+					<div class="WriterInfo">
+						<div class="profile-sectio">
+							<img class="user-profile-icon" th:src="@{/image/user_profile.png}" alt="UserProfile">
 						</div>
-						<div class="qaDetailDelete">
-							<a class="qaDetail_qaDetailDeleteBtn" th:href="@{/post/delete/{po_num}(po_num=${po_num})}">삭제</a>
+						<!-- 닉네임 클릭 시 팝업 -->
+						<div class="nickname-container" style="position: relative;">
+							<div th:text="${post.me_id}" class="nickname" onclick="togglePopup()">닉네임</div>
+							<div class="nickname-popup" id="nicknamePopup">
+								<div class="popup-item">프로필 보기</div>
+								<div class="popup-item">쪽지 보내기</div>
+								<div class="popup-item">신고 하기</div>
+							</div>
+							<div class="article_info">
+								<span class="date" th:text="${post.po_date != null ? #dates.format(post.po_date, 'yyyy-MM-dd') : '날짜 없음'}"></span>
+								조회 
+								<span class="count" th:text="*{po_viewCount}"></span>
+							</div>
 						</div>
 					</div>
 				</div>
+				<div class="main-contents">
+					<div th:utext="*{po_content}"></div>
+					<div class="thumbButtonContainerWrap">
+						<div class="thumbButtonContainer01">
+							<a href="#" data-state="1" class="btn-up btn btn"
+								th:classappend="${re_state != 1} ? '-outline-danger' : '-danger'"> 
+								<span class="thumbButton">👍</span>
+							</a>
+						</div>
+						<div class="thumbButtonContainer02">
+							<a href="#" data-state="-1" class="btn-down btn btn"
+								th:classappend="${re_state != -1} ? '-outline-danger' : '-danger'"> 
+								<span class="thumbButton">👎</span>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div th:if="${fileVoList.size() != 0 }">
+					<div class="post_Category">
+						<label>첨부파일</label>
+						<div class=" file-upload">
+							<a class="insertbtn" 
+								th:each="item : ${fileVoList}" 
+								th:text="${item.fi_ori_name}"
+								th:href="${item.fi_name}"
+								th:attr="download=${item.fi_ori_name}"></a>
+						</div>
+					</div>
+				</div>
+				<!-- <a class="btn btn-outline-info" th:href="@{/post/list/{po_num}(po_num=*{po_num})}">목록으로</a> -->
+				<div class="qaDetailContainer">
+					<div class="qaDetailinfo">
+						<a class="qaDetail_qaDetailInfoBtn" th:href="@{/post/update/{po_num}(po_num=*{po_num})}">수정</a>
+					</div>
+					<div class="qaDetailDelete">
+						<a class="qaDetail_qaDetailDeleteBtn" th:href="@{/post/delete/{po_num}(po_num=${po_num})}">삭제</a>
+					</div>
+				</div>
 			</div>
-	<script th:inline="javascript">
-	// 팝업 토글 함수
-    function togglePopup() {
-        const popup = document.getElementById('nicknamePopup');
-        if (popup.style.display === 'none' || popup.style.display === '') {
-            popup.style.display = 'block';  // 팝업을 보여줌
-        } else {
-            popup.style.display = 'none';  // 팝업을 숨김
-        }
-    }
-
-    // 페이지 외부를 클릭하면 팝업을 닫음
-    window.onclick = function(event) {
-        const popup = document.getElementById('nicknamePopup');
-        if (!event.target.matches('.nickname')) {
-            if (popup.style.display === 'block') {
-                popup.style.display = 'none';
-            }
-        }
-    }
-    // 추천/비추천 버튼 클릭 이벤트
-    $('.btn-up, .btn-down').click(function(e) {
-        e.preventDefault();
-        if (!checkLogin()) {
-            return;
-        }
-
-        // 추천: 1, 비추천: -1 상태
-        let state = $(this).data('state');
-        // Thymeleaf에서 JS 변수로 게시글 번호를 전달
-        var num = /*[[${post.po_num}]]*/ "0";  
-        // 게시글 번호를 Thymeleaf로 전달
-
-        $.ajax({
-            url: '/post/recommend',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                state: state,
-                num: num
-            },
-            success: function(data) {
-            	
-                let res = data.result;
-                if (res == 1) {
-                    alert('추천했습니다.');
-                } else if (res == -1) {
-                    alert('비추천했습니다.');
-                } else {
-                    alert(`${state == 1 ? '추천' : '비추천'}을 취소했습니다.`);
-                }
-
-                checkRecommendBtns(res);
-                console.log(res);
-
-                // 업데이트된 추천/비추천 수 반영
-                let post = data.post;
-                $('.thumbButtonContainer01 span').text(post.po_recommendCount);
-                $('.thumbButtonContainer02 span').text(post.po_notRecommendCount);
-            },
-            error: function(xhr) {
-                if (xhr.status === 400) {  // 400 에러 처리
-                    let response = JSON.parse(xhr.responseText);
-                    alert(response.error);  // "로그인이 필요합니다." 메시지 출력
-                    location.href = '/member/login';  // 로그인 페이지로 리다이렉트
-                } else {
-                    alert('오류가 발생했습니다.');
-                }
-            }
-        });
-    });
-    function checkRecommendBtns(state) {
-        // 모든 추천/비추천 버튼을 기본 스타일로 초기화
-        $('.thumbButtonContainer01, .thumbButtonContainer02').removeClass('btn btn-light');
-        $('.thumbButtonContainer01, .thumbButtonContainer02').addClass('btn btn-outline-light');
-
-        // 추천(1) 또는 비추천(2)에 따라 스타일 변경
-        if (state != 0) {
-            $(state == 1 ? '.thumbButtonContainer01' : '.thumbButtonContainer02').removeClass('btn-outline-light');
-            $(state == 1 ? '.thumbButtonContainer01' : '.thumbButtonContainer02').addClass('btn-light');
-        }
-    }
-    // 로그인 확인 함수
-    function checkLogin(){
-    	 // 로그인된 사용자 ID를 Thymeleaf를 통해 가져옴
-        let userId = /*[[${#authentication.principal}]]*/ false;
-
-		console.log("1:" + userId);
+		</div>
+		<div class="form-group">
+			<button class="btn btn-outline-info" id="commentButton">댓글</button>
+		</div>
+		<div class="form-group commentList" id="commentList" style="display: none;">
+			<div id="comment"></div>
+			<th:block th:if="${user != null}">
+				<div class="input-group mb-3">
+					<textarea class="form-control" placeholder="댓글 입력" id="input-comment"></textarea>
+					<div class="input-group-append">
+						<span class="input-group-text btn-insert" id="btn_insert0">등록</span>
+					</div>
+				</div>
+			</th:block>
+		</div>
 		
-        if (userId == '') {  // 로그인되지 않은 상태
-            if (confirm('로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?')) {
-                location.href = '[[@{/member/login}]]';  // 로그인 페이지로 이동
-                return false;
-            } else {
-                return false;
-            }
-        }
-        return true;
-    }
-	</script>	
+		<script th:inline="javascript">
+		// 팝업 토글 함수
+	    function togglePopup() {
+	        const popup = document.getElementById('nicknamePopup');
+	        if (popup.style.display === 'none' || popup.style.display === '') {
+	            popup.style.display = 'block';  // 팝업을 보여줌
+	        } else {
+	            popup.style.display = 'none';  // 팝업을 숨김
+	        }
+	    }
+	
+	    // 페이지 외부를 클릭하면 팝업을 닫음
+	    window.onclick = function(event) {
+	        const popup = document.getElementById('nicknamePopup');
+	        if (!event.target.matches('.nickname')) {
+	            if (popup.style.display === 'block') {
+	                popup.style.display = 'none';
+	            }
+	        }
+	    }
+	    // 추천/비추천 버튼 클릭 이벤트
+	    $('.btn-up, .btn-down').click(function(e) {
+	        e.preventDefault();
+	        if (!checkLogin()) {
+	            return;
+	        }
+	
+	        // 추천: 1, 비추천: -1 상태
+	        let state = $(this).data('state');
+	        // Thymeleaf에서 JS 변수로 게시글 번호를 전달
+	        var num = /*[[${post.po_num}]]*/ "0";  
+	        // 게시글 번호를 Thymeleaf로 전달
+	
+	        $.ajax({
+	            url: '/post/recommend',
+	            type: 'POST',
+	            dataType: 'json',
+	            data: {
+	                state: state,
+	                num: num
+	            },
+	            success: function(data) {
+	            	
+	                let res = data.result;
+	                if (res == 1) {
+	                    alert('추천했습니다.');
+	                } else if (res == -1) {
+	                    alert('비추천했습니다.');
+	                } else {
+	                    alert(`${state == 1 ? '추천' : '비추천'}을 취소했습니다.`);
+	                }
+	
+	                checkRecommendBtns(res);
+	                console.log(res);
+	
+	                // 업데이트된 추천/비추천 수 반영
+	                let post = data.post;
+	                $('.thumbButtonContainer01 span').text(post.po_recommendCount);
+	                $('.thumbButtonContainer02 span').text(post.po_notRecommendCount);
+	            },
+	            error: function(xhr) {
+	                if (xhr.status === 400) {  // 400 에러 처리
+	                    let response = JSON.parse(xhr.responseText);
+	                    alert(response.error);  // "로그인이 필요합니다." 메시지 출력
+	                    location.href = '/member/login';  // 로그인 페이지로 리다이렉트
+	                } else {
+	                    alert('오류가 발생했습니다.');
+	                }
+	            }
+	        });
+	    });
+	    function checkRecommendBtns(state) {
+	        // 모든 추천/비추천 버튼을 기본 스타일로 초기화
+	        $('.thumbButtonContainer01, .thumbButtonContainer02').removeClass('btn btn-light');
+	        $('.thumbButtonContainer01, .thumbButtonContainer02').addClass('btn btn-outline-light');
+	
+	        // 추천(1) 또는 비추천(2)에 따라 스타일 변경
+	        if (state != 0) {
+	            $(state == 1 ? '.thumbButtonContainer01' : '.thumbButtonContainer02').removeClass('btn-outline-light');
+	            $(state == 1 ? '.thumbButtonContainer01' : '.thumbButtonContainer02').addClass('btn-light');
+	        }
+	    }
+	    // 로그인 확인 함수
+	    function checkLogin(){
+	    	 // 로그인된 사용자 ID를 Thymeleaf를 통해 가져옴
+	        let userId = /*[[${#authentication.principal}]]*/ false;
+	
+			console.log("1:" + userId);
+			
+	        if (userId == '') {  // 로그인되지 않은 상태
+	            if (confirm('로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?')) {
+	                location.href = '[[@{/member/login}]]';  // 로그인 페이지로 이동
+	                return false;
+	            } else {
+	                return false;
+	            }
+	        }
+	        return true;
+	    }
+	    
+    	let me_num = '[[${user != null ? user.me_num : 0}]]';
+    	let po_num = '[[${post.po_num}]]';
+		
+		$(document).ready ( function () { 
+			document.getElementById("commentButton").click();
+		}); 
+		
+		$("#commentButton").click(function() {
+			$(".commentList").toggle();
+		})
+		
+		function getCommentList() {
+			$.ajax({
+				async : true, 
+				url : '/comment/listin',
+				method : "post",
+				data : JSON.stringify(po_num), 
+				contentType : "application/json; charset=utf-8",
+				success : function (data){
+					DisplayCommentList(data);
+				}, 
+				error : function(jqXHR, textStatus, errorThrown){
+				}
+			});
+		}
+		
+		function DisplayCommentList(data){
+			str = '';
+			if(data == null || data.length == 0){
+				$("#comment").html('<li class="comment-item">등록된 댓글이 없습니다.</li>');
+				return;
+			}
+			for(comment of data){
+				let reBtn = '';
+				let reInput = '';
+				let btns = '';
+				if(comment.me_num == me_num){
+					btns = `
+						<button class="btn btn-outline-info btn-update" data-num="${comment.cm_num}">수정</button>
+						<button class="btn btn-outline-dark btn-delete" data-num="${comment.cm_num}">삭제</button>
+					`
+				}
+				let commentLayer = '';
+				
+				if (comment.cm_layer == 0){
+					reBtn = `<button class="btn btn-outline-primary btn-comment btn-comment1" data-reply="${comment.cm_reply}" data-ord="${comment.cm_ord}" data-layer="${comment.cm_layer}">대댓글</button>`;
+					if (me_num != 0) {
+						reInput =`
+							<div class="input-group mb-3 commnet-input commentListInput" style="padding-left:20px; display: none;">
+							    <textarea class="form-control input-comment1" id="input-comment1" placeholder="댓글 입력"></textarea>
+							    <div class="input-group-append">
+									<span class="input-group-text btn-insert1" id="btn_insert1" data-reply="${comment.cm_reply}"  data-ord="${comment.cm_ord}">등록</span>
+									</div>
+							</div>
+						`
+					}
+				}
+				if (comment.cm_layer == 1) {
+					commentLayer = 'comment-layer-1';
+					reBtn = `<button class="btn btn-outline-primary btn-comment btn-comment2" data-reply="${comment.cm_reply}"  data-ord="${comment.cm_ord}" data-layer="${comment.cm_layer}">대대댓글</button>`;
+					if (me_num != 0) {
+						reInput =`
+							<div class="input-group commnet-input mb-3 commentListInput comment-layer-2" style="padding-left:20px; display: none;">
+							    <textarea class="form-control input-comment2" id="input-comment2" placeholder="댓글 입력" ></textarea>
+							    <div class="input-group-append">
+									<span class="input-group-text btn-insert2" id="btn-insert2" data-reply="${comment.cm_reply}"  data-ord="${comment.cm_ord}">등록</span>
+									</div>
+							</div>
+						`
+					}
+				}
+				if (comment.cm_layer == 2) {
+					commentLayer = 'comment-layer-2';
+					reBtn = '';
+				}
+				str += `
+					<div class="comment-item ${commentLayer} " id="commentList1" data-reply="${comment.cm_reply}" data-ord="${comment.cm_ord}" data-layer="${comment.cm_layer}">
+						<div>
+							<div style="float: left; line-height: 40px;">${comment.me_id}</div>
+							<div style="line-height: 40px;">(${comment.cm_date})</div>
+							<div class="float-right">
+								${btns}
+								${reBtn}
+							</div>
+						</div>
+						<div>
+							<div style="padding-left:20px; line-height: 40px;">${comment.cm_content}</div>
+						</div>
+						${reInput}
+					</div>
+				`;
+				$("#comment").html(str);
+			}
+		}
+		
+		$("#btn_insert0").click(function name() {
+			var cm_content = $('#input-comment').val();
+			var cm_po_num = po_num;
+			var cm_ord = 0;
+			var cm_layer = 0;
+			var comment = {
+					cm_content : cm_content,
+					cm_po_num : cm_po_num,
+					cm_ord : cm_ord,
+					cm_layer : cm_layer
+				}
+			$.ajax({
+				async : true,
+				url : '/comment/insert', 
+				type : 'post', 
+				data : JSON.stringify(comment), 
+				contentType : "application/json; charset=utf-8",
+				success : function (data){
+					if(data){
+						$('#input-comment').val('');
+						location.reload(true);
+					}
+				}, 
+				error : function(jqXHR, textStatus, errorThrown){
+					console.log(jqXHR);
+				}
+			});
+		})
+		
+		$(document).on('click', ".btn-insert1",  function() {
+			var cm_content = $(this).parent().prev().val();
+			var cm_po_num = po_num;
+			var cm_reply = $(this).data('reply');
+			var cm_layer = 1;
+			var comment = {
+					cm_content : cm_content,
+					cm_po_num : cm_po_num,
+					cm_reply : cm_reply,
+					cm_layer : cm_layer
+				}
+			$.ajax({
+				async : true,
+				url : '/comment/insert1', 
+				type : 'post', 
+				data : JSON.stringify(comment), 
+				contentType : "application/json; charset=utf-8",
+				success : function (data){
+					if(data){
+						$('.input-comment1').val('');
+						location.reload(true);
+					}
+				}, 
+				error : function(jqXHR, textStatus, errorThrown){
+					console.log(jqXHR);
+				}
+			});
+		})
+		
+		$(document).on('click', ".btn-insert2",  function() {
+			var cm_content = $(this).parent().prev().val();
+			var cm_po_num = po_num;
+			var cm_reply = $(this).data('reply');
+			var cm_ord = $(this).data('ord');
+			var cm_layer = 2;
+			var comment = {
+					cm_content : cm_content,
+					cm_po_num : cm_po_num,
+					cm_reply : cm_reply,
+					cm_ord : cm_ord,
+					cm_layer : cm_layer
+				}
+			$.ajax({
+				async : true,
+				url : '/comment/insert2', 
+				type : 'post', 
+				data : JSON.stringify(comment), 
+				contentType : "application/json; charset=utf-8",
+				success : function (data){
+					if(data){
+						$('.input-comment2').val('');
+						location.reload(true);
+					}
+				}, 
+				error : function(jqXHR, textStatus, errorThrown){
+					console.log(jqXHR);
+				}
+			});
+		})
+		
+		
+		$(function(){
+		    getCommentList();
+		});
+		
+		$(".btn_insert").click(function() {
+		    getCommentList();
+		});
+		
+		
+		//댓글의 대댓글
+		$(document).on('click', ".btn-comment1",  function() {
+			//대댓에 layer값과 댓글 값을 지정
+			let reply = $(this).data('reply');
+			let ord = $(this).data('ord');
+			let layer = $(this).data('layer');
+			
+			$('.comment-item').each(function(){
+				let t_reply = $(this).data('reply');
+				let t_ord = $(this).data('ord');
+				let t_layer = $(this).data('layer');
+				let nextObj = null;
+				if(t_reply != reply){
+					return;
+				}
+				if(t_ord < ord){
+					return;
+				}
+				if(t_layer != layer+1){
+					return;
+				}
+				$(this).toggle();
+				if(t_reply == reply){
+					nextObj = $(this);
+				}
+				$('.comment-layer-2').hide();
+			})
+			$(this).parents('.comment-item').find('.commnet-input').toggle();
+		})
+		
+		//대댓글의 대대댓글
+		$(document).on('click', ".btn-comment2",  function() {
+			//대댓에 layer값과 댓글 값을 지정
+			let reply = $(this).data('reply');
+			let ord = $(this).data('ord');
+			let layer = $(this).data('layer');
+			let curObj = $(this).parents('.comment-item'); 
+			let nextObj = null;
+			$('.comment-item').each(function(){
+				let t_reply = $(this).data('reply');
+				let t_ord = $(this).data('ord');
+				let t_layer = $(this).data('layer');
+				if(t_reply == reply && t_layer == layer && ord < t_ord && nextObj == null){
+					nextObj = $(this);
+				}
+				if(t_reply > reply && nextObj == null){
+					nextObj = $(this);
+				}
+			})
+			curObj.nextUntil(nextObj).toggle();
+			$(this).parents('.comment-item').find('.commnet-input').toggle();
+		})
+		
+		$(document).on('click', ".btn-delete",  function() {
+			var cm_num = $(this).data('num');
+			var comment = {
+					cm_num : cm_num
+				}
+			$.ajax({
+				async : true,
+				url : '/comment/delete', 
+				type : 'post', 
+				data : JSON.stringify(comment), 
+				contentType : "application/json; charset=utf-8",
+				success : function (data){
+					if(data){
+						location.reload(true);
+					}
+				}, 
+				
+				error : function(jqXHR, textStatus, errorThrown){
+					console.log(jqXHR);
+				}
+			});
+		})
+		
+		let myWindow;
+		$(document).on('click', ".btn-update",  function() {
+			var cm_num = $(this).data('num');
+			let popOption = "width=300,height=300, top=300, left=1000";
+			let openUrl = '/comment/update?cm_num='+ cm_num;
+			myWindow = window.open(openUrl, 'pop', popOption);
+		})
+			
+		</script>
 	</main>
 </body>
 </html>
