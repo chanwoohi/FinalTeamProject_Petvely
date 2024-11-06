@@ -3,20 +3,78 @@
     xmlns:th="http://www.thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
     xmlns:sec="http://www.thymeleaf.org/extras/spring-security" 
-    layout:decorate="~{layout/layout.html}">
+    layout:decorate="~{layout/layout2.html}">
 <head>
     <meta charset="UTF-8">
     <title>Insert Title Here</title>
 </head>
 <body >
 	<main layout:fragment="content">
-		</br>
-		<p>펫블리</p>
-		<p sec:authorize="isAuthenticated()">
-		<span th:text="${#authentication.principal.member.me_id}"></span>님 반갑습니다.<br>
-		</p>
-		<a class="btn btn-outline-info" th:href="@{/comment/list}">댓글보기</a>
-		
+	     <div id="bannerWrap">
+            <div id="frame">
+                <ul id="imgBanner">
+                    <li>
+                        <a href="#"><img src="/image/pet_banner_01.jpg" alt="기본 이미지"></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="/image/pet_banner_02.jpg" alt="기본 이미지"></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="/image/pet_banner_03.jpg" alt="기본 이미지"></a>
+                    </li>
+                </ul>
+            </div>
+            <p>
+                <button class="swiper-button-prev">
+                    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M0,22L22,0l2.1,2.1L4.2,22l19.9,19.9L22,44L0,22L0,22L0,22z' fill='#fff'/></svg>
+                </button>
+                <button class="swiper-button-next">
+                    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M27,22L27,22L5,44l-2.1-2.1L22.8,22L2.9,2.1L5,0L27,22L27,22z' fill='#fff'/></svg>
+                </button>
+            </p>
+            <div class="content">
+            	<ul>
+            		<li><a href="#"><img class="css-1100" src="/image/content_01.jpg" alt="기본 이미지"></a></li>
+            	</ul>
+            </div>
+        </div>
+
+        <!-- jQuery 코드 -->
+      <script>
+         $(document).ready(function() {
+             let currentIndex = 0;
+             const totalSlides = $('#imgBanner li').length;
+             const bannerWidth = $('#bannerWrap').width();
+
+             // 슬라이드 이동 함수
+             function updateSlide() {
+                 $('#imgBanner').css('transform', `translateX(-${currentIndex * bannerWidth}px)`);
+             }
+
+             // 다음 버튼 클릭 시 슬라이드 이동
+             $('.swiper-button-next').click(function() {
+                 currentIndex = (currentIndex + 1) % totalSlides;
+                 updateSlide();
+             });
+
+             // 이전 버튼 클릭 시 슬라이드 이동
+             $('.swiper-button-prev').click(function() {
+                 currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+                 updateSlide();
+             });
+
+             // 2초마다 자동으로 슬라이드 이동
+             setInterval(function() {
+                 currentIndex = (currentIndex + 1) % totalSlides;
+                 updateSlide();
+             }, 2000);
+
+             // 창 크기 변경 시 슬라이드 너비 재조정
+             $(window).resize(function() {
+                 updateSlide();
+             });
+         });
+        </script>
 	</main>
 </body>
 </html>
