@@ -100,6 +100,9 @@ public class WalkMatePostController {
 		
 		List<AnimalVO> detailPetList = animalService.selectDetailPetList(po_num);
 		model.addAttribute("detailPetList", detailPetList);
+		
+		List<Sido_AreasVO> sidoList = addressService.getSidoList();
+		model.addAttribute("sidoList", sidoList);
 		System.out.println("=================");
 		System.out.println("walkMatePost : "+ walkMatePost);
 		System.out.println("detailPetList : "+ detailPetList);
