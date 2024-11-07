@@ -41,7 +41,7 @@
 			                    <div class="nickname-container" style="position: relative;">
 			                        <div th:text="*{me_id}" class="nickname" onclick="togglePopup()">닉네임</div>
 			                        <div class="nickname-popup" id="nicknamePopup">
-			                            <div class="popup-item">프로필 보기</div>
+			                            <div class="popup-item" onclick="profile()">프로필 보기</div>
 			                            <div class="popup-item">쪽지 보내기</div>
 			                            <div class="popup-item">신고 하기</div>
 			                        </div>
@@ -413,12 +413,11 @@
 				});
 			})
 			
-			let myWindow;
 			$(document).on('click', ".btn-update",  function() {
 				var cm_num = $(this).data('num');
 				let popOption = "width=300,height=300, top=300, left=1000";
 				let openUrl = '/comment/update?cm_num='+ cm_num;
-				myWindow = window.open(openUrl, 'pop', popOption);
+				window.open(openUrl, 'pop', popOption);
 			})
 			
 			// 팝업 토글 함수
@@ -428,6 +427,7 @@
 		            popup.style.display = 'block';  // 팝업을 보여줌
 		        } else {
 		            popup.style.display = 'none';  // 팝업을 숨김
+		            console.log(123);
 		        }
 		    }
 			
@@ -441,6 +441,13 @@
 		        }
 		    }
 			
+			function profile()  {
+				var me_num = '[[${GATPost.me_num}]]';
+    	 		console.log(me_num)
+    	 		let popOption = "width=300,height=300, top=300, left=1000";
+				let openUrl = '/comment/update?cm_num='+ cm_num;
+				window.open(openUrl, 'pop', popOption);
+	    	}
 		</script>
 	</main>
 </body>
