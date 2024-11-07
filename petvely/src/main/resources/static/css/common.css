@@ -815,8 +815,8 @@ background-color: #ffc107;
 	align-items: center;
 	justify-content: center;
 	cursor: pointer;
-	font-weight: 600; /* 글씨 두께 조정 */
-	font-size: 16px; /* 글씨 크기 조정 */
+	font-weight: 600; 
+	font-size: 16px; 
 }
 .gatpost_inventoryBtn:hover{
 	text-decoration: none;
@@ -844,3 +844,43 @@ background-color: #ffc107;
 	justify-content: left;   
 	margin-block: 11px;
 }
+
+/* .getpostContainer{
+	position: relative;
+} */
+.givebtn{
+display: inline-block;
+padding: 10px 30px;
+font-size: 16px;
+color: #000;
+background-color: #ffd966;
+border: none;
+border-radius: 25px;
+cursor: pointer;
+margin-top: 10px;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+transition: background-color 0.3s;
+}
+.givebtn:hover {
+text-decoration-line: none;
+color: #000;
+background-color: #ffc107;
+}
+.takebtn{
+	display: inline-block;
+	padding: 10px 30px;
+	font-size: 16px;
+	color: #000;
+	background-color: #fff4d5;
+	border: none;
+	border-radius: 25px;
+	cursor: pointer;
+	margin-top: 10px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	transition: background-color 0.3s;
+	}
+	.takebtn:hover {
+	text-decoration-line: none;
+	color: #000;
+	background-color: #ffc107;
+	}

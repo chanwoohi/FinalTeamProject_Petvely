@@ -15,12 +15,12 @@ layout:decorate="~{layout/layout.html}">
 			<input type="hidden" class="form-control" name="po_co_num" required="required" value="12">
 			<input type="hidden" class="form-control" name="po_me_num" th:value="${Userlist.me_num}">
 			<input type="hidden" class="form-control" name="po_viewCount" value="0">
-			<div class="form-group" id="GT">
+			<div class="getpostContainer" id="GT">
 				<label>품앗이</label>
 				<!-- 유효성 검사로 오류 표시로 바꿀것 -->
 				<input type="text" id="gat_gat" name="gat_gat" required="required" style="display: none;">
-				<a id="give" class="btn btn-outline-info" onclick="">GIVE</a>
-				<a id="take" class="btn btn-outline-info" onclick="">TAKE</a>
+				<a id="give" class="givebtn" onclick="">GIVE</a>
+				<a id="take" class="takebtn" onclick="">TAKE</a>
 			</div>
 			<div  class="post_Category">
 				<label>제목</label> <span class="post_Mark">*</span>
