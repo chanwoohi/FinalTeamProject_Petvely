@@ -25,10 +25,9 @@
 					<div class="walkContents">
 						<div class="walkContents01">
 							<div class="post_Category">
-								<label>제목</label>
+								<label>제목</label> 
 								<input type="text" class="postInput" th:field="*{po_title}" readonly>
 							</div>
-							<!-- 로그인 기능 미구현으로 작성자 직접 입력해야함... 추후 수정 -->
 							<div class="post_Category">
 								<label>작성자</label>
 								<input type="text" class="postInput" th:field="*{me_id}" readonly>
@@ -95,7 +94,7 @@
 						<tbody>
 							<tr th:if="${choicePetList == null or choicePetList.empty}">
 				                <!-- 이 부분이 아무 펫도 없을 때 표시됩니다. -->
-				                <td>아직 신청한 펫이 없습니다.</td>
+				                <td colspan="4" >아직 신청한 펫이 없습니다.</td>
 				            </tr>
 							<tr th:each="item : ${choicePetList}">
 								<td>
