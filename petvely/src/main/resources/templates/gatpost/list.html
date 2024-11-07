@@ -40,13 +40,12 @@
 				
 				</tbody>
 			 </table>
-			 <div class="insertBtnContainer">
-	        		<a class="insertbtn" th:href="@{/gatpost/insert}">글쓰기</a>
-	        </div>
+			<th:block th:if ="${user != null}">
+				<div class="insertBtnContainer">
+					<a class="insertbtn" th:href="@{/gatpost/insert}">글쓰기</a>
+				</div>
+			</th:block>
 		</div>
-		<th:block th:if ="${user != null}">
-			<a class="btn btn-outline-dark" th:href="@{/gatpost/insert}">등록</a>
-		</th:block>
 		       
 		<script type="text/javascript">
             $(document).ready(function() {
