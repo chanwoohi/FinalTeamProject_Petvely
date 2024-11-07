@@ -37,6 +37,9 @@
                     <div>몸무게 : <span th:text="*{ani_weight} + '(kg)'"></span></div>
                 </div>
                 <div class="petsDetail_btnWrapper">
+	                <th:block th:if="${myPet.ani_me_num} != ${#authentication.principal.member.me_num}">
+	                	<button type="button" class="petsDetail_detailBtn_1010" th:onclick="|window.location.href='/mypage/otherpet/' + ${myPet.ani_me_num}|">목록으로</button>
+	                </th:block>
 	                <th:block th:if="${myPet.ani_me_num} == ${#authentication.principal.member.me_num}">
 		                <button type="button" class="petsDetail_detailBtn_1010" onclick="window.location.href='/mypage/pet'">목록으로</button>
 	                	<button type="button" class="petsDetail_detailBtn_1011" th:attr="onclick=|move('/animal/update/${ani_num}')|">수정하기</button>
