@@ -48,7 +48,11 @@
 								</p>
 								</div>
 								<div class="popup-item">
-								<a class="profile" th:href="@{/mypage/mypage}">마이페이지</a></div>
+								<a class="profile" th:href="@{/mypage/mypage}">마이페이지</a>
+								</div>
+								<div class="popup-item">
+								<a class="profile" th:href="@{/message/messagebox}">쪽지함</a>
+								</div>
 								<form name="logoutForm" 
 									th:action="@{/member/logout}" sec:authorize="isAuthenticated()">
 									<a class="popup-item" onclick="javascript:logoutForm.submit();">로그아웃</a>

@@ -48,6 +48,10 @@ public class AnimalService {
 	public boolean updateMyPet(AnimalVO animal) {
 		return animalDao.updateMyPet(animal);
 	}
+
+	public List<AnimalVO> selectOtherPetList(int me_num) {
+		return animalDao.selectOtherPet(me_num);
+	}
 	
 
 }

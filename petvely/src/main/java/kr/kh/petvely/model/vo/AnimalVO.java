@@ -34,4 +34,5 @@ public class AnimalVO {
 	private int pusp_num;
 	private int pusp_po_num;
 	private int pusp_ani_num;
+	private String me_id;
 }

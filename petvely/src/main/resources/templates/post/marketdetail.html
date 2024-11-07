@@ -106,36 +106,32 @@
                 <div class="price">가격: <span th:text="${post.mp_price}"></span>원</div>
             </div>
             <div class="actions">
-                <div>
-                
-                    <a th:if="${bookmark}!=${po_num}" class="btn btn-outline-warning" th:href="@{/post/bookmark/insert/{po_num}(po_num=*{po_num})}">즐겨찾기⭐</a>
-                    <a th:if="${bookmark}==${po_num}" class="btn btn-warning" th:href="@{/post/bookmark/delete/{po_num}(po_num=*{po_num})}">즐겨찾기⭐</a>
-                    <button type="button" class="btn btn-outline-info"
-                        th:onclick="'window.open(\'/report/post/' + ${po_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'">
-                        신고하기🚨
-                    </button>
+                <div th:if="${user == null}">
+                    <a th:if="${bookmark}!=${po_num}" class="btn btn-outline-warning" href="javascript:void(0);" onclick="loginAlert()">즐겨찾기⭐</a>
+                    <a th:if="${bookmark}==${po_num}" class="btn btn-warning" href="javascript:void(0);" onclick="loginAlert()">즐겨찾기⭐</a>
+                    <button type="button" class="btn btn-outline-info" onclick="loginAlert()">신고하기🚨</button>
                 </div>
-                 <div th:if="${user != null}">
-                    	<a class="btn btn-dark" th:href="@{/message/marketmessagesend/{po_num}(po_num=${po_num})}">쪽지 보내기</a>
-                    </div>
-                    <div th:if="${user == null}">
-                    	 <button class="btn btn-dark" onclick="loginAlert()">쪽지 보내기</button>
-                    </div>
+                <div th:if="${user != null}">
+                    <a class="btn btn-dark" th:href="@{/message/marketmessagesend/{po_num}(po_num=${po_num})}">쪽지 보내기</a>
+                </div>
+                <div th:if="${user == null}">
+                    <button class="btn btn-dark" onclick="loginAlert()">쪽지 보내기</button>
+                </div>
                 <div th:if="${me_num == post.po_me_num}" style="display:flex; margin-right: 10px;">
                     <form method="post" th:action="@{/post/marketcomplete/{po_num}(po_num=${post.po_num})}">
                         <button type="submit" class="btn btn-dark">거래완료</button>
                     </form>
-                   
-                    <div th:if="${">
- 	                   <a class="btn btn-dark" th:href="@{/post/marketupdate/{po_num}(po_num=*{po_num})}">수정</a>
+                    <div>
+                        <a class="btn btn-dark" th:href="@{/post/marketupdate/{po_num}(po_num=*{po_num})}">수정</a>
                     </div>
                 </div>
             </div>
         </div>
         <script>
-        	function loginAlert(){
-        		alert("로그인이 필요합니다.");
-        	}
+            // 로그인하지 않은 사용자가 버튼을 클릭하면 로그인 알림 표시
+            function loginAlert() {
+                alert("로그인이 필요합니다.");
+            }
         </script>
     </main>
 </body>
