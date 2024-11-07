@@ -13,6 +13,8 @@ select{
 
 /* POST */
 .post_Container{
+	margin: 0 auto;
+	max-width: 1024px;
 	margin-top: 40px;
 }
 .post_Category {
@@ -56,6 +58,7 @@ select{
 	border-radius: 5px;
 	padding: 0 24px 0 12px;	
 }
+
 .post_Btn {
 	display: flex;
 	align-items: center;      /* 수직 가운데 정렬 */
@@ -196,7 +199,7 @@ body {
 	padding: 20px;
 }
 
-.user_icon, .pet_icon {
+.user_icon>img, .pet_icon {
 	width: 100px;
 	height: 100px;
 	border-radius: 50%;

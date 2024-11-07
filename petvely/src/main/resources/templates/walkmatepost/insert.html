@@ -2,7 +2,7 @@
 <html 
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-	layout:decorate="~{layout/layout.html}">
+	layout:decorate="~{layout/layout2.html}">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -10,30 +10,28 @@
 <body>
 	<main layout:fragment="content">
 		<form method="post" th:action="@{/walkmatepost/insert}" id="walkmatePostForm">
-
-			<div class="form-group">
-				<label>제목</label>
-				<input type="text" class="form-control" name="po_title">
+		 <div class="post_Container">
+			<div class="post_Category">
+				<label>제목</label><span class="post_Mark">*</span>
+				<input placeholder="제목을 입력해주세요" type="text" class="postInput" id="po_title" name="po_title">
 			</div>
-			
 			<!-- 로그인 PostVO에 me_id 넣기 -->
 			<div class="form-group">
 				<input type="hidden" th:value="${me_num}" class="form-control" name="po_me_num">
 			</div>
 			
 			<!-- 추후에 달력 api 추가 예정 -->
-			<div class="form-group">
+			<div class="post_Category">
 				<label>날짜</label>
-				<input type="date" class="form-control" name="wm_date">
+				<input type="date" class="postInput" name="wm_date">
 			</div>
-			<div class="form-group">
+			<div class="post_Category">
 				<label>시간</label>
-				<input type="text" class="form-control" name="wm_time">
+				<input type="text" class="postInput" name="wm_time">
 			</div>
-			<div class="form-group">
+			<div class="post_Category">
 				<label>내용</label>
-				<textarea class="form-control" style="min-height: 400px; height: auto;" name="po_content">
-				</textarea>
+				<textarea placeholder="5자 이상의 글 내용을 입력해주세요" class="postText" id="po_content" name="po_content"></textarea>
 			</div>
 			<div>
 				<table class="table table-striped">
@@ -55,8 +53,8 @@
 					</tbody>
 				</table>
 			</div>
-			
-			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+			<span class="post_Mark">*</span>
+			<button type="button" class="walkbutton" data-toggle="modal" data-target="#myModal">
 				내 펫 등록하기
 			</button>
 			
@@ -84,15 +82,13 @@
 					</div>
 				</div>
 			</div>
-			<div class="form-group" id="address">
-				<label>주소:</label>
-				<select id="sido">
+			<div class="walk_PostCategory" id="address">
+				<label>주소 :&nbsp</label>
+				<select id="sido" class="walkCategoryFiled" >
 					<option th:each="itemSido : ${sidoList}" th:text="${itemSido.sido_name}" th:value="${itemSido.sido_num}"></option>
 				</select>
-				<select id="sigg">
-				</select>
-				<select id="emd" name="emd_num">
-				</select>
+				<select id="sigg" class="walkCategoryFiled"></select>
+				<select id="emd" name="emd_num" class="walkCategoryFiled"></select>
 			</div> 
 			
 			<div class="modal" id="myModal2">
@@ -144,10 +140,14 @@
 			</div>
 			<div th:text="${message}"></div>
 			
-			<button class="btn btn-outline-info col-12" id="submitBtn" type="button" >게시글 등록</button>
+				<div class="post_Btn">
+					<button class="post_submitBtn" id="submitBtn" type="button">글 등록</button>
+					<a class="post_inventoryBtn" th:href="@{/walkmatepost/list}">목록으로</a>
+				</div>
 			<input type="hidden" id="selectedPets" name="selectedPets" value="">
+		</div>
 		</form>
-		<a class="btn btn-outline-info" th:href="@{/walkmatepost/list}">목록으로</a>
+		
 		
 		<script>
 		    // myModal2를 열 때 myModal을 닫는 함수

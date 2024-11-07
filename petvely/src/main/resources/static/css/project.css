@@ -199,7 +199,7 @@ img{
 }
 
 
-/* 게시판 테이블 */
+/* POST 게시판 테이블 */
 
 table { 
     border-spacing: 1; 
@@ -710,6 +710,60 @@ table.dataTable {
 }
 .btn_box{
 	padding-top:10px;
+}
+
+/* 산책 게시판 테이블 */
+.insertWalkBtnContainer{
+    position: relative;
+}
+.insertWalktbtn{
+    position: relative;
+    top: -60px;
+    display: inline-block;
+	padding: 10px 30px;
+	font-size: 16px;
+	color: #000;
+	background-color: #ffd966;
+	border: none;
+	border-radius: 25px;
+	cursor: pointer;
+	margin-top: 10px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	transition: background-color 0.3s;
+}
+.insertWalktbtn:hover {
+	text-decoration-line: none;
+	color: #000;
+	background-color: #ffc107;
+}
+/* 산책 - 주소 */
+.walk_PostCategory {
+	display: flex;
+	margin-block: 11px;
+	align-items: center; 
+}
+.walkCategoryFiled {
+	width: 15%; 
+	display: inline-block;
+	height: 36px; 
+	border: 1px solid #e4e4e6;
+	border-radius: 5px;
+	padding: 0 10px; 
+	margin-right: 5px; 
+}
+.walkbutton{
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #000;
+    background-color: #ffd966;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    margin: 7px;
+}
+.walkbutton:hover{
+	background-color: #ffEBB9;
 }
 /* 푸터 */
 .petfooter{
