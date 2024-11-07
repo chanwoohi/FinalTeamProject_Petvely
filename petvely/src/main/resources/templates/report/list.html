@@ -19,6 +19,7 @@
                     <th>신고 일시</th>
                     <th></th>
                     <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -33,6 +34,10 @@
 						   >신고 내용 보기</a>
 			        </td>
                 	<td>
+		            	<div th:if="${item.rp_rtt_type == 'post'}">
+			                <a class="btn btn-outline-warning"
+			                   th:href="@{/post/detail/{po_num}(po_num=${item.rp_rtt_num})}">해당 게시글 보기</a>
+			            </div>
 			            <div th:if="${item.rp_rtt_type == 'walkmatepost'}">
 			                <a class="btn btn-outline-warning"
 			                   th:href="@{/walkmatepost/detail/{po_num}(po_num=${item.rp_rtt_num})}">해당 게시글 보기</a>
@@ -45,6 +50,11 @@
 			                <a class="btn btn-outline-warning"
 			                   th:href="@{/post/marketdetail/{po_num}(po_num=${item.rp_rtt_num})}">해당 게시글 보기</a>
 			            </div>
+		            </td>
+	            	<td>
+	            		<div>
+	            		 <a class="btn btn-outline-info">사용자 정지</a>
+	            		</div>
 		            </td>
                 </tr>
             </tbody>

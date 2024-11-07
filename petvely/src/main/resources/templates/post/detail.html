@@ -50,9 +50,9 @@
 						<div class="nickname-container" style="position: relative;">
 							<div th:text="${post.me_id}" class="nickname" onclick="togglePopup()">닉네임</div>
 							<div class="nickname-popup" id="nicknamePopup">
-								<div class="popup-item">프로필 보기</div>
+								<a class="popup-item" th:href="@{/mypage/otherpet/{me_num}(me_num=${post.po_me_num})}">프로필 보기</a>
 								<div class="popup-item">쪽지 보내기</div>
-								<div class="popup-item">신고 하기</div>
+								<div class="popup-item"  th:onclick="'window.open(\'/report/post/' + ${po_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'">신고 하기</div>
 							</div>
 							<div class="article_info">
 								<span class="date" th:text="${post.po_date != null ? #dates.format(post.po_date, 'yyyy-MM-dd') : '날짜 없음'}"></span>
