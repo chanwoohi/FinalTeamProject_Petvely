@@ -718,7 +718,7 @@ table.dataTable {
 }
 .insertWalktbtn{
     position: relative;
-    top: -10px;
+    top: -60px;
     display: inline-block;
 	padding: 10px 30px;
 	font-size: 16px;
