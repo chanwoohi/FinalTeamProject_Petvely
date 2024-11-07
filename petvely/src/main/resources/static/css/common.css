@@ -13,13 +13,15 @@ select{
 
 /* POST */
 .post_Container{
+	margin: 0 auto;
+	max-width: 1024px;
 	margin-top: 40px;
 }
 .post_Category {
 	font-weight: 600;
 	font-size: 16px;
 	line-height: 19px;
-	margin-block: 30px;
+	margin-block: 20px;
 }
 .post_Mark{
 	color: red;
@@ -29,7 +31,7 @@ select{
 	margin-block: 11px;
 }
 .postInput{
-	margin: 10px 0;
+	margin: 5px 0;
 	padding: 0 10px;
 	width: 100%;
 	height: 55px;
@@ -56,6 +58,7 @@ select{
 	border-radius: 5px;
 	padding: 0 24px 0 12px;	
 }
+
 .post_Btn {
 	display: flex;
 	align-items: center;      /* 수직 가운데 정렬 */
@@ -692,6 +695,92 @@ button {
 .petEdit_registerDeleteBtn:hover{
 	background-color: red;
 	color: #fff;
+}
+
+/* 중고마켓 */
+
+.search-form input {
+	width: 100%;
+}
+.search-contents{
+	width: 60%;
+	border: 2px solid #fcd11e;
+	border-radius: 24px;
+	padding: 0 45px;
+	height: 48px;
+	line-height: 48px;
+	font-size: 16px;
+	letter-spacing: 0;
+	text-align: left;
+  background-image: url('/image/search_icon.svg');
+	background-repeat: no-repeat;
+	background-size: 24px;
+	background-position: 12px 50%;
+
+}
+.sendMessagebtn{
+	display: inline-block;
+	padding: 10px 15px;
+	margin-top: 10px;
+	color: #fff;
+	background-color: #007bff;
+	border: none;
+	border-radius: 5px;
+	text-decoration: none;
+	text-align: center;
+	transition: background-color 0.3s;
+}
+.sendMessagebtn:hover{
+	text-decoration-line: none;
+	color: #fff;
+	background-color: #4f8fd3;
+}
+.marketinsertbtn{
+	position: relative;
+	top: -30px;
+	display: inline-block;
+	padding: 10px 30px;
+	font-size: 16px;
+	color: #000;
+	background-color: #ffd966;
+	border: none;
+	border-radius: 25px;
+	cursor: pointer;
+	margin-top: 10px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	transition: background-color 0.3s;
+}
+
+.marketinsertbtn:hover {
+	text-decoration-line: none;
+	color: #000;
+	background-color: #ffc107;
+}
+
+/* 중고마켓 타입 */
+
+.marketCategoryFiled {
+	width: 15%; 
+	display: inline-block;
+	height: 36px; 
+	border: 1px solid #e4e4e6;
+	border-radius: 5px;
+	padding: 0 10px; 
+	margin-right: 5px; 
+}
+.marketbutton{
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #000;
+    background-color: #ffd966;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    margin: 7px;
+}
+.marketbutton:hover{
+	background-color: #ffEBB9;
 }
 /*품앗이*/
 .btn-gatpost-insert{

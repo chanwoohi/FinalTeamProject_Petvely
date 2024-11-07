@@ -25,9 +25,13 @@ public class WalkMatePostVO extends PostVO {
 	private String emd_name;
 	private String emd_num;
 	
+	private float latitude;
+	private float longitude;
+	
 	@Override
 	public String toString() {
-		return "WalkMatePostVO [wm_date=" + wm_date + ", wm_time=" + wm_time + ", wm_wms_state=" + wm_wms_state +super.toString() + "]";
+		return "WalkMatePostVO [wm_date=" + wm_date + ", wm_time=" + wm_time + ", wm_wms_state=" + wm_wms_state +super.toString() + "위도경도"+latitude +"]";
+		
 	}
 	
 }

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout/layout2.html}">
+<head>
+<link rel="stylesheet" type="text/css" href="/css/project.css">
+<link rel="stylesheet" type="text/css" href="/css/common.css"> 
+    <meta charset="UTF-8">
+    <link href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+    <main layout:fragment="content">
+			<div class="otherpet_profile">
+				<h1 class="pet_title" th:text="${me_id} + '의 반려동물'"></h1>
+   			</div>
+			 <div class="pet_petContents" th:each="item : ${otherPetList}">
+			 <ul>
+			    <li class="pet_Petslist">
+			        <a th:href="@{/animal/profile/{ani_num}(ani_num=${item.ani_num})}">
+			            <div class="pet_mypets">
+			                <div>
+			                    <div th:if="${item.ani_img != null}">
+			                        <img class="pet_Petimg" th:src="${item.ani_img}" alt="펫 이미지" />
+			                    </div>
+			                    <div th:if="${item.ani_img == null}">
+			                        <img class="pet_Petimg" th:src="@{/image/image_not_found_new.png}" alt="기본 이미지" />
+			                    </div>
+			                </div>
+			                <div class="pet_ct">
+			                    <div class="pet_Petname" th:text="${item.ani_name}">펫 이름</div>
+			                    <div class="pet_PetAge" th:text="${#dates.format(item.ani_birth, 'yyyy-MM-dd')} + ' (' + ${item.ani_age} + '살)'">펫 나이</div>
+			                </div>
+			            </div>
+			        </a>
+			    </li>
+			</ul>
+			 </div>   			
+    </main>
+</body>
+</html>

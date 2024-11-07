@@ -55,4 +55,12 @@
 			
 		where ani_num = #{ani_num}
 	</update>
+	<select id="selectOtherPet" resultType="AnimalVO">
+		select 
+			*
+		from 
+			animal
+		where
+			ani_me_num = #{me_num}
+	</select>
 </mapper>

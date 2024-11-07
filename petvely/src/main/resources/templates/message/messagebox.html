@@ -2,7 +2,7 @@
 <html 
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-	layout:decorate="~{layout/layout.html}">
+	layout:decorate="~{layout/layout2.html}">
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
@@ -30,31 +30,82 @@
             font-size: 0.9em;
             color: gray;
         }
+        .dropdown{
+		  position : relative;
+		  display : inline-block;
+		}
+	
+		.dropdown-content{
+		  display : none;
+		  position : absolute;
+		  z-index : 1; /*다른 요소들보다 앞에 배치*/
+		  font-weight: 400;
+		  background-color: #f9f9f9;
+		  min-width : 200px;
+		}
+		.dropdown-content a{
+		  display : block;
+		  text-decoration : none;
+		  color : rgb(37, 37, 37);
+		  font-size: 12px;
+		  padding : 12px 20px;
+		}
+		
+		.dropdown-content a:hover{
+		  background-color : #ececec
+		}
+		
+		.dropdown:hover .dropdown-content {
+		  display: block;
+		}
+		   .message-sender {
+            font-weight: bold;
+            color: #007bff;
+            cursor: pointer; /* 마우스를 올렸을 때 포인터 커서로 바뀌도록 설정 */
+            position: relative;
+            display: inline-block;
+        }
+		.message-sender:hover {
+            color: #0056b3;
+            
+        }
+          .message-sender:after {
+            content: " ▼";
+            font-size: 10px;
+            color: #007bff;
+            margin-left: 5px;
+        }
+
+        /* 아이디 클릭 시에 스타일 */
+        .message-sender:active {
+            color: #0056b3;
+        }
     </style>
 </head>
 <body>
-    <header th:fragment="header">
-        <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-            <a class="navbar-brand" href="#">Home</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </nav>
-    </header>
-    <main layout:fragment="content" class="container">
-        <h2 class="mt-4">쪽지함</h2>
+<main layout:fragment="content" class="container">
+	<div class="post_Container">
+        <h1 class="categoryTitle">쪽지함</h1>
         <div class="message-container">
             <div class="message-item" th:each="item : ${messages}">
                 <a th:href="@{/message/messagedetail/{mes_num}(mes_num=${item.mes_num})}">
                     <span th:text="${#strings.length(item.mes_content) > 10 ? 
                     #strings.substring(item.mes_content, 0, 10) + '.......' : item.mes_content}"></span>
                 </a>
-                <div class="message-sender" th:text="'보낸 사람: ' + ${item.mes_me_senderId}">보낸 사람</div>
+                <div class="dropdown">
+                	<a class="message-sender" th:text="'보낸 사람: ' + ${item.mes_me_senderId}"></a>
+                	<div class="dropdown-content">
+                		<a th:href="@{/mypage/otherpet/{me_num}(me_num=${item.mes_me_senderNum})}">펫 정보보기</a>
+                		<a th:href="@{/message/send}">쪽지 보내기</a>
+                	</div>
+                </div>
+                
                 <div class="message-date" th:text="${item.mes_date}">보낸 날짜</div>
             
             </div>
         </div>
         <a class="btn btn-primary send-button" th:href="@{/message/send}">쪽지 보내기</a>
+    </div>
     </main>
 </body>
 </html>

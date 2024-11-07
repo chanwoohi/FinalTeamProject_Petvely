@@ -21,14 +21,14 @@
 							<a class="nav-link" th:href="@{/gatpost/list}">품앗이 리스트</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" th:href="@{/post/market/11}">중고거래</a>
+							<a class="nav-link" th:href="@{/post/market/11}">중고마켓</a>
 						</li>
 				<!-- 		<li class="nav-item">
 							<a class="nav-link" th:href="@{/bookmark/list/1}">즐겨찾기</a>
 						</li> -->
-						<li class="nav-item">
+				<!-- 		<li class="nav-item">
 							<a class="nav-link" th:href="@{/message/messagebox}">쪽지함</a>
-						</li>
+						</li> -->
 						<li class="nav-item">
 							<a class="nav-link" 
 								th:href="@{/member/signup}" sec:authorize="isAnonymous()">회원가입</a>
@@ -48,7 +48,11 @@
 								</p>
 								</div>
 								<div class="popup-item">
-								<a class="profile" th:href="@{/mypage/mypage}">마이페이지</a></div>
+								<a class="profile" th:href="@{/mypage/mypage}">마이페이지</a>
+								</div>
+								<div class="popup-item">
+								<a class="profile" th:href="@{/message/messagebox}">쪽지함</a>
+								</div>
 								<form name="logoutForm" 
 									th:action="@{/member/logout}" sec:authorize="isAuthenticated()">
 									<a class="popup-item" onclick="javascript:logoutForm.submit();">로그아웃</a>

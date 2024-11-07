@@ -56,7 +56,10 @@ public class MypageController {
 			MemberVO user = customUser.getMember();
 			List<AnimalVO> petList = animalService.selectPetList(user.getMe_num());
 			model.addAttribute("petList", petList);
+		
+			
 		}
+		
 		
 		return "/mypage/pet";
 	}

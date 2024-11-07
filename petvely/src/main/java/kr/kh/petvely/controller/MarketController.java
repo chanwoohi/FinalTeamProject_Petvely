@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.mysql.cj.log.Log;
+
 import kr.kh.petvely.model.user.CustomUser;
 import kr.kh.petvely.model.vo.FileVO;
 import kr.kh.petvely.model.vo.GoodsTypeVO;
@@ -35,21 +37,24 @@ public class MarketController {
 	PostService postService;
 	
 	@GetMapping("/post/market/{co_num}")
-	public String postList(Model model,@PathVariable int co_num,PostCriteria cri) {
-		cri.setCo_num(co_num);
-		cri.setPerPageNum(9);
+	public String postList(Model model,@PathVariable int co_num,PostCriteria cri,
+										@AuthenticationPrincipal CustomUser customUser) {
 		
 		List<MarketPostVO> list = marketPostService.getMarketList(cri);
 		PageMaker pm = marketPostService.getPageMaker(cri);
+		if(customUser != null) {
+			MemberVO user = customUser.getMember();
+			model.addAttribute("user", user);
+			
+		}
+		cri.setCo_num(co_num);
+		cri.setPerPageNum(9);
+		
+		
 		
 		model.addAttribute("list",list);
 		model.addAttribute("pm",pm);
 		
-		System.out.println("cri"+cri);
-		System.out.println(co_num);
-		System.out.println("pm"+pm);
-		System.out.println("list"+list);
-
 		return "post/market";
 
 	}
@@ -71,15 +76,14 @@ public class MarketController {
 			Integer bookmark = postService.selectBookmark(bm_me_num, po_num);
 			
 			if (bookmark != null) {
-				System.out.println("bookmark : " + bookmark);
 				model.addAttribute("bookmark", bookmark);
 			}
-			
 			
 			int me_num = user.getMe_num();
 			model.addAttribute("me_num",me_num);
 			model.addAttribute("user", user);
-		
+			
+			
 		}
 		model.addAttribute("fileList",fileList);
 		model.addAttribute("post",post);

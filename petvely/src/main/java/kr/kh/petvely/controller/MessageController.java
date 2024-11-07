@@ -49,10 +49,7 @@ public class MessageController {
     	        	
     	        }
     	        
-    	    } else {
-
-    	        return "redirect:/login"; 
-    	    }
+    	    } 
         return "message/messagebox";
     }
 

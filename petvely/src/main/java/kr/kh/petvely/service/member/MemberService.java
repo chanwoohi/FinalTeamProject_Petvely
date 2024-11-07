@@ -49,6 +49,7 @@ public class MemberService {
 		return memberDao.selectMeId(po_me_num);
 	}
 
+
 	public boolean updateMember(MemberVO memberVo) {
 		if (memberVo == null)
 			return false;
@@ -60,5 +61,6 @@ public class MemberService {
 		
 		return memberDao.updateMember(memberVo);
 	}
+
 }
 	
