@@ -40,7 +40,6 @@ select{
 	font-size: 15px;
 }
 .postText{
-	margin-bottom: 10px;
 	padding: 20px 10px;
 	font-family: inherit;
 	width: 100%;
@@ -845,27 +844,23 @@ background-color: #ffc107;
 	justify-content: left;   
 	margin-block: 11px;
 }
-
-/* .getpostContainer{
-	position: relative;
-} */
 .givebtn{
-display: inline-block;
-padding: 10px 30px;
-font-size: 16px;
-color: #000;
-background-color: #fff4d5;
-border: none;
-border-radius: 25px;
-cursor: pointer;
-margin-top: 10px;
-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-transition: background-color 0.3s;
+	display: inline-block;
+	padding: 10px 30px;
+	font-size: 16px;
+	color: #000;
+	background-color: #fff4d5;
+	border: none;
+	border-radius: 25px;
+	cursor: pointer;
+	margin-top: 10px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	transition: background-color 0.3s;
 }
 .givebtn:hover {
-text-decoration-line: none;
-color: #000;
-background-color: #ffc107;
+	text-decoration-line: none;
+	color: #000;
+	background-color: #ffc107;
 }
 .takebtn{
 	display: inline-block;
@@ -885,3 +880,193 @@ background-color: #ffc107;
 	color: #000;
 	background-color: #ffc107;
 	}
+
+/* 산책 게시판 테이블 */
+.insertWalkBtnContainer{
+    position: relative;
+}
+.insertWalktbtn{
+    position: relative;
+    top: -60px;
+    display: inline-block;
+	padding: 10px 30px;
+	font-size: 16px;
+	color: #000;
+	background-color: #ffd966;
+	border: none;
+	border-radius: 25px;
+	cursor: pointer;
+	margin-top: 10px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	transition: background-color 0.3s;
+}
+.insertWalktbtn:hover {
+	text-decoration-line: none;
+	color: #000;
+	background-color: #ffc107;
+}
+
+.walkbutton{
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #000;
+    background-color: #ffd966;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    margin: 7px;
+}
+.walkbutton:hover{
+	background-color: #ffEBB9;
+}
+/* 산책 맵 */
+.map_search {
+    width: 100%;
+    border: 2px solid #fcd11e;
+    border-radius: 10px;
+    padding: 0 45px;
+    height: 48px;
+    line-height: 48px;
+    font-size: 16px;
+    letter-spacing: 0;
+    text-align: left;
+    background-image: url(/image/search_icon.svg);
+    background-repeat: no-repeat;
+    background-size: 24px;
+    background-position: 12px 50%;
+}
+
+/* 펫 등록 버튼 */
+.walkBtnContianer{
+	position: relative;
+}
+.walk_walkBtn{
+	position: absolute;
+    left: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 81px;
+    height: 30px;
+    font-size: 12px;
+    border-radius: 21px;
+    border: none;
+    color: #fff;
+    width: 50%;
+    background-color: #ffebb9;
+    font-weight: 600;
+    color: #333;
+    float: left;
+}
+
+/* 펫 산책 등록 버튼 */
+.walk_Btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.walk_submitBtn{
+	width: 240px;
+	height: 40px;
+	background-color: #ffd966;
+	color: #000;
+	border-radius: 21px;
+	border: none;
+	margin: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	font-weight: 600; 
+	font-size: 16px; 
+}
+.walk_submitBtn:hover{
+	background-color: #fcd11e;
+	text-decoration: none;
+	color: #000;
+}
+
+.walk_inventoryBtn {
+	width: 240px;
+	height: 40px;
+	background-color: #e4e4e6;
+	color: #000;
+	border-radius: 21px;
+	border: none;
+	margin: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	font-weight: 600; 
+	font-size: 16px; 
+}
+
+.walk_inventoryBtn:hover{
+	background-color: #f6f6fa;
+	text-decoration: none;
+	color: #000;
+}
+.walkTestBtn{
+	width: 240px;
+	height: 40px;
+	background-color: #e4e4e6;
+	color: #000;
+	border-radius: 21px;
+	border: none;
+	margin: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	font-weight: 600; 
+	font-size: 16px; 
+}
+.walkTestBtn:hover{
+	background-color: #f6f6fa;
+	text-decoration: none;
+	color: #000;
+}
+
+.walk_DetailDeleteBtn, .walk_DetailInfoBtn{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 81px;
+	height: 26px;
+	font-size: 12px;
+	border-radius: 21px;
+	border: none;
+	color: #fff;
+	width: 60px;
+	background-color: #f6f6f9;
+	color: #868688;
+	float: left;
+}
+
+.walk_DetailInfoBtn:hover, .walk_DetailDeleteBtn:hover{
+	text-decoration: none;
+	color: #868688;
+	background-color: #dbdbdb;
+}
+
+.walkDetailContainer {
+	position: relative;
+	padding: 25px 0 30px 7px;
+}
+.walkDetailDelete{
+	position: absolute;
+	left: 80px;
+}
+.tableContainer{
+    margin: 0 0 23px;
+    border: 1px solid #e4e4e6;
+    border-radius: 10px;
+    font-size: 15px;
+}
+.table_Category {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+}
