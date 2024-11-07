@@ -23,7 +23,7 @@
 				<input type="hidden" th:value="${me_num}" class="form-control" name="po_me_num">
 			</div>
     		<div class = "from-group">
-        		<label>약속 장소</label>
+        		<label>약속 장소 검색</label>
         		<input type = "text" id ="keyword" class = "input-textbox" placeholder = "장소를 검색해주세요.">
     		</div>
 			<ul id = "placesList"></ul>
@@ -90,7 +90,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="form-group" id="address">
+<!-- 			<div class="form-group" id="address">
 				<label>주소:</label>
 				<select id="sido">
 					<option th:each="itemSido : ${sidoList}" th:text="${itemSido.sido_name}" th:value="${itemSido.sido_num}"></option>
@@ -99,7 +99,7 @@
 				</select>
 				<select id="emd" name="emd_num">
 				</select>
-			</div> 
+			</div> --> 
 			
 			<div class="modal" id="myModal2">
 				<div class="modal-dialog">
