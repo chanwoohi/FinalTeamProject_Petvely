@@ -118,5 +118,6 @@ public class ReportController {
 		
 		return "/report/postview";
 	}
+	@PostMapping("/report/memberstop/{po_num}")
 	
 }
