@@ -13,9 +13,8 @@
 </head>
 <body>
     <main layout:fragment="content">
-			<div class="otherpet_profile">
-				<h1 class="pet_title" th:text="${me_id} + '의 반려동물'"></h1>
-   			</div>
+    		<div class="pet_profile">
+			<h2 class="pet_title" th:text="${me_id} + '의 반려동물'"></h2>
 			 <div class="pet_petContents" th:each="item : ${otherPetList}">
 			 <ul>
 			    <li class="pet_Petslist">
@@ -38,6 +37,7 @@
 			    </li>
 			</ul>
 			 </div>   			
+		</div>
     </main>
 </body>
 </html>

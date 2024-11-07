@@ -20,6 +20,7 @@
 					<tr>
 						<th>번호</th>
 						<th>제목</th>
+						<th>진행상태</th>
 						<th>작성자</th>
 						<th>조회수</th>
 					</tr>
@@ -31,6 +32,7 @@
 							<a th:text="${item.po_title}"
 							th:href="@{/walkmatepost/detail/{po_num}(po_num=${item.po_num})}"></a> 
 						</td>
+						<td th:text="${item.wm_wms_state}"></td>
 						<td th:text="${item.me_id}"></td>
 						<td th:text="${item != null ? item.po_viewCount : '0'}"></td>
 					</tr>

@@ -147,12 +147,11 @@ public class PostController {
 	    if (customUser != null) {
 			MemberVO user = customUser.getMember();
 			model.addAttribute("user", user);
-			
-			List<FileVO> fileVoList = postService.getFileList(po_num);
-			
-			System.out.println(fileVoList);
-			model.addAttribute("fileVoList", fileVoList);
 		}
+	    List<FileVO> fileVoList = postService.getFileList(po_num);
+	    
+	    System.out.println(fileVoList);
+	    model.addAttribute("fileVoList", fileVoList);
 
 	    return "post/detail"; // 뷰 템플릿 반환
 	}

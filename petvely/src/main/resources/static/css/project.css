@@ -209,6 +209,7 @@ table {
     overflow:hidden;
     border : none;
     width:100%;
+    text-align: center;
     margin:0 auto;
     position:relative;
   }
@@ -765,6 +766,7 @@ table.dataTable {
 .walkbutton:hover{
 	background-color: #ffEBB9;
 }
+
 /* 푸터 */
 .petfooter{
     padding: 20px;

@@ -36,7 +36,11 @@ public class GATPostController {
 	private PostService postService;
 	
 	@GetMapping("/gatpost/list")
-	public String GTAPostlist(Model model) {
+	public String GTAPostlist(Model model, @AuthenticationPrincipal CustomUser customUser) {
+		if (customUser != null) {
+			MemberVO user = customUser.getMember();
+			model.addAttribute("user", user);
+		}
 		List<GiveAndTakePostVO> list = gatPostService.getGATPostList();
 		model.addAttribute("list", list);
 		return "gatpost/list";

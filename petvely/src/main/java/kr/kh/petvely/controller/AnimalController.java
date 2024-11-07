@@ -181,13 +181,28 @@ public class AnimalController {
 	
 	@GetMapping("/animal/profile/{ani_num}")
 	public String animalProfile(Model model,
+								@PathVariable int ani_num,
+								@AuthenticationPrincipal CustomUser customUser) {
+		AnimalVO myPet = animalService.selectMyPet(ani_num);
+		// 확인용
+		System.out.println(myPet);
+		model.addAttribute("myPet", myPet);
+		
+		MemberVO user = customUser.getMember();
+		model.addAttribute("user", user);
+		
+		return "/animal/profile";
+	}
+	
+	@GetMapping("/animal/profile2/{ani_num}")
+	public String animalProfile2(Model model,
 								@PathVariable int ani_num) {
 		AnimalVO myPet = animalService.selectMyPet(ani_num);
 		// 확인용
 		System.out.println(myPet);
 		model.addAttribute("myPet", myPet);
 		
-		return "/animal/profile";
+		return "/animal/profile2";
 	}
 	
 }

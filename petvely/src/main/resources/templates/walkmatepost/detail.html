@@ -2,7 +2,7 @@
 <html 
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout/layout.html}">
+	layout:decorate="~{layout/layout2.html}">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -19,39 +19,45 @@
 <body>
 	<main layout:fragment="content" id="main">
 		<form method="post" th:action="@{/walkmatepost/detail/{po_num}(po_num=*{po_num})}">
+		<div class="post_Container">
 			<div th:object="${walkMatePost}">
-				<div class="form-group">
-					<label>제목</label>
-					<input type="text" class="form-control" th:field="*{po_title}" readonly>
+				<div class="walkContainer">
+					<div class="walkContents">
+						<div class="walkContents01">
+							<div class="post_Category">
+								<label>제목</label>
+								<input type="text" class="postInput" th:field="*{po_title}" readonly>
+							</div>
+							<!-- 로그인 기능 미구현으로 작성자 직접 입력해야함... 추후 수정 -->
+							<div class="post_Category">
+								<label>작성자</label>
+								<input type="text" class="postInput" th:field="*{me_id}" readonly>
+							</div>
+							
+							<div class="post_Category">
+								<label>날짜</label>
+								<input type="date" class="postInput" th:field="*{wm_date}" readonly>
+							</div>
+							<div class="post_Category">
+								<label>시간</label>
+								<input type="time" class="postInput" th:field="*{wm_time}" readonly>
+							</div>
+						</div>
+						<div class="walkContents02">
+							<div class="post_Category">
+								<label>약속 장소</label>
+								<!-- 이미지 지도를 표시할 div 입니다 -->
+								<div class="walkMap" id="staticMap" style="width:100%; height:350px;"></div>
+							</div>
+						</div>
+					</div>
 				</div>
-				
-				<!-- 로그인 기능 미구현으로 작성자 직접 입력해야함... 추후 수정 -->
-				<div class="form-group">
-					<label>작성자</label>
-					<input type="text" class="form-control" th:field="*{me_id}" readonly>
-				</div>
-				
-				<!-- 추후에 달력 api 추가 예정 -->
-				<div class="form-group">
-					<label>날짜</label>
-					<input type="text" class="form-control" th:field="*{wm_date}" readonly>
-				</div>
-				<div class="form-group">
-					<label>시간</label>
-					<input type="text" class="form-control" th:field="*{wm_time}" readonly>
-				</div>
-				<div class="form-group">
+				<div class="post_Category">
 					<label>내용</label>
-					<textarea class="form-control" style="min-height: 400px; height: auto;" th:utext="*{po_content}" readonly>
+					<textarea class="postText" style="min-height: 400px; height: auto;" th:utext="*{po_content}" readonly>
 					</textarea>
 				</div>
-				<div class="form-group">
-					<label>주소:</label>
-					<input type="text" class="form-control" readonly th:field="*{sido_name}">
-					<input type="text" class="form-control" readonly th:field="*{sigg_name}">
-					<input type="text" class="form-control" readonly th:field="*{emd_name}">
-				</div>
-				<div>
+				<div class="post_Category">
 				<label>작성자</label>
 					<table class="table table-striped">
 						<thead>
@@ -66,7 +72,7 @@
 							<tr th:each="item : ${detailPetList}">
 								<td>
 									<button th:text="${item.ani_name}"
-									   th:onclick="'window.open(\'/animal/profile/' + ${item.ani_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'" >
+									   th:onclick="'window.open(\'/animal/profile2/' + ${item.ani_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'" >
 								   </button>
 								</td>
 								<td th:text="${item.ani_age}"></td>
@@ -94,7 +100,7 @@
 							<tr th:each="item : ${choicePetList}">
 								<td>
 									<button th:text="${item.ani_name}"
-									   th:onclick="'window.open(\'/animal/profile/' + ${item.ani_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'" >
+									   		th:onclick="'window.open(\'/animal/profile2/' + ${item.ani_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'" >
 							    	</button>
 								</td>
 								<td th:text="${item.ani_age}"></td>
@@ -160,15 +166,11 @@
 												</td>
 											</tr>
 											
-											<tr  th:if="${petList != null}" th:each="item : ${petList}">
+											<tr th:if="${petList != null}" th:each="item : ${petList}">
 												<td>
 													<input type="checkbox" name="check" value="선택" th:value="${item.ani_num}"/>
 												</td>
-												<td>
-													<button th:text="${item.ani_name}"
-									  					 th:onclick="'window.open(\'/animal/profile/' + ${item.ani_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'" >
-								   					</button>
-												</td>
+												<td th:text="${item.ani_name}"></td>
 												<td th:text="${item.ani_age}"></td>
 												<td th:text="${item.ani_gender}"></td>
 												<td th:text="${item.ani_neutralization}"></td>
@@ -204,12 +206,13 @@
 					</div>
 				</th:block>
 				</div>
-				
-				<a th:if="${bookmark}!=${po_num}" class="btn btn-outline-warning" th:href="@{/post/bookmark/insert/{po_num}(po_num=*{po_num})}" >즐겨찾기⭐</a>
-				<a th:if="${bookmark}==${po_num}" class="btn btn-warning" th:href="@{/post/bookmark/delete/{po_num}(po_num=*{po_num})}" >즐겨찾기⭐</a>
-				<button type="button" class="btn btn-outline-info"
-								    th:onclick="'window.open(\'/report/post/' + ${po_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'"
-								    >신고하기🚨</button>
+				<th:block th:if="${user != null}">
+					<a th:if="${bookmark}!=${po_num}" class="btn btn-outline-warning" th:href="@{/post/bookmark/insert/{po_num}(po_num=*{po_num})}" >즐겨찾기⭐</a>
+					<a th:if="${bookmark}==${po_num}" class="btn btn-warning" th:href="@{/post/bookmark/delete/{po_num}(po_num=*{po_num})}" >즐겨찾기⭐</a>
+					<button type="button" class="btn btn-outline-info"
+									    th:onclick="'window.open(\'/report/post/' + ${po_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'"
+									    >신고하기🚨</button>
+				</th:block>
 				<div sec:authorize="isAnonymous()">
 					<button type="button" class="anonymous-action">즐겨찾기⭐</button>
 					<button type="button" class="anonymous-action">신고하기🚨</button>
@@ -217,7 +220,7 @@
 				<br>
 				<!-- 신청자 전용 -->
 				<div sec:authorize="isAuthenticated()">
-					<div th:if="${#authentication.principal.member.me_num} != ${walkMatePost.po_me_num}">
+					<div th:if="${#authentication.principal.member.me_num != walkMatePost.po_me_num && walkMatePost.wm_wms_state != '완료'}">
 						<a class="btn btn-outline-info" data-toggle="modal" data-target="#myModal">산책 메이트 신청하기</a>
 					</div>
 				</div>
@@ -225,7 +228,7 @@
 				<!-- 글 작성자 전용 -->
 				<!-- 로그인 기능 구현 완료되면 작성자만 보이게 수정할 것 -->
 				<div sec:authorize="isAuthenticated()">
-					<div th:if="${#authentication.principal.member.me_num} == ${walkMatePost.po_me_num}">
+					<div th:if="${#authentication.principal.member.me_num == walkMatePost.po_me_num && walkMatePost.wm_wms_state != '완료'}">
 						<a class="btn btn-outline-info" th:href="@{/walkmatepost/approve/{po_num}(po_num=*{po_num})}">산책 메이트 수락하기</a>
 						<a class="btn btn-outline-primary" th:href="@{/walkmatepost/update/{po_num}(po_num=*{po_num})}">수정</a>
 						<a class="btn btn-outline-warning" th:href="@{/walkmatepost/delete/{po_num}(po_num=*{po_num})}">삭제</a>
@@ -234,7 +237,35 @@
 				<a class="btn btn-outline-dark" th:href="@{/walkmatepost/list}">목록으로</a>
 				<div id="selectedPets"></div> <!-- selectedPets를 출력할 요소 추가 -->
 			</div>
+			</div>
 		</form>
+
+<!-- appkey 가져오기 -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e141a54b3e32d6131dd17f72265325ab"></script>
+<!-- services와 clusterer, drawing 라이브러리 불러오기 -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services,clusterer,drawing"></script>
+	<script>
+	var latitude = '[[${walkMatePost.latitude}]]';
+	var longitude = '[[${walkMatePost.longitude}]]';
+    
+    console.log("Latitude:", latitude);
+    console.log("Longitude:", longitude);
+    
+    var marker = {
+        position: new kakao.maps.LatLng(latitude, longitude),
+        text: '약속 장소!'
+    };
+
+    var staticMapContainer = document.getElementById('staticMap'), // 이미지 지도를 표시할 div
+        staticMapOption = {
+            center: new kakao.maps.LatLng(latitude, longitude), // 이미지 지도의 중심좌표
+            level: 3, // 이미지 지도의 확대 레벨
+            marker: marker // 이미지 지도에 표시할 마커
+        };
+
+    // 이미지 지도를 생성합니다
+    var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
+	</script>
 	<script>
 		// myModal2를 열 때 myModal을 닫는 함수
 	    $('#myModal2').on('show.bs.modal', function () {

@@ -27,4 +27,5 @@ public class CommentVO {
 	private int me_num; 
 	
 	private int po_num;
+	private int po_co_num;
 }

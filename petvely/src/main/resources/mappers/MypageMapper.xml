@@ -12,7 +12,8 @@
 	</select>
 	<select id="selectPostList" resultType="PostVO">
 		SELECT * from post 
-		WHERE po_co_num = #{co_num} and po_me_num=#{me_num}
+		left join member on me_num = po_me_num
+		WHERE po_co_num = #{co_num} and po_me_num = #{me_num}
 	</select>
 	<select id="selectWalkMatePostList" resultType="WalkMatePostVO">
 		select * from walkmatepost

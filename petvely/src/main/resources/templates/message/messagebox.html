@@ -2,7 +2,7 @@
 <html 
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-	layout:decorate="~{layout/layout.html}">
+	layout:decorate="~{layout/layout2.html}">
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
@@ -83,17 +83,10 @@
     </style>
 </head>
 <body>
-    <header th:fragment="header">
-        <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-            <a class="navbar-brand" href="#">Home</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </nav>
-    </header>
-    <main layout:fragment="content" class="container">
-        <h2 class="mt-4">쪽지함</h2>
-        <div class="message-container">
+<main layout:fragment="content" class="container">
+	<div class="post_Container">
+        <h1 class="categoryTitle">쪽지함</h1>
+        <div class="message-container">gd
             <div class="message-item" th:each="item : ${messages}">
                 <a th:href="@{/message/messagedetail/{mes_num}(mes_num=${item.mes_num})}">
                     <span th:text="${#strings.length(item.mes_content) > 10 ? 
