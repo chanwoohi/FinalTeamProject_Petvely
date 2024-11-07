@@ -86,7 +86,7 @@
 <main layout:fragment="content" class="container">
 	<div class="post_Container">
         <h1 class="categoryTitle">쪽지함</h1>
-        <div class="message-container">
+        <div class="message-container">gd
             <div class="message-item" th:each="item : ${messages}">
                 <a th:href="@{/message/messagedetail/{mes_num}(mes_num=${item.mes_num})}">
                     <span th:text="${#strings.length(item.mes_content) > 10 ? 
