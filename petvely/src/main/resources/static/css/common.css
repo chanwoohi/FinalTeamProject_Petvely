@@ -21,7 +21,7 @@ select{
 	font-weight: 600;
 	font-size: 16px;
 	line-height: 19px;
-	margin-block: 30px;
+	margin-block: 20px;
 }
 .post_Mark{
 	color: red;
@@ -741,12 +741,8 @@ button {
 	background-color: #ffc107;
 }
 
-/* 산책 - 주소 */
-.market_PostCategory {
-	display: flex;
-	margin-block: 11px;
-	align-items: center; 
-}
+/* 중고마켓 타입 */
+
 .marketCategoryFiled {
 	width: 15%; 
 	display: inline-block;
