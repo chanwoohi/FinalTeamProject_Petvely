@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout/layout2.html}"><head>
+<link rel="stylesheet" type="text/css" href="/css/common.css"> 
+<meta charset="UTF-8">
+<title>펫 프로필</title>
+
+</head>
+<body>
+    <main layout:fragment="content">
+        <form method="post" th:object="${myPet}" th:action="@{/animal/update/{ani_num}(ani_num=*{ani_num})}" enctype="multipart/form-data">
+            <div class="petsDetail_petDetailALLContainer">
+                <div class="petsDetail_petDetailContents">
+                    <div class="petsDetail_petDetail">
+                        <div class="petsDetail_petImgWrapper">
+                          <img th:src="${myPet.ani_img != null ? myPet.ani_img : '/image/image_not_found_new.png'}" alt="펫 이미지" />
+                         </div>
+                        <h2 th:text="*{ani_name}">펫 이름</h2>
+                    </div>
+                </div>
+                <div class="petsDetail_petDetailList">
+                  <div>생일 : <span th:text="*{#dates.format(ani_birth, 'yyyy-MM-dd')} + ' (' + *{ani_age} + '살)'"></span></div>
+                </div>
+                <div class="petsDetail_petDetailList">
+                    <div>품종 : <span th:text="*{ani_at_type}"></span></div>
+                </div>
+                <div ></div>
+                <div th:if="*{ani_gender == 'M'}" class="petsDetail_petDetailList">
+                    <div>성별 : <span>남아</span></div>
+                </div>
+                <div th:if="*{ani_gender == 'W'}" class="petsDetail_petDetailList">
+                    <div>성별 : <span>여아</span></div>
+                </div>
+                <div class="petsDetail_petDetailList">
+                    <div>몸무게 : <span th:text="*{ani_weight} + '(kg)'"></span></div>
+                </div>
+           </div>
+        </form>
+        <script type="text/javascript">
+        	function move(str){
+        		location.href = str;
+        	}
+        </script>
+    </main>
+</body>
+</html>

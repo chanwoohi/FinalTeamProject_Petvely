@@ -2,7 +2,7 @@
 <html 
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout/layout.html}">
+	layout:decorate="~{layout/layout2.html}">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -19,37 +19,38 @@
 <body>
 	<main layout:fragment="content" id="main">
 		<form method="post" th:action="@{/walkmatepost/detail/{po_num}(po_num=*{po_num})}">
+		<div class="post_Container">
 			<div th:object="${walkMatePost}">
-				<div class="form-group">
+				<div class="post_Category">
 					<label>제목</label>
-					<input type="text" class="form-control" th:field="*{po_title}" readonly>
+					<input type="text" class="postInput" th:field="*{po_title}" readonly>
 				</div>
 				
 				<!-- 로그인 기능 미구현으로 작성자 직접 입력해야함... 추후 수정 -->
-				<div class="form-group">
+				<div class="post_Category">
 					<label>작성자</label>
-					<input type="text" class="form-control" th:field="*{me_id}" readonly>
+					<input type="text" class="postInput" th:field="*{me_id}" readonly>
 				</div>
 				
-				<div class="form-group">
+				<div class="post_Category">
 					<label>날짜</label>
-					<input type="date" class="form-control" th:field="*{wm_date}" readonly>
+					<input type="date" class="postInput" th:field="*{wm_date}" readonly>
 				</div>
-				<div class="form-group">
+				<div class="post_Category">
 					<label>시간</label>
-					<input type="time" class="form-control" th:field="*{wm_time}" readonly>
+					<input type="time" class="postInput" th:field="*{wm_time}" readonly>
 				</div>
-				<div class="form-group">
+				<div class="post_Category">
 				<label>약속 장소</label>
 				<!-- 이미지 지도를 표시할 div 입니다 -->
 				<div id="staticMap" style="width:600px;height:350px;"></div>
 				</div>
-				<div class="form-group">
+				<div class="post_Category">
 					<label>내용</label>
-					<textarea class="form-control" style="min-height: 400px; height: auto;" th:utext="*{po_content}" readonly>
+					<textarea class="postText" style="min-height: 400px; height: auto;" th:utext="*{po_content}" readonly>
 					</textarea>
 				</div>
-				<div>
+				<div class="post_Category">
 				<label>작성자</label>
 					<table class="table table-striped">
 						<thead>
@@ -64,7 +65,7 @@
 							<tr th:each="item : ${detailPetList}">
 								<td>
 									<button th:text="${item.ani_name}"
-									   th:onclick="'window.open(\'/animal/profile/' + ${item.ani_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'" >
+									   th:onclick="'window.open(\'/animal/profile2/' + ${item.ani_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'" >
 								   </button>
 								</td>
 								<td th:text="${item.ani_age}"></td>
@@ -92,7 +93,7 @@
 							<tr th:each="item : ${choicePetList}">
 								<td>
 									<button th:text="${item.ani_name}"
-									   		th:onclick="'window.open(\'/animal/profile/' + ${item.ani_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'" >
+									   		th:onclick="'window.open(\'/animal/profile2/' + ${item.ani_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'" >
 							    	</button>
 								</td>
 								<td th:text="${item.ani_age}"></td>
@@ -162,11 +163,7 @@
 												<td>
 													<input type="checkbox" name="check" value="선택" th:value="${item.ani_num}"/>
 												</td>
-												<td>
-													<button th:text="${item.ani_name}"
-									  					 	th:onclick="'window.open(\'/animal/profile/' + ${item.ani_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'" >
-								   					</button>
-												</td>
+												<td th:text="${item.ani_name}"></td>
 												<td th:text="${item.ani_age}"></td>
 												<td th:text="${item.ani_gender}"></td>
 												<td th:text="${item.ani_neutralization}"></td>
@@ -231,6 +228,7 @@
 				</div>
 				<a class="btn btn-outline-dark" th:href="@{/walkmatepost/list}">목록으로</a>
 				<div id="selectedPets"></div> <!-- selectedPets를 출력할 요소 추가 -->
+			</div>
 			</div>
 		</form>
 

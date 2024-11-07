@@ -190,4 +190,15 @@ public class AnimalController {
 		return "/animal/profile";
 	}
 	
+	@GetMapping("/animal/profile2/{ani_num}")
+	public String animalProfile2(Model model,
+								@PathVariable int ani_num) {
+		AnimalVO myPet = animalService.selectMyPet(ani_num);
+		// 확인용
+		System.out.println(myPet);
+		model.addAttribute("myPet", myPet);
+		
+		return "/animal/profile2";
+	}
+	
 }
