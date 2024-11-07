@@ -798,7 +798,11 @@ button {
 	cursor: pointer;
 	font-weight: 600;
 }
-
+.btn-gatpost-insert:hover{
+text-decoration-line: none;
+color: #000;
+background-color: #ffc107;
+}
 .gatpost_inventoryBtn {
 	width: 240px;
 	height: 40px;
@@ -813,6 +817,11 @@ button {
 	cursor: pointer;
 	font-weight: 600; /* 글씨 두께 조정 */
 	font-size: 16px; /* 글씨 크기 조정 */
+}
+.gatpost_inventoryBtn:hover{
+	text-decoration: none;
+	color: #000;
+	background-color: #f6f6fa;
 }
 .gatpost_Btn {
 	display: flex;
