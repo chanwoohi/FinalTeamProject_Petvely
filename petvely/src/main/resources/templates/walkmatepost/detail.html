@@ -199,12 +199,13 @@
 					</div>
 				</th:block>
 				</div>
-				
-				<a th:if="${bookmark}!=${po_num}" class="btn btn-outline-warning" th:href="@{/post/bookmark/insert/{po_num}(po_num=*{po_num})}" >즐겨찾기⭐</a>
-				<a th:if="${bookmark}==${po_num}" class="btn btn-warning" th:href="@{/post/bookmark/delete/{po_num}(po_num=*{po_num})}" >즐겨찾기⭐</a>
-				<button type="button" class="btn btn-outline-info"
-								    th:onclick="'window.open(\'/report/post/' + ${po_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'"
-								    >신고하기🚨</button>
+				<th:block th:if="${user != null}">
+					<a th:if="${bookmark}!=${po_num}" class="btn btn-outline-warning" th:href="@{/post/bookmark/insert/{po_num}(po_num=*{po_num})}" >즐겨찾기⭐</a>
+					<a th:if="${bookmark}==${po_num}" class="btn btn-warning" th:href="@{/post/bookmark/delete/{po_num}(po_num=*{po_num})}" >즐겨찾기⭐</a>
+					<button type="button" class="btn btn-outline-info"
+									    th:onclick="'window.open(\'/report/post/' + ${po_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'"
+									    >신고하기🚨</button>
+				</th:block>
 				<div sec:authorize="isAnonymous()">
 					<button type="button" class="anonymous-action">즐겨찾기⭐</button>
 					<button type="button" class="anonymous-action">신고하기🚨</button>
@@ -212,7 +213,7 @@
 				<br>
 				<!-- 신청자 전용 -->
 				<div sec:authorize="isAuthenticated()">
-					<div th:if="${#authentication.principal.member.me_num} != ${walkMatePost.po_me_num}">
+					<div th:if="${#authentication.principal.member.me_num} != ${walkMatePost.po_me_num} || ${walkMatePost.wmp_state">
 						<a class="btn btn-outline-info" data-toggle="modal" data-target="#myModal">산책 메이트 신청하기</a>
 					</div>
 				</div>
