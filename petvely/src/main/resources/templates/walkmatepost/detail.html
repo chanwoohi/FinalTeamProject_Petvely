@@ -21,29 +21,36 @@
 		<form method="post" th:action="@{/walkmatepost/detail/{po_num}(po_num=*{po_num})}">
 		<div class="post_Container">
 			<div th:object="${walkMatePost}">
-				<div class="post_Category">
-					<label>제목</label>
-					<input type="text" class="postInput" th:field="*{po_title}" readonly>
-				</div>
-				
-				<!-- 로그인 기능 미구현으로 작성자 직접 입력해야함... 추후 수정 -->
-				<div class="post_Category">
-					<label>작성자</label>
-					<input type="text" class="postInput" th:field="*{me_id}" readonly>
-				</div>
-				
-				<div class="post_Category">
-					<label>날짜</label>
-					<input type="date" class="postInput" th:field="*{wm_date}" readonly>
-				</div>
-				<div class="post_Category">
-					<label>시간</label>
-					<input type="time" class="postInput" th:field="*{wm_time}" readonly>
-				</div>
-				<div class="post_Category">
-				<label>약속 장소</label>
-				<!-- 이미지 지도를 표시할 div 입니다 -->
-				<div id="staticMap" style="width:600px;height:350px;"></div>
+				<div class="walkContainer">
+					<div class="walkContents">
+						<div class="walkContents01">
+							<div class="post_Category">
+								<label>제목</label>
+								<input type="text" class="postInput" th:field="*{po_title}" readonly>
+							</div>
+							<!-- 로그인 기능 미구현으로 작성자 직접 입력해야함... 추후 수정 -->
+							<div class="post_Category">
+								<label>작성자</label>
+								<input type="text" class="postInput" th:field="*{me_id}" readonly>
+							</div>
+							
+							<div class="post_Category">
+								<label>날짜</label>
+								<input type="date" class="postInput" th:field="*{wm_date}" readonly>
+							</div>
+							<div class="post_Category">
+								<label>시간</label>
+								<input type="time" class="postInput" th:field="*{wm_time}" readonly>
+							</div>
+						</div>
+						<div class="walkContents02">
+							<div class="post_Category">
+								<label>약속 장소</label>
+								<!-- 이미지 지도를 표시할 div 입니다 -->
+								<div class="walkMap" id="staticMap" style="width:100%; height:350px;"></div>
+							</div>
+						</div>
+					</div>
 				</div>
 				<div class="post_Category">
 					<label>내용</label>
@@ -213,7 +220,7 @@
 				<br>
 				<!-- 신청자 전용 -->
 				<div sec:authorize="isAuthenticated()">
-					<div th:if="${#authentication.principal.member.me_num} != ${walkMatePost.po_me_num} || ${walkMatePost.wmp_state">
+					<div th:if="${#authentication.principal.member.me_num != walkMatePost.po_me_num && walkMatePost.wm_wms_state != '완료'}">
 						<a class="btn btn-outline-info" data-toggle="modal" data-target="#myModal">산책 메이트 신청하기</a>
 					</div>
 				</div>
@@ -221,7 +228,7 @@
 				<!-- 글 작성자 전용 -->
 				<!-- 로그인 기능 구현 완료되면 작성자만 보이게 수정할 것 -->
 				<div sec:authorize="isAuthenticated()">
-					<div th:if="${#authentication.principal.member.me_num} == ${walkMatePost.po_me_num}">
+					<div th:if="${#authentication.principal.member.me_num == walkMatePost.po_me_num && walkMatePost.wm_wms_state != '완료'}">
 						<a class="btn btn-outline-info" th:href="@{/walkmatepost/approve/{po_num}(po_num=*{po_num})}">산책 메이트 수락하기</a>
 						<a class="btn btn-outline-primary" th:href="@{/walkmatepost/update/{po_num}(po_num=*{po_num})}">수정</a>
 						<a class="btn btn-outline-warning" th:href="@{/walkmatepost/delete/{po_num}(po_num=*{po_num})}">삭제</a>
