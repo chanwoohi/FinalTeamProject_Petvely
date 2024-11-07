@@ -40,19 +40,14 @@
 					<input type="time" class="form-control" th:field="*{wm_time}" readonly>
 				</div>
 				<div class="form-group">
-					<!-- 이미지 지도를 표시할 div 입니다 -->
-					<div id="staticMap" style="width:600px;height:350px;"></div>
+				<label>약속 장소</label>
+				<!-- 이미지 지도를 표시할 div 입니다 -->
+				<div id="staticMap" style="width:600px;height:350px;"></div>
 				</div>
 				<div class="form-group">
 					<label>내용</label>
 					<textarea class="form-control" style="min-height: 400px; height: auto;" th:utext="*{po_content}" readonly>
 					</textarea>
-				</div>
-				<div class="form-group">
-					<label>주소:</label>
-					<input type="text" class="form-control" readonly th:field="*{sido_name}">
-					<input type="text" class="form-control" readonly th:field="*{sigg_name}">
-					<input type="text" class="form-control" readonly th:field="*{emd_name}">
 				</div>
 				<div>
 				<label>작성자</label>
@@ -244,8 +239,8 @@
 <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services,clusterer,drawing"></script>
 	<script>
-	var latitude = /*[[${walkMatePost.latitude}]]*/ 0;
-	var longitude = /*[[${walkMatePost.longitude}]]*/ 0;
+	var latitude = '[[${walkMatePost.latitude}]]';
+	var longitude = '[[${walkMatePost.longitude}]]';
     
     console.log("Latitude:", latitude);
     console.log("Longitude:", longitude);
