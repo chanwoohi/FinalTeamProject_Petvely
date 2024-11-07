@@ -19,7 +19,13 @@
 			<div class="form-group">
 				<input type="hidden" th:value="${me_num}" class="form-control" name="po_me_num">
 			</div>
-			
+    		<div class = "from-group">
+        		<label>약속 장소 검색</label>
+        		<input type = "text" id ="keyword" class = "input-textbox" placeholder = "장소를 검색해주세요.">
+    		</div>
+    		<input type="hidden" id="latitude" name="latitude">
+			<input type="hidden" id="longitude" name="longitude">
+			<ul id = "placesList"></ul>
 			<!-- 추후에 달력 api 추가 예정 -->
 			<div class="post_Category">
 				<label>날짜</label>
@@ -27,7 +33,7 @@
 			</div>
 			<div class="post_Category">
 				<label>시간</label>
-				<input type="text" class="postInput" name="wm_time">
+				<input type="time" class="postInput" name="wm_time">
 			</div>
 			<div class="post_Category">
 				<label>내용</label>
@@ -82,14 +88,6 @@
 					</div>
 				</div>
 			</div>
-			<div class="walk_PostCategory" id="address">
-				<label>주소 :&nbsp</label>
-				<select id="sido" class="walkCategoryFiled" >
-					<option th:each="itemSido : ${sidoList}" th:text="${itemSido.sido_name}" th:value="${itemSido.sido_num}"></option>
-				</select>
-				<select id="sigg" class="walkCategoryFiled"></select>
-				<select id="emd" name="emd_num" class="walkCategoryFiled"></select>
-			</div> 
 			
 			<div class="modal" id="myModal2">
 				<div class="modal-dialog">
@@ -148,6 +146,91 @@
 		</div>
 		</form>
 		
+		<!-- appkey 가져오기 -->
+		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e141a54b3e32d6131dd17f72265325ab&libraries=services"></script>
+		<script type="text/javascript">
+		$('#keyword').change(function(){
+		    searchPlaces();
+		});
+
+		var ps = new kakao.maps.services.Places(); 
+		var listEl = document.getElementById('placesList');
+
+		function searchPlaces() {
+		    var keyword = document.getElementById('keyword').value;
+		    if (!keyword.replace(/^\s+|\s+$/g, '')) {
+		        removeAllChildNods(listEl);
+		        return false;
+		    }
+		    ps.keywordSearch(keyword, placesSearchCB); 
+		}
+
+		function placesSearchCB(data, status, pagination) {
+		    if (status === kakao.maps.services.Status.OK) {
+		        displayPlaces(data);
+		    } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+		        removeAllChildNods(listEl);
+		        alert('검색 결과가 존재하지 않습니다.');
+		        return;
+		    } else if (status === kakao.maps.services.Status.ERROR) {
+		        alert('검색 결과 중 오류가 발생했습니다.');
+		        return;
+		    }
+		}
+
+		function displayPlaces(places) {
+		    var fragment = document.createDocumentFragment(); 
+		    removeAllChildNods(listEl);
+		    
+		    for (var i = 0; i < places.length; i++) {
+		        var itemEl = getListItem(i, places[i]);
+				
+		        // 클릭 이벤트 추가
+		        (function(place) {
+		            itemEl.onclick = function() {
+		                var key = document.getElementById('keyword');
+		                var latInput = document.getElementById('latitude');
+		                var lngInput = document.getElementById('longitude');
+
+		                // 장소 이름과 경위도 값을 input에 설정
+		                key.value = place.place_name;
+		                latInput.value = place.y; // 위도
+		                lngInput.value = place.x; // 경도
+		                
+		                // 리스트 초기화
+		                removeAllChildNods(listEl);       		
+		            };
+		        })(places[i]);
+		        
+		        fragment.appendChild(itemEl);
+		    }
+		    listEl.appendChild(fragment);
+		}
+
+		function getListItem(index, place) {
+		    var el = document.createElement('li'),
+		        itemStr = '<span class="markerbg marker_' + (index + 1) + '"></span>' +
+		                  '<div class="info">' +
+		                  '   <span class="info-title"><b>' + place.place_name + '</b></span>';
+		    
+		    if (place.road_address_name) {
+		        itemStr += '<br><span class="info-address"><small>' + place.road_address_name + '</small></span>';
+		    } else {
+		        itemStr += '<br><span class="info-address"><small>' + place.address_name + '</small></span>'; 
+		    }        
+
+		    el.innerHTML = itemStr;
+		    el.className = 'item';
+
+		    return el;
+		}
+
+		function removeAllChildNods(el) {   
+		    while (el.hasChildNodes()) {
+		        el.removeChild(el.lastChild);
+		    }
+		}
+		</script>
 		
 		<script>
 		    // myModal2를 열 때 myModal을 닫는 함수

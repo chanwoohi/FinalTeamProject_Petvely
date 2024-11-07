@@ -1,5 +1,6 @@
 package kr.kh.petvely.controller;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +51,7 @@ public class WalkMatePostController {
 	        model.addAttribute("msg", model.getAttribute("msg"));
 	    }
 	    List<WalkMatePostVO> list = walkMatePostService.getWalkMatePostList();
+	    Collections.reverse(list);
 	    model.addAttribute("list", list);
 		return "/walkmatepost/list";
 	}
@@ -76,6 +78,7 @@ public class WalkMatePostController {
 	@ResponseBody
 	public Map<String, Object> walkmatepostInsertPost(WalkMatePostVO walkMatePost, int[] selectedHostAniNums) {
 	    Map<String, Object> response = new HashMap<>();
+	    System.out.println(walkMatePost.getLatitude());
 	    if (walkMatePostService.insertWalkMatePost(walkMatePost, selectedHostAniNums)) {
 	        response.put("success", true);
 	        response.put("message", "게시글 등록에 성공하셨습니다.");
@@ -222,11 +225,11 @@ public class WalkMatePostController {
 	@PostMapping("/walkmatepost/approve/{po_num}")
 	public String walkmatepostApprove(@PathVariable int po_num,
 									  int [] selectedAniNums) {
-		
+		System.out.println("들어가긴하니??");
 		walkMateService.updateWalkMateMember(selectedAniNums, po_num);
 		
-		walkMatePostService.updateWalkmatePostState(po_num);
-		
+		boolean check = walkMatePostService.updateWalkmatePostState(po_num);
+		if(check) System.out.println("상태 변경 성공");
 		return "/walkmatepost/list";
 	}
 }
