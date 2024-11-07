@@ -214,9 +214,11 @@
 <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services,clusterer,drawing"></script>
 	<script>
-    // 서버에서 전달된 latitude와 longitude 값을 사용
-    var latitude = /*[[${walkMatePost.latitude}]]*/ 33.450701;
-    var longitude = /*[[${walkMatePost.longitude}]]*/ 126.570667;
+	var latitude = /*[[${walkMatePost.latitude}]]*/ 0;
+	var longitude = /*[[${walkMatePost.longitude}]]*/ 0;
+    
+    console.log("Latitude:", latitude);
+    console.log("Longitude:", longitude);
     
     var marker = {
         position: new kakao.maps.LatLng(latitude, longitude),
