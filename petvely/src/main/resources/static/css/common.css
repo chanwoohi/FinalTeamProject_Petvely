@@ -196,7 +196,7 @@ body {
 	padding: 20px;
 }
 
-.user_icon, .pet_icon {
+.user_icon>img, .pet_icon {
 	width: 100px;
 	height: 100px;
 	border-radius: 50%;
