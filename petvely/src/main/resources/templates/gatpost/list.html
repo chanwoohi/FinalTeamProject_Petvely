@@ -41,7 +41,9 @@ layout:decorate="~{layout/layout.html}">
 				</tbody>
 			</table>
 		</div>
-		<a class="btn btn-outline-dark" th:href="@{/gatpost/insert}">등록</a>
+		<th:block th:if ="${user != null}">
+			<a class="btn btn-outline-dark" th:href="@{/gatpost/insert}">등록</a>
+		</th:block>
 	</main>
 </body>
 </html>
