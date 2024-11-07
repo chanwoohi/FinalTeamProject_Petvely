@@ -102,10 +102,10 @@
 			</div>
 			<div class="form-group">
 				<a class="btn btn-outline-info" th:href="@{/gatpost/list}">목록으로</a>
-				<th:if test="${user != null && post.po_me_id eq user.me_id }">
+				<th:block th:if = "${user != null && me_id eq user.me_id }">
 					<a class="btn btn-outline-info" th:href="@{/gatpost/update/{po_num}(po_num=*{po_num})}">수정</a>
 					<a class="btn btn-outline-info" th:href="@{/gatpost/delete/{po_num}(po_num=*{po_num})}">삭제</a>
-				</th:if>
+				</th:block>
 			</div>
 		</div>
 		<script type="text/javascript">
