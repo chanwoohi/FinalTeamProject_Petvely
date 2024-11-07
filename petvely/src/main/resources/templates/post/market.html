@@ -140,7 +140,7 @@
 	                   <p class="card-text" th:text="${item.po_content}"></p>
 	                   <div class="price">가격: <span th:text="${item.mp_price}"></span></div>
 	                   <div th:if="${item.mp_gts_state == '판매완료'}" class="overlay">판매 완료</div>
-	                   <a th:href="@{/message/marketmessagesend/{po_num}(po_num=${item.po_num})}" class="btn">쪽지 보내기</a>
+	                   <a th:href="@{/message/marketmessagesend/{po_num}(po_num=${item.po_num})}" class="sendMessagebtn">쪽지 보내기</a>
 	                   <div class="tooltip" th:text="'상세 정보: ' + ${item.po_content}">상세 정보</div>
 	               </div>
 	           </div>
