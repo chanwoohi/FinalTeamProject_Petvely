@@ -42,7 +42,7 @@
 			                        <div th:text="*{me_id}" class="nickname" onclick="togglePopup()">닉네임</div>
 			                        <div class="nickname-popup" id="nicknamePopup">
 			                            <div class="popup-item" onclick="profile()">프로필 보기</div>
-			                            <div class="popup-item">쪽지 보내기</div>
+			                            <div class="popup-item" onclick="message()">쪽지 보내기</div>
 			                            <div class="popup-item">신고 하기</div>
 			                        </div>
 			                       <div class="article_info">
@@ -444,8 +444,16 @@
 			function profile()  {
 				var me_num = '[[${GATPost.me_num}]]';
     	 		console.log(me_num, '[[${GATPost.me_id}]]')
-    	 		let popOptionProfile = "width=300,height=300, top=300, left=1000";
+    	 		let popOptionProfile = "width=300,height=300, top=300, left=500";
 				let openUrlProfile = '/profile/profile?me_num='+ me_num;
+				window.open(openUrlProfile, 'Profile', popOptionProfile);
+	    	}
+			
+			function message()  {
+				var me_num = '[[${GATPost.me_num}]]';
+    	 		console.log(me_num, '[[${GATPost.me_id}]]')
+    	 		let popOptionProfile = "width=300,height=300, top=300, left=500";
+				let openUrlProfile = '/profile/message?me_num='+ me_num;
 				window.open(openUrlProfile, 'Profile', popOptionProfile);
 	    	}
 		</script>
