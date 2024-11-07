@@ -7,6 +7,23 @@
 <link rel="stylesheet" type="text/css" href="/css/common.css"> 
 <meta charset="UTF-8">
 <title>글 쓰기</title>
+
+<style type="text/css">
+	div input::file-selector-button {
+      	display: none;
+	}
+	.insertbtn {
+		top: 0px;
+	}
+	.file-upload {
+		display: flex;
+		justify-content: space-between;
+	}
+	.file-upload>input {
+		width: 30%;
+	}
+</style>
+
 </head>
 <body>
 	<main layout:fragment="content">
@@ -35,6 +52,14 @@
 				<div class="post_Category">
 					<label>내용</label> <span class="post_Mark">*</span>
 					<textarea placeholder="5자 이상의 글 내용을 입력해주세요" class="postText" id="po_content" name="po_content"></textarea>
+				</div>
+				<div class="post_Category">
+					<label>파일</label>
+					<div class=" file-upload">
+						<input type="file" class="insertbtn" name="fileList"/>
+						<input type="file" class="insertbtn" name="fileList"/>
+						<input type="file" class="insertbtn" name="fileList"/>
+					</div>
 				</div>
 				<div class="post_Btn">
 					<button class="post_submitBtn" id="submitBtn" disabled>글 등록</button>

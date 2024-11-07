@@ -35,10 +35,19 @@ public class MypageController {
 	private MarketPostService marketPostService;
 	
 	@GetMapping("/mypage/mypage")
-	public String showProfilePage(Model model) {
+	public String showProfilePage(Model model, @AuthenticationPrincipal CustomUser customUser) {
+		if(customUser != null) {
+			MemberVO user = customUser.getMember();
+			List<AnimalVO> animalVoList = animalService.selectPetList(user.getMe_num());
+			
+			AnimalVO animalVo = animalVoList.size() == 0 ? null : animalVoList.getFirst();
+			model.addAttribute("animalVo", animalVo);
+		}
+		
 		model.addAttribute("currentPage", "user");
 		return "/mypage/mypage";
 	}
+	
 	@GetMapping("/mypage/pet")
 	public String showgetProfilePage(Model model, @AuthenticationPrincipal CustomUser customUser) {
 		model.addAttribute("currentPage", "pet");

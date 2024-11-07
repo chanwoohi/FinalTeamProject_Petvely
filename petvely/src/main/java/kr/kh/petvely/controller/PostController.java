@@ -1,5 +1,6 @@
 package kr.kh.petvely.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,10 +15,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.kh.petvely.model.user.CustomUser;
+import kr.kh.petvely.model.vo.AnimalVO;
 import kr.kh.petvely.model.vo.CommunityVO;
+import kr.kh.petvely.model.vo.FileVO;
 import kr.kh.petvely.model.vo.MemberVO;
 import kr.kh.petvely.model.vo.PostVO;
 import kr.kh.petvely.model.vo.RecommendVO;
@@ -74,6 +78,14 @@ public class PostController {
 		List<CommunityVO> communities = postService.getCommunityList();
 		
 		System.out.println(list);
+
+		List<FileVO> thumbnailList = new ArrayList<FileVO>();
+		
+		list.forEach(postVo->{
+			thumbnailList.add(postService.getFileList(postVo.getPo_num()).size() == 0 ? null : postService.getFileList(postVo.getPo_num()).getFirst());
+		});
+		
+		model.addAttribute("thumbnailList", thumbnailList);
 	
 		// 카테고리 리스트를 가져옴
 		model.addAttribute("list", list);
@@ -102,7 +114,12 @@ public class PostController {
 	@PostMapping("/post/insert") // 글 작성 처리
 	public String postInsertPost(Model model, PostVO post, 
 								@RequestParam("po_co_num") int co_num,
-								@AuthenticationPrincipal CustomUser customUser) {
+								@AuthenticationPrincipal CustomUser customUser,
+								MultipartFile[] fileList) {
+		
+		for (MultipartFile multipartFile : fileList) {
+			System.out.println(multipartFile.getOriginalFilename());
+		}
 	  
 		post.setPo_co_num(co_num); // 선택된 카테고리 설정
 	    int meNum = customUser.getMeNum(); // 로그인된 사용자의 meNum 가져오기
@@ -113,7 +130,7 @@ public class PostController {
 	    model.addAttribute("me_id", meId);
 
 	    // 게시글 저장 처리
-	    boolean res = postService.addPost(post);
+	    boolean res = postService.addPost(post, fileList);
 	    
 	    if (res) {
 	        return "redirect:/post/list/" + co_num; // 성공 시 카테고리로
@@ -130,6 +147,11 @@ public class PostController {
 	    if (customUser != null) {
 			MemberVO user = customUser.getMember();
 			model.addAttribute("user", user);
+			
+			List<FileVO> fileVoList = postService.getFileList(po_num);
+			
+			System.out.println(fileVoList);
+			model.addAttribute("fileVoList", fileVoList);
 		}
 
 	    return "post/detail"; // 뷰 템플릿 반환
@@ -155,13 +177,18 @@ public class PostController {
 	        return "redirect:/post/list/" + post.getPo_co_num();  // 수정 페이지가 아닌 목록 페이지로 리디렉션
 	    }
 	    
+		List<FileVO> fileVoList = postService.getFileList(po_num);
+		System.out.println(fileVoList);
+	    
 	    model.addAttribute("post", post);
 	    model.addAttribute("communities", communities);
+		model.addAttribute("fileVoList", fileVoList);
 	    return "post/update";
 	}
 	@PostMapping("/post/update/{po_num}")
 	public String postUpdatePost(@PathVariable int po_num, @RequestParam("po_co_num") int co_num,
-								 PostVO post, @AuthenticationPrincipal CustomUser customUser) {
+								 PostVO post, @AuthenticationPrincipal CustomUser customUser,
+								 MultipartFile[] fileList, int[] fileNumList) {
 	    // 로그인 사용자와 게시글 작성자가 동일한지 확인 (또는 관리자)
 	    PostVO existingPost = postService.getPost(po_num);
 	    if (existingPost == null || (existingPost.getPo_me_num() != customUser.getMember().getMe_num())) {
@@ -171,7 +198,7 @@ public class PostController {
 	    // 수정된 내용 저장 처리
 	    post.setPo_num(po_num);  // 수정할 게시글 번호 설정
 	    post.setPo_co_num(co_num); //수정할 커뮤니티 번호
-	    postService.updatePost(post);
+	    postService.updatePost(post, fileList, fileNumList);
 	    
 	    return "redirect:/post/list/" + post.getPo_co_num();  // 수정 완료 후 해당 페이지로 이동
 	}

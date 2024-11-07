@@ -1,200 +1,226 @@
 
 <!DOCTYPE html>
-<html 
-	xmlns:th="http://www.thymeleaf.org"
+<html xmlns:th="http://www.thymeleaf.org" 
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout/layout.html}">
+	layout:decorate="~{layout/layout.html}"
+>
 <head>
 <link rel="stylesheet" type="text/css" href="/css/project.css">
 <meta charset="UTF-8">
 <title>detail</title>
 <style type="text/css">
-	.comment-item.comment-layer-1{
-		padding-left: 40px; display: none;
-	}
-	.comment-item.comment-layer-2{
-		padding-left: 80px; display: none;
-	}
-	
+.comment-item.comment-layer-1 {
+	padding-left: 40px;
+	display: none;
+}
+
+.comment-item.comment-layer-2 {
+	padding-left: 80px;
+	display: none;
+}
+.insertbtn {
+	top: 0px;
+}
+.file-upload {
+	display: flex;
+	justify-content: space-between;
+}
+.file-upload>a {
+    display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+	width: 30%;
+}
 </style>
 </head>
 <body>
 	<main layout:fragment="content">
 		<div class="contents">
 			<div th:if="${post != null}" th:object="${post}">
-					<div class="article_header">
-						<div class="title_area">
-							<h3 class="title_text" th:text ="*{po_title}"></h3>
-						</div>
-						<div class="WriterInfo">
-							<div class="profile-sectio">
+				<div class="article_header">
+					<div class="title_area">
+						<h3 class="title_text" th:text="*{po_title}"></h3>
+					</div>
+					<div class="WriterInfo">
+						<div class="profile-sectio">
 							<img class="user-profile-icon" th:src="@{/image/user_profile.png}" alt="UserProfile">
+						</div>
+						<!-- 닉네임 클릭 시 팝업 -->
+						<div class="nickname-container" style="position: relative;">
+							<div th:text="${post.me_id}" class="nickname" onclick="togglePopup()">닉네임</div>
+							<div class="nickname-popup" id="nicknamePopup">
+								<div class="popup-item">프로필 보기</div>
+								<div class="popup-item">쪽지 보내기</div>
+								<div class="popup-item">신고 하기</div>
 							</div>
-							<!-- 닉네임 클릭 시 팝업 -->
-		                    <div class="nickname-container" style="position: relative;">
-		                        <div th:text="${post.me_id}" class="nickname" onclick="togglePopup()">닉네임</div>
-		                        <div class="nickname-popup" id="nicknamePopup">
-		                            <div class="popup-item">프로필 보기</div>
-		                            <div class="popup-item">쪽지 보내기</div>
-		                            <div class="popup-item">신고 하기</div>
-		                        </div>
-		                       <div class="article_info">
-								    <span class="date" th:text="${post.po_date != null ? #dates.format(post.po_date, 'yyyy-MM-dd') : '날짜 없음'}"></span>
-								    조회 <span class="count" th:text="*{po_viewCount}"></span>
-						     	</div>
-		                    </div>
-				     	</div>
+							<div class="article_info">
+								<span class="date" th:text="${post.po_date != null ? #dates.format(post.po_date, 'yyyy-MM-dd') : '날짜 없음'}"></span>
+								조회 
+								<span class="count" th:text="*{po_viewCount}"></span>
+							</div>
+						</div>
 					</div>
-					<div class="main-contents">
-						<div th:utext="*{po_content}"></div>
-						<div class="thumbButtonContainerWrap">
-							<div class="thumbButtonContainer01">
-								<a href="#" data-state="1"
-								   class="btn-up btn btn"
-							       th:classappend="${re_state != 1} ? '-outline-danger' : '-danger'">
-							    <span class="thumbButton">👍</span>
-							    </a>
-							 </div>
-							 <div class="thumbButtonContainer02">
-							    <a href="#" data-state="-1"
-							       class="btn-down btn btn" 
-							       th:classappend="${re_state != -1} ? '-outline-danger' : '-danger'">
-							    <span class="thumbButton">👎</span>
-							    </a>
-						     </div>
-					    </div>
+				</div>
+				<div class="main-contents">
+					<div th:utext="*{po_content}"></div>
+					<div class="thumbButtonContainerWrap">
+						<div class="thumbButtonContainer01">
+							<a href="#" data-state="1" class="btn-up btn btn"
+								th:classappend="${re_state != 1} ? '-outline-danger' : '-danger'"> 
+								<span class="thumbButton">👍</span>
+							</a>
+						</div>
+						<div class="thumbButtonContainer02">
+							<a href="#" data-state="-1" class="btn-down btn btn"
+								th:classappend="${re_state != -1} ? '-outline-danger' : '-danger'"> 
+								<span class="thumbButton">👎</span>
+							</a>
+						</div>
 					</div>
+				</div>
+				<div th:if="${fileVoList.size() != 0 }">
+					<div class="post_Category">
+						<label>첨부파일</label>
+						<div class=" file-upload">
+							<a class="insertbtn" 
+								th:each="item : ${fileVoList}" 
+								th:text="${item.fi_ori_name}"
+								th:href="${item.fi_name}"
+								th:attr="download=${item.fi_ori_name}"></a>
+						</div>
+					</div>
+				</div>
 				<!-- <a class="btn btn-outline-info" th:href="@{/post/list/{po_num}(po_num=*{po_num})}">목록으로</a> -->
-					<div class="qaDetailContainer">
-						<div class="qaDetailinfo">
-							<a class="qaDetail_qaDetailInfoBtn" th:href="@{/post/update/{po_num}(po_num=*{po_num})}">수정</a>
-						</div>
-						<div class="qaDetailDelete">
-							<a class="qaDetail_qaDetailDeleteBtn" th:href="@{/post/delete/{po_num}(po_num=${po_num})}">삭제</a>
-						</div>
+				<div class="qaDetailContainer">
+					<div class="qaDetailinfo">
+						<a class="qaDetail_qaDetailInfoBtn" th:href="@{/post/update/{po_num}(po_num=*{po_num})}">수정</a>
+					</div>
+					<div class="qaDetailDelete">
+						<a class="qaDetail_qaDetailDeleteBtn" th:href="@{/post/delete/{po_num}(po_num=${po_num})}">삭제</a>
 					</div>
 				</div>
-				</div>
-				<div class="form-group">
-					<button class="btn btn-outline-info" id="commentButton">댓글</button>
-				</div>
-				<div class="form-group commentList" id="commentList" style="display: none;">
-					<div id="comment">
-						
+			</div>
+		</div>
+		<div class="form-group">
+			<button class="btn btn-outline-info" id="commentButton">댓글</button>
+		</div>
+		<div class="form-group commentList" id="commentList" style="display: none;">
+			<div id="comment"></div>
+			<th:block th:if="${user != null}">
+				<div class="input-group mb-3">
+					<textarea class="form-control" placeholder="댓글 입력" id="input-comment"></textarea>
+					<div class="input-group-append">
+						<span class="input-group-text btn-insert" id="btn_insert0">등록</span>
 					</div>
-					<th:block th:if ="${user != null}">
-						<div class="input-group mb-3">
-						    <textarea class="form-control" placeholder="댓글 입력" id="input-comment"></textarea>
-						    <div class="input-group-append">
-								<span class="input-group-text btn-insert" id="btn_insert0">등록</span>
-						    </div>
-						</div>
-					</th:block>
 				</div>
-	<script th:inline="javascript">
-	// 팝업 토글 함수
-    function togglePopup() {
-        const popup = document.getElementById('nicknamePopup');
-        if (popup.style.display === 'none' || popup.style.display === '') {
-            popup.style.display = 'block';  // 팝업을 보여줌
-        } else {
-            popup.style.display = 'none';  // 팝업을 숨김
-        }
-    }
-
-    // 페이지 외부를 클릭하면 팝업을 닫음
-    window.onclick = function(event) {
-        const popup = document.getElementById('nicknamePopup');
-        if (!event.target.matches('.nickname')) {
-            if (popup.style.display === 'block') {
-                popup.style.display = 'none';
-            }
-        }
-    }
-    // 추천/비추천 버튼 클릭 이벤트
-    $('.btn-up, .btn-down').click(function(e) {
-        e.preventDefault();
-        if (!checkLogin()) {
-            return;
-        }
-
-        // 추천: 1, 비추천: -1 상태
-        let state = $(this).data('state');
-        // Thymeleaf에서 JS 변수로 게시글 번호를 전달
-        var num = /*[[${post.po_num}]]*/ "0";  
-        // 게시글 번호를 Thymeleaf로 전달
-
-        $.ajax({
-            url: '/post/recommend',
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                state: state,
-                num: num
-            },
-            success: function(data) {
-            	
-                let res = data.result;
-                if (res == 1) {
-                    alert('추천했습니다.');
-                } else if (res == -1) {
-                    alert('비추천했습니다.');
-                } else {
-                    alert(`${state == 1 ? '추천' : '비추천'}을 취소했습니다.`);
-                }
-
-                checkRecommendBtns(res);
-                console.log(res);
-
-                // 업데이트된 추천/비추천 수 반영
-                let post = data.post;
-                $('.thumbButtonContainer01 span').text(post.po_recommendCount);
-                $('.thumbButtonContainer02 span').text(post.po_notRecommendCount);
-            },
-            error: function(xhr) {
-                if (xhr.status === 400) {  // 400 에러 처리
-                    let response = JSON.parse(xhr.responseText);
-                    alert(response.error);  // "로그인이 필요합니다." 메시지 출력
-                    location.href = '/member/login';  // 로그인 페이지로 리다이렉트
-                } else {
-                    alert('오류가 발생했습니다.');
-                }
-            }
-        });
-    });
-    function checkRecommendBtns(state) {
-        // 모든 추천/비추천 버튼을 기본 스타일로 초기화
-        $('.thumbButtonContainer01, .thumbButtonContainer02').removeClass('btn btn-light');
-        $('.thumbButtonContainer01, .thumbButtonContainer02').addClass('btn btn-outline-light');
-
-        // 추천(1) 또는 비추천(2)에 따라 스타일 변경
-        if (state != 0) {
-            $(state == 1 ? '.thumbButtonContainer01' : '.thumbButtonContainer02').removeClass('btn-outline-light');
-            $(state == 1 ? '.thumbButtonContainer01' : '.thumbButtonContainer02').addClass('btn-light');
-        }
-    }
-    // 로그인 확인 함수
-    function checkLogin(){
-    	 // 로그인된 사용자 ID를 Thymeleaf를 통해 가져옴
-        let userId = /*[[${#authentication.principal}]]*/ false;
-
-		console.log("1:" + userId);
+			</th:block>
+		</div>
 		
-        if (userId == '') {  // 로그인되지 않은 상태
-            if (confirm('로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?')) {
-                location.href = '[[@{/member/login}]]';  // 로그인 페이지로 이동
-                return false;
-            } else {
-                return false;
-            }
-        }
-        return true;
-    }
-    
+		<script th:inline="javascript">
+		// 팝업 토글 함수
+	    function togglePopup() {
+	        const popup = document.getElementById('nicknamePopup');
+	        if (popup.style.display === 'none' || popup.style.display === '') {
+	            popup.style.display = 'block';  // 팝업을 보여줌
+	        } else {
+	            popup.style.display = 'none';  // 팝업을 숨김
+	        }
+	    }
+	
+	    // 페이지 외부를 클릭하면 팝업을 닫음
+	    window.onclick = function(event) {
+	        const popup = document.getElementById('nicknamePopup');
+	        if (!event.target.matches('.nickname')) {
+	            if (popup.style.display === 'block') {
+	                popup.style.display = 'none';
+	            }
+	        }
+	    }
+	    // 추천/비추천 버튼 클릭 이벤트
+	    $('.btn-up, .btn-down').click(function(e) {
+	        e.preventDefault();
+	        if (!checkLogin()) {
+	            return;
+	        }
+	
+	        // 추천: 1, 비추천: -1 상태
+	        let state = $(this).data('state');
+	        // Thymeleaf에서 JS 변수로 게시글 번호를 전달
+	        var num = /*[[${post.po_num}]]*/ "0";  
+	        // 게시글 번호를 Thymeleaf로 전달
+	
+	        $.ajax({
+	            url: '/post/recommend',
+	            type: 'POST',
+	            dataType: 'json',
+	            data: {
+	                state: state,
+	                num: num
+	            },
+	            success: function(data) {
+	            	
+	                let res = data.result;
+	                if (res == 1) {
+	                    alert('추천했습니다.');
+	                } else if (res == -1) {
+	                    alert('비추천했습니다.');
+	                } else {
+	                    alert(`${state == 1 ? '추천' : '비추천'}을 취소했습니다.`);
+	                }
+	
+	                checkRecommendBtns(res);
+	                console.log(res);
+	
+	                // 업데이트된 추천/비추천 수 반영
+	                let post = data.post;
+	                $('.thumbButtonContainer01 span').text(post.po_recommendCount);
+	                $('.thumbButtonContainer02 span').text(post.po_notRecommendCount);
+	            },
+	            error: function(xhr) {
+	                if (xhr.status === 400) {  // 400 에러 처리
+	                    let response = JSON.parse(xhr.responseText);
+	                    alert(response.error);  // "로그인이 필요합니다." 메시지 출력
+	                    location.href = '/member/login';  // 로그인 페이지로 리다이렉트
+	                } else {
+	                    alert('오류가 발생했습니다.');
+	                }
+	            }
+	        });
+	    });
+	    function checkRecommendBtns(state) {
+	        // 모든 추천/비추천 버튼을 기본 스타일로 초기화
+	        $('.thumbButtonContainer01, .thumbButtonContainer02').removeClass('btn btn-light');
+	        $('.thumbButtonContainer01, .thumbButtonContainer02').addClass('btn btn-outline-light');
+	
+	        // 추천(1) 또는 비추천(2)에 따라 스타일 변경
+	        if (state != 0) {
+	            $(state == 1 ? '.thumbButtonContainer01' : '.thumbButtonContainer02').removeClass('btn-outline-light');
+	            $(state == 1 ? '.thumbButtonContainer01' : '.thumbButtonContainer02').addClass('btn-light');
+	        }
+	    }
+	    // 로그인 확인 함수
+	    function checkLogin(){
+	    	 // 로그인된 사용자 ID를 Thymeleaf를 통해 가져옴
+	        let userId = /*[[${#authentication.principal}]]*/ false;
+	
+			console.log("1:" + userId);
+			
+	        if (userId == '') {  // 로그인되지 않은 상태
+	            if (confirm('로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?')) {
+	                location.href = '[[@{/member/login}]]';  // 로그인 페이지로 이동
+	                return false;
+	            } else {
+	                return false;
+	            }
+	        }
+	        return true;
+	    }
+	    
     	let me_num = '[[${user != null ? user.me_num : 0}]]';
     	let po_num = '[[${post.po_num}]]';
 		
-		$ (document).ready ( function () { 
+		$(document).ready ( function () { 
 			document.getElementById("commentButton").click();
 		}); 
 		
@@ -468,8 +494,8 @@
 			let openUrl = '/comment/update?cm_num='+ cm_num;
 			myWindow = window.open(openUrl, 'pop', popOption);
 		})
-		
-	</script>	
+			
+		</script>
 	</main>
 </body>
 </html>

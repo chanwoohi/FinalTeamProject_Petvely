@@ -38,8 +38,8 @@
 	            </thead>
 	            <tbody>
 	                <!-- 데이터가 있을 경우 렌더링 -->
-	                <tr th:each="post : ${list}">
-	                	<td class="tableImg"><img class="pet_Petimg" th:src="@{/image/image_not_found_new.png}" alt="기본 이미지" style="width:80px;"/></td>
+	                <tr th:each="post, iter : ${list}">
+	                	<td class="tableImg"><img class="pet_Petimg" th:src="${thumbnailList[iter.index] == null ? '/image/image_not_found_new.png' : thumbnailList[iter.index].fi_name}" alt="기본 이미지" style="width:80px;"/></td>
 	                    <td th:text="${post.po_num}"></td> <!-- 번호 -->
 						<td>
 							<!-- 사용자 확인 -->

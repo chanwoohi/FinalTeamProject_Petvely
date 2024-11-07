@@ -1,45 +1,92 @@
 <!DOCTYPE html>
-<html 
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-	layout:decorate="~{layout/layout.html}">
+<html xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout.html}"
+>
 <head>
 <link rel="stylesheet" type="text/css" href="/css/common.css">
 <meta charset="UTF-8">
 <title>update</title>
+<style type="text/css">
+.insertbtn {
+	top: 0px;
+}
+.file-upload {
+	display: flex;
+	justify-content: space-between;
+}
+.file-upload>.insertbtn {
+    display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+	width: 30%;
+}
+div input::file-selector-button {
+	display: none;
+}
+</style>
 </head>
 <body>
 	<main layout:fragment="content">
-		<form method="post" th:object="${post}" th:action="@{/post/update/{po_num}(po_num=*{po_num})}">
-		<input type="hidden" th:field="*{po_num}"/>
-		  <!-- 카테고리 선택 -->
-		  <div class="post_Container">
-		    <span class="post_Category">카테고리</span>
-		          	<div class="post_PostCategory">
-					      <select class="categoryFiled" id="category" name="po_co_num" required>
-						    <option value="">게시판을 선택하세요</option>
-						    <!-- 카테고리 목록을 동적으로 생성 -->
-						    <option th:each="item : ${communities}" 
-						            th:value="${item.co_num}" 
-						            th:text="${item.co_name}" 
-						            th:selected="${post.po_co_num eq item.co_num}">
-						    </option>
-						</select>
+		<form method="post" th:object="${post}" th:action="@{/post/update/{po_num}(po_num=*{po_num})}" enctype="multipart/form-data">
+			<input type="hidden" th:field="*{po_num}" />
+			<!-- 카테고리 선택 -->
+			<div class="post_Container">
+				<span class="post_Category">카테고리</span>
+				<div class="post_PostCategory">
+					<select class="categoryFiled" id="category" name="po_co_num" required>
+						<option value="">게시판을 선택하세요</option>
+						<!-- 카테고리 목록을 동적으로 생성 -->
+						<option th:each="item : ${communities}" th:value="${item.co_num}" th:text="${item.co_name}"
+							th:selected="${post.po_co_num eq item.co_num}"
+						></option>
+					</select>
+				</div>
+				<div class="post_Category">
+					<label>제목</label> <input type="text" class="postInput" name="po_title" th:field="*{po_title}">
+				</div>
+				<div class="post_Category">
+					<label>내용</label>
+					<textarea class="postText" th:field="*{po_content}"></textarea>
+				</div>
+				
+				<div class="post_Category">
+					<label>첨부파일</label>
+					<div class=" file-upload">
+						<input name="fileList" class="insertbtn" 
+							type="file"
+							th:each="item : ${#numbers.sequence(1, 3 - fileVoList.size(), 1)}"/>
+							
+						<th:block
+							th:if="${fileVoList.size() > 0}" 
+							th:each="item : ${fileVoList}">
+							<a class="insertbtn" th:text="${item.fi_ori_name}"></a>
+							<a href="javascript:void(0);" class="btn-del" th:attr="data-num=${item.fi_num}">X</a>
+						</th:block>
 					</div>
-					<div class="post_Category">
-						<label>제목</label>
-						<input type="text" class="postInput" name="po_title"  th:field="*{po_title}">
-					</div>
-					<div class="post_Category">
-						<label>내용</label>
-						<textarea class="postText" th:field="*{po_content}"></textarea>
-					</div>
-					<div class="post_Btn">
-						<button class="post_submitBtn">글 수정</button>
-						<a class="post_inventoryBtn" th:href="@{/post/list/{po_co_num}(po_co_num=${post.po_co_num})}">목록으로</a>
-					</div>
+				</div>
+			
+				<div class="post_Btn">
+					<button class="post_submitBtn">글 수정</button>
+					<a class="post_inventoryBtn" th:href="@{/post/list/{po_co_num}(po_co_num=${post.po_co_num})}">목록으로</a>
+				</div>
 			</div>
 		</form>
+
+	    <script>
+		$(document).ready(function() {
+	    	$('.btn-del').click(function(){
+	    		var fi_num = $(this).data('num');
+	    		var str1 = `<input type="hidden" name="fileNumList" value="${fi_num}">`;
+	    		var str2 = `<input type="file" name="fileList" class="insertbtn"/>`
+	    		$('.file-upload').append(str1);
+	    		$('.file-upload').append(str2);
+	    		$(this).prev().remove();
+	    		$(this).remove();
+	    	});
+		});
+	    </script>
 	</main>
 
 </body>
