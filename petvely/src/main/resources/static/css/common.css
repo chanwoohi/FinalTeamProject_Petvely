@@ -740,3 +740,33 @@ button {
 	color: #000;
 	background-color: #ffc107;
 }
+
+/* 산책 - 주소 */
+.market_PostCategory {
+	display: flex;
+	margin-block: 11px;
+	align-items: center; 
+}
+.marketCategoryFiled {
+	width: 15%; 
+	display: inline-block;
+	height: 36px; 
+	border: 1px solid #e4e4e6;
+	border-radius: 5px;
+	padding: 0 10px; 
+	margin-right: 5px; 
+}
+.marketbutton{
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #000;
+    background-color: #ffd966;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    margin: 7px;
+}
+.marketbutton:hover{
+	background-color: #ffEBB9;
+}

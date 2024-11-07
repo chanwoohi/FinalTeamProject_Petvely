@@ -2,7 +2,7 @@
 <html 
     xmlns:th="http://www.thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-    layout:decorate="~{layout/layout.html}">
+    layout:decorate="~{layout/layout2.html}">
 <head>
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
@@ -10,18 +10,18 @@
 <body>
     <main layout:fragment="content">
         <form method="post" th:action="@{/post/marketinsert/11}" enctype="multipart/form-data">
-            
-            <div class="form-group">
-                <label>게시글 제목:</label>
-                <input type="text" class="form-control" name="po_title" >
+           <div class="post_Container">
+            <div class="post_Category">
+                <label>제목</label> <span class="post_Mark">*</span>
+                <input placeholder="제목을 입력해주세요" type="text" class="form-control" name="po_title" >
             </div>
-            <div class="form-group">
-                <label>게시글 내용:</label>
-                <textarea id="content" class="form-control" style="min-height: 400px; height: auto;" name="po_content"></textarea>
+            <div class="post_Category">
+                <label>내용</label> <span class="post_Mark">*</span>
+                <textarea placeholder="5자 이상의 글 내용을 입력해주세요" id="content" class="postText" name="po_content"></textarea>
             </div>
-            <div class="form-group">
-                <label>타입:</label>
-                <select class="form-control" name="mp_gt_type">
+            <div class="market_PostCategory">
+                <label>타입&nbsp</label>
+                <select class="marketCategoryFiled" name="mp_gt_type">
                     <option value="">선택하세요</option>
                     <option th:each="type : ${types}" 
                             th:value="${type.gt_type}" 
@@ -45,6 +45,7 @@
                 <input type="file" class="form-control" name="fileList" multiple />
             </div>
             <button class="btn btn-outline-info col-12" type="submit">게시글 등록</button>
+			</div>
         </form>
     </main>
 
