@@ -51,12 +51,13 @@ select{
 	font-size: 15px;
 }
 .categoryFiled{
-	width: 25%;
+	width: 15%;
 	display: block;
 	height: 40px;
 	border: 1px solid #e4e4e6;
 	border-radius: 5px;
-	padding: 0 24px 0 12px;	
+	padding: 0 25px 0 10px;	
+	margin-right: 7px;
 }
 
 .post_Btn {
@@ -698,7 +699,9 @@ button {
 }
 
 /* 중고마켓 */
-
+.otherTitles{
+	margin: 34px 0px 34px;
+}
 .search-form input {
 	width: 100%;
 }
@@ -813,8 +816,8 @@ button {
 }
 .gatpost_Btn {
 	display: flex;
-	align-items: center;      /* 수직 가운데 정렬 */
-	justify-content: center;   /* 가로 방향 가운데 정렬 */
+	align-items: center;      
+	justify-content: center;  
 	margin: 0 0 40px 0;
 }
 .gatpost_Category {
@@ -828,7 +831,7 @@ button {
 }
 .gatpost_sidoList{
 	display: flex;
-	align-items: center;      /* 수직 가운데 정렬 */
-	justify-content: left;   /* 가로 방향 가운데 정렬 */
+	align-items: center;     
+	justify-content: left;   
 	margin-block: 11px;
 }
