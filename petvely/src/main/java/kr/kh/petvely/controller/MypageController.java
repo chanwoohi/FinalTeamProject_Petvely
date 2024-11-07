@@ -67,6 +67,7 @@ public class MypageController {
 		int me_num = user.getMe_num();
 		List<CommentVO> list = mypageService.getCommentList(me_num);
 		model.addAttribute("list", list);
+		System.out.println(list);
 		return "member/mypage/commentList";
 	}
 	
