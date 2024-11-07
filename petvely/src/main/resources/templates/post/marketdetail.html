@@ -125,10 +125,7 @@
                     <form method="post" th:action="@{/post/marketcomplete/{po_num}(po_num=${post.po_num})}">
                         <button type="submit" class="btn btn-dark">거래완료</button>
                     </form>
-                   
-                    <div th:if="${">
  	                   <a class="btn btn-dark" th:href="@{/post/marketupdate/{po_num}(po_num=*{po_num})}">수정</a>
-                    </div>
                 </div>
             </div>
         </div>
