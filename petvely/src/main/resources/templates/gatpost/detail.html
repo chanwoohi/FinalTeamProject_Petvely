@@ -443,10 +443,10 @@
 			
 			function profile()  {
 				var me_num = '[[${GATPost.me_num}]]';
-    	 		console.log(me_num)
-    	 		let popOption = "width=300,height=300, top=300, left=1000";
-				let openUrl = '/comment/update?cm_num='+ cm_num;
-				window.open(openUrl, 'pop', popOption);
+    	 		console.log(me_num, '[[${GATPost.me_id}]]')
+    	 		let popOptionProfile = "width=300,height=300, top=300, left=1000";
+				let openUrlProfile = '/profile/profile?me_num='+ me_num;
+				window.open(openUrlProfile, 'Profile', popOptionProfile);
 	    	}
 		</script>
 	</main>

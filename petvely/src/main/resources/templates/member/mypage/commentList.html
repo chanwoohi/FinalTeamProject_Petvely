@@ -32,7 +32,15 @@
 							
 							<td th:text="${item.cm_num}"></td>
 							<td>
-								<a th:text="${item.cm_content}" th:href="@{/gatpost/detail/{po_num}(po_num=${item.po_num})}"></a>
+								<th:block th:if ="${item.po_co_num <= 4}">
+									<a th:text="${item.cm_content}" th:href="@{/post/detail/{po_num}(po_num=${item.po_num})}"></a>
+								</th:block>
+								<th:block th:if ="${item.po_co_num == 10}">
+									<a th:text="${item.cm_content}" th:href="@{/walkmatepost/detail/{po_num}(po_num=${item.po_num})}"></a>
+								</th:block>
+								<th:block th:if ="${item.po_co_num == 12}">
+									<a th:text="${item.cm_content}" th:href="@{/gatpost/detail/{po_num}(po_num=${item.po_num})}"></a>
+								</th:block>
 							</td>
 							<td th:text="${item.me_id}"></td>
 							<td>
