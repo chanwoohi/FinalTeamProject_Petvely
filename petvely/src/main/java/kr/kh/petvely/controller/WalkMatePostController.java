@@ -1,5 +1,6 @@
 package kr.kh.petvely.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,11 +17,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.kh.petvely.model.user.CustomUser;
 import kr.kh.petvely.model.vo.AnimalVO;
 import kr.kh.petvely.model.vo.MemberVO;
+import kr.kh.petvely.model.vo.MessageVO;
+import kr.kh.petvely.model.vo.PostVO;
 import kr.kh.petvely.model.vo.Sido_AreasVO;
 import kr.kh.petvely.model.vo.WalkMateMemberVO;
 import kr.kh.petvely.model.vo.WalkMatePostVO;
 import kr.kh.petvely.service.AddressService;
 import kr.kh.petvely.service.AnimalService;
+import kr.kh.petvely.service.MessageService;
 import kr.kh.petvely.service.PostService;
 import kr.kh.petvely.service.WalkMatePostService;
 import kr.kh.petvely.service.WalkMateService;
@@ -43,6 +47,9 @@ public class WalkMatePostController {
 	
 	@Autowired
 	private AddressService addressService;
+	
+	@Autowired
+	private MessageService messageService;
 	
 	@GetMapping("/walkmatepost/list")
 	public String walkmatepostList(Model model) {
@@ -221,11 +228,39 @@ public class WalkMatePostController {
 	}
 	@PostMapping("/walkmatepost/approve/{po_num}")
 	public String walkmatepostApprove(@PathVariable int po_num,
-									  int [] selectedAniNums) {
+									  int [] selectedAniNums,
+									  @AuthenticationPrincipal CustomUser customUser) {
 		
 		walkMateService.updateWalkMateMember(selectedAniNums, po_num);
+		System.out.println(selectedAniNums);
 		
 		walkMatePostService.updateWalkmatePostState(po_num);
+		
+		if(customUser != null) {
+			MemberVO user = customUser.getMember();
+			int senderNum = user.getMe_num();
+			
+		
+				WalkMateMemberVO comer = walkMateService.getReceiverNum(selectedAniNums);
+				System.out.println(comer);
+				int receiverNum = comer.getAni_me_num();
+				System.out.println("받는사람 : " + receiverNum);
+				String content = "산책메이트가 승인 되었습니다.";
+				
+				MessageVO message = new MessageVO();
+				message.setMes_me_senderNum(senderNum); 
+				message.setMes_me_receiverNum(receiverNum); 
+				message.setMes_content(content); 
+				message.setMes_date(new Date()); 
+				System.out.println("산책 msg : "+message);
+				
+				messageService.WalkMateMessage(message);
+				
+				return "/walkmatepost/list";
+			}
+			
+		
+		
 		
 		return "/walkmatepost/list";
 	}

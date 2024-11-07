@@ -27,6 +27,8 @@ public interface MessageDAO {
 
 	int deleteMessage(int mes_num);
 
+	boolean sendWalkMateMessage(MessageVO message);
+
 
 
 

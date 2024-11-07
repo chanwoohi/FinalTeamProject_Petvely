@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.kh.petvely.dao.WalkMateDAO;
+import kr.kh.petvely.model.vo.WalkMateMemberVO;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -29,6 +30,11 @@ public class WalkMateService {
             walkMateDao.updateWmmApprove(aniNum, po_num);
         }
 		
+	}
+
+	public WalkMateMemberVO getReceiverNum(int[] selectedAniNums) {
+		
+		return walkMateDao.selectComerNum(selectedAniNums);
 	}
 
 }
