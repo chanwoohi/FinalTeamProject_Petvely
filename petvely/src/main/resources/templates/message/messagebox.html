@@ -105,7 +105,15 @@
             </div>
         </div>
         <a class="btn btn-primary send-button" th:href="@{/message/send}">쪽지 보내기</a>
-    </div>
+         <!-- 메시지 출력 부분 -->
+      <script th:inline="javascript">
+        /*<![CDATA[*/
+        var msg = /*[[${msg}]]*/ '';
+        if (msg) {
+            alert(msg);
+        }
+        /*]]>*/
+    </script>
     </main>
 </body>
 </html>

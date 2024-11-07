@@ -10,4 +10,12 @@
 		delete from walkmatemember
 		where wmm_po_num = #{po_num} and wmm_me_num = #{me_num}
 	</delete>
+	<select id="selectComerNum">
+		select 
+			* 
+		from 
+			walkmatemember
+		where 
+			wmm_me_num = #{receiverNum}
+	</select>
 </mapper>
