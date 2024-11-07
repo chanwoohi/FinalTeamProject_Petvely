@@ -18,7 +18,7 @@
 </head>
 <body>
 	<main layout:fragment="content">
-		<div class="form-group" th:object="${GATPost}" style="padding-top: 20px">
+		<div class="contents" th:object="${GATPost}" style="padding-top: 20px">
 			<div class="form-group">
 				<div th:if="${GATPost.gat_gat.equals('o')}">
 					<input class="btn btn-outline-info text-center" type="text" readonly value="GIVE">
@@ -29,53 +29,53 @@
 					<input class="btn btn-outline-info text-center btn-state" type="text" readonly th:field="*{gat_gats_state}" th:value="*{gat_gats_state}">
 				</div>
 			</div>
-			<div class="form-group">
-				<label>제목:</label>
-				<input type="text" class="form-control" readonly th:field="*{po_title}">
-			</div>
-			<div class="WriterInfo">
-								<div class="profile-sectio">
-								<img class="user-profile-icon" th:src="@{/image/user_profile.png}" alt="UserProfile">
-								</div>
-								<!-- 닉네임 클릭 시 팝업 -->
-			                    <div class="nickname-container" style="position: relative;">
-			                        <div th:text="*{me_id}" class="nickname" onclick="togglePopup()">닉네임</div>
-			                        <div class="nickname-popup" id="nicknamePopup">
-			                            <div class="popup-item" onclick="profile()">프로필 보기</div>
-			                            <div class="popup-item" onclick="message()">쪽지 보내기</div>
-			                            <div class="popup-item">신고 하기</div>
-			                        </div>
-			                       <div class="article_info">
-									    <span class="date" th:text="*{po_date != null ? #dates.format(po_date, 'yyyy-MM-dd') : '날짜 없음'}"></span>
-									    조회 <span class="count" th:text="*{po_viewCount}"></span>
-							     	</div>
-			                    </div>
-					     </div>
-			<div class="form-group">
-				<label>내용:</label>
-				<div class="form-control" style="min-height: 400px; height: auto;"
-					th:utext="*{po_content}">
+			<div class="article_header">
+				<div class="title_area">
+					<h3 class="title_text" th:text="*{po_title}"></h3>
 				</div>
+				<div class="WriterInfo">
+						<div class="profile-sectio">
+						<img class="user-profile-icon" th:src="@{/image/user_profile.png}" alt="UserProfile">
+						</div>
+						<!-- 닉네임 클릭 시 팝업 -->
+	                    <div class="nickname-container" style="position: relative;">
+	                        <div th:text="*{me_id}" class="nickname" onclick="togglePopup()">닉네임</div>
+	                        <div class="nickname-popup" id="nicknamePopup">
+	                            <div class="popup-item" onclick="profile()">프로필 보기</div>
+	                            <div class="popup-item" onclick="message()">쪽지 보내기</div>
+	                            <div class="popup-item">신고 하기</div>
+	                        </div>
+	                       <div class="article_info">
+							    <span class="date" th:text="*{po_date != null ? #dates.format(po_date, 'yyyy-MM-dd') : '날짜 없음'}"></span>
+							    조회 <span class="count" th:text="*{po_viewCount}"></span>
+					     	</div>
+	                    </div>
+			     </div>
+		    </div>
+		    <div class="main-contents">
+				<div th:utext="*{po_content}"></div>
 			</div>
 			<div class="form-group">
-				<label>타입:</label>
+				<label>타입</label>
 				<input type="text" class="form-control" readonly th:field="*{gat_gatt_type}">
 			</div>
 			<div class="form-group">
-				<label>시작기간:</label>
+				<label>시작기간</label>
 				<input type="date" class="form-control" readonly name="gat_startDate"
 					th:value="*{#dates.format(gat_startDate, 'yyyy-MM-dd')}">
 			</div>
 			<div class="form-group">
-				<label>종료기간:</label>
+				<label>종료기간</label>
 				<input type="date" class="form-control" readonly name="gat_endDate"
 					th:value="*{#dates.format(gat_endDate, 'yyyy-MM-dd')}">
 			</div>
 			<div class="form-group">
-				<label>주소:</label>
-				<input type="text" class="form-control" readonly th:field="*{sido_name}">
-				<input type="text" class="form-control" readonly th:field="*{sigg_name}">
-				<input type="text" class="form-control" readonly th:field="*{emd_name}">
+				<label>주소</label>
+				<div style="display: flex; ">
+					<input type="text" style="width: 33%;" class="form-control" readonly th:field="*{sido_name}">
+					<input type="text" style="width: 33%;" class="form-control" readonly th:field="*{sigg_name}">
+					<input type="text" style="width: 33%;" class="form-control" readonly th:field="*{emd_name}">
+				</div>
 			</div>
 			<div>
 				<a th:if="${bookmark}!=${po_num}" class="btn btn-outline-warning" th:href="@{/post/bookmark/insert/{po_num}(po_num=*{po_num})}" >즐겨찾기⭐</a>
@@ -456,6 +456,8 @@
 				let openUrlProfile = '/profile/message?me_num='+ me_num;
 				window.open(openUrlProfile, 'Profile', popOptionProfile);
 	    	}
+			
+			
 		</script>
 	</main>
 </body>
