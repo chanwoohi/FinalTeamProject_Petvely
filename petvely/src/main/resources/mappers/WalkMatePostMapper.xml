@@ -12,7 +12,7 @@
 	</select>
 	<insert id="insertWalkMatePost">
 		insert into walkmatepost(po_num, wm_date, wm_time, longitude, latitude, wm_emd_num)
-		values(#{po_num}, #{wm_date}, #{wm_time}, #{longitude}, #{latitude}, 0)
+		values(#{po_num}, #{wm_date}, #{wm_time}, #{longitude}, #{latitude}, 1)
 	</insert>
 	<select id="selectWalkMatePost" resultType="WalkMatePostVO">
 		select * from walkmatepost

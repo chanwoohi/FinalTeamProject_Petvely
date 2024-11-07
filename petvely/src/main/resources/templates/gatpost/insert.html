@@ -4,67 +4,70 @@ xmlns:th="http://www.thymeleaf.org"
 xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
 layout:decorate="~{layout/layout.html}">
 <head>
+<link rel="stylesheet" type="text/css" href="/css/common.css"> 
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
 	<main layout:fragment="content">
-		<form class="form-group" method="post" th:action="@{/gatpost/insert}">
+		<form method="post" th:action="@{/gatpost/insert}"  enctype="multipart/form-data">
+		<div class="post_Container">
 			<input type="hidden" class="form-control" name="po_co_num" required="required" value="12">
 			<input type="hidden" class="form-control" name="po_me_num" th:value="${Userlist.me_num}">
+			<input type="hidden" class="form-control" name="po_viewCount" value="0">
 			<div class="form-group" id="GT">
-				<label>품앗이:</label>
+				<label>품앗이</label>
 				<!-- 유효성 검사로 오류 표시로 바꿀것 -->
 				<input type="text" id="gat_gat" name="gat_gat" required="required" style="display: none;">
 				<a id="give" class="btn btn-outline-info" onclick="">GIVE</a>
 				<a id="take" class="btn btn-outline-info" onclick="">TAKE</a>
 			</div>
-			<div class="form-group">
-				<label>제목:</label>
-				<input type="text" class="form-control" name="po_title" required="required">
+			<div  class="post_Category">
+				<label>제목</label> <span class="post_Mark">*</span>
+				<input placeholder="제목을 입력해주세요" type="text" class="form-control" name="po_title" required="required">
 			</div>
+			<div class="post_Category">
+					<label>내용</label> <span class="post_Mark">*</span>
+					<textarea placeholder="5자 이상의 글 내용을 입력해주세요" class="postText" id="po_content" name="po_content"></textarea>
+				</div>
+				<span class="gatpost_Category">타입</span>
+				<span class="post_Mark">*</span>
+				<div class="gatpost_PostCategory">
+					<select class="categoryFiled" id="type" name="gatt_type">
+						<option th:each="itemtype : ${gatTypeList}" th:text="${itemtype.gatt_type}" th:value="${itemtype.gatt_type}"></option>
+					</select>
+				</div>
 			<div class="form-group">
-				<label>내용:</label>
-				<textarea class="form-control" style="min-height: 400px; height: auto;" name="po_content" required="required">
-				</textarea>
-			</div>
-			<div class="form-group" id="view">
-				<label>조회수:</label>
-				<input type="hidden" class="form-control" name="po_viewCount" value="0">
-			</div>
-			<div class="form-group">
-				<label>타입:</label>
-				<select id="type" name="gatt_type">
-					<option  th:each="itemtype : ${gatTypeList}" th:text="${itemtype.gatt_type}" th:value="${itemtype.gatt_type}"></option>
-				</select>
-			</div>
-			<div class="form-group">
-				<label>시작날짜:</label>
+				<label>시작날짜</label> <span class="post_Mark">*</span>
 				<input type="date" class="form-control" name="gat_startDate" required="required">
 			</div>
 			<div class="form-group">
-				<label>종료날짜:</label>
+				<label>종료날짜</label> <span class="post_Mark">*</span>
 				<input type="date" class="form-control" name="gat_endDate" required="required">
 			</div>
 			<div class="form-group" id="gats_state">
-				<label>상태:</label>
+				<label>상태</label>
 				<select id="state" name="gats_state">
 					<option th:each="itemstate : ${gatstateList}" th:text="${itemstate.gats_state}" th:value="${itemstate.gats_state}"></option>
 				</select>
 			</div>
 			<div class="form-group" id="address">
-				<label>주소:</label>
-				<select id="sido">
-					<option th:each="itemSido : ${sidoList}" th:text="${itemSido.sido_name}" th:value="${itemSido.sido_num}"></option>
-				</select>
-				<select id="sigg">
-				</select>
-				<select id="emd" name="emd_num">
-				</select>
+				<span class="gatpost_Category">주소</span>
+				<span class="post_Mark">*</span>
+				<div class="gatpost_sidoList">
+					<select class="categoryFiled" id="sido">
+						<option th:each="itemSido : ${sidoList}" th:text="${itemSido.sido_name}" th:value="${itemSido.sido_num}"></option>
+					</select>
+					<select class="categoryFiled" id="sigg"></select>
+					<select class="categoryFiled" id="emd" name="emd_num"></select>
+				</div>
 			</div> 
-			<button class="btn btn-outline-info col-12 btn-gatpost-insert">등록</button>
+			<div class="gatpost_Btn">
+				<button class="btn-gatpost-insert">등록</button>
+				<a class="gatpost_inventoryBtn" th:href="@{/gatpost/list}">목록으로</a>
+			</div>
+		</div>
 		</form>
-		<a class="btn btn-outline-info" th:href="@{/gatpost/list}">목록으로</a>
 		<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 		<script type="text/javascript">
 		
@@ -135,7 +138,6 @@ layout:decorate="~{layout/layout.html}">
 		})
 		
 		$("#gats_state").hide();
-		$("#view").hide();
 		
 		$('.btn-gatpost-insert').click(function(){
 			let gat = $('#gat_gat').val();
