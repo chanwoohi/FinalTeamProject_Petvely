@@ -86,6 +86,10 @@ public class ReportController {
 				rp_rtt_type = "gatpost";
 				reportService.insertReport(rp_me_num, rp_rtt_num, rp_rt_type, rp_rtt_type, rp_cause);
 				System.out.println(rp_rtt_type);
+			} else {
+				rp_rtt_type = "post";
+				reportService.insertReport(rp_me_num, rp_rtt_num, rp_rt_type, rp_rtt_type, rp_cause);
+				System.out.println(rp_rtt_type);
 			}
 			
 		}
