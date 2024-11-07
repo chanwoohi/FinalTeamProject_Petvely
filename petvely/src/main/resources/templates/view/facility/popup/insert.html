@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	
+<head>
+	<head th:replace="~{head/main.html :: head}"></head>
+	<head th:replace="~{ui/facility/popup/insert.html :: head-f}"></head>
+</head>
+<body>
+	<div class="view-container" >
+
+		<div class="register_registerContainer">
+			<div class="register_registerContents">
+		<form id="form-insert" enctype="multipart/form-data">
+	    	<div th:replace="~{ui/facility/popup/insert.html :: main-f}"></div>
+		    
+			<button id="btn-insert" class="register_noregisterBtn post_submitBtn" 
+				type="button" disabled>시설 등록</button>
+				</div>
+			</div>
+	    </form>
+		
+		<script>
+		$(document).ready(function() {
+			initSummerNote('#summerNote-insert', 250);
+			
+			$("#btn-insert").click(function() {
+				$.ajax({
+					async : true,
+					url : "/facility/popup/insert", 
+					type : 'post', 
+					data : $("#form-insert").serialize(),
+					success : function (){
+						self.close();
+					},  
+					error : function(jqXHR, textStatus, errorThrown){
+						console.log(jqXHR);
+					}
+				});
+			});
+			
+			function toggleSubmitButton() {
+				console.log($('#fs_name').val());
+				
+			    if ($('#fs_name').val().trim() 
+				&& $('[name=fs_info]').val().trim()
+				&& $('#fs_fst_type').val() == null) {
+					$('#btn-insert').prop('disabled', true);
+			    } else {
+			        $('#btn-insert').prop('disabled', false);
+			    }
+			}
+
+			// 입력 필드에 이벤트 리스너 추가
+			$('#fs_name, #fs_fst_type').on('input', toggleSubmitButton);
+			$('#summerNote-insert').on('summernote.keyup', function(we, e) {
+				toggleSubmitButton();
+			});
+		});
+		</script>
+	</div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	
+<head th:replace="~{head/main.html :: head}"></head>
+<head layout:fragment="head"></head>
+	<style>
+/* 		html, body{
+		    width: 100%;
+		} */
+		.basic-main {
+		    /* width: 80%; */
+		    margin: auto;
+  			/* padding-bottom: 56px; */
+		}
+	</style>
+<body>
+	<div th:replace="~{layout/header.html :: header}"></div>
+
+    <main class="basic-main">
+	    <div layout:fragment="main">
+	        <h1>기본 내용</h1>
+	    </div>	
+    </main>
+
+	<div th:replace="~{layout/footer.html :: footer}"></div>
+</body>
+</html>

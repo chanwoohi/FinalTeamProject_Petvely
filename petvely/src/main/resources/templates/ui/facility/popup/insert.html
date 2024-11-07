@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head-f">
+	<head th:replace="~{head/summerNote.html :: head}"></head>
+	
+	<style>
+	.top-group {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-top: 10px;
+	}
+	.title-group {
+		display: flex;
+	}	
+	.title-group>input {
+		width: 80%;
+		margin-left: 5px;
+	}
+	.post_Category {
+		margin-block: 0;
+		line-height: 1.5;
+	}
+	.btn-select {
+		height: 32px;
+		width: 128px;
+		margin-right: 3px;
+		line-height: 1;
+		padding: 0;
+		
+		font-size: 16px;
+		font-weight: 600;
+		border-radius: 30px;
+		border: none;
+		background-color: #fcd11e;
+	}
+	
+ 	.btn-select>option {
+		background-color: white;
+		color: black;
+	}
+	
+	div>label:first-child {
+		margin: 0;
+		height: 38px;
+		display: flex;
+		align-items: center;
+	}
+	.postInput {
+		height: auto;
+		margin: 0;
+	}
+	
+	.latlng-group {
+		display: flex;
+	}
+	
+	.latlng-item {
+		display: flex;
+    	width: 100%;
+	}
+	
+	.latlng-item>input {
+		width: 73%;
+		margin-left: 5px;
+	}
+	
+	.register_registerContainer {
+		padding: 0px;
+	}
+	
+	.register_registerContents {
+		width: 100%;
+	}
+	.register_registerContainer .register_noregisterBtn  {
+		font-size: 16px;
+		font-weight: 600;
+	}
+	.postInput.readonly {
+		background-color: ivory !important;
+	}
+</style>
+</head>
+<body>
+	<div class="ui-container" th:fragment="main-f">
+		<div class="form-group">
+			<div class="top-group">
+				<div class="title-group post_Category">
+					<label>이름 :</label>
+					<input id="fs_name" name="fs_name" class="postInput" 
+						type="text" value="123">
+				</div>
+				<div class="dropdown">				  
+					<select id="fs_fst_type" name="fs_fst_type" class="btn btn-select"
+							required="required">
+    					<option selected disabled hidden="hidden">선택하세요</option>
+						<option th:each="item : ${fsTypeList}"
+								th:text="${item.fst_type}">
+						</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="form-group latlng-group">
+			<div class="latlng-item post_Category">
+				<label>위도 :</label>
+				<input name="fs_lat" class="postInput readonly" 
+					th:value="${fsVo.fs_lat}" readonly>
+			</div>
+			<div class="latlng-item post_Category">
+				<label class="label">경도 :</label>
+				<input name="fs_lng"  class="postInput readonly" 
+					th:value="${fsVo.fs_lng}" readonly>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="post_Category"
+				<label>내용:</label>
+			</div>
+			<textarea id="summerNote-insert" name="fs_info">123</textarea>
+		</div>
+	</div>
+</body>
+</html>

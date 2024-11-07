@@ -26,7 +26,7 @@ public class MyBatisConfig {
         SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
         sessionFactory.setDataSource(dataSource);
         sessionFactory.setMapperLocations(
-            new PathMatchingResourcePatternResolver().getResources("classpath:mappers/*.xml")
+            new PathMatchingResourcePatternResolver().getResources("classpath:mappers/**/*.xml")
         );
          // TypeAlias 적용
         sessionFactory.setTypeAliasesPackage("kr.kh.petvely.model.vo");  // 여기에 패키지 경로 지정
