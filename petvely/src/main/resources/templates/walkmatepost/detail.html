@@ -28,8 +28,8 @@
 							<!-- 모두 전용 -->
 							<div class="test">
 								<div sec:authorize="isAnonymous()">
-									<button type="button" class="" id="anonymous-action">즐겨찾기</button>
-									<button type="button" class="" id="anonymous-action">신고하기</button>
+									<button type="button" class="wlakIconBtn" id="anonymous-action"><span class="wlakHeartIcon"></span>즐겨찾기</button>
+									<button type="button" class="wlakIconBtn" id="anonymous-action"><span class="wlakBlockIcon"></span>신고하기</button>
 								</div>
 							</div>
 							<!-- 유저 전용 -->
@@ -40,12 +40,12 @@
 									<button type="button" class=""
 									 th:onclick="'window.open(\'/report/post/' + ${po_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'">신고하기</button>
 								</div>
+							</th:block>
 							<!-- 신청자 전용 -->
 							<div sec:authorize="isAuthenticated()">
-								<div th:if="${#authentication.principal.member.me_num != walkMatePost.po_me_num && walkMatePost.wm_wms_state != '완료'}">
-								</div>
+								<div th:if="${#authentication.principal.member.me_num != walkMatePost.po_me_num && walkMatePost.wm_wms_state != '완료'}"></div>
 							</div>
-							</th:block>
+							
 							<div class="post_Category">
 								<label>제목</label> 
 								<input type="text" class="postInput" th:field="*{po_title}" readonly>
@@ -243,6 +243,13 @@
 						</div>
 					</div>
 				</div>
+				<!-- 유저 전용 -->
+				<th:block th:if="${user != null}">
+						<div class="post_Btn">
+							<a class="walk_submitBtn" data-toggle="modal" data-target="#myModal">산책 메이트 신청하기</a>
+							<a class="walk_inventoryBtn" th:href="@{/walkmatepost/list}">목록으로</a>
+						</div>
+				</th:block>
 				<!-- 모두 전용 -->
 				<div sec:authorize="isAnonymous()">
 					<div class="post_Btn">
