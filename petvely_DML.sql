@@ -1,4 +1,4 @@
-use petvely;
+memberuse petvely;
 
 # 관리자가 '강아지', '고양이', '도마뱀', '고슴도치' 커뮤니티를 추가했을 때 필요한 쿼리
 INSERT INTO COMMUNITY(CO_NAME, CO_NUM) 

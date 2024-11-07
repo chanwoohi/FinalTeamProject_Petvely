@@ -7,8 +7,8 @@
 <body>
     <script th:inline="javascript">
 	    /*<![CDATA[*/
-	    var msg = /*[[${msg}]]*/ '기본 메시지';
-	    if (msg !== '기본 메시지') {
+	    var msg = '[[${msg}]]';
+	    if (msg !== '') {
 	        alert(msg);
 	    }
 	    /*]]>*/

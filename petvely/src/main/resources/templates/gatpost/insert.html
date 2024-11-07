@@ -15,16 +15,16 @@ layout:decorate="~{layout/layout.html}">
 			<input type="hidden" class="form-control" name="po_co_num" required="required" value="12">
 			<input type="hidden" class="form-control" name="po_me_num" th:value="${Userlist.me_num}">
 			<input type="hidden" class="form-control" name="po_viewCount" value="0">
-			<div class="form-group" id="GT">
+			<div class="getpostContainer" id="GT">
 				<label>품앗이</label>
 				<!-- 유효성 검사로 오류 표시로 바꿀것 -->
 				<input type="text" id="gat_gat" name="gat_gat" required="required" style="display: none;">
-				<a id="give" class="btn btn-outline-info" onclick="">GIVE</a>
-				<a id="take" class="btn btn-outline-info" onclick="">TAKE</a>
+				<a id="give" class="givebtn" onclick="">GIVE</a>
+				<a id="take" class="takebtn" onclick="">TAKE</a>
 			</div>
 			<div  class="post_Category">
 				<label>제목</label> <span class="post_Mark">*</span>
-				<input placeholder="제목을 입력해주세요" type="text" class="form-control" name="po_title" required="required">
+				<input placeholder="제목을 입력해주세요" type="text" class="postInput" name="po_title" required="required">
 			</div>
 			<div class="post_Category">
 					<label>내용</label> <span class="post_Mark">*</span>
@@ -37,13 +37,13 @@ layout:decorate="~{layout/layout.html}">
 						<option th:each="itemtype : ${gatTypeList}" th:text="${itemtype.gatt_type}" th:value="${itemtype.gatt_type}"></option>
 					</select>
 				</div>
-			<div class="form-group">
+			<div class="gatpost_Category">
 				<label>시작날짜</label> <span class="post_Mark">*</span>
-				<input type="date" class="form-control" name="gat_startDate" required="required">
+				<input type="date" class="postInput" name="gat_startDate" required="required">
 			</div>
-			<div class="form-group">
+			<div class="gatpost_Category">
 				<label>종료날짜</label> <span class="post_Mark">*</span>
-				<input type="date" class="form-control" name="gat_endDate" required="required">
+				<input type="date" class="postInput" name="gat_endDate" required="required">
 			</div>
 			<div class="form-group" id="gats_state">
 				<label>상태</label>

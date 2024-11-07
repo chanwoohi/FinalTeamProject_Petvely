@@ -1,6 +1,5 @@
 package kr.kh.petvely.controller;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.kh.petvely.model.user.CustomUser;
 import kr.kh.petvely.model.vo.MemberVO;
@@ -64,6 +64,12 @@ public class MessageController {
     			MemberVO user = CustomUser.getMember();
     			int senderNum = user.getMe_num();
     			Integer receiverNum = messageService.getreceiverId(receiverId); 
+    			
+    			if(senderNum == receiverNum) {
+    				model.addAttribute("msg","자신에게는 보낼 수 없습니다.");
+    				
+    				return "message/messagebox";
+    			}
     			MessageVO message = new	MessageVO();
     			message.setMes_me_senderNum(senderNum);
     			message.setMes_me_receiverNum(receiverNum);
@@ -71,8 +77,12 @@ public class MessageController {
     			message.setMes_date(new Date());
     			
     			boolean res = messageService.sendMessage(message);
-    			model.addAttribute("senderNum",senderNum);
-    			model.addAttribute("receiverNum",receiverNum);
+    			if(res) {
+    				model.addAttribute("senderNum",senderNum);
+    				model.addAttribute("receiverNum",receiverNum);
+    				model.addAttribute("msg","쪽지보내기 성공");
+    				return "message/messagebox";
+    			}
     			
     			
     		}
