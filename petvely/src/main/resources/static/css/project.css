@@ -209,6 +209,7 @@ table {
     overflow:hidden;
     border : none;
     width:100%;
+    text-align: center;
     margin:0 auto;
     position:relative;
   }

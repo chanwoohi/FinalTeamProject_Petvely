@@ -698,7 +698,9 @@ button {
 }
 
 /* 중고마켓 */
-
+.otherTitles{
+	margin: 34px 0px 34px;
+}
 .search-form input {
 	width: 100%;
 }
