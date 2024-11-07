@@ -1,6 +1,8 @@
 package kr.kh.petvely.controller;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +20,6 @@ import kr.kh.petvely.model.user.CustomUser;
 import kr.kh.petvely.model.vo.AnimalVO;
 import kr.kh.petvely.model.vo.MemberVO;
 import kr.kh.petvely.model.vo.MessageVO;
-import kr.kh.petvely.model.vo.PostVO;
 import kr.kh.petvely.model.vo.Sido_AreasVO;
 import kr.kh.petvely.model.vo.WalkMateMemberVO;
 import kr.kh.petvely.model.vo.WalkMatePostVO;
@@ -234,7 +235,7 @@ public class WalkMatePostController {
 									  @AuthenticationPrincipal CustomUser customUser) {
 		
 		walkMateService.updateWalkMateMember(selectedAniNums, po_num);
-		System.out.println(selectedAniNums);
+		System.out.println(Arrays.toString(selectedAniNums));
 		
 		walkMatePostService.updateWalkmatePostState(po_num);
 		
