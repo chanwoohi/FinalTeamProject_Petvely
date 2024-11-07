@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.kh.petvely.model.user.CustomUser;
 import kr.kh.petvely.model.vo.AnimalVO;
 import kr.kh.petvely.model.vo.MemberVO;
+import kr.kh.petvely.model.vo.Sido_AreasVO;
 import kr.kh.petvely.model.vo.WalkMateMemberVO;
 import kr.kh.petvely.model.vo.WalkMatePostVO;
+import kr.kh.petvely.service.AddressService;
 import kr.kh.petvely.service.AnimalService;
 import kr.kh.petvely.service.PostService;
 import kr.kh.petvely.service.WalkMatePostService;
@@ -40,6 +41,9 @@ public class WalkMatePostController {
 	@Autowired
 	private WalkMateService walkMateService;
 	
+	@Autowired
+	private AddressService addressService;
+	
 	@GetMapping("/walkmatepost/list")
 	public String walkmatepostList(Model model) {
 	    if (model.containsAttribute("msg")) {
@@ -60,9 +64,10 @@ public class WalkMatePostController {
 			
 			List<AnimalVO> petList = animalService.selectPetList(user.getMe_num());
 			System.out.println(petList);
-			
+			List<Sido_AreasVO> sidoList = addressService.getSidoList();
 			model.addAttribute("petList", petList);
 			model.addAttribute("me_num", user.getMe_num());
+			model.addAttribute("sidoList", sidoList);
 		}
 		return "/walkmatepost/insert";
 	}
@@ -97,6 +102,11 @@ public class WalkMatePostController {
 		List<AnimalVO> detailPetList = animalService.selectDetailPetList(po_num);
 		model.addAttribute("detailPetList", detailPetList);
 		
+		List<Sido_AreasVO> sidoList = addressService.getSidoList();
+		model.addAttribute("sidoList", sidoList);
+		System.out.println("=================");
+		System.out.println("walkMatePost : "+ walkMatePost);
+		System.out.println("detailPetList : "+ detailPetList);
 		if(customUser != null) {
 			// 로그인 기능 구현 완료 하면 me_num 서버에서 로그인 되어있는 아이디 가져오면 됨
 			MemberVO user = customUser.getMember();
@@ -155,7 +165,10 @@ public class WalkMatePostController {
 		if(customUser!=null) {
 			MemberVO user = customUser.getMember();
 			List<AnimalVO> petList = animalService.selectPetList(user.getMe_num());
+			List<Sido_AreasVO> sidoList = addressService.getSidoList();
 			model.addAttribute("petList", petList);
+			model.addAttribute("sidoList", sidoList);
+			System.out.println("sidoList : " + sidoList);
 		}
 		List<WalkMateMemberVO> walkMateMemberList = walkMatePostService.selectWalkMateMember(po_num);
 		model.addAttribute("walkMateMemberList", walkMateMemberList);

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import jakarta.servlet.http.HttpServletRequest;
+import kr.kh.petvely.model.dto.MessageDTO;
 import kr.kh.petvely.model.user.CustomUser;
 import kr.kh.petvely.model.vo.AnimalVO;
 import kr.kh.petvely.model.vo.BookMarkVO;
@@ -52,11 +55,41 @@ public class MemberController {
 	
 	@ResponseBody
 	@PostMapping("check/value")
-	public boolean memberCheckValue_Post(String type, String value) {
+	public boolean memberCheckValue_Post(String type, String value
+			, @AuthenticationPrincipal CustomUser customUser) {
 		log.info(util.getCurrentMethodName() + " : " + type + " : " + value);
-		boolean result = memberService.checkRedundancy(type, value);
+		//System.out.println(customUser);
+		boolean result = true;
+		
+		if (customUser != null) {
+			switch(type) {
+				case "id":
+					if (customUser.getMember().getMe_id().equals(value)) {
+						result = false;
+					}
+					break;
+				case "nickname":
+					if (customUser.getMember().getMe_nickname().equals(value)) {
+						result = false;
+					}
+					break;
+				case "phone":
+					if (customUser.getMember().getMe_phone().equals(value)) {
+						result = false;
+					}
+					break;
+				case "email":
+					if (customUser.getMember().getMe_email().equals(value)) {
+						result = false;
+					}
+					break;
+			}
+		}
+		
+		result &= memberService.checkRedundancy(type, value);
 		log.info("" + result);
-		return result;
+		
+		return !result;
 	}
 	
 	@PostMapping("signup")
@@ -65,6 +98,13 @@ public class MemberController {
 		boolean result = memberService.signup(memberVO);
 		log.info("" + result);
 		
+		return "redirect:/";
+	}
+	
+	@GetMapping("login/button")
+	public String memberLoginButton() {
+		log.info(util.getCurrentMethodName());
+
 		return "redirect:/";
 	}
 	
@@ -106,22 +146,48 @@ public class MemberController {
 		return "/member/mypage";
 	}
 	
-	
+	@PostMapping("failed")
+	public String memberFailed_post(Model model, HttpServletRequest request) {
+		log.info(util.getCurrentMethodName());
 
+		Exception error =  (Exception)request.getAttribute("error");
+		log.info("{}", error.getMessage());
+		
+    	if(error instanceof AuthenticationServiceException) {
+    		model.addAttribute("message", new MessageDTO("/", "정지되었거나 존재하지 않는 계정입니다."));
+    	}
+    	else {
+    		model.addAttribute("message", new MessageDTO("/", "로그인에 실패했습니다.\\n아이디 또는 비밀번호를 확인해주세요."));
+    	}
+    	
+		return "view/main/message";
+	}
+
+	@GetMapping("update")
+	public String memberUpdate(Model model, @AuthenticationPrincipal CustomUser customUser) {
+		log.info(util.getCurrentMethodName() + " : " + customUser.getMember());
+		
+		MemberVO memberVo = customUser.getMember();
+		memberVo.setMe_phone(changePhoneFormat(memberVo.getMe_phone()));
+		
+	    model.addAttribute("memberVo", memberVo);
+		return viewRoute + "update";
+	}
 	
-	
-	/*
-	 * @PostMapping("login") public String memberLogin_post(Model model,
-	 * MemberVO memberVO, HttpSession session) {
-	 * log.info(util.getCurrentMethodName() + " : " + memberVO); MemberVO user =
-	 * memberService.login(memberVO);
-	 * 
-	 * model.addAttribute("user", user); log.info("memberLogin_pos123123t : " +
-	 * user); return "redirect:/"; }
-	 * 
-	 * @GetMapping("logout") public String memberLogout() {
-	 * log.info(util.getCurrentMethodName());
-	 * 
-	 * return viewRoute + "logout"; }
-	 */
+	private String changePhoneFormat(String phoneNum) {		
+		String regEx = "(01\\d{1})[-. )]*(\\d{4})[-. ]*(\\d{4})$";
+		return phoneNum.replaceAll(regEx, "$1-$2-$3");
+	}
+
+	@PostMapping("update")
+	public String memberUpdate_post(MemberVO memberVo
+			, Model model, @AuthenticationPrincipal CustomUser customUser) {
+		log.info(util.getCurrentMethodName() + " : " + memberVo);
+		
+		memberService.updateMember(memberVo);
+		
+		customUser.setMember(memberVo);
+		
+		return "redirect:/";
+	}
 }

@@ -7,6 +7,23 @@
 <link rel="stylesheet" type="text/css" href="/css/common.css"> 
 <meta charset="UTF-8">
 <title>글 쓰기</title>
+
+<style type="text/css">
+	div input::file-selector-button {
+      	display: none;
+	}
+	.insertbtn {
+		top: 0px;
+	}
+	.file-upload {
+		display: flex;
+		justify-content: space-between;
+	}
+	.file-upload>input {
+		width: 30%;
+	}
+</style>
+
 </head>
 <body>
 	<main layout:fragment="content">
@@ -28,25 +45,44 @@
 	       		 </div> 
 				<div class="post_Category">
 					<label>제목</label> <span class="post_Mark">*</span>
-					<input placeholder="제목을 입력해주세요" type="text" class="postInput" name="po_title">
+					<input placeholder="제목을 입력해주세요" type="text" class="postInput" id="po_title" name="po_title">
 				</div>
 			    <!-- 작성자 ID를 숨겨진 필드로 전달 -->
 	    		<input type="hidden" name="po_me_num" th:value="${me_num}">
 				<div class="post_Category">
 					<label>내용</label> <span class="post_Mark">*</span>
-					<textarea placeholder="5자 이상의 글 내용을 입력해주세요" class="postText" name="po_content"></textarea>
+					<textarea placeholder="5자 이상의 글 내용을 입력해주세요" class="postText" id="po_content" name="po_content"></textarea>
 				</div>
-				<!-- <div class="from-group">
-					<label>첨부파일</label>
-					<input type="file" class="form-control" name="fileList">
-					<br/>
-				</div> -->
+				<div class="post_Category">
+					<label>파일</label>
+					<div class=" file-upload">
+						<input type="file" class="insertbtn" name="fileList"/>
+						<input type="file" class="insertbtn" name="fileList"/>
+						<input type="file" class="insertbtn" name="fileList"/>
+					</div>
+				</div>
 				<div class="post_Btn">
-					<button class="post_submitBtn">글 등록</button>
+					<button class="post_submitBtn" id="submitBtn" disabled>글 등록</button>
 					<a class="post_inventoryBtn"th:href="@{/post/list/{co_num}(co_num=${co_num})}">목록으로</a>
 				</div>
 			</div>
 		</form>
+		<script type="text/javascript">
+		// 제목 내용 미 입력시
+		$(document).ready(function() {
+		    function toggleSubmitButton() {
+		        // 제목과 내용이 모두 채워졌는지 확인
+		        if ($('#po_title').val().trim() && $('#po_content').val().trim()) {
+		            $('#submitBtn').prop('disabled', false);
+		        } else {
+		            $('#submitBtn').prop('disabled', true);
+		        }
+		    }
+
+		    // 입력 필드에 이벤트 리스너 추가
+		    $('#po_title, #po_content').on('input', toggleSubmitButton);
+		});
+	    </script>
 	</main>
 </body>
 </html>

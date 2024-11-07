@@ -1,6 +1,5 @@
 package kr.kh.petvely.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.kh.petvely.dao.MarketPostDAO;
 import kr.kh.petvely.model.vo.FileVO;
 import kr.kh.petvely.model.vo.MarketPostVO;
-import kr.kh.petvely.model.vo.PostVO;
 import kr.kh.petvely.pagination.PageMaker;
 import kr.kh.petvely.pagination.PostCriteria;
 import kr.kh.petvely.utils.UploadFileUtils;

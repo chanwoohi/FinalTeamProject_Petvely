@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" 
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      layout:decorate="~{layout/layout.html}">
+      layout:decorate="~{layout/layout2.html}">
       
 <head>
     <meta charset="UTF-8">
@@ -12,55 +12,64 @@
 </head>
 <body>
     <main layout:fragment="content">
-        <!-- 강아지 커뮤니티 버튼 -->
-        <div class="mt-3">
-            <a class="btn mr-3 mb-3" th:each="item : ${communities}" th:classappend="${item.co_num} ? 'btn-info' : 'btn-outline-info'" th:text="${item.co_name}" th:href="@{/post/list/{co_num}(co_num=${item.co_num})}">강아지</a>
-        </div>
-
-        <h1>게시판 구현중</h1>
-
-        <table id="dataTable" width="100%">
-            <thead>
-                <tr>
-                    <th>번호</th>
-                    <th>제목</th>
-                    <th>작성자</th>
-                    <th>작성일</th>
-                    <th>추천수</th>
-                    <th>조회수</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- 데이터가 있을 경우 렌더링 -->
-                <tr th:each="post : ${list}">
-                    <td th:text="${post.po_num}"></td> <!-- 번호 -->
-					<td>
-						<!-- 사용자 확인 -->
-						<a th:if="${post.po_delete == 1}" sec:authorize="!hasAuthority('ADMIN')"> 
-						    <span class="text">관리자에 의해 삭제된 글입니다.</span>
-						</a>
-						
-						<!-- 관리자 확인 -->
-						<div th:if="${post.po_delete == 1}" sec:authorize="hasAuthority('ADMIN')">
-							<span class="text">[삭제글]</span>
-							<a th:text="${post.po_title}" th:href="@{/post/detail/{po_num}(po_num=${post.po_num})}"></a> 
-						</div>
-						
-					    <!-- 글이 삭제되지 않았을 때만 제목을 표시 -->
-					    <a th:if="${post.po_delete == 0}" th:text="${post.po_title}" th:href="@{/post/detail/{po_num}(po_num=${post.po_num})}"></a>
-					</td>
-                    <td th:text="${post.me_id}"></td>
-                    <td th:text="${#dates.format(post.po_date, 'yyyy-MM-dd')}"></td> <!-- 작성일 -->
-                    <td th:text="${post.po_recommendCount} + ' / ' + ${post.po_notRecommendCount}"></td> <!-- 추천수 / 비추천수 -->
-                    <td th:text="${post.po_viewCount}"></td> <!-- 조회수 -->
-                </tr>
-            </tbody>
-        </table>
-
-        <a class="btn btn btn-outline-dark" th:href="@{/post/insert/{co_num}(co_num=${co_num})}">글쓰기</a>
-
+    	<div class="CommunityContainer">  	<div class="qaList_qaListContainer"></div>
+	        <div class="categoryGroup">
+			    <a class="btnCategory" 
+			       th:each="item, iter : ${communities}" 
+			       th:if="${iter.index < 4}"
+			       th:text="${item.co_name}" 
+			       th:href="@{/post/list/{co_num}(co_num=${item.co_num})}"
+			       th:attr="data-co-num=${item.co_num}">
+			       강아지
+			    </a>
+			</div>
+       		<h1 class="categoryTitle">커뮤니티</h1>
+	        <table id="dataTable">
+	            <thead>
+	                <tr>
+	                	<th>이미지</th>
+	                    <th>번호</th>
+	                    <th>제목</th>
+	                    <th>작성자</th>
+	                    <th>작성일</th>
+	                    <th>추천수</th>
+	                    <th>조회수</th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	                <!-- 데이터가 있을 경우 렌더링 -->
+	                <tr th:each="post, iter : ${list}">
+	                	<td class="tableImg"><img class="pet_Petimg" th:src="${thumbnailList[iter.index] == null ? '/image/image_not_found_new.png' : thumbnailList[iter.index].fi_name}" alt="기본 이미지" style="width:80px;"/></td>
+	                    <td th:text="${post.po_num}"></td> <!-- 번호 -->
+						<td>
+							<!-- 사용자 확인 -->
+							<a th:if="${post.po_delete == 1}" sec:authorize="!hasAuthority('ADMIN')"> 
+							    <span class="text">관리자에 의해 삭제된 글입니다.</span>
+							</a>
+							
+							<!-- 관리자 확인 -->
+							<div th:if="${post.po_delete == 1}" sec:authorize="hasAuthority('ADMIN')">
+								<span class="text">[삭제글]</span>
+								<a th:text="${post.po_title}" th:href="@{/post/detail/{po_num}(po_num=${post.po_num})}"></a> 
+							</div>
+							
+						    <!-- 글이 삭제되지 않았을 때만 제목을 표시 -->
+						    <a th:if="${post.po_delete == 0}" th:text="${post.po_title}" th:href="@{/post/detail/{po_num}(po_num=${post.po_num})}"></a>
+						</td>
+	                    <td th:text="${post.me_id}"></td>
+	                    <td th:text="${#dates.format(post.po_date, 'yyyy-MM-dd')}"></td> <!-- 작성일 -->
+	                    <td th:text="${post.po_recommendCount} + ' / ' + ${post.po_notRecommendCount}"></td> <!-- 추천수 / 비추천수 -->
+	                    <td th:text="${post.po_viewCount}"></td> <!-- 조회수 -->
+	                </tr>
+	            </tbody>
+	        </table>
+	        <div class="insertBtnContainer">
+	        	<a class="insertbtn" th:href="@{/post/insert/{co_num}(co_num=${co_num})}">글쓰기</a>
+	        </div>
+		</div>
         <script type="text/javascript">
             $(document).ready(function() {
+            	
                 $('#dataTable').DataTable({
                     "language": {
                         "search": "검색: ",
@@ -75,12 +84,40 @@
                             "previous": "이전"
                         }
                     },
-                    "info": false  // 테이블 정보 표시를 제거
+                    "info": false, // 테이블 정보 표시를 제거
+                    "lengthMenu": false,
+                    "lengthChange" : false,
+                    //"dom": '<"top"f>t<"bottom"p>' // 'lengthMenu' 부분을 제거하고 테이블과 페이징만 표시
                 });
+                // 검색 텍스트만 숨기기
+                $('.dataTables_filter label').contents().filter(function() {
+                    return this.nodeType === 3; // 텍스트 노드만 선택
+                }).remove();
+   
+                // URL에서 co_num 값을 추출하는 함수
+                function getCategoryFromUrl() {
+                    const url = window.location.pathname;
+                    const match = url.match(/\/post\/list\/(\d+)/); // URL 경로에서 숫자를 추출
+                    return match ? match[1] : null; // 값이 있으면 첫 번째 그룹 반환
+                }
+
+                // URL 경로에서 co_num 값을 가져오기
+                const selectedCategory = getCategoryFromUrl();
+
+                if (selectedCategory) {
+                    $(".btnCategory").each(function() {
+                        const categoryNum = $(this).data("co-num");
+                        if (categoryNum == selectedCategory) {
+                            $(this).addClass("btnCategoryActive");
+                        }
+                    });
+                }
+
             });
             if ('[[${errorMessage}]]'!= '') {
 		        alert('[[${errorMessage}]]');
 		    }
+            
         </script>
     </main>
 </body>
