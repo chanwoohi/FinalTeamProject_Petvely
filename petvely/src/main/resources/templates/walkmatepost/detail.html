@@ -26,19 +26,39 @@
 					<div class="walkContents">
 						<div class="walkContents01">
 							<!-- 모두 전용 -->
-							<div class="test">
-								<div sec:authorize="isAnonymous()">
-									<button type="button" class="wlakIconBtn" id="anonymous-action"><span class="wlakHeartIcon"></span>즐겨찾기</button>
-									<button type="button" class="wlakIconBtn" id="anonymous-action"><span class="wlakBlockIcon"></span>신고하기</button>
+							<div >
+								<div sec:authorize="isAnonymous()" class="walkButContainer" >
+									<button type="button" class="wlakIconBtn" id="anonymous-action">
+										<span>
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#f00" class="bi bi-heart-fill" viewBox="0 0 16 16">
+											  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+											</svg>
+										</span>
+										 즐겨찾기
+									</button>
+									<button type="button" class="wlakIconBtn" id="anonymous-action"><span style="background-image: url('/image/block_icon.svg'); background-size: cover; display: inline-block; width: 16px; height: 16px; vertical-align: middle;"></span> 신고하기</button>
 								</div>
 							</div>
 							<!-- 유저 전용 -->
 							<th:block th:if="${user != null}">
-								<div class="test">
-									<a th:if="${bookmark}!=${po_num}" class="" th:href="@{/post/bookmark/insert/{po_num}(po_num=*{po_num})}" >즐겨찾기</a>
-									<a th:if="${bookmark}==${po_num}" class="" th:href="@{/post/bookmark/delete/{po_num}(po_num=*{po_num})}" >즐겨찾기</a>
-									<button type="button" class=""
-									 th:onclick="'window.open(\'/report/post/' + ${po_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'">신고하기</button>
+								<div class="walkButContainer">
+									<a th:if="${bookmark}!=${po_num}" class="wlakIconAbtn" th:href="@{/post/bookmark/insert/{po_num}(po_num=*{po_num})}"><span>
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#f00" class="bi bi-heart-fill" viewBox="0 0 16 16">
+										  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+										</svg>
+										</span>
+										&nbsp;즐겨찾기
+									</a>
+									<a th:if="${bookmark}==${po_num}" class="wlakIconAbtn" th:href="@{/post/bookmark/delete/{po_num}(po_num=*{po_num})}" >
+										<span>
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#f00" class="bi bi-heart-fill" viewBox="0 0 16 16">
+										  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+										</svg>
+										</span>
+										&nbsp;즐겨찾기
+									</a>
+									<button type="button" class="wlakIconBtn"
+									 th:onclick="'window.open(\'/report/post/' + ${po_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'"><span style="background-image: url('/image/block_icon.svg'); background-size: cover; display: inline-block; width: 16px; height: 16px; vertical-align: middle;"></span> 신고하기</button>
 								</div>
 							</th:block>
 							<!-- 신청자 전용 -->
@@ -227,11 +247,6 @@
 								<a class="walk_DetailDeleteBtn" th:href="@{/walkmatepost/delete/{po_num}(po_num=*{po_num})}">삭제</a>
 							</div>
 						</div>
-						<div class="walk_Btn">
-							<a class="walk_submitBtn" th:href="@{/walkmatepost/approve/{po_num}(po_num=*{po_num})}">산책 메이트 수락하기</a>
-							<a class="walk_inventoryBtn" th:href="@{/walkmatepost/list}">목록으로</a>
-						</div>
-	
 					</div>
 				</div>
 				<!-- 신청자 전용 -->
