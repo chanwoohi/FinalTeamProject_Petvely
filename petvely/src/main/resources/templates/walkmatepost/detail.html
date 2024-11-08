@@ -5,6 +5,7 @@
 	layout:decorate="~{layout/layout2.html}">
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="/css/common.css">
 <title>Insert title here</title>
 <style type="text/css">
 	.comment-item.comment-layer-1{
@@ -24,11 +25,51 @@
 				<div class="walkContainer">
 					<div class="walkContents">
 						<div class="walkContents01">
+							<!-- 모두 전용 -->
+							<div >
+								<div sec:authorize="isAnonymous()" class="walkButContainer" >
+									<button type="button" class="wlakIconBtn" id="anonymous-action">
+										<span>
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#f00" class="bi bi-heart-fill" viewBox="0 0 16 16">
+											  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+											</svg>
+										</span>
+										 즐겨찾기
+									</button>
+									<button type="button" class="wlakIconBtn" id="anonymous-action"><span style="background-image: url('/image/block_icon.svg'); background-size: cover; display: inline-block; width: 16px; height: 16px; vertical-align: middle;"></span> 신고하기</button>
+								</div>
+							</div>
+							<!-- 유저 전용 -->
+							<th:block th:if="${user != null}">
+								<div class="walkButContainer">
+									<a th:if="${bookmark}!=${po_num}" class="wlakIconAbtn" th:href="@{/post/bookmark/insert/{po_num}(po_num=*{po_num})}"><span>
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#f00" class="bi bi-heart-fill" viewBox="0 0 16 16">
+										  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+										</svg>
+										</span>
+										&nbsp;즐겨찾기
+									</a>
+									<a th:if="${bookmark}==${po_num}" class="wlakIconAbtn" th:href="@{/post/bookmark/delete/{po_num}(po_num=*{po_num})}" >
+										<span>
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#f00" class="bi bi-heart-fill" viewBox="0 0 16 16">
+										  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+										</svg>
+										</span>
+										&nbsp;즐겨찾기
+									</a>
+									<button type="button" class="wlakIconBtn"
+									 th:onclick="'window.open(\'/report/post/' + ${po_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'"><span style="background-image: url('/image/block_icon.svg'); background-size: cover; display: inline-block; width: 16px; height: 16px; vertical-align: middle;"></span> 신고하기</button>
+								</div>
+							</th:block>
+							<!-- 신청자 전용 -->
+							<div sec:authorize="isAuthenticated()">
+								<div th:if="${#authentication.principal.member.me_num != walkMatePost.po_me_num && walkMatePost.wm_wms_state != '완료'}"></div>
+							</div>
+							
 							<div class="post_Category">
-								<label>제목</label>
+								<label>제목</label> 
 								<input type="text" class="postInput" th:field="*{po_title}" readonly>
 							</div>
-							<!-- 로그인 기능 미구현으로 작성자 직접 입력해야함... 추후 수정 -->
 							<div class="post_Category">
 								<label>작성자</label>
 								<input type="text" class="postInput" th:field="*{me_id}" readonly>
@@ -58,31 +99,35 @@
 					</textarea>
 				</div>
 				<div class="post_Category">
-				<label>작성자</label>
-					<table class="table table-striped">
-						<thead>
-							<tr>
-								<th>이름</th>
-								<th>나이</th>
-								<th>성별</th>
-								<th>중성화 여부</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr th:each="item : ${detailPetList}">
-								<td>
-									<button th:text="${item.ani_name}"
-									   th:onclick="'window.open(\'/animal/profile2/' + ${item.ani_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'" >
-								   </button>
-								</td>
-								<td th:text="${item.ani_age}"></td>
-								<td th:text="${item.ani_gender}"></td>
-								<td th:text="${item.ani_neutralization}"></td>
-							</tr>
-						</tbody>
-					</table>
-					<br>
-					<label>신청자</label>
+				<label class="table_Category">작성자</label>
+					<div class="tableContainer">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>이름</th>
+									<th>나이</th>
+									<th>성별</th>
+									<th>중성화 여부</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="item : ${detailPetList}">
+									<td>
+									<div class="walkBtnContianer">
+										<button class="walk_walkBtn" th:text="${item.ani_name}"
+										   th:onclick="'window.open(\'/animal/profile2/' + ${item.ani_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'" >
+									   </button>
+									</div>   
+									</td>
+									<td th:text="${item.ani_age}"></td>
+									<td th:text="${item.ani_gender}"></td>
+									<td th:text="${item.ani_neutralization}"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<label class="table_Category">신청자</label>
+					<div class="tableContainer">
 					<table class="table table-striped" id="myTable">
 						<thead>
 							<tr>
@@ -95,13 +140,15 @@
 						<tbody>
 							<tr th:if="${choicePetList == null or choicePetList.empty}">
 				                <!-- 이 부분이 아무 펫도 없을 때 표시됩니다. -->
-				                <td>아직 신청한 펫이 없습니다.</td>
+				                <td colspan="4" >아직 신청한 펫이 없습니다.</td>
 				            </tr>
 							<tr th:each="item : ${choicePetList}">
 								<td>
-									<button th:text="${item.ani_name}"
+								<div class="walkBtnContianer">
+									<button class="walk_walkBtn" th:text="${item.ani_name}"
 									   		th:onclick="'window.open(\'/animal/profile2/' + ${item.ani_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'" >
 							    	</button>
+							    </div>   
 								</td>
 								<td th:text="${item.ani_age}"></td>
 								<td th:text="${item.ani_gender}"></td>
@@ -109,6 +156,7 @@
 							</tr>
 						</tbody>
 					</table>
+				</div>
 				</div>
 				<!-- The Modal -->
 				<div class="modal" id="myModal">
@@ -190,8 +238,41 @@
 						</div>
 					</div>
 				</div>
-				
-				<div class="form-group">
+				<!-- 글 작성자 전용 -->
+				<div sec:authorize="isAuthenticated()">
+					<div th:if="${#authentication.principal.member.me_num == walkMatePost.po_me_num && walkMatePost.wm_wms_state != '완료'}">
+						<div class="walkDetailContainer">
+							<div class="walkDetailDelete">
+								<a class="walk_DetailInfoBtn" th:href="@{/walkmatepost/update/{po_num}(po_num=*{po_num})}">수정</a>
+								<a class="walk_DetailDeleteBtn" th:href="@{/walkmatepost/delete/{po_num}(po_num=*{po_num})}">삭제</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 신청자 전용 -->
+				<div sec:authorize="isAuthenticated()">
+					<div th:if="${#authentication.principal.member.me_num != walkMatePost.po_me_num && walkMatePost.wm_wms_state != '완료'}">
+						<div class="post_Btn">
+							<a class="walk_submitBtn" data-toggle="modal" data-target="#myModal">산책 메이트 신청하기</a>
+							<a class="walk_inventoryBtn" th:href="@{/walkmatepost/list}">목록으로</a>
+						</div>
+					</div>
+				</div>
+				<!-- 유저 전용 -->
+				<th:block th:if="${user != null}">
+						<div class="post_Btn">
+							<a class="walk_submitBtn" data-toggle="modal" data-target="#myModal">산책 메이트 신청하기</a>
+							<a class="walk_inventoryBtn" th:href="@{/walkmatepost/list}">목록으로</a>
+						</div>
+				</th:block>
+				<!-- 모두 전용 -->
+				<div sec:authorize="isAnonymous()">
+					<div class="post_Btn">
+						<a class="walkTestBtn" th:href="@{/walkmatepost/list}">목록으로</a>
+					</div>
+				</div>
+				<!-- 댓글 -->
+				<div class="form-group">  
 					<button class="btn btn-outline-info" id="commentButton" type="button">댓글</button>
 				</div>
 				<div class="form-group commentList" id="commentList" style="display: none;">
@@ -206,35 +287,6 @@
 					</div>
 				</th:block>
 				</div>
-				<th:block th:if="${user != null}">
-					<a th:if="${bookmark}!=${po_num}" class="btn btn-outline-warning" th:href="@{/post/bookmark/insert/{po_num}(po_num=*{po_num})}" >즐겨찾기⭐</a>
-					<a th:if="${bookmark}==${po_num}" class="btn btn-warning" th:href="@{/post/bookmark/delete/{po_num}(po_num=*{po_num})}" >즐겨찾기⭐</a>
-					<button type="button" class="btn btn-outline-info"
-									    th:onclick="'window.open(\'/report/post/' + ${po_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'"
-									    >신고하기🚨</button>
-				</th:block>
-				<div sec:authorize="isAnonymous()">
-					<button type="button" class="anonymous-action">즐겨찾기⭐</button>
-					<button type="button" class="anonymous-action">신고하기🚨</button>
-				</div>
-				<br>
-				<!-- 신청자 전용 -->
-				<div sec:authorize="isAuthenticated()">
-					<div th:if="${#authentication.principal.member.me_num != walkMatePost.po_me_num && walkMatePost.wm_wms_state != '완료'}">
-						<a class="btn btn-outline-info" data-toggle="modal" data-target="#myModal">산책 메이트 신청하기</a>
-					</div>
-				</div>
-				<br>
-				<!-- 글 작성자 전용 -->
-				<!-- 로그인 기능 구현 완료되면 작성자만 보이게 수정할 것 -->
-				<div sec:authorize="isAuthenticated()">
-					<div th:if="${#authentication.principal.member.me_num == walkMatePost.po_me_num && walkMatePost.wm_wms_state != '완료'}">
-						<a class="btn btn-outline-info" th:href="@{/walkmatepost/approve/{po_num}(po_num=*{po_num})}">산책 메이트 수락하기</a>
-						<a class="btn btn-outline-primary" th:href="@{/walkmatepost/update/{po_num}(po_num=*{po_num})}">수정</a>
-						<a class="btn btn-outline-warning" th:href="@{/walkmatepost/delete/{po_num}(po_num=*{po_num})}">삭제</a>
-					</div>
-				</div>
-				<a class="btn btn-outline-dark" th:href="@{/walkmatepost/list}">목록으로</a>
 				<div id="selectedPets"></div> <!-- selectedPets를 출력할 요소 추가 -->
 			</div>
 			</div>
@@ -617,7 +669,7 @@
 			myWindow = window.open(openUrl, 'pop', popOption);
 		})
 	    document.addEventListener('DOMContentLoaded', function() {
-	        const anonymousButtons = document.querySelectorAll('.anonymous-action');
+	        const anonymousButtons = document.querySelectorAll('#anonymous-action');
 
 	        anonymousButtons.forEach(button => {
 	            button.addEventListener('click', function() {

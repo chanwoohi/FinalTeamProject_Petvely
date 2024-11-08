@@ -21,4 +21,6 @@ public interface ReportDAO {
 
 	ReportVO selectReport(int rp_num);
 
+	boolean memberStop(int po_me_num);
+
 }

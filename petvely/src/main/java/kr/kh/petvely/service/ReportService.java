@@ -33,4 +33,8 @@ public class ReportService {
 	public ReportVO getReport(int rp_num) {
 		return reportDao.selectReport(rp_num);
 	}
+
+	public boolean memberStop(int po_me_num) {
+		return reportDao.memberStop(po_me_num);
+	}
 }

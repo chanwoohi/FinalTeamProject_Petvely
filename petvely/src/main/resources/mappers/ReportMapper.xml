@@ -18,4 +18,11 @@
 		join member on po_me_num = me_num
 		where rp_num = #{rp_num}
 	</select>
+	<update id="memberStop">
+		update post
+		join member on po_me_num = me_num 
+		set
+			me_authority = 'STOP'
+		where po_me_num = #{po_me_num}
+	</update>
 </mapper>

@@ -214,12 +214,22 @@ table {
     position:relative;
   }
   
-  thead tr { 
-      height:60px;
+thead tr { 
+      height:35px;
       background:#ffeb99;
       font-size:16px;
   } 
-   
+.table td { 
+    background:#fff;
+    border: none;
+} 
+.table-striped th {
+    vertical-align: middle !important;
+    border:none !important;
+}
+
+
+
 /* DataTables의 thead에 있는 th와 td의 border를 제거 */
 table.dataTable > thead > tr > th, 
 table.dataTable > thead > tr > td {
@@ -574,7 +584,7 @@ table.dataTable {
     background-color: #e8e8e8;
 }
 
-.qaDetail_qaDetailInfoBtn{
+.qaDetail_qaDetailInfoBtn, .qaDetail_qaDetailDeleteBtn{
     display: flex;
 	align-items: center;
 	justify-content: center;
@@ -589,30 +599,14 @@ table.dataTable {
     color: #868688;
     float: left;
 }
-.qaDetail_qaDetailDeleteBtn{
-    display: flex;
-	align-items: center;
-	justify-content: center;
-    width: 81px;
-    height: 26px;
-    font-size: 12px;
-    border-radius: 21px;
-    border: none;
-    color: #fff;
-    width: 60px;
-    background-color: #f6f6f9;
-    color: #868688;
-}
-.qaDetail_qaDetailDeleteBtn:hover{
+
+.qaDetail_qaDetailDeleteBtn:hover, .qaDetail_qaDetailInfoBtn:hover{
     text-decoration: none;
     color: #868688;
     background-color: #dbdbdb;
+
 }
-.qaDetail_qaDetailInfoBtn:hover{
-    text-decoration: none;
-    color: #868688;
-    background-color: #dbdbdb;
-}
+
 .qaDetailContainer {
     position: relative;
     padding: 25px 0 30px 7px;
@@ -737,21 +731,7 @@ table.dataTable {
 	color: #000;
 	background-color: #ffc107;
 }
-/* 산책 - 주소 */
-.walk_PostCategory {
-	display: flex;
-	margin-block: 11px;
-	align-items: center; 
-}
-.walkCategoryFiled {
-	width: 15%; 
-	display: inline-block;
-	height: 36px; 
-	border: 1px solid #e4e4e6;
-	border-radius: 5px;
-	padding: 0 10px; 
-	margin-right: 5px; 
-}
+
 .walkbutton{
     display: inline-block;
     padding: 10px 20px;
@@ -766,6 +746,41 @@ table.dataTable {
 .walkbutton:hover{
 	background-color: #ffEBB9;
 }
+/* 산책 맵 */
+.map_search {
+    width: 100%;
+    border: 2px solid #fcd11e;
+    border-radius: 10px;
+    padding: 0 45px;
+    height: 48px;
+    line-height: 48px;
+    font-size: 16px;
+    letter-spacing: 0;
+    text-align: left;
+    background-image: url(/image/search_icon.svg);
+    background-repeat: no-repeat;
+    background-size: 24px;
+    background-position: 12px 50%;
+}
+
+/* 펫 등록 버튼 */
+.walk_walkBtn{
+    display: flex;
+	align-items: center;
+	justify-content: center;
+    width: 81px;
+    height: 26px;
+    font-size: 12px;
+    border-radius: 21px;
+    border: none;
+    color: #fff;
+    width: 60px;
+    background-color: #ffd966;
+    color: #333;
+    float: left;
+}
+
+
 
 /* 푸터 */
 .petfooter{
@@ -775,3 +790,4 @@ table.dataTable {
     background-color: #fdfdfd;
     border-top: 1px solid #ddd;
 }
+

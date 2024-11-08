@@ -1,4 +1,4 @@
-memberuse petvely;
+use petvely;
 
 # 관리자가 '강아지', '고양이', '도마뱀', '고슴도치' 커뮤니티를 추가했을 때 필요한 쿼리
 INSERT INTO COMMUNITY(CO_NAME, CO_NUM) 
@@ -121,3 +121,6 @@ VALUES
 ('욕설/생명경시/혐오/차별적 표현입니다.'),
 ('개인정보가 노출되었습니다.'),
 ('불쾌한 표현이 있습니다.');
+
+insert into facilitysharetype values
+("식당"), ("카페"), ("병원");

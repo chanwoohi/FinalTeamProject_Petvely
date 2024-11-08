@@ -403,3 +403,19 @@ ADD COLUMN `longitude` FLOAT NULL;
 
 ALTER TABLE `petvely`.`walkmatepost` 
 ADD COLUMN `wm_emd_num` INT NOT NULL AFTER `wm_wms_state`;
+
+ALTER TABLE `petvely`.`facilityshare` 
+ADD COLUMN `fs_info` VARCHAR(255) NOT NULL AFTER `fs_fst_type`;
+
+ALTER TABLE `petvely`.`facilityshare` 
+CHANGE COLUMN `fs_name` `fs_name` VARCHAR(255) NOT NULL ,
+CHANGE COLUMN `fs_grade` `fs_grade` INT NULL DEFAULT 0 ,
+CHANGE COLUMN `fs_reviewCount` `fs_reviewCount` INT NULL DEFAULT 0 ,
+CHANGE COLUMN `fs_reportCount` `fs_reportCount` INT NULL DEFAULT 0 ;
+
+ALTER TABLE `petvely`.`facilityshare` 
+ADD COLUMN `fs_approval` VARCHAR(1) NULL DEFAULT 0 AFTER `fs_info`;
+
+ALTER TABLE `petvely`.`facilityshare` 
+ADD COLUMN `fs_lat` DOUBLE NOT NULL AFTER `fs_approval`,
+ADD COLUMN `fs_lng` DOUBLE NOT NULL AFTER `fs_lat`;

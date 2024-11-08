@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.petvely.dao.facility.FacilityDAO">	
+	<select id="selectFacilityShareTypeList" resultType="FacilityShareTypeVO">
+		select *
+		from facilitysharetype
+	</select>
+	<insert id="insertFacilityShare">		
+		insert into facilityshare(fs_name, fs_info, fs_fst_type, fs_lat, fs_lng)
+		values
+		(#{fs_name}, #{fs_info}, #{fs_fst_type}, #{fs_lat}, #{fs_lng})
+	</insert>
+	<select id="selectFacilityShareList" resultType="FacilityShareVO">
+		select *
+		from facilityshare
+		where fs_approval = #{isApproval}
+        order by fs_num asc;
+	</select>
+	
+	<update id="approveFacilityShare">
+		update facilityshare
+		set fs_approval = true
+		where fs_num = #{fs_num}
+	</update>
+</mapper>
