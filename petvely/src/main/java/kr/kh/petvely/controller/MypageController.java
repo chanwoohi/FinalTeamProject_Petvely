@@ -88,6 +88,7 @@ public class MypageController {
 		model.addAttribute("list", list);
 		model.addAttribute("gatPostlist", gatPostlist);
 		model.addAttribute("maketList",maketList);
+		System.out.println(maketList);
 		model.addAttribute("pm",pm);
 		model.addAttribute("walkList", walkList);
 		return "member/mypage/postList";

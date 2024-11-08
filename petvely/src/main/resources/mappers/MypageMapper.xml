@@ -19,18 +19,21 @@
 		select * from walkmatepost
 		join post using(po_num)
 		join member on po_me_num = me_num
+		where po_me_num = #{me_num}
 		order by po_num desc
 	</select>
 	<select id="selectGATPostList" resultType="GiveAndTakePostVO">
 		select * from GATPost
-			left join post using (po_num)
-			left join member on po_me_num = me_num
+		left join post using (po_num)
+		left join member on po_me_num = me_num
+		where po_me_num = #{me_num}
 		order by po_num desc
 	</select>
 	<select id="selectMarketList" resultType="MarketPostVO">
 		select * from marketpost 
-			join post using(po_num) 
-			join member
-			where po_me_num = me_num
+		join post using(po_num) 
+		join  member on po_me_num = me_num
+		where po_me_num = #{me_num}
+		order by po_num desc
 	</select>
 </mapper>
