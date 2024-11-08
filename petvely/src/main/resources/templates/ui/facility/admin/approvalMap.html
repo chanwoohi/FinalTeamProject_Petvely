@@ -67,14 +67,20 @@
 			display: flex;
 			align-items: center;
 		}		
-		.label-group>input {
+		.label-group>.fs_content {
 			width: 50%;
 			/* width: auto; */
 			height: 90%;
 			margin-left: 5px;
-			text-overflow: ellipsis;
+		    background-color: #e9ecef;
 		    flex: 1 1 auto;
-		}		
+		}
+		.fs_content>:first-child {
+			overflow: hidden;
+		}
+		.fs_content *:not(:first-child) {
+			display: none;
+		}
 		.btn {
 			margin: 5px 5px 0px 0px;
 		    border-radius: 10px !important;
@@ -95,13 +101,13 @@
 				<form id="approval-form" class="approval-form">
 					<div class="label-group">
 						<label>이름 :</label>
-						<input class="form-control " 
-							th:value="${item.fs_name}" readonly>
+						<div class="form-control fs_content" 
+							th:utext="${item.fs_name}"></div>
 					</div>
 					<div class="label-group">
 						<label>내용 :</label>
-						<input class="form-control" 
-							th:value="${item.fs_info}" readonly>
+						<div class="form-control fs_content" 
+							th:utext="${item.fs_info}"></div>
 					</div>				
 					<div class="btn-group">
 						<button name="btn-moveMap" class="btn btn-dark"
