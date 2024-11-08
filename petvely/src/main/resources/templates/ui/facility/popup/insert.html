@@ -9,7 +9,6 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		margin-top: 10px;
 	}
 	.title-group {
 		display: flex;
@@ -67,7 +66,9 @@
 	}
 	
 	.register_registerContainer {
-		padding: 0px;
+		padding-top: 10px;
+	    padding-bottom: 10px;
+	    height: 100vw;
 	}
 	
 	.register_registerContents {
@@ -89,7 +90,7 @@
 				<div class="title-group post_Category">
 					<label>이름 :</label>
 					<input id="fs_name" name="fs_name" class="postInput" 
-						type="text" value="123">
+						type="text">
 				</div>
 				<div class="dropdown">				  
 					<select id="fs_fst_type" name="fs_fst_type" class="btn btn-select"
@@ -115,10 +116,10 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<div class="post_Category"
+			<div class="post_Category">
 				<label>내용:</label>
 			</div>
-			<textarea id="summerNote-insert" name="fs_info">123</textarea>
+			<textarea id="summerNote-insert" name="fs_info"></textarea>
 		</div>
 	</div>
 </body>

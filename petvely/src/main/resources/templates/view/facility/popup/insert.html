@@ -12,14 +12,14 @@
 
 		<div class="register_registerContainer">
 			<div class="register_registerContents">
-		<form id="form-insert" enctype="multipart/form-data">
-	    	<div th:replace="~{ui/facility/popup/insert.html :: main-f}"></div>
-		    
-			<button id="btn-insert" class="register_noregisterBtn post_submitBtn" 
-				type="button" disabled>시설 등록</button>
-				</div>
+				<form id="form-insert" enctype="multipart/form-data">
+			    	<div th:replace="~{ui/facility/popup/insert.html :: main-f}"></div>
+				    
+					<button id="btn-insert" class="register_noregisterBtn post_submitBtn" 
+						type="button" disabled>시설 등록</button>
+			    </form>
 			</div>
-	    </form>
+		</div>
 		
 		<script>
 		$(document).ready(function() {
@@ -40,15 +40,13 @@
 				});
 			});
 			
-			function toggleSubmitButton() {
-				console.log($('#fs_name').val());
-				
+			function toggleSubmitButton() {				
 			    if ($('#fs_name').val().trim() 
 				&& $('[name=fs_info]').val().trim()
-				&& $('#fs_fst_type').val() == null) {
-					$('#btn-insert').prop('disabled', true);
+				&& $('#fs_fst_type').val() != null) {
+					$('#btn-insert').prop('disabled', false);
 			    } else {
-			        $('#btn-insert').prop('disabled', false);
+			        $('#btn-insert').prop('disabled', true);
 			    }
 			}
 
