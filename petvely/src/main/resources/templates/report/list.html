@@ -53,13 +53,41 @@
 		            </td>
 	            	<td>
 	            		<div>
-	            		 <a class="btn btn-outline-info" th:href="@{/report/memberStop/{po_num}(po_num=${item.rp_rtt_num})}">회원 정지</a>
+	            			<button type="button" class="btn btn-outline-info memberStopBtn" th:data-po_num="${item.rp_rtt_num}">회원 정지</button>
 	            		</div>
 		            </td>
                 </tr>
             </tbody>
         </table>
 		</div>
+		
+    	<script>
+    	$(document).ready(function() {
+    	    $('#dataTable').DataTable();
+
+    	    // 회원 정지 버튼 클릭 이벤트
+    	    $('.memberStopBtn').click(function(e) {
+    	        e.preventDefault();
+    	        var po_num = $(this).data('po_num');
+    	        
+    	        // AJAX로 POST 요청
+    	        $.ajax({
+    	            url: '/report/memberStop/' + po_num,
+    	            method: 'POST',
+    	            success: function(response) {
+    	                if (response.success) {
+    	                    alert("회원 정지되었습니다.");
+    	                } else {
+    	                    alert("회원 정지에 실패했습니다. " + (response.message || ""));
+    	                }
+    	            },
+    	            error: function(xhr, status, error) {
+    	                alert("회원 정지에 실패했습니다. 오류: " + error);
+    	            }
+    	        });
+    	    });
+    	});
+    	</script>
     </main>
 </body>
 </html>
