@@ -84,28 +84,30 @@
 </head>
 <body>
 <main layout:fragment="content" class="container">
+	<div th:replace="~{layout/mypageheader.html :: header}"></div>
 	<div class="post_Container">
-        <h1 class="categoryTitle">쪽지함</h1>
-        <div class="message-container">gd
-            <div class="message-item" th:each="item : ${messages}">
-                <a th:href="@{/message/messagedetail/{mes_num}(mes_num=${item.mes_num})}">
-                    <span th:text="${#strings.length(item.mes_content) > 10 ? 
-                    #strings.substring(item.mes_content, 0, 10) + '.......' : item.mes_content}"></span>
-                </a>
-                <div class="dropdown">
-                	<a class="message-sender" th:text="'보낸 사람: ' + ${item.mes_me_senderId}"></a>
-                	<div class="dropdown-content">
-                		<a th:href="@{/mypage/otherpet/{me_num}(me_num=${item.mes_me_senderNum})}">펫 정보보기</a>
-                		<a th:href="@{/message/send}">쪽지 보내기</a>
-                	</div>
-                </div>
-                
-                <div class="message-date" th:text="${item.mes_date}">보낸 날짜</div>
-            
-            </div>
-        </div>
-        <a class="btn btn-primary send-button" th:href="@{/message/send}">쪽지 보내기</a>
-         <!-- 메시지 출력 부분 -->
+		<h1 class="categoryTitle">쪽지함</h1>
+		<div class="message-container">gd
+			<div class="message-item" th:each="item : ${messages}">
+				<a th:href="@{/message/messagedetail/{mes_num}(mes_num=${item.mes_num})}">
+					<span th:text="${#strings.length(item.mes_content) > 10 ? 
+					#strings.substring(item.mes_content, 0, 10) + '.......' : item.mes_content}"></span>
+				</a>
+				<div class="dropdown">
+					<a class="message-sender" th:text="'보낸 사람: ' + ${item.mes_me_senderId}"></a>
+					<div class="dropdown-content">
+						<a th:href="@{/mypage/otherpet/{me_num}(me_num=${item.mes_me_senderNum})}">펫 정보보기</a>
+						<a th:href="@{/message/send}">쪽지 보내기</a>
+					</div>
+				</div>
+				    
+				<div class="message-date" th:text="${item.mes_date}">보낸 날짜</div>
+			
+			</div>
+		</div>
+		<a class="btn btn-primary send-button" th:href="@{/message/send}">쪽지 보내기</a>
+		 <!-- 메시지 출력 부분 -->
+	</div>
       <script th:inline="javascript">
         /*<![CDATA[*/
         var msg = /*[[${msg}]]*/ '';
