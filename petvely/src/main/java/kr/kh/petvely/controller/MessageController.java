@@ -1,5 +1,7 @@
 package kr.kh.petvely.controller;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.kh.petvely.model.user.CustomUser;
 import kr.kh.petvely.model.vo.MemberVO;
@@ -43,7 +44,7 @@ public class MessageController {
     	        LocalDateTime now = LocalDateTime.now();
     	        for(MessageVO message : messages) {
     	        	LocalDateTime messageDate = message.getMes_date().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-    	        	if(messageDate.plusDays(1).isBefore(now)) {
+    	        	if(messageDate.plusDays(7).isBefore(now)) {
     	        		messageService.deleteMessage(message.getMes_num());
     	        	}
     	        	
@@ -129,6 +130,11 @@ public class MessageController {
     		PostVO post = messageService.getPostUserNum(po_num);
     		int receiverNum = post.getPo_me_num();
     		
+    		if(senderNum == receiverNum) {
+				model.addAttribute("msg","자신에게는 보낼 수 없습니다.");
+				
+				 return "message/messagebox";
+			}
     		
     		
     		model.addAttribute("receiverNum",receiverNum);
@@ -141,12 +147,10 @@ public class MessageController {
     		message.setMes_date(new Date());
     		boolean res = messageService.MarketMessageSend(message);
     		
-    	}else {
-    		return "redirect:/login";
     	}
     	
   
-        return "redirect:/post/market"; 
+        return "redirect:/post/market/11"; 
     }
     @GetMapping("/message/messagedetail/{mes_num}")
     public String messageDetail(Model model,@AuthenticationPrincipal CustomUser customUser,

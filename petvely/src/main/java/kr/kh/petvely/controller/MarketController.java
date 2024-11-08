@@ -105,6 +105,7 @@ public class MarketController {
 										@PathVariable int co_num,
 										@AuthenticationPrincipal CustomUser customUser
 										) {
+		
 		if(customUser != null) {
 			MemberVO user = customUser.getMember();
 			int me_num = user.getMe_num();

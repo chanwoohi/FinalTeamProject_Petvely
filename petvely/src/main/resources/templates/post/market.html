@@ -5,7 +5,9 @@
     layout:decorate="~{layout/layout2.html}">
 <head>
 <link rel="stylesheet" type="text/css" href="/css/common.css"> 
+
     <style>
+    
         body {
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
@@ -113,11 +115,19 @@
             padding: 10px 30px; /* 버튼 패딩 조정 */
         }
     </style>
-       <script>
+       <script th:inline="javascript">
             function userLoginAlert() {
                 alert("로그인이 필요합니다.");
             }
-        </script>
+            
+            
+            /*<![CDATA[*/
+            var msg = /*[[${msg}]]*/ '';
+            if (msg) {
+                alert(msg);
+            }
+            /*]]>*/
+    </script>
 </head>
 <body>
     <main layout:fragment="content">
@@ -140,7 +150,13 @@
 	                   <p class="card-text" th:text="${item.po_content}"></p>
 	                   <div class="price">가격: <span th:text="${item.mp_price}"></span></div>
 	                   <div th:if="${item.mp_gts_state == '판매완료'}" class="overlay">판매 완료</div>
-	                   <a th:href="@{/message/marketmessagesend/{po_num}(po_num=${item.po_num})}" class="sendMessagebtn">쪽지 보내기</a>
+	                   <div th:if="${user != null}">
+                    		<a th:href="@{/message/marketmessagesend/{po_num}(po_num=${item.po_num})}" class="sendMessagebtn" >쪽지 보내기</a>
+                		</div>
+						<div th:if="${user == null}">
+                    		<button class="sendMessagebtn" onclick="userLoginAlert()">쪽지 보내기</button>
+                		</div>
+	                   
 	                   <div class="tooltip" th:text="'상세 정보: ' + ${item.po_content}">상세 정보</div>
 	               </div>
 	           </div>
@@ -170,7 +186,9 @@
 	       <a class="marketinsertbtn" th:href="@{/post/marketinsert}">게시글 등록</a>
 	    </div>
 	  </form>
-    </main>
+	   
+ 
   
+       </main>
 </body>
 </html>

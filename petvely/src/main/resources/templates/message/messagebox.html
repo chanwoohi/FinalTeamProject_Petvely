@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-<html 
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
-	layout:decorate="~{layout/layout2.html}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout2.html}">
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
@@ -15,107 +12,126 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             max-width: 250px;
         }
+
         .message-item {
             padding: 10px;
             border-bottom: 1px solid #dee2e6;
+            display: flex;
+            flex-direction: column; /* 세로 방향으로 정렬 */
+            justify-content: space-between; /* 아이템들을 위아래로 배치 */
         }
+
         .message-item:last-child {
             border-bottom: none;
         }
+
         .send-button {
             margin-top: 20px;
             display: inline-block;
         }
-        .message-date, .message-sender {
+
+        .message-date,
+        .message-sender {
             font-size: 0.9em;
             color: gray;
         }
-        .dropdown{
-		  position : relative;
-		  display : inline-block;
-		}
-	
-		.dropdown-content{
-		  display : none;
-		  position : absolute;
-		  z-index : 1; /*다른 요소들보다 앞에 배치*/
-		  font-weight: 400;
-		  background-color: #f9f9f9;
-		  min-width : 200px;
-		}
-		.dropdown-content a{
-		  display : block;
-		  text-decoration : none;
-		  color : rgb(37, 37, 37);
-		  font-size: 12px;
-		  padding : 12px 20px;
-		}
-		
-		.dropdown-content a:hover{
-		  background-color : #ececec
-		}
-		
-		.dropdown:hover .dropdown-content {
-		  display: block;
-		}
-		   .message-sender {
-            font-weight: bold;
-            color: #007bff;
-            cursor: pointer; /* 마우스를 올렸을 때 포인터 커서로 바뀌도록 설정 */
+
+        .dropdown {
             position: relative;
             display: inline-block;
         }
-		.message-sender:hover {
-            color: #0056b3;
-            
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            z-index: 1;
+            font-weight: 400;
+            background-color: #f9f9f9;
+            min-width: 200px;
         }
-          .message-sender:after {
+
+        .dropdown-content a {
+            display: block;
+            text-decoration: none;
+            color: rgb(37, 37, 37);
+            font-size: 12px;
+            padding: 12px 20px;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ececec;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .message-sender {
+            font-weight: bold;
+            color: #007bff;
+            cursor: pointer;
+            position: relative;
+            display: block; /* 변경된 부분: display를 block으로 변경하여 '보낸 사람'을 아래로 배치 */
+        }
+
+        .message-sender:hover {
+            color: #0056b3;
+        }
+
+        .message-sender:after {
             content: " ▼";
             font-size: 10px;
             color: #007bff;
             margin-left: 5px;
         }
 
-        /* 아이디 클릭 시에 스타일 */
         .message-sender:active {
             color: #0056b3;
+        }
+
+        .message-date {
+            margin-top: 5px; /* 날짜와 '보낸 사람'을 구분할 수 있게 여백 추가 */
         }
     </style>
 </head>
 <body>
-<main layout:fragment="content" class="container">
-	<div th:replace="~{layout/mypageheader.html :: header}"></div>
-	<div class="post_Container">
-        <h1 class="categoryTitle">쪽지함</h1>
-        <div class="message-container">gd
-            <div class="message-item" th:each="item : ${messages}">
-                <a th:href="@{/message/messagedetail/{mes_num}(mes_num=${item.mes_num})}">
-                    <span th:text="${#strings.length(item.mes_content) > 10 ? 
-                    #strings.substring(item.mes_content, 0, 10) + '.......' : item.mes_content}"></span>
-                </a>
-                <div class="dropdown">
-                	<a class="message-sender" th:text="'보낸 사람: ' + ${item.mes_me_senderId}"></a>
-                	<div class="dropdown-content">
-                		<a th:href="@{/mypage/otherpet/{me_num}(me_num=${item.mes_me_senderNum})}">펫 정보보기</a>
-                		<a th:href="@{/message/send}">쪽지 보내기</a>
-                	</div>
+    <main layout:fragment="content" class="container">
+        <div th:replace="~{layout/mypageheader.html :: header}"></div>
+        <div class="post_Container">
+            <h1 class="categoryTitle">쪽지함</h1>
+            <div class="message-container">
+                <!-- 여기에 'gd'는 임시 텍스트로 보입니다. 삭제해주세요. -->
+                <div class="message-item" th:each="item : ${messages}">
+                    <a th:href="@{/message/messagedetail/{mes_num}(mes_num=${item.mes_num})}">
+                        <span th:text="${#strings.length(item.mes_content) > 10 ? #strings.substring(item.mes_content, 0, 10) + '.......' : item.mes_content}"></span>
+                    </a>
+
+                    <!-- 보낸 사람: 스타일링을 변경하여 내용 아래로 배치 -->
+                    <div class="dropdown">
+                        <a class="message-sender" th:text="'보낸 사람: ' + ${item.mes_me_senderId}"></a>
+                        <div class="dropdown-content">
+                            <a th:href="@{/mypage/otherpet/{me_num}(me_num=${item.mes_me_senderNum})}">펫 정보보기</a>
+                            <a th:href="@{/message/send}">쪽지 보내기</a>
+                        </div>
+                    </div>
+
+                    <!-- 보낸 날짜 아래로 이동 -->
+                    <div class="message-date" th:text="${item.mes_date}">보낸 날짜</div>
                 </div>
-                
-                <div class="message-date" th:text="${item.mes_date}">보낸 날짜</div>
-            
             </div>
+
+            <a class="btn btn-primary send-button" th:href="@{/message/send}">쪽지 보내기</a>
         </div>
-        <a class="btn btn-primary send-button" th:href="@{/message/send}">쪽지 보내기</a>
-         <!-- 메시지 출력 부분 -->
-         </div>
-      <script th:inline="javascript">
-        /*<![CDATA[*/
-        var msg = /*[[${msg}]]*/ '';
-        if (msg) {
-            alert(msg);
-        }
-        /*]]>*/
-    </script>
+
+        <!-- 메시지 출력 부분 -->
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            var msg = /*[[${msg}]]*/ '';
+            if (msg) {
+                alert(msg);
+            }
+            /*]]>*/
+        </script>
     </main>
 </body>
 </html>
