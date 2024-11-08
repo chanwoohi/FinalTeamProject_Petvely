@@ -18,6 +18,7 @@ public class WalkMatePostVO extends PostVO {
 	
 	private String wm_time;
 	private String wm_wms_state;
+	private String wm_emd_num;
 	
 	private String sido_name;
 	private String sigg_name;

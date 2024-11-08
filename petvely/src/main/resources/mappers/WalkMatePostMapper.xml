@@ -31,8 +31,8 @@
 			po_num = #{po_num}
 	</update>
 	<insert id="insertWalkMateMember">
-		insert into walkmatemember(wmm_po_num, wmm_ani_num, wmm_me_num)
-		values(#{pet.pusp_po_num}, #{pet.pusp_ani_num}, #{pet.wmm_me_num})
+		insert into walkmatemember(wmm_po_num, wmm_ani_num, wmm_me_num, wm_emd_num)
+		values(#{pet.pusp_po_num}, #{pet.pusp_ani_num}, #{pet.wmm_me_num}, 1)
 	</insert>
 	<select id="selectWalkMateMember" resultType="WalkMateMemberVO">
         select * from walkmatemember
