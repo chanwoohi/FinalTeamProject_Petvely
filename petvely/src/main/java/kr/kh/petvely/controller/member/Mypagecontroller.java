@@ -2,6 +2,7 @@ package kr.kh.petvely.controller.member;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @AllArgsConstructor
 public class Mypagecontroller{
-
+	
 	private final NoName util = NoName.getInstance();
 	private MypageService mypageService;
 	private GATPostService gatPostService;

@@ -68,16 +68,7 @@ public class MessageService {
 		return messageDao.deleteMessage(mes_num) > 0;
 		
 	}
-	public boolean WalkMateMessage(MessageVO message) {
-		
-		try {
-			messageDao.sendWalkMateMessage(message);
-			return true;
-		}catch(Exception e) {
-			e.printStackTrace();
-			return false;
-		}
 	
 	}
 
-}
+

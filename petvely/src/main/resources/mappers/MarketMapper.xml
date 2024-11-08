@@ -67,7 +67,7 @@
 		select 
 			* 
 		from 
-			goodstype;
+			goodstype
 	</select>
 	
 	<update id="updateTradeState">
