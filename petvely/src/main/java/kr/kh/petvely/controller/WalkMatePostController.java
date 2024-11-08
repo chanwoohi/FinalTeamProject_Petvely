@@ -235,35 +235,8 @@ public class WalkMatePostController {
 									  @AuthenticationPrincipal CustomUser customUser) {
 		
 		walkMateService.updateWalkMateMember(selectedAniNums, po_num);
-		System.out.println(Arrays.toString(selectedAniNums));
 		
 		walkMatePostService.updateWalkmatePostState(po_num);
-		
-		if(customUser != null) {
-			MemberVO user = customUser.getMember();
-			int senderNum = user.getMe_num();
-			
-		
-				WalkMateMemberVO comer = walkMateService.getReceiverNum(selectedAniNums);
-				System.out.println(comer);
-				int receiverNum = comer.getAni_me_num();
-				System.out.println("받는사람 : " + receiverNum);
-				String content = "산책메이트가 승인 되었습니다.";
-				
-				MessageVO message = new MessageVO();
-				message.setMes_me_senderNum(senderNum); 
-				message.setMes_me_receiverNum(receiverNum); 
-				message.setMes_content(content); 
-				message.setMes_date(new Date()); 
-				System.out.println("산책 msg : "+message);
-				
-				messageService.WalkMateMessage(message);
-				
-				return "/walkmatepost/list";
-			}
-			
-		
-		
 		
 		return "/walkmatepost/list";
 	}

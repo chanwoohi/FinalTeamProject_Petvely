@@ -78,8 +78,4 @@
 			where
 		mes_num = #{mes_num}
 	</delete>
-	<insert id="sendWalkMateMessage" parameterType="MessageVO">
-		insert into message (mes_me_senderNum, mes_me_receiverNum,mes_content, mes_date)
-			values(#{mes_me_senderNum}, #{mes_me_receiverNum}, #{mes_content}, now())
-	</insert>
 </mapper>

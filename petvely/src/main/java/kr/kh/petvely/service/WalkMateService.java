@@ -32,9 +32,4 @@ public class WalkMateService {
 		
 	}
 
-	public WalkMateMemberVO getReceiverNum(int[] selectedAniNums) {
-		
-		return walkMateDao.selectComerNum(selectedAniNums);
-	}
-
 }
