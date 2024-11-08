@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/basic.html}">
+	
+<head layout:fragment="head">
+	<head th:replace="~{ui/facility/user/insertMap.html :: head}"></head>
+</head>
+<body>
+	<div class="view-container" layout:fragment="main">
+	    <div th:replace="~{ui/facility/user/insertMap.html :: body}"></div>
+		
+		<script type="text/javascript">
+		const init_latlng = new kakao.maps.LatLng(37.49918793615268, 127.03278998015888);
+		
+		let current_latlng = init_latlng;
+		
+		$(document).ready(function() {			
+			createMap();
+		})
+		
+		function createMap() {
+			let mapContainer = $('#map')[0], // 지도를 표시할 div 
+		    mapOption = { 
+		        center: init_latlng, // 지도의 중심좌표
+		        level: 1 // 지도의 확대 레벨
+		    };
+			
+			let map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+			
+			addMapControl(map);
+			
+			let marker = addMapMarker(map);
+			
+			let overlay = addCustomOverlay(map);
+			
+			addMapClickEvent(map, marker, overlay);
+			
+			addDocumentClickEvent(overlay);
+		}
+			
+		function addMapControl(map) {
+			// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+			let mapTypeControl = new kakao.maps.MapTypeControl();
+	
+			// 지도에 컨트롤을 추가해야 지도위에 표시됩니다
+			// kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
+			map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+	
+			// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+			let zoomControl = new kakao.maps.ZoomControl();
+			map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+		}
+		
+		function addMapMarker(map) {
+			let marker = new kakao.maps.Marker({
+			    clickable: true,
+			    position: map.getCenter(),
+			    map: map
+			});
+			
+			return marker;
+		}
+		
+		function addCustomOverlay(map) {
+			let content = createDiv_Overlay();
+
+			let overlay = new kakao.maps.CustomOverlay({
+			    content: content,
+			    clickable: true,
+			    position: map.getCenter(),
+			    map: map
+			});
+			
+			return overlay;
+		}	
+		
+		function addMapClickEvent(map, marker, overlay) {			
+			kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+			    marker.setPosition(mouseEvent.latLng);
+			    
+			    if (overlay.getMap() == null) {
+					overlay.setMap(map);
+			    }
+
+			    overlay.setPosition(mouseEvent.latLng);
+			    
+			    current_latlng = new kakao.maps.LatLng(mouseEvent.latLng.getLat(), mouseEvent.latLng.getLng());
+			});
+			
+			kakao.maps.event.addListener(marker, 'click', function() {			    
+			    if (overlay.getMap() == null) {
+					overlay.setMap(map);
+			    }
+			    else {
+					overlay.setMap(null);
+			    }
+			});
+		}
+		
+		function createDiv_Overlay() {
+			return content = `
+				<div class="wrap">
+            		<div class="info"> 
+            			<div class="title">
+            				<div class="close" title="닫기">
+            				</div> 
+            			</div>
+            			<div class="body">
+            				<div class="desc">
+	            				<button class="insertbtn fs-insert-btn"
+	            					type="button">
+	            					등록
+	            				</button>
+	            			</div>
+            			</div>
+            		</div>
+            	</div>
+            `;
+		}
+		
+		function addDocumentClickEvent(overlay) {
+			$(document).on("click", ".fs-insert-btn", function() {
+				const url = "/facility/popup/insert"
+					+ "?fs_lat=" + current_latlng.getLat()
+					+ "&fs_lng=" + current_latlng.getLng();
+
+				console.log(current_latlng);
+					
+			    var popupWidth = 640;
+			    var popupHeight = 600;
+				
+			    var popupX = Math.round(window.screenX + (window.outerWidth/2) - (popupWidth/2));
+			    var popupY = Math.round(window.screenY + (window.outerHeight/2) - (popupHeight/2));
+
+				const option = `
+					width=${popupWidth}px
+					, height=${popupHeight}px
+					, top=${popupY}
+					, left=${popupX}
+				`;
+				const popup = window.open(url, "_blank", option);
+			});
+			
+			$(document).on("click", ".close", function() {
+				overlay.setMap(null);
+			});
+		}
+		
+		</script>
+	</div>
+</body>
+</html>

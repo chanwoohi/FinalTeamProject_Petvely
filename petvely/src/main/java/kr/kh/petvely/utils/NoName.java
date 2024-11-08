@@ -13,4 +13,8 @@ public class NoName {
     public String getCurrentMethodName() {
     	return Thread.currentThread().getStackTrace()[2].getMethodName();
     }
+
+    public String getCurrentMethodName2() {
+    	return Thread.currentThread().getStackTrace()[3].getMethodName();
+    }
 }

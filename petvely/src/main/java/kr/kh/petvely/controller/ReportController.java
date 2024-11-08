@@ -1,6 +1,8 @@
 package kr.kh.petvely.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -9,8 +11,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
+import kr.kh.petvely.dao.PostDAO;
 import kr.kh.petvely.model.user.CustomUser;
 import kr.kh.petvely.model.vo.MemberVO;
 import kr.kh.petvely.model.vo.PostVO;
@@ -118,5 +124,28 @@ public class ReportController {
 		
 		return "/report/postview";
 	}
+	
+
+	@ResponseBody
+	@PostMapping("/report/memberStop/{po_num}")
+	public Map<String, Object> memberStop(@PathVariable("po_num") int po_num) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+        	PostVO post = postService.getPost(po_num);
+        	
+        	System.out.println(post);
+        	
+            boolean result = reportService.memberStop(post.getPo_me_num()); // 서비스에서 정지 처리 수행
+            response.put("success", result);
+            if (!result) {
+                response.put("message", "회원 정지 처리에 실패했습니다.");
+            }
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("message", "오류가 발생했습니다: " + e.getMessage()); // 상세 오류 메시지 추가
+        }
+        return response; // JSON으로 응답
+    }
+	
 	
 }

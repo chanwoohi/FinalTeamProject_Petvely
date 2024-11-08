@@ -84,6 +84,7 @@
 </head>
 <body>
 <main layout:fragment="content" class="container">
+	<div th:replace="~{layout/mypageheader.html :: header}"></div>
 	<div class="post_Container">
         <h1 class="categoryTitle">쪽지함</h1>
         <div class="message-container">gd
@@ -106,6 +107,7 @@
         </div>
         <a class="btn btn-primary send-button" th:href="@{/message/send}">쪽지 보내기</a>
          <!-- 메시지 출력 부분 -->
+         </div>
       <script th:inline="javascript">
         /*<![CDATA[*/
         var msg = /*[[${msg}]]*/ '';
