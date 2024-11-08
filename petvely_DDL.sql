@@ -401,9 +401,6 @@ ALTER TABLE `walkmatepost`
 ADD COLUMN `latitude` FLOAT NULL,
 ADD COLUMN `longitude` FLOAT NULL;
 
-ALTER TABLE `petvely`.`walkmatepost` 
-ADD COLUMN `wm_emd_num` INT NOT NULL AFTER `wm_wms_state`;
-
 ALTER TABLE `petvely`.`facilityshare` 
 ADD COLUMN `fs_info` VARCHAR(255) NOT NULL AFTER `fs_fst_type`;
 

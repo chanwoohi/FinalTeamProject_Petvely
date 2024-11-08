@@ -5,22 +5,16 @@
 		select * from walkmatepost
 		join post using(po_num)
 		join member on po_me_num = me_num
-		left join emd_areas on wm_emd_num = emd_num
-		left join sigg_areas on emd_sigg_num = sigg_num
-		left join sido_areas on sigg_sido_num = sido_num
 		order by po_num desc
 	</select>
 	<insert id="insertWalkMatePost">
-		insert into walkmatepost(po_num, wm_date, wm_time, longitude, latitude, wm_emd_num)
-		values(#{po_num}, #{wm_date}, #{wm_time}, #{longitude}, #{latitude}, 1)
+		insert into walkmatepost(po_num, wm_date, wm_time, longitude, latitude)
+		values(#{po_num}, #{wm_date}, #{wm_time}, #{longitude}, #{latitude})
 	</insert>
 	<select id="selectWalkMatePost" resultType="WalkMatePostVO">
 		select * from walkmatepost
 		join post using(po_num)
 		join member on po_me_num = me_num
-		left join emd_areas on wm_emd_num = emd_num
-		left join sigg_areas on emd_sigg_num = sigg_num
-		left join sido_areas on sigg_sido_num = sido_num
 		where po_num = #{po_num}
 	</select>
 	<update id="updateWalkMatePost">
