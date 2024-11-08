@@ -1,4 +1,4 @@
-package kr.kh.petvely.model.vo;
+package kr.kh.petvely.model.vo.facility;
 
 import java.util.Date;
 

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/basic.html}">
+	
+<head layout:fragment="head">
+	<head th:replace="~{ui/facility/admin/approvalMap.html :: head}"></head>
+</head>
+<body>
+	<div class="view-container" layout:fragment="main">
+	    <div th:replace="~{ui/facility/admin/approvalMap.html :: body}"></div>
+		
+		<script type="text/javascript">		
+		const default_latlng = new kakao.maps.LatLng(37.49918793615268, 127.03278998015888);
+
+		$(document).ready(function() {
+			createMap();
+		})
+		
+		function createMap() {
+			const firstItem = $("button[name='btn-moveMap']").first();
+			let latlng = null;
+			
+			if (firstItem.length != 0) {
+				const lat = firstItem.siblings("#fs_lat").val();
+				const lng = firstItem.siblings("#fs_lng").val();
+				latlng = new kakao.maps.LatLng(lat, lng);
+			}
+			
+			let mapContainer = $('#map')[0],
+		    mapOption = { 
+		        center: latlng == null ? default_latlng : latlng,
+		        level: 1
+		    };
+			
+			let map = new kakao.maps.Map(mapContainer, mapOption);
+			
+			addMapControl(map);
+			
+			let marker = addMapMarker(map, latlng);
+			
+			addDocumentClickEvent(map, marker);
+		}
+		
+		function addMapMarker(map, latlng) {
+			let marker = new kakao.maps.Marker({
+			    clickable: true,
+			    position: latlng,
+			    map: latlng == null ? null : map
+			});
+			
+			return marker;
+		}
+			
+		function addMapControl(map) {
+			// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+			let mapTypeControl = new kakao.maps.MapTypeControl();
+	
+			// 지도에 컨트롤을 추가해야 지도위에 표시됩니다
+			// kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
+			map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+	
+			// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+			let zoomControl = new kakao.maps.ZoomControl();
+			map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+		}
+		
+		function addDocumentClickEvent(map, marker) {
+			$(document).on("click", "button[name='btn-moveMap']", function() {
+				const lat = $(this).siblings("#fs_lat").val();
+				const lng = $(this).siblings("#fs_lng").val();
+
+				moveMap(map, marker, lat, lng);
+				
+				//playAni(map, moveMap, ArriveDestination, map.getCenter(), latlng, 500, 1);
+			});
+			
+			$(document).on("click", "button[name='btn-approval']", function() {
+				const selectedBtn = $(this).siblings("#fs_num");
+				
+ 				$.ajax({
+					async : true,
+					url : "/facility/admin/approval", 
+					type : 'post', 
+					data : {
+						fs_num : selectedBtn.val()
+					},
+					success : function (data){
+						const removeElement = selectedBtn.closest("#approval-item");
+						removeElement.addClass("remove-item");
+						removeElement.slideToggle(1000, function() {
+							//$(this).remove();
+						});
+						
+						const addElement = removeElement.siblings(".display-none").first();						
+						addElement.slideToggle(1000);
+						addElement.removeClass("display-none");
+						
+						const nextElement = removeElement.nextAll(".approval-item:not(.remove-item)").first();
+						const prevElement = removeElement.prevAll(".approval-item:not(.remove-item)").first();
+						const selectedElement = nextElement.length > 0 ? nextElement : prevElement;
+						
+						console.log(selectedElement);
+						
+						if (selectedElement.length > 0) {
+	 						selectedElement.find('[name=btn-moveMap]').click();							
+						}
+						else {
+							marker.setMap(null);
+						}
+					},  
+					error : function(jqXHR, textStatus, errorThrown){
+						console.log(jqXHR);
+					}
+				}); 
+				
+				//playAni(map, moveMap, ArriveDestination, map.getCenter(), latlng, 500, 1);
+			});
+		}
+		
+		function moveMap(map, marker, lat, lng) {
+			if (lat == null || lng == null) {
+				marker.setMap(null);
+				return;
+			}
+			
+			const latlng = new kakao.maps.LatLng(lat, lng);
+	
+			marker.setPosition(latlng);
+			map.panTo(latlng);
+		}
+		
+/* 		function playAni(obj, action, finalBlow, startPos, endPos, time, interval) {
+
+			console.log(333122213123);
+			
+			const startTime = new Date();
+			
+			let motor = setInterval(() => {
+				action(startPos, endPos, startTime, time * 0.001);
+			}, interval);
+			
+			setTimeout(() => {
+				clearInterval(motor);
+				finalBlow(obj, endPos);
+			}, time);
+		}
+		
+		function moveMap(startPos, endPos, startTime, endTime) {
+			const nowTime = new Date();
+			const goneTime = (nowTime - startTime) * 0.001;
+			
+			const ratioTime = goneTime / endTime;			
+			
+			map.setCenter(new kakao.maps.LatLng(lat, lng));
+			
+			console.log(ratioTime);
+		}
+		
+		function ArriveDestination(map, endPos) {
+			map.setCenter(endPos);
+			console.log(33333);
+		} */
+		
+		</script>
+	</div>
+</body>
+</html>
