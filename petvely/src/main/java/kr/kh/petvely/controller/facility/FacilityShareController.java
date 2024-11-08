@@ -68,10 +68,12 @@ public class FacilityShareController {
 	
 	@ResponseBody
 	@PostMapping("popup/insert")
-	public void facilityPopupInsert_post(FacilityShareVO fsVo) {
+	public String facilityPopupInsert_post(FacilityShareVO fsVo) {
 		log(" : {}", fsVo);
 		
 		boolean result = facilityService.insertFacilityShare(fsVo);
+		
+		return "등록되었습니다.";
 	}
 	
 	@GetMapping("admin/approval")

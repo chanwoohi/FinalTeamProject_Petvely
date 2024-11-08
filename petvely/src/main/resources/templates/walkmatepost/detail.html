@@ -42,21 +42,21 @@
 							<!-- 유저 전용 -->
 							<th:block th:if="${user != null}">
 								<div class="walkButContainer">
-									<a th:if="${bookmark}!=${po_num}" class="wlakIconAbtn" th:href="@{/post/bookmark/insert/{po_num}(po_num=*{po_num})}"><span>
+									<button th:if="${bookmark}!=${po_num}" class="wlakIconAbtn" th:href="@{/post/bookmark/insert/{po_num}(po_num=*{po_num})}"><span>
 										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#f00" class="bi bi-heart-fill" viewBox="0 0 16 16">
 										  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
 										</svg>
 										</span>
 										&nbsp;즐겨찾기
-									</a>
-									<a th:if="${bookmark}==${po_num}" class="wlakIconAbtn" th:href="@{/post/bookmark/delete/{po_num}(po_num=*{po_num})}" >
+									</button>
+									<button th:if="${bookmark}==${po_num}" class="wlakIconAbtn" th:href="@{/post/bookmark/delete/{po_num}(po_num=*{po_num})}" >
 										<span>
 										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#f00" class="bi bi-heart-fill" viewBox="0 0 16 16">
 										  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
 										</svg>
 										</span>
 										&nbsp;즐겨찾기
-									</a>
+									</button>
 									<button type="button" class="wlakIconBtn"
 									 th:onclick="'window.open(\'/report/post/' + ${po_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'"><span style="background-image: url('/image/block_icon.svg'); background-size: cover; display: inline-block; width: 16px; height: 16px; vertical-align: middle;"></span> 신고하기</button>
 								</div>

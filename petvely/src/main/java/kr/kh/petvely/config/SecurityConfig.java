@@ -39,7 +39,7 @@ public class SecurityConfig{
                     .hasAnyAuthority(UserRole.USER.name(), UserRole.ADMIN.name())
 	                .requestMatchers("/walkmatepost/insert/*", "/walkmatepost/update/*", "/walkmatepost/delete/*")
 	                .hasAnyAuthority(UserRole.USER.name(), UserRole.ADMIN.name())
-	                .requestMatchers("/gatpost/update/*", "/gatpost/delete/*", "/member/mypage")
+	                .requestMatchers("/gatpost/insert", "/gatpost/update/*", "/gatpost/delete/*", "/member/mypage")
 	                .hasAnyAuthority(UserRole.USER.name(), UserRole.ADMIN.name())
 	                .requestMatchers("/member/login/button", "/mypage/pet")
 	                .hasAnyAuthority(UserRole.USER.name(), UserRole.ADMIN.name())

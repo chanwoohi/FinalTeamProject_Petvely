@@ -31,8 +31,9 @@
 					url : "/facility/popup/insert", 
 					type : 'post', 
 					data : $("#form-insert").serialize(),
-					success : function (){
+					success : function (msg){
 						self.close();
+						alert(msg);
 					},  
 					error : function(jqXHR, textStatus, errorThrown){
 						console.log(jqXHR);
