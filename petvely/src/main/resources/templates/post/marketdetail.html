@@ -91,7 +91,7 @@
 <body>
     <main layout:fragment="content">
         <div class="product-card">
-            <img th:src="${fileList != null && !fileList.isEmpty() ? fileList[0].fi_name : '/image/default.jpg'}" alt="Product Image"/>
+            <img th:src="${fileList != null && !fileList.isEmpty() ? fileList[0].fi_name : '/image/image.jpg'}" alt="Product Image"/>
             <div class="product-details" th:object="${post}">
                 <label>작성자:</label>
                 <input type="text" readonly th:value="*{me_id}">
