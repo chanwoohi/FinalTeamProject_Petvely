@@ -243,7 +243,7 @@
 						</div>
 					</div>
 				</div>
-				<!-- 글 작성자 전용 -->
+				<!-- 글 작성자 전용// 수락 완료시 수정 삭제 버튼 삭제 -->
 				<div sec:authorize="isAuthenticated()">
 					<div th:if="${#authentication.principal.member.me_num == walkMatePost.po_me_num && walkMatePost.wm_wms_state != '완료'}">
 						<div class="walkDetailContainer">
@@ -252,6 +252,14 @@
 								<a class="walk_DetailInfoBtn" th:href="@{/walkmatepost/update/{po_num}(po_num=*{po_num})}">수정</a>
 								<a class="walk_DetailDeleteBtn" th:href="@{/walkmatepost/delete/{po_num}(po_num=*{po_num})}">삭제</a>
 							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 관리자 전용 -->
+				<div sec:authorize="hasAuthority('ADMIN')">
+					<div class="walkDetailContainer">
+						<div class="walkDetailDelete">
+							<a class="walk_DetailDeleteBtn" th:href="@{/walkmatepost/delete/{po_num}(po_num=*{po_num})}">삭제</a>
 						</div>
 					</div>
 				</div>
