@@ -5,16 +5,16 @@
 	layout:decorate="~{layout/layout2.html}">
 	
 <head layout:fragment="head">
+	<link rel="stylesheet" type="text/css" href="/css/project.css">
 	<head th:replace="~{ui/member/login.html :: head}"></head>
 </head>
 <body>
 	<main layout:fragment="content">
+	
 		<form method="post" th:action="@{/member/login}">
-			<div class="loginContainer">
+		<div class="login-wrapper">
 		   		<div th:replace="~{ui/member/login.html :: body}"></div>
-		   		
-				<button class="btn btn-outline-info col-12">로그인</button>
-			</div>  
+		</div>
 		</form>
     </main>
 </body>

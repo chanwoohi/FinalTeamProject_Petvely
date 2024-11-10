@@ -1093,4 +1093,9 @@ background-color: #ffc107;
 text-decoration: none;
 color: #333;
 }
-
+/* 회원가입 */
+.member_title{
+	font-weight: 600;
+	margin-bottom: 35px;
+	text-align: center;
+}
