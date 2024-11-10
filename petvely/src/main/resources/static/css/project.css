@@ -460,7 +460,6 @@ table.dataTable {
 .CommunityContainer{
     max-width: 1024px;
     margin: 40px auto;
-    /* padding: 0 50px; */
 }
 .categoryGroup {
 	display: flex;
@@ -878,6 +877,34 @@ table.dataTable {
     color: #333;
     float: left;
 }
+
+/* 리포트 팝업 */
+.ReportContainer{
+    max-width: 500px;
+    margin: 40px auto;
+}
+
+.reportbtn{
+    display: inline-block;
+	padding: 10px 30px;
+	font-size: 16px;
+	color: #000;
+	background-color: #ffd966;
+	border: none;
+	border-radius: 25px;
+	cursor: pointer;
+	margin-top: 10px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	transition: background-color 0.3s;
+}
+.reportbtn:hover {
+	text-decoration-line: none;
+	color: #000;
+	background-color: #ffc107;
+}
+
+
+
 
 /* 푸터 */
 .petfooter{
