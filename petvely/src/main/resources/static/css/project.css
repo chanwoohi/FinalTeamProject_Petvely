@@ -74,10 +74,10 @@
         &:active {
           box-shadow: none;
 }
-.login_checkboxwrap{
+.login_checkbox{
 	position: relative;
 }
-.login_checkbox>input[type=checkbox]:before {
+.checkbox>input[type=checkbox]:before {
 	content: "";
 	display: block;
 	position: absolute;
@@ -88,7 +88,7 @@
 	background-color: #fff;
 	border: 1px solid #e4e4e6;
 }
-.login_checkbox>input[type=checkbox]:checked:before {
+.checkbox>input[type=checkbox]:checked:before {
 	content: "";
 	display: block;
 	position: absolute;
@@ -416,7 +416,15 @@ table.dataTable {
 }
 
 /* 게시판리스트 */
-
+.popup-item{
+    color: #000;
+    text-decoration: none;
+    border: none;
+}
+.popup-item:hover{
+    text-decoration: none;
+    color: #000;
+}
 /* 검색창 전체를 감싸는 컨테이너 스타일 */
 .dataTables_filter {
     text-align: left; /* 정렬 변경 */
