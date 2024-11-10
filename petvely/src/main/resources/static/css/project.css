@@ -74,7 +74,31 @@
         &:active {
           box-shadow: none;
 }
-
+.login_checkboxwrap{
+	position: relative;
+}
+.login_checkbox>input[type=checkbox]:before {
+	content: "";
+	display: block;
+	position: absolute;
+	width: 15px;
+	height: 15px;
+	top: 4px;
+	left: 0;
+	background-color: #fff;
+	border: 1px solid #e4e4e6;
+}
+.login_checkbox>input[type=checkbox]:checked:before {
+	content: "";
+	display: block;
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	top: 4px;
+	left: 0;
+	background-color: #fcd11e;
+	border: 1px solid #fcd11e;
+}
 /* MAIN NAV */
 }
 .logo_icon {
