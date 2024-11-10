@@ -784,6 +784,7 @@ table.dataTable {
 
 /* 푸터 */
 .petfooter{
+	margin-top: 700px; /* 고정 여백 */
     padding: 20px;
     text-align: center;
     height: 70px;

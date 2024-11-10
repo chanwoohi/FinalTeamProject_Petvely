@@ -4,6 +4,7 @@
 *{
 	font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 }
+
 select{
 	appearance: none;
 	-webkit-appearance: none; /* 사파리, 크롬 하위버전용 */
@@ -1092,3 +1093,4 @@ background-color: #ffc107;
 text-decoration: none;
 color: #333;
 }
+
