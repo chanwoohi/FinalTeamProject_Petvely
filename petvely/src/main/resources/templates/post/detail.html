@@ -52,7 +52,7 @@
 							<div th:text="${post.me_id}" class="nickname" onclick="togglePopup()">닉네임</div>
 							<div class="nickname-popup" id="nicknamePopup">
 								<a class="popup-item" th:href="@{/mypage/otherpet/{me_num}(me_num=${post.po_me_num})}">프로필 보기</a>
-								<div class="popup-item">쪽지 보내기</div>
+								<a class="popup-item" th:href="@{/message/messagebox}">쪽지 보내기</a>
 								<div class="popup-item"  th:onclick="'window.open(\'/report/post/' + ${po_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'">신고 하기</div>
 							</div>
 							<div class="article_info">
@@ -92,7 +92,6 @@
 						</div>
 					</div>
 				</div>
-				<!-- <a class="btn btn-outline-info" th:href="@{/post/list/{po_num}(po_num=*{po_num})}">목록으로</a> -->
 				<div class="qaDetailContainer">
 					<div class="qaDetailinfo">
 						<a class="qaDetail_qaDetailInfoBtn" th:href="@{/post/update/{po_num}(po_num=*{po_num})}">수정</a>
@@ -103,8 +102,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="form-group">
-			<button class="btn btn-outline-info" id="commentButton">댓글</button>
+		<div class="qaDetailContainer">
+			<button class="qaDetail_qaDetailInfoBtn" id="commentButton">댓글</button>
 		</div>
 		<div class="form-group commentList" id="commentList" style="display: none;">
 			<div id="comment"></div>
