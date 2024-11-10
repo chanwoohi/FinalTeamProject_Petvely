@@ -780,15 +780,17 @@ table.dataTable {
     float: left;
 }
 
-
-
 /* 푸터 */
 .petfooter{
-	margin-top: 700px; /* 고정 여백 */
     padding: 20px;
     text-align: center;
     height: 70px;
     background-color: #fdfdfd;
     border-top: 1px solid #ddd;
+}
+.loginContainer{
+	height: 900px;
+	max-width: 400px;
+    margin: 40px auto;
 }
 
