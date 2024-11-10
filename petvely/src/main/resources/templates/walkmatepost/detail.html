@@ -259,7 +259,7 @@
 				<div sec:authorize="hasAuthority('ADMIN')">
 					<div class="walkDetailContainer">
 						<div class="walkDetailDelete">
-							<a class="walk_DetailDeleteBtn" th:href="@{/walkmatepost/delete/{po_num}(po_num=*{po_num})}">삭제</a>
+							<a class="walk_DetailDeleteBtn" th:href="@{/post/delete/{po_num}(po_num=${po_num})}">삭제</a>
 						</div>
 					</div>
 				</div>
