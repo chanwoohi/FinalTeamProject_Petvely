@@ -273,7 +273,7 @@ public class PostController {
 	    boolean res;
 
 	    // 일반 사용자는 본인이 작성한 글만 삭제 가능
-	    if (post.getPo_me_num() == me_num || "ADMIN".equals(me_authority)) {
+	    if (post.getPo_me_num() == me_num) {
 	        res = postService.physicalDeletePost(po_num);  // 물리적 삭제
 	    } 
 	    // 관리자 권한이 있는 경우 논리적 삭제 처리
