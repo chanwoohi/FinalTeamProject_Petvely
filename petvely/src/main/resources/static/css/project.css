@@ -903,8 +903,11 @@ table.dataTable {
 	background-color: #ffc107;
 }
 
-
-
+/* 댓글 */
+.comment-item{
+    list-style-type: none;
+    list-style: none;
+}
 
 /* 푸터 */
 .petfooter{

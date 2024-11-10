@@ -92,7 +92,6 @@
 						</div>
 					</div>
 				</div>
-				<!-- <a class="btn btn-outline-info" th:href="@{/post/list/{po_num}(po_num=*{po_num})}">목록으로</a> -->
 				<div class="qaDetailContainer">
 					<div class="qaDetailinfo">
 						<a class="qaDetail_qaDetailInfoBtn" th:href="@{/post/update/{po_num}(po_num=*{po_num})}">수정</a>
@@ -103,8 +102,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="form-group">
-			<button class="btn btn-outline-info" id="commentButton">댓글</button>
+		<div class="qaDetailContainer">
+			<button class="qaDetail_qaDetailInfoBtn" id="commentButton">댓글</button>
 		</div>
 		<div class="form-group commentList" id="commentList" style="display: none;">
 			<div id="comment"></div>
