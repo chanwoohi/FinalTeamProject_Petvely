@@ -42,23 +42,28 @@
 							<!-- 유저 전용 -->
 							<th:block th:if="${user != null}">
 								<div class="walkButContainer">
-									<button th:if="${bookmark}!=${po_num}" class="wlakIconAbtn" th:href="@{/post/bookmark/insert/{po_num}(po_num=*{po_num})}"><span>
-										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#f00" class="bi bi-heart-fill" viewBox="0 0 16 16">
-										  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
-										</svg>
-										</span>
-										&nbsp;즐겨찾기
-									</button>
-									<button th:if="${bookmark}==${po_num}" class="wlakIconAbtn" th:href="@{/post/bookmark/delete/{po_num}(po_num=*{po_num})}" >
+									<!-- <a th:if="${bookmark != po_num}" class="wlakIconAbtn bookmark-btn" th:attr="data-url=@{/post/bookmark/insert/{po_num}(po_num=${po_num})}"> -->
+									<a th:if="${bookmark != po_num}" class="wlakIconAbtn bookmark-btn" th:attr="data-url='/post/bookmark/insert/'+${po_num}">
 										<span>
 										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#f00" class="bi bi-heart-fill" viewBox="0 0 16 16">
 										  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
 										</svg>
 										</span>
 										&nbsp;즐겨찾기
-									</button>
+									</a>
+									<a th:if="${bookmark == po_num}" class="wlakIconAbtn bookmark-btn" th:attr="data-url=|/post/bookmark/delete/${po_num}|">
+										<span>
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#f00" class="bi bi-heart-fill" viewBox="0 0 16 16">
+										  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+										</svg>
+										</span>
+										&nbsp;즐겨찾기
+									</a>
 									<button type="button" class="wlakIconBtn"
-									 th:onclick="'window.open(\'/report/post/' + ${po_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'"><span style="background-image: url('/image/block_icon.svg'); background-size: cover; display: inline-block; width: 16px; height: 16px; vertical-align: middle;"></span> 신고하기</button>
+									 th:onclick="'window.open(\'/report/post/' + ${po_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'">
+										 <span style="background-image: url('/image/block_icon.svg'); background-size: cover; display: inline-block; width: 16px; height: 16px; vertical-align: middle;"></span> 
+										 신고하기
+									 </button>
 								</div>
 							</th:block>
 							<!-- 신청자 전용 -->
@@ -238,14 +243,23 @@
 						</div>
 					</div>
 				</div>
-				<!-- 글 작성자 전용 -->
+				<!-- 글 작성자 전용// 수락 완료시 수정 삭제 버튼 삭제 -->
 				<div sec:authorize="isAuthenticated()">
 					<div th:if="${#authentication.principal.member.me_num == walkMatePost.po_me_num && walkMatePost.wm_wms_state != '완료'}">
 						<div class="walkDetailContainer">
 							<div class="walkDetailDelete">
+								<a class="walk_submitBtn" th:href="@{/walkmatepost/approve/{po_num}(po_num=*{po_num})}">산책 메이트 수락하기</a>
 								<a class="walk_DetailInfoBtn" th:href="@{/walkmatepost/update/{po_num}(po_num=*{po_num})}">수정</a>
 								<a class="walk_DetailDeleteBtn" th:href="@{/walkmatepost/delete/{po_num}(po_num=*{po_num})}">삭제</a>
 							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 관리자 전용 -->
+				<div sec:authorize="hasAuthority('ADMIN')">
+					<div class="walkDetailContainer">
+						<div class="walkDetailDelete">
+							<a class="walk_DetailDeleteBtn" th:href="@{/post/delete/{po_num}(po_num=${po_num})}">삭제</a>
 						</div>
 					</div>
 				</div>
@@ -258,13 +272,6 @@
 						</div>
 					</div>
 				</div>
-				<!-- 유저 전용 -->
-				<th:block th:if="${user != null}">
-						<div class="post_Btn">
-							<a class="walk_submitBtn" data-toggle="modal" data-target="#myModal">산책 메이트 신청하기</a>
-							<a class="walk_inventoryBtn" th:href="@{/walkmatepost/list}">목록으로</a>
-						</div>
-				</th:block>
 				<!-- 모두 전용 -->
 				<div sec:authorize="isAnonymous()">
 					<div class="post_Btn">
@@ -273,7 +280,7 @@
 				</div>
 				<!-- 댓글 -->
 				<div class="form-group">  
-					<button class="btn btn-outline-info" id="commentButton" type="button">댓글</button>
+					<button class="qaDetail_qaDetailInfoBtn" id="commentButton" type="button">댓글</button>
 				</div>
 				<div class="form-group commentList" id="commentList" style="display: none;">
 					<div id="comment">

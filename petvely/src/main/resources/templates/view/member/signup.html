@@ -15,16 +15,11 @@
 		<div class="main-container">
 			<div class="register_registerContainer">
 				<div class="register_registerContents">
+					<h1 class="member_title">회원가입</h1>
 					<form id="form" method="post" th:action="@{/member/signup}">
 				   		<div th:replace="~{ui/member/signup.html :: main}"></div>
 				   		
 						<button class="register_noregisterBtn">회원 가입</button>
-						<button id="cheatBtn" class="btn btn-outline-info"
-							type="button">치트키1</button>
-						<button id="cheatBtn2" class="btn btn-outline-info"
-							type="button">치트키2</button>
-						<button id="cheatBtn3" class="btn btn-outline-info"
-							type="button">치트키admin</button>
 				   	</form>
 			   	</div>
 		   	</div>

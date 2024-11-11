@@ -8,6 +8,97 @@
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 
 }
+
+}
+/* LOGIN */
+.loginInput{
+    margin: 5px 0;
+    padding: 0 10px;
+    width: 100%;
+    height: 55px;
+    border: none;
+    font-size: 15px;
+    border-bottom: 1px solid #e4e4e6;
+}
+.login-wrapper{
+    width: 400px;
+    height: 1000px;
+    padding: 40px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    
+}
+
+.login-wrapper > h2{
+    text-align: left;
+    color: #000;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.loginbtn {
+    display: flex;
+    align-items: center; 
+    justify-content: space-between; 
+    margin-top: 30px;
+    width: 100%;
+}
+
+.login_checkbox {
+    display: flex;
+    align-items: center; 
+    gap: 5px;
+}
+
+.login_button{
+        display: inline-block;
+        width: 30%;
+        border: 2px solid #ffd966;
+        background: #ffd966;
+        border-radius: 25px;
+        padding: 3px 12px 5px 12px;
+        color: #fff;
+        font-size: 14px;
+        font-weight: bold;
+        letter-spacing: 0px;
+        -webkit-transition: all 0.1s ease-out;
+        transition: all 0.1s ease-out;
+        &:hover {
+          color: #ffd966;
+          background: #fff;
+          border: 2px solid #ffd966;
+        }
+        &:active {
+          box-shadow: none;
+}
+.login_checkbox{
+	position: relative;
+}
+.checkbox>input[type=checkbox]:before {
+	content: "";
+	display: block;
+	position: absolute;
+	width: 15px;
+	height: 15px;
+	top: 4px;
+	left: 0;
+	background-color: #fff;
+	border: 1px solid #e4e4e6;
+}
+.checkbox>input[type=checkbox]:checked:before {
+	content: "";
+	display: block;
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	top: 4px;
+	left: 0;
+	background-color: #fcd11e;
+	border: 1px solid #fcd11e;
+}
 /* MAIN NAV */
 }
 .logo_icon {
@@ -325,7 +416,15 @@ table.dataTable {
 }
 
 /* 게시판리스트 */
-
+.popup-item{
+    color: #000;
+    text-decoration: none;
+    border: none;
+}
+.popup-item:hover{
+    text-decoration: none;
+    color: #000;
+}
 /* 검색창 전체를 감싸는 컨테이너 스타일 */
 .dataTables_filter {
     text-align: left; /* 정렬 변경 */
@@ -361,7 +460,6 @@ table.dataTable {
 .CommunityContainer{
     max-width: 1024px;
     margin: 40px auto;
-    /* padding: 0 50px; */
 }
 .categoryGroup {
 	display: flex;
@@ -615,6 +713,10 @@ table.dataTable {
     position: absolute;
     left: 80px;
 }
+.qaDetailComment{
+    position: absolute;
+    left: 160px;
+}
 /* 파일 링크 스타일 */
 .file{
 	margin:20px;
@@ -780,7 +882,36 @@ table.dataTable {
     float: left;
 }
 
+/* 리포트 팝업 */
+.ReportContainer{
+    max-width: 500px;
+    margin: 40px auto;
+}
 
+.reportbtn{
+    display: inline-block;
+	padding: 10px 30px;
+	font-size: 16px;
+	color: #000;
+	background-color: #ffd966;
+	border: none;
+	border-radius: 25px;
+	cursor: pointer;
+	margin-top: 10px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	transition: background-color 0.3s;
+}
+.reportbtn:hover {
+	text-decoration-line: none;
+	color: #000;
+	background-color: #ffc107;
+}
+
+/* 댓글 */
+.comment-item{
+    list-style-type: none;
+    list-style: none;
+}
 
 /* 푸터 */
 .petfooter{
@@ -790,4 +921,3 @@ table.dataTable {
     background-color: #fdfdfd;
     border-top: 1px solid #ddd;
 }
-

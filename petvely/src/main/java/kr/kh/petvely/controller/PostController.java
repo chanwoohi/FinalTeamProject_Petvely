@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.kh.petvely.model.user.CustomUser;
-import kr.kh.petvely.model.vo.AnimalVO;
 import kr.kh.petvely.model.vo.CommunityVO;
 import kr.kh.petvely.model.vo.FileVO;
 import kr.kh.petvely.model.vo.MemberVO;
@@ -34,6 +34,7 @@ public class PostController {
 	@Autowired
 	private PostService postService;
 	
+	@ResponseBody
 	@PostMapping("/post/bookmark/insert/{po_num}")
 	public ResponseEntity<?> postBookmarkInsert(@PathVariable int po_num, @AuthenticationPrincipal CustomUser customUser) {
 	    if (customUser == null) {
@@ -272,7 +273,7 @@ public class PostController {
 	    boolean res;
 
 	    // 일반 사용자는 본인이 작성한 글만 삭제 가능
-	    if (post.getPo_me_num() == me_num || "ADMIN".equals(me_authority)) {
+	    if (post.getPo_me_num() == me_num) {
 	        res = postService.physicalDeletePost(po_num);  // 물리적 삭제
 	    } 
 	    // 관리자 권한이 있는 경우 논리적 삭제 처리

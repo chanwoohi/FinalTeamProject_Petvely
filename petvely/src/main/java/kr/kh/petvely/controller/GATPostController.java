@@ -49,7 +49,6 @@ public class GATPostController {
 	@GetMapping("/gatpost/detail/{po_num}")
 	public String postDetail(Model model, @PathVariable int po_num, @AuthenticationPrincipal CustomUser customUser) {
 		
-		
 		gatPostService.updatePostView(po_num);
 		GiveAndTakePostVO GATPost = gatPostService.getGATPost(po_num);
 		model.addAttribute("GATPost", GATPost);
@@ -57,6 +56,7 @@ public class GATPostController {
 			MemberVO user = customUser.getMember();
 			model.addAttribute("user", user);
 			int bm_me_num = user.getMe_num();
+			System.out.println(user);
 			// 즐겨찾기 기능 추가
 			Integer bookmark = postService.selectBookmark(bm_me_num, po_num);
 			if (bookmark != null) {
