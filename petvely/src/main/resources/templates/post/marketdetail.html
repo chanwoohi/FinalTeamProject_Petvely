@@ -91,7 +91,17 @@
 <body>
     <main layout:fragment="content">
         <div class="product-card">
-            <img th:src="${fileList != null && !fileList.isEmpty() ? fileList[0].fi_name : '/image/image.jpg'}" alt="Product Image"/>
+            <div class="form-group">
+			    <label>첨부 이미지:</label>
+			    <div th:if="${fileList != null && !fileList.isEmpty()}">
+			        <div th:each="image : ${fileList}">			    
+		            	<img th:src="${image.fi_name}" alt="Image" style="max-width: 100%; height: auto;" />
+			        </div>
+			    </div>
+			   	 <div th:unless="${fileList != null && !fileList.isEmpty()}">
+			        <p>등록된 이미지가 없습니다.</p>
+			    </div>
+        	</div>
             <div class="product-details" th:object="${post}">
                 <label>작성자:</label>
                 <input type="text" readonly th:value="*{me_id}">
