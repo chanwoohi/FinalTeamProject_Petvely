@@ -713,6 +713,10 @@ table.dataTable {
     position: absolute;
     left: 80px;
 }
+.qaDetailComment{
+    position: absolute;
+    left: 160px;
+}
 /* 파일 링크 스타일 */
 .file{
 	margin:20px;
