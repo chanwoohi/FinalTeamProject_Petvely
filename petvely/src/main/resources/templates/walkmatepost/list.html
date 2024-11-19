@@ -29,7 +29,17 @@
 					<tr th:each="item : ${list}" th:if="${item != null}">
 						<td th:text="${item.po_num}"></td>
 						<td>
-							<a th:text="${item.po_title}"
+							<!-- 사용자 확인 -->
+							<a th:if="${item.po_delete == 1}" sec:authorize="!hasAuthority('ADMIN')"> 
+							    <span class="text">관리자에 의해 삭제된 글입니다.</span>
+							</a>
+							<!-- 관리자 확인 -->
+							<div th:if="${item.po_delete == 1}" sec:authorize="hasAuthority('ADMIN')">
+								<span class="text">[삭제글]</span>
+								<a th:text="${post.po_title}" th:href="@{/post/detail/{po_num}(po_num=${post.po_num})}"></a> 
+							</div>
+							<!-- 글이 삭제되지 않았을 때만 제목을 표시 -->
+							<a th:if="${item.po_delete == 0}" th:text="${item.po_title}"
 							th:href="@{/walkmatepost/detail/{po_num}(po_num=${item.po_num})}"></a> 
 						</td>
 						<td th:text="${item.wm_wms_state}"></td>
