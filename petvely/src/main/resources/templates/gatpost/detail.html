@@ -84,21 +84,33 @@
 				    th:onclick="'window.open(\'/report/post/' + ${po_num} + '\', \'newwindow\', \'width=800,height=600,left=100,top=100\'); return false;'"
 				    >신고하기🚨</button>
 		    </div>
-			<div class="form-group">
+		    <th:block th:if = "${user != null && GATPost.me_id eq user.me_id }">
+			    <div class="qaDetailContainer">
+					<div class="qaDetailinfo">
+						<a class=" qaDetail_qaDetailInfoBtn" th:href="@{/gatpost/update/{po_num}(po_num=*{po_num})}">수정</a>
+					</div>
+					<div class="qaDetailDelete">
+						<a class="qaDetail_qaDetailDeleteBtn" th:href="@{/gatpost/delete/{po_num}(po_num=*{po_num})}">삭제</a>
+					</div>
+					<div class="qaDetailComment">
+						<button class="qaDetail_qaDetailInfoBtn" id="commentButton">댓글</button>
+					</div>
+				</div>
+			</th:block>
+			<th:block th:if = "${user == null || GATPost.me_id ne user.me_id}">
+			<div class="qaDetailContainer">
 				<button class="qaDetail_qaDetailInfoBtn" id="commentButton">댓글</button>
 			</div>
+			</th:block>
 			<div class="form-group commentList" id="commentList" style="display: none;">
 				<div id="comment">
-					
 				</div>
-				<th:block th:if ="${user != null}">
-					<div class="input-group mb-3">
-					    <textarea class="form-control" placeholder="댓글 입력" id="input-comment"></textarea>
-					    <div class="input-group-append">
-							<span class="input-group-text btn-insert" id="btn_insert0">등록</span>
-					    </div>
-					</div>
-				</th:block>
+				<div class="input-group mb-3">
+				    <textarea class="form-control" placeholder="댓글 입력" id="input-comment"></textarea>
+				    <div class="input-group-append">
+						<span class="input-group-text btn-insert" id="btn_insert0">등록</span>
+				    </div>
+				</div>
 			</div>
 			<div class="form-group">
 				<a class="btn btn-outline-info" th:href="@{/gatpost/list}">목록으로</a>
